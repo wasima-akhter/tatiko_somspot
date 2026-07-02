@@ -1,9 +1,9 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'core/di/getx_injection.dart';
 import 'core/di/injection.dart';
 import 'core/router/routes.dart';
@@ -24,7 +24,7 @@ void main() async {
   runApp(
     //   MyApp(languages: languages),
     DevicePreview(
-      enabled: !kReleaseMode,
+      enabled: false,
       builder: (context) => MyApp(languages: languages),
     ),
   );
@@ -54,7 +54,11 @@ class MyApp extends StatelessWidget {
         // In release mode DevicePreview is disabled so they have no effect.
         useInheritedMediaQuery: true,
         builder: DevicePreview.appBuilder,
-        locale: DevicePreview.locale(context),
+        // locale: DevicePreview.locale(context),
+        locale: Locale(
+          Get.find<LanguageController>().selectedLanguage.languageCode,
+          Get.find<LanguageController>().selectedLanguage.countryCode,
+        ),
 
         // ── Routing (go_router) ───────────────────────────────────────────
         routeInformationParser: AppRouter.route.routeInformationParser,
