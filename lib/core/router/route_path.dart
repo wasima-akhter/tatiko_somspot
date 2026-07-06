@@ -5,6 +5,7 @@ class RoutePath {
   static const String splashScreen = 'splashScreen';
 
   static const String chooseLanguageScreen = 'chooseLanguageScreen';
+  static const String chooseRoleScreen = 'chooseRoleScreen';
   static const String onboardingScreen = 'onboardingScreen';
   static const String welcomeScreen = 'welcomeScreen';
   static const String vendorSelectionScreen = 'vendorSelectionScreen';

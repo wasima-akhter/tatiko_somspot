@@ -129,7 +129,7 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
                       CustomButton(
                         text: AppStrings.verifyAndContinue.tr,
                         onTap: () {
-                          if (CommonController.to.isSeller.value) {
+                          if (CommonController.to.isMerchandiser) {
                             AppRouter.route.goNamed(
                               RoutePath.completedProfileScreen,
                             );

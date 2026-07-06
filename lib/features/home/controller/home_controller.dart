@@ -7,7 +7,9 @@ class HomeController extends GetxController {
   // User profile and greeting state (clean MVC pattern)
   final RxString userName = "Abdul Karim".obs;
   final RxString userLocation = "Maka Al Mukarama, Mogadishu".obs;
-  final RxString userProfileImage = "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150&auto=format&fit=crop".obs;
+  final RxString userProfileImage =
+      "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150&auto=format&fit=crop"
+          .obs;
 
   final RxBool isRefreshing = false.obs;
 

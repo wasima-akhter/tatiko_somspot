@@ -7,6 +7,8 @@ import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
+
+import '../../../utils/common_controller/common_controller.dart';
 import '../controller/onboarding_controller.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -23,7 +25,10 @@ class OnboardingScreen extends StatelessWidget {
           children: [
             // ── Top Bar: Dots & Skip ──
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 16.0,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -37,11 +42,17 @@ class OnboardingScreen extends StatelessWidget {
 
                   // Skip Button
                   GestureDetector(
-                    onTap: () => AppRouter.route.goNamed(RoutePath.welcomeScreen),
+                    onTap: () =>
+                        AppRouter.route.goNamed(RoutePath.welcomeScreen),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.primaryColor.withValues(alpha: 0.5)),
+                        border: Border.all(
+                          color: AppColors.primaryColor.withValues(alpha: 0.5),
+                        ),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
@@ -77,14 +88,19 @@ class OnboardingScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Obx(() {
-                final isLast = _controller.currentIndex.value ==
+                final isLast =
+                    _controller.currentIndex.value ==
                     _controller.onboardingList.length - 1;
 
                 return CustomButton(
-                  text: isLast ? AppStrings.getStarted.tr : AppStrings.next.tr,
+                  text: isLast
+                      ? (CommonController.to.isInfluencer
+                            ? AppStrings.startEarning.tr
+                            : AppStrings.getStarted.tr)
+                      : AppStrings.next.tr,
                   onTap: () {
                     if (isLast) {
-                      AppRouter.route.goNamed(RoutePath.welcomeScreen); 
+                      AppRouter.route.goNamed(RoutePath.welcomeScreen);
                     } else {
                       _controller.pageController.nextPage(
                         duration: const Duration(milliseconds: 300),
@@ -113,7 +129,8 @@ class OnboardingScreen extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: isActive
-                ? AppColors.primaryColor // Blue from Figma
+                ? AppColors
+                      .primaryColor // Blue from Figma
                 : AppColors.primaryColor.withValues(alpha: 0.2), // Light blue
           ),
         );

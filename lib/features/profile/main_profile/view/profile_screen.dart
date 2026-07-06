@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:som_spot/core/router/route_path.dart';
+import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
 import 'package:som_spot/features/profile/main_profile/view/widgets/language_dialog_content.dart';
@@ -10,15 +12,13 @@ import 'package:som_spot/features/profile/main_profile/view/widgets/profile_menu
 import 'package:som_spot/features/profile/main_profile/view/widgets/profile_menu_item.dart';
 import 'package:som_spot/features/profile/main_profile/view/widgets/profile_section_header.dart';
 import 'package:som_spot/features/profile/main_profile/view/widgets/profile_stat_card.dart';
+import 'package:som_spot/helper/toast/toast_helper.dart';
 import 'package:som_spot/share/widgets/dialog/custom_dialog.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
-import 'package:som_spot/core/router/routes.dart';
-import 'package:som_spot/core/router/route_path.dart';
-import 'package:som_spot/helper/toast/toast_helper.dart';
 
 class ProfileScreen extends GetView<ProfileScreenController> {
   const ProfileScreen({super.key});
@@ -125,7 +125,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                   Gap(20.h),
                   // Statistics cards
                   Obx(() {
-                    if (CommonController.to.isSeller.value) {
+                    if (CommonController.to.isMerchandiser) {
                       return Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 20.w,
@@ -225,7 +225,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                         ),
                       ),
                       Obx(() {
-                        if (CommonController.to.isSeller.value) {
+                        if (CommonController.to.isMerchandiser) {
                           return Column(
                             children: [
                               ProfileMenuItem(

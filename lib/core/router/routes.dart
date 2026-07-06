@@ -3,41 +3,42 @@ import 'package:go_router/go_router.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/features/alerts/view/alerts_screen.dart';
 import 'package:som_spot/features/auth/active/active_otp_screen.dart';
-import 'package:som_spot/features/auth/completed_profile/view/completed_profile_screen.dart';
 import 'package:som_spot/features/auth/completed_profile/view/application_submitted_screen.dart';
 import 'package:som_spot/features/auth/completed_profile/view/application_under_review_screen.dart';
-import 'package:som_spot/features/auth/forget_otp/forgetotp_screen.dart';
+import 'package:som_spot/features/auth/completed_profile/view/completed_profile_screen.dart';
 import 'package:som_spot/features/auth/forget/forget_password_screen.dart';
+import 'package:som_spot/features/auth/forget_otp/forgetotp_screen.dart';
 import 'package:som_spot/features/auth/login/login_screen.dart';
 import 'package:som_spot/features/auth/reset/reset_password_screen.dart';
 import 'package:som_spot/features/auth/sign_up/sign_up_screen.dart';
 import 'package:som_spot/features/business_info/view/business_info_screen.dart';
 import 'package:som_spot/features/choose_language/view/choose_language_screen.dart';
-import 'package:som_spot/features/nav/navigation_page.dart';
-import 'package:som_spot/features/offers/view/offer_details_screen.dart';
+import 'package:som_spot/features/claims/view/claims_screen.dart';
 import 'package:som_spot/features/dashboard/view/create_offer_screen.dart';
+import 'package:som_spot/features/home/model/deal_model.dart';
+import 'package:som_spot/features/home/model/merchant_model.dart';
+import 'package:som_spot/features/home/view/category_merchants_screen.dart';
+import 'package:som_spot/features/home/view/merchant_details_screen.dart';
+import 'package:som_spot/features/home/view/nearby_you_screen.dart';
+import 'package:som_spot/features/home/view/offer_details_screen.dart';
+import 'package:som_spot/features/home/view/top_deals_screen.dart';
+import 'package:som_spot/features/nav/navigation_page.dart';
 import 'package:som_spot/features/offers/view/edit_offer_screen.dart';
+import 'package:som_spot/features/offers/view/offer_details_screen.dart';
 import 'package:som_spot/features/onboarding/view/onboarding_screen.dart';
+import 'package:som_spot/features/other/view/about_somsport_screen.dart';
+import 'package:som_spot/features/other/view/change_password_screen.dart';
+import 'package:som_spot/features/other/view/help_and_support_screen.dart';
+import 'package:som_spot/features/other/view/privacy_policy_screen.dart';
+import 'package:som_spot/features/other/view/terms_and_conditions_screen.dart';
+// Feature screens imports
+import 'package:som_spot/features/profile/edit_profile/view/edit_profile_screen.dart';
 import 'package:som_spot/features/splash/splash_screen.dart';
 import 'package:som_spot/features/subscription/subscription_screen.dart';
 import 'package:som_spot/features/wellcome/view/welcome_screen.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
-// Feature screens imports
-import 'package:som_spot/features/profile/edit_profile/view/edit_profile_screen.dart';
-import 'package:som_spot/features/claims/view/claims_screen.dart';
-import 'package:som_spot/features/other/view/help_and_support_screen.dart';
-import 'package:som_spot/features/other/view/about_somsport_screen.dart';
-import 'package:som_spot/features/other/view/terms_and_conditions_screen.dart';
-import 'package:som_spot/features/other/view/privacy_policy_screen.dart';
-import 'package:som_spot/features/other/view/change_password_screen.dart';
-import 'package:som_spot/features/home/view/top_deals_screen.dart';
-import 'package:som_spot/features/home/view/nearby_you_screen.dart';
-import 'package:som_spot/features/home/view/merchant_details_screen.dart';
-import 'package:som_spot/features/home/view/offer_details_screen.dart';
-import 'package:som_spot/features/home/view/category_merchants_screen.dart';
-import 'package:som_spot/features/home/model/merchant_model.dart';
-import 'package:som_spot/features/home/model/deal_model.dart';
+import '../../features/choose_role/view/choose_role_screen.dart';
 
 class AppRouter {
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -65,6 +66,16 @@ class AppRouter {
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
             child: ChooseLanguageScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.chooseRoleScreen,
+        path: RoutePath.chooseRoleScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: ChooseRoleScreen(),
             state: state,
           );
         },

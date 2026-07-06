@@ -30,10 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Assets.images.splashlogo.image(),
             const Gap(20),
-            Text(
-              "Discover. Connect. Save.",
-              style: context.headlineSmall,
-            ),
+            Text("Discover. Connect. Save.", style: context.headlineSmall),
           ],
         ),
       ),

@@ -43,6 +43,19 @@ class AppStrings {
   static const String selectRole = "select_role";
   static const String customer = "customer";
   static const String merchant = "merchant";
+  static const String influencer = "influencer";
+
+  //
+
+  static const String monetizeYourAudience = "monetize_your_audience";
+  static const String createAndShare = "create_and_share";
+  static const String trackEarnings = "track_earnings";
+  static const String partnerDescription = "partner_description";
+  static const String campaignsDescription = "campaigns_description";
+  static const String commissionsDescription = "commissions_description";
+  static const String startEarning = "start_earning";
+
+  //
   static const String fullName = "full_name";
   static const String ahmedMohamed = "ahmed_mohamed";
   static const String phoneNumber = "phone_number";
@@ -245,7 +258,8 @@ class AppStrings {
   static const String applicationSubmittedDesc = "application_submitted_desc";
   static const String viewStatus = "view_status";
   static const String applicationUnderReview = "application_under_review";
-  static const String applicationUnderReviewDesc = "application_under_review_desc";
+  static const String applicationUnderReviewDesc =
+      "application_under_review_desc";
   static const String underReviewBadge = "under_review_badge";
   static const String estimatedTime = "estimated_time";
   static const String estimatedTimeDesc = "estimated_time_desc";
@@ -291,7 +305,8 @@ class AppStrings {
 
   // ─── Listings ───
   static const String myListings = "my_listings";
-  static const String manageYourBusinessProfile = "manage_your_business_profile";
+  static const String manageYourBusinessProfile =
+      "manage_your_business_profile";
   static const String manageBusiness = "manage_business";
   static const String editBusinessProfile = "edit_business_profile";
   static const String manageGallery = "manage_gallery";
@@ -327,7 +342,8 @@ class AppStrings {
 
   // ─── Create/Edit Offer ───
   static const String createNewOffer = "create_new_offer";
-  static const String editOfferTitle = "edit_offer"; // Note: editOffer already exists, reuse or use this
+  static const String editOfferTitle =
+      "edit_offer"; // Note: editOffer already exists, reuse or use this
   static const String tapToAddCoverImage = "tap_to_add_cover_image";
   static const String recommendedSizeOffer = "recommended_size_offer";
   static const String offerTitle = "offer_title";

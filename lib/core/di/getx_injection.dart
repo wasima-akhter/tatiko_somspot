@@ -1,20 +1,20 @@
 import 'package:get/get.dart';
+import 'package:som_spot/features/alerts/controller/alerts_controller.dart';
 import 'package:som_spot/features/auth/controller/auth_controller.dart';
+import 'package:som_spot/features/home/controller/home_category_controller.dart';
+// Home Feature Controllers
+import 'package:som_spot/features/home/controller/home_controller.dart';
+import 'package:som_spot/features/home/controller/home_deals_controller.dart';
+import 'package:som_spot/features/home/controller/home_nearby_controller.dart';
 import 'package:som_spot/features/onboarding/controller/onboarding_controller.dart';
+import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
+import 'package:som_spot/features/saved/controller/saved_controller.dart';
+// Other Bottom Nav Feature Controllers
+import 'package:som_spot/features/search/controller/search_controller.dart';
 import 'package:som_spot/share/controller/language_controller.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
-// Home Feature Controllers
-import 'package:som_spot/features/home/controller/home_controller.dart';
-import 'package:som_spot/features/home/controller/home_category_controller.dart';
-import 'package:som_spot/features/home/controller/home_deals_controller.dart';
-import 'package:som_spot/features/home/controller/home_nearby_controller.dart';
-
-// Other Bottom Nav Feature Controllers
-import 'package:som_spot/features/search/controller/search_controller.dart';
-import 'package:som_spot/features/saved/controller/saved_controller.dart';
-import 'package:som_spot/features/alerts/controller/alerts_controller.dart';
-import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
+import '../../features/choose_role/controller/choose_role_controller.dart';
 
 void initGetx() {
   // Global & Common Controllers
@@ -34,5 +34,6 @@ void initGetx() {
   Get.lazyPut(() => SavedScreenController(), fenix: true);
   Get.lazyPut(() => AlertsScreenController(), fenix: true);
   Get.lazyPut(() => ProfileScreenController(), fenix: true);
+  Get.lazyPut(() => ProfileScreenController(), fenix: true);
+  Get.lazyPut(() => ChooseRoleController(), fenix: true);
 }
-

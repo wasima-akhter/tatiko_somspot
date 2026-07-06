@@ -22,13 +22,13 @@ class OnboardingPageCard extends StatelessWidget {
           Expanded(
             flex: 6,
             child: Center(
-              child: Image.asset(
-                model.image,
-                fit: BoxFit.contain,
+              child: Container(
+                // color: Colors.amber,
+                child: Image.asset(model.image, fit: BoxFit.contain),
               ),
             ),
           ),
-
+          const Gap(6),
           // ── Title ──
           Text(
             model.title.tr,

@@ -42,10 +42,7 @@ class ChooseLanguageScreen extends StatelessWidget {
               const Gap(32),
 
               // ── Section Label ──
-              Text(
-                AppStrings.selectLanguage.tr,
-                style: context.titleMedium,
-              ),
+              Text(AppStrings.selectLanguage.tr, style: context.titleMedium),
               const Gap(16),
 
               // ── Language Cards ──
@@ -66,8 +63,8 @@ class ChooseLanguageScreen extends StatelessWidget {
                         nativeName: lang.countryCode == 'SO'
                             ? 'Somali'
                             : lang.countryCode == 'SA'
-                                ? 'Arabic'
-                                : 'English',
+                            ? 'Arabic'
+                            : 'English',
                         isSelected: isSelected,
                         onTap: () => _controller.selectLanguage(index),
                       );
@@ -82,7 +79,7 @@ class ChooseLanguageScreen extends StatelessWidget {
                 child: CustomButton(
                   text: AppStrings.continueText.tr,
                   onTap: () {
-                    AppRouter.route.goNamed(RoutePath.onboardingScreen);
+                    AppRouter.route.goNamed(RoutePath.chooseRoleScreen);
                   },
                 ),
               ),
@@ -125,7 +122,9 @@ class _LanguageCard extends StatelessWidget {
               : AppColors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: isSelected ? AppColors.primaryColor : AppColors.linesDarkColor,
+            color: isSelected
+                ? AppColors.primaryColor
+                : AppColors.linesDarkColor,
             width: isSelected ? 1.5 : 1,
           ),
         ),
@@ -140,10 +139,7 @@ class _LanguageCard extends StatelessWidget {
                 color: AppColors.backgroundsLinesColor.withValues(alpha: 0.4),
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: Text(
-                flag,
-                style: const TextStyle(fontSize: 22),
-              ),
+              child: Text(flag, style: const TextStyle(fontSize: 22)),
             ),
             const Gap(14),
 

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final String imageUrl;
@@ -80,23 +81,28 @@ class CustomNetworkImage extends StatelessWidget {
           borderRadius: borderRadius,
           shape: boxShape,
           color: backgroundColor,
-          image: DecorationImage(image: imageProvider, fit: BoxFit.cover, colorFilter: colorFilter),
+          image: DecorationImage(
+            image: imageProvider,
+            fit: BoxFit.cover,
+            colorFilter: colorFilter,
+          ),
         ),
         child: child,
       ),
-      placeholder: (context, url) => CircularProgressIndicator(),
-      errorWidget: (context, url, error){
-        return errorWidget??Container(
-          height: height,
-          width: width,
-          decoration: BoxDecoration(
-            border: border,
-            color: Colors.grey.withValues(alpha: 0.6),
-            borderRadius: borderRadius,
-            shape: boxShape,
-          ),
-          child: const Icon(Icons.error),
-        );
+      placeholder: (context, url) => LoadingWidget(),
+      errorWidget: (context, url, error) {
+        return errorWidget ??
+            Container(
+              height: height,
+              width: width,
+              decoration: BoxDecoration(
+                border: border,
+                color: Colors.grey.withValues(alpha: 0.6),
+                borderRadius: borderRadius,
+                shape: boxShape,
+              ),
+              child: const Icon(Icons.error),
+            );
       },
     );
   }
