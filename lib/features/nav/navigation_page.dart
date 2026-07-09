@@ -49,8 +49,9 @@ class _NavigationPageState extends State<NavigationPage> {
       // bottom: true (default) → pads for home-indicator / gesture bar.
       child: SafeArea(
         top: false,
-        child: SizedBox(
+        child: Container(
           // height: 64.h, // fixed height keeps every tab item the same size
+          padding: EdgeInsets.only(left: 15, right: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(

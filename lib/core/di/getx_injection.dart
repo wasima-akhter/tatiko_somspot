@@ -15,6 +15,7 @@ import 'package:som_spot/share/controller/language_controller.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../features/choose_role/controller/choose_role_controller.dart';
+import '../../features/influencer_all/influencer_discover/controller/influencer_discover_controller.dart';
 
 void initGetx() {
   // Global & Common Controllers
@@ -35,5 +36,8 @@ void initGetx() {
   Get.lazyPut(() => AlertsScreenController(), fenix: true);
   Get.lazyPut(() => ProfileScreenController(), fenix: true);
   Get.lazyPut(() => ProfileScreenController(), fenix: true);
+
+  // influencer
   Get.lazyPut(() => ChooseRoleController(), fenix: true);
+  Get.lazyPut(() => InfluencerDiscoverController(), fenix: true);
 }

@@ -15,7 +15,7 @@ import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
-class CompletedProfileScreen extends StatefulWidget {
+class  CompletedProfileScreen extends StatefulWidget {
   const CompletedProfileScreen({super.key});
 
   @override

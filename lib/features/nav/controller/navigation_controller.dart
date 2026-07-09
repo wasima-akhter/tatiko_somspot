@@ -4,6 +4,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/features/alerts/view/alerts_screen.dart';
 import 'package:som_spot/features/dashboard/view/dashboard_screen.dart';
 import 'package:som_spot/features/home/view/home_screen.dart';
+import 'package:som_spot/features/influencer_all/influencer_dashboard/view/influencer_dashboard_screen.dart';
+import 'package:som_spot/features/influencer_all/influencer_discover/view/influencer_discover_screen.dart';
+import 'package:som_spot/features/influencer_all/influencer_task_screen/view/influencer_task_screen.dart';
+import 'package:som_spot/features/influencer_all/influencer_wallet_screen/view/influencer_wallet_screen.dart';
 import 'package:som_spot/features/listings/view/listing_screen.dart';
 import 'package:som_spot/features/offers/view/offers_screen.dart';
 import 'package:som_spot/features/profile/main_profile/view/profile_screen.dart';
@@ -31,10 +35,10 @@ class NavigationControllerMain extends GetxController {
         ];
       case UserRole.influencer:
         return const [
-          HomeScreen(),
-          SearchScreen(),
-          SavedScreen(), // change the pages
-          AlertsScreen(),
+          InfluencerDashboardScreen(),
+          InfluencerDiscoverScreen(),
+          InfluencerTaskScreen(), // change the pages
+          InfluencerWalletScreen(),
           ProfileScreen(),
         ];
       case UserRole.customer:
@@ -61,9 +65,9 @@ class NavigationControllerMain extends GetxController {
       case UserRole.influencer:
         return [
           Iconsax.element_3,
-          Iconsax.flash,
+          Iconsax.discover,
+          Iconsax.video,
           Iconsax.wallet,
-          Iconsax.notification,
           Iconsax.user,
         ];
       case UserRole.customer:
@@ -89,10 +93,10 @@ class NavigationControllerMain extends GetxController {
         ];
       case UserRole.influencer:
         return [
-          AppStrings.home,
-          AppStrings.search, // change the names
-          AppStrings.saved,
-          AppStrings.alerts,
+          AppStrings.dashboard,
+          AppStrings.discover, // change the names
+          AppStrings.tasks,
+          AppStrings.wallet,
           AppStrings.profile,
         ];
       case UserRole.customer:

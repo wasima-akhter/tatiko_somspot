@@ -133,6 +133,10 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
                             AppRouter.route.goNamed(
                               RoutePath.completedProfileScreen,
                             );
+                          } else if (CommonController.to.isInfluencer) {
+                            AppRouter.route.goNamed(
+                              RoutePath.completedProfileInfluencerScreen,
+                            );
                           } else {
                             AppRouter.route.goNamed(RoutePath.navigationPages);
                           }

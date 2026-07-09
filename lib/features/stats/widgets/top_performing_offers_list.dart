@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
+
+import '../../../share/widgets/network_image/custom_network_image.dart';
 
 class TopPerformingOffersList extends StatelessWidget {
   const TopPerformingOffersList({super.key});
@@ -24,21 +26,24 @@ class TopPerformingOffersList extends StatelessWidget {
         Gap(16.h),
         _buildItem(
           context: context,
-          imagePath: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600&auto=format&fit=crop',
+          imagePath:
+              'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600&auto=format&fit=crop',
           title: '20% Off Family Platter',
           claims: 64,
           percentage: '+18%',
         ),
         _buildItem(
           context: context,
-          imagePath: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=600&auto=format&fit=crop',
+          imagePath:
+              'https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=600&auto=format&fit=crop',
           title: 'Buy 1 Get 1 Free - Fresh...',
           claims: 64,
           percentage: '+12%',
         ),
         _buildItem(
           context: context,
-          imagePath: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600&auto=format&fit=crop',
+          imagePath:
+              'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600&auto=format&fit=crop',
           title: '\$5 Iced Latte & Pastry',
           claims: 64,
           percentage: '+09%',
@@ -72,17 +77,11 @@ class TopPerformingOffersList extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
-            child: Image.network(
-              imagePath,
+            child: CustomNetworkImage(
+              imageUrl: imagePath,
               width: 48.w,
               height: 48.w,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
-                width: 48.w,
-                height: 48.w,
-                color: AppColors.inactiveBackground,
-                child: Icon(Icons.image_not_supported, size: 20.sp, color: AppColors.white),
-              ),
             ),
           ),
           Gap(12.w),

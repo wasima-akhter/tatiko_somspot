@@ -8,10 +8,7 @@ import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/common_controller/common_controller.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
-
-import '../../../utils/enum/app_enum.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -28,17 +25,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  final ValueNotifier<UserRole> _selectedRole = ValueNotifier<UserRole>(
-    UserRole.customer,
-  );
   bool _agreedToTerms = false;
 
   @override
   void initState() {
     super.initState();
     // Initialize common controller state
-
-    CommonController.to.setRole(_selectedRole.value);
   }
 
   @override
@@ -48,7 +40,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
-    _selectedRole.dispose();
     super.dispose();
   }
 
@@ -91,41 +82,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   color: AppColors.subtitleTextColor,
                   height: 1.5,
                 ),
-              ),
-              const Gap(24),
-
-              // ── Role Selection ──
-              Text(
-                AppStrings.selectRole.tr,
-                style: context.titleMedium.copyWith(
-                  color: AppColors.darkTextColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const Gap(12),
-              ValueListenableBuilder<UserRole>(
-                valueListenable: _selectedRole,
-                builder: (context, selectedRole, _) {
-                  return Row(
-                    children: [
-                      _buildTab(
-                        label: AppStrings.customer.tr,
-                        isSelected: selectedRole.isCustomer,
-                        onTap: () => _selectRole(UserRole.customer),
-                      ),
-                      _buildTab(
-                        label: AppStrings.merchant.tr,
-                        isSelected: selectedRole.isMerchandiser,
-                        onTap: () => _selectRole(UserRole.merchandiser),
-                      ),
-                      _buildTab(
-                        label: AppStrings.influencer.tr,
-                        isSelected: selectedRole.isInfluencer,
-                        onTap: () => _selectRole(UserRole.influencer),
-                      ),
-                    ],
-                  );
-                },
               ),
               const Gap(24),
 
@@ -312,44 +268,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   //
-
-  void _selectRole(UserRole role) {
-    _selectedRole.value = role;
-    CommonController.to.setRole(role);
-  }
-
-  Widget _buildTab({
-    required String label,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: isSelected
-                    ? AppColors.primaryColor
-                    : AppColors.linesDarkColor,
-                width: isSelected ? 2 : 1,
-              ),
-            ),
-          ),
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: context.bodyMedium.copyWith(
-              color: isSelected
-                  ? AppColors.primaryColor
-                  : AppColors.subtitleTextColor,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }

@@ -364,4 +364,10 @@ class AppStrings {
   static const String howCustomersReach = "how_customers_reach";
   static const String whatsappOptional = "whatsapp_optional";
   static const String saveContactInfo = "save_contact_info";
+
+  //
+  // Influencer Strings
+  static const String discover = "discover";
+  static const String tasks = "tasks";
+  static const String wallet = "wallet";
 }

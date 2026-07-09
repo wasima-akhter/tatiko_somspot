@@ -5,7 +5,7 @@ import 'package:som_spot/helper/toast/toast_helper.dart';
 
 class ProfileScreenController extends GetxController {
   // User Profile details
-  final userName = "Abdul Karim".obs;
+  final userName = "Jorge Walton".obs;
   final userEmail = "example.mail.com".obs;
   final userPhone = "+252 61 5000000".obs;
   final userAvatar =

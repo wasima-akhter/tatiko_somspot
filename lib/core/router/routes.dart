@@ -22,6 +22,10 @@ import 'package:som_spot/features/home/view/merchant_details_screen.dart';
 import 'package:som_spot/features/home/view/nearby_you_screen.dart';
 import 'package:som_spot/features/home/view/offer_details_screen.dart';
 import 'package:som_spot/features/home/view/top_deals_screen.dart';
+import 'package:som_spot/features/influencer_all/influencer_dashboard/view/influencer_dashboard_screen.dart';
+import 'package:som_spot/features/influencer_all/influencer_discover/view/influencer_discover_screen.dart';
+import 'package:som_spot/features/influencer_all/influencer_task_screen/view/influencer_task_screen.dart';
+import 'package:som_spot/features/influencer_all/influencer_wallet_screen/view/influencer_wallet_screen.dart';
 import 'package:som_spot/features/nav/navigation_page.dart';
 import 'package:som_spot/features/offers/view/edit_offer_screen.dart';
 import 'package:som_spot/features/offers/view/offer_details_screen.dart';
@@ -38,7 +42,9 @@ import 'package:som_spot/features/subscription/subscription_screen.dart';
 import 'package:som_spot/features/wellcome/view/welcome_screen.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
+import '../../features/auth/completed_profile_influencer/view/completed_profile_influencer_screen.dart';
 import '../../features/choose_role/view/choose_role_screen.dart';
+import '../../features/influencer_all/influencer_campaign_details/view/influencer_campaign_details_screen.dart';
 
 class AppRouter {
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -218,6 +224,16 @@ class AppRouter {
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
             child: const CompletedProfileScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.completedProfileInfluencerScreen,
+        path: RoutePath.completedProfileInfluencerScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const CompletedProfileInfluencerScreen(),
             state: state,
           );
         },
@@ -468,6 +484,62 @@ class AppRouter {
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
             child: const AlertsScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      // Influencer ---->
+      GoRoute(
+        name: RoutePath.influencerDashboardScreen,
+        path: RoutePath.influencerDashboardScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const InfluencerDashboardScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.influencerDiscoverScreen,
+        path: RoutePath.influencerDiscoverScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const InfluencerDiscoverScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.influencerTaskScreen,
+        path: RoutePath.influencerTaskScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const InfluencerTaskScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.influencerWalletScreen,
+        path: RoutePath.influencerWalletScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const InfluencerWalletScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      //
+
+      // Individual screens
+      GoRoute(
+        name: RoutePath.influencerCampaignDetailsScreen,
+        path: RoutePath.influencerCampaignDetailsScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const InfluencerCampaignDetailsScreen(),
             state: state,
           );
         },

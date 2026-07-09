@@ -16,6 +16,8 @@ class RoutePath {
   static const String forgetPasswordScreen = 'forgetPasswordScreen';
   static const String resetPasswordScreen = 'resetPasswordScreen';
   static const String completedProfileScreen = 'completedProfileScreen';
+  static const String completedProfileInfluencerScreen =
+      'completedProfileInfluencerScreen';
   static const String applicationSubmittedScreen = 'applicationSubmittedScreen';
   static const String applicationUnderReviewScreen =
       'applicationUnderReviewScreen';
@@ -41,4 +43,16 @@ class RoutePath {
   static const String businessInfoScreen = 'businessInfoScreen';
   static const String subscriptionScreen = 'subscriptionScreen';
   static const String alertScreen = 'alertScreen';
+
+  // Influencer all inside app pages
+
+  // tabs
+  static const String influencerDashboardScreen = 'influencerDashboardScreen';
+  static const String influencerDiscoverScreen = 'influencerDiscoverScreen';
+  static const String influencerTaskScreen = 'influencerTaskScreen';
+  static const String influencerWalletScreen = 'influencerWalletScreen';
+
+  // individuals
+  static const String influencerCampaignDetailsScreen =
+      'influencerCampaignDetailsScreen';
 }

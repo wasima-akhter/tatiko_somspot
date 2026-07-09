@@ -3,13 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:som_spot/core/router/route_path.dart';
+import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/home/model/deal_model.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/core/router/routes.dart';
-import 'package:som_spot/core/router/route_path.dart';
-import 'package:iconsax/iconsax.dart';
+
+import '../../../share/widgets/network_image/custom_network_image.dart';
 
 class ClaimedOfferDetailsScreen extends StatelessWidget {
   final DealModel deal;
@@ -68,22 +70,12 @@ class ClaimedOfferDetailsScreen extends StatelessWidget {
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(16.r),
                         ),
-                        child: Image.network(
-                          'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600&auto=format&fit=crop',
+                        child: CustomNetworkImage(
+                          imageUrl:
+                              'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600&auto=format&fit=crop',
                           height: 200.h,
                           width: double.infinity,
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Container(
-                                height: 200.h,
-                                width: double.infinity,
-                                color: AppColors.inactiveBackground,
-                                child: Icon(
-                                  Icons.image_not_supported,
-                                  color: AppColors.white,
-                                  size: 40.sp,
-                                ),
-                              ),
                         ),
                       ),
                       Positioned(

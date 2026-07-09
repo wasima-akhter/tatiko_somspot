@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:som_spot/core/router/route_path.dart';
+import 'package:som_spot/features/home/model/deal_model.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
-import 'package:som_spot/features/home/model/deal_model.dart';
+
+import '../../../share/widgets/network_image/custom_network_image.dart';
 
 class OfferListCard extends StatelessWidget {
   final String badgeText;
@@ -69,21 +71,11 @@ class OfferListCard extends StatelessWidget {
               ),
               child: Stack(
                 children: [
-                  Image.network(
-                    imagePath,
+                  CustomNetworkImage(
+                    imageUrl: imagePath,
                     width: 100.w,
                     height: 120.h,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      width: 100.w,
-                      height: 120.h,
-                      color: AppColors.inactiveBackground,
-                      child: Icon(
-                        Icons.image_not_supported,
-                        color: AppColors.white,
-                        size: 24.sp,
-                      ),
-                    ),
                   ),
                   Positioned(
                     top: 0,

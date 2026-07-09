@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:som_spot/share/widgets/loading/loading_widget.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final String imageUrl;
@@ -83,13 +83,26 @@ class CustomNetworkImage extends StatelessWidget {
           color: backgroundColor,
           image: DecorationImage(
             image: imageProvider,
-            fit: BoxFit.cover,
+            fit: fit ?? BoxFit.cover,
             colorFilter: colorFilter,
           ),
         ),
         child: child,
       ),
-      placeholder: (context, url) => LoadingWidget(),
+      placeholder: (context, url) => Container(
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: borderRadius,
+          shape: boxShape,
+        ),
+        child: Shimmer.fromColors(
+          baseColor: Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: Container(color: Colors.white),
+        ),
+      ),
       errorWidget: (context, url, error) {
         return errorWidget ??
             Container(

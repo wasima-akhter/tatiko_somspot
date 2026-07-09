@@ -4,6 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
+import '../../../share/widgets/network_image/custom_network_image.dart';
+
 class ListingBusinessCard extends StatelessWidget {
   const ListingBusinessCard({super.key});
 
@@ -30,8 +32,9 @@ class ListingBusinessCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
-                child: Image.network(
-                  'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600&auto=format&fit=crop', // Default cover
+                child: CustomNetworkImage(
+                  imageUrl:
+                      'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600&auto=format&fit=crop', // Default cover
                   height: 140.h,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -82,7 +85,6 @@ class ListingBusinessCard extends StatelessWidget {
             ],
           ),
           Gap(40.h), // Space for the overlapping profile image
-
           // ── Text Details ──
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
