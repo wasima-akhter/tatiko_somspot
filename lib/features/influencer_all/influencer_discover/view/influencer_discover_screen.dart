@@ -1,4 +1,3 @@
-import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -18,9 +17,8 @@ class InfluencerDiscoverScreen extends StatefulWidget {
 }
 
 class _InfluencerDiscoverScreenState extends State<InfluencerDiscoverScreen> {
-  final InfluencerDiscoverController controller = Get.put(
-    InfluencerDiscoverController(),
-  );
+  final InfluencerDiscoverController controller =
+      InfluencerDiscoverController.to;
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +35,7 @@ class _InfluencerDiscoverScreenState extends State<InfluencerDiscoverScreen> {
             SliverPersistentHeader(
               pinned: true,
 
-              delegate: DiscoverTabsDelegate(
-                child: DiscoverCategoryTabs(controller: controller),
-              ),
+              delegate: DiscoverTabsDelegate(child: DiscoverCategoryTabs()),
             ),
             SliverPadding(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
@@ -48,15 +44,13 @@ class _InfluencerDiscoverScreenState extends State<InfluencerDiscoverScreen> {
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final campaign = controller.campaigns[index];
 
-                  return AutoShimmerAnimate(
-                    isLoading: controller.isLoading.value,
+                  // return InfluencerCampaignCard(campaign: campaign);
 
-                    duration: const Duration(milliseconds: 4200),
-
-                    layeredSkeleton: true,
-
-                    child: InfluencerCampaignCard(campaign: campaign),
-                  );
+                  return Obx(() {
+                    return controller.isLoading.value
+                        ? const CampaignCardSkeleton()
+                        : InfluencerCampaignCard(campaign: campaign);
+                  });
                 }, childCount: controller.campaigns.length),
               ),
             ),

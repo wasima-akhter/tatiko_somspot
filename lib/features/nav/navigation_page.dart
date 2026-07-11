@@ -14,12 +14,15 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  final _controller = Get.put(NavigationControllerMain());
+  final _controller = NavigationControllerMain.to;
 
   @override
   void initState() {
     super.initState();
-    _controller.selectedNavIndex.value = widget.index;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.selectedNavIndex.value = widget.index;
+    });
   }
 
   @override

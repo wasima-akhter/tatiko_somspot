@@ -44,14 +44,19 @@ import 'package:som_spot/utils/extension/base_extension.dart';
 
 import '../../features/auth/completed_profile_influencer/view/completed_profile_influencer_screen.dart';
 import '../../features/choose_role/view/choose_role_screen.dart';
+import '../../features/influencer_all/influencer_apply_campaign/view/influencer_apply_campaign_screen.dart';
 import '../../features/influencer_all/influencer_campaign_details/view/influencer_campaign_details_screen.dart';
+import '../../features/influencer_all/influencer_publish_proof/view/influencer_publish_proof_screen.dart';
+import '../../features/influencer_all/influencer_submit_content/view/influencer_submit_content_screen.dart';
+import '../../features/influencer_all/influencer_your_submission/view/influencer_your_submission_screen.dart';
+import '../../features/success/success_screen.dart';
 
 class AppRouter {
   static final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>();
 
   static final GoRouter initRoute = GoRouter(
-    initialLocation: RoutePath.splashScreen.addBasePath,
+    initialLocation: RoutePath.navigationPages.addBasePath,
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     routes: [
@@ -541,6 +546,67 @@ class AppRouter {
           return _buildPageWithAnimation(
             child: const InfluencerCampaignDetailsScreen(),
             state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.influencerApplyCampaignScreen,
+        path: RoutePath.influencerApplyCampaignScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const ApplyCampaignScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.influencerSubmitContentScreen,
+        path: RoutePath.influencerSubmitContentScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const InfluencerSubmitContentScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.influencerYourSubmissionScreen,
+        path: RoutePath.influencerYourSubmissionScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const InfluencerYourSubmissionScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.influencerPublishProofScreen,
+        path: RoutePath.influencerPublishProofScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const InfluencerPublishProofScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      // success -----> screen
+      GoRoute(
+        name: RoutePath.successScreen,
+        path: RoutePath.successScreen.addBasePath,
+        pageBuilder: (context, state) {
+          final args = state.extra as SuccessScreenArgs;
+
+          return _buildPageWithAnimation(
+            state: state,
+            child: SuccessScreen(
+              title: args.title,
+              subtitle: args.subtitle,
+              buttonText: args.buttonText,
+              onButtonTap: args.onButtonTap,
+              autoNavigateAfter: args.autoNavigateAfter,
+              onAutoNavigate: args.onAutoNavigate,
+            ),
           );
         },
       ),

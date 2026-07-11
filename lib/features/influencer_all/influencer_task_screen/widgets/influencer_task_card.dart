@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:som_spot/core/router/routes.dart';
 
+import '../../../../core/router/route_path.dart';
+import '../../../../share/widgets/button/custom_button.dart';
 import '../../../../utils/color/app_colors.dart';
 import '../../../../utils/extension/base_extension.dart';
+import '../modules/influencer_task_status_tag.dart';
+import 'influencer_deliverable_card.dart';
+import 'influencer_merchant_name.dart';
 
 class InfluencerTaskCard extends StatelessWidget {
   final Map<String, dynamic> task;
@@ -37,33 +43,11 @@ class InfluencerTaskCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text(
-                    task["merchant"],
-                    style: context.bodySmall.copyWith(
-                      color: AppColors.grayTextSecondaryColor,
-                    ),
-                  ),
+                  child: InfluencerMerchantName(merchant: task["merchant"]),
                 ),
 
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-
-                  decoration: BoxDecoration(
-                    color: approved
-                        ? Colors.green.withOpacity(.12)
-                        : AppColors.primaryColor.withOpacity(.12),
-
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-
-                  child: Text(
-                    approved ? "Approved" : "ACTIVE",
-                    style: TextStyle(
-                      color: approved ? Colors.green : AppColors.primaryColor,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 10.sp,
-                    ),
-                  ),
+                InfluencerTaskStatusTag(
+                  status: approved ? TaskStatus.approved : TaskStatus.active,
                 ),
               ],
             ),
@@ -75,31 +59,9 @@ class InfluencerTaskCard extends StatelessWidget {
               style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
             ),
 
-            SizedBox(height: 14.h),
+            SizedBox(height: 8.h),
 
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(12.w),
-
-              decoration: BoxDecoration(
-                color: AppColors.softBackgroundColor,
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.photo_library_outlined,
-                    size: 18.sp,
-                    color: AppColors.primaryColor,
-                  ),
-
-                  SizedBox(width: 8.w),
-
-                  Text(task["deliverable"], style: context.bodySmall),
-                ],
-              ),
-            ),
+            InfluencerDeliverableCard(deliverable: task["deliverable"]),
 
             if (approved) ...[
               SizedBox(height: 12.h),
@@ -133,20 +95,24 @@ class InfluencerTaskCard extends StatelessWidget {
             SizedBox(height: 14.h),
 
             SizedBox(
-              width: double.infinity,
               height: 42.h,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: approved
-                      ? Colors.green
-                      : AppColors.primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  elevation: 0,
-                ),
-                onPressed: () {},
-                child: Text(approved ? "Download Content" : "Submit Content"),
+              child: CustomButton(
+                text: approved ? "Download Content" : "Submit Content",
+                icon: approved ? Icons.file_download_outlined : null,
+                backgroundColor: approved
+                    ? Colors.green
+                    : AppColors.primaryColor,
+                onTap: () {
+                  if (!approved) {
+                    AppRouter.route.pushNamed(
+                      RoutePath.influencerSubmitContentScreen,
+                    );
+                  } else {
+                    AppRouter.route.pushNamed(
+                      RoutePath.influencerPublishProofScreen,
+                    );
+                  }
+                },
               ),
             ),
           ],

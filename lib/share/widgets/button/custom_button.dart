@@ -11,6 +11,7 @@ class CustomButton extends StatelessWidget {
   final IconData? icon;
 
   final bool isOutlined;
+  final Color? backgroundColor;
 
   const CustomButton({
     required this.text,
@@ -19,19 +20,25 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.isOutlined = false,
     super.key,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isOutlined
-        ? Colors.transparent
-        : (isDark ? AppColors.white : AppColors.primaryColor);
-    final borderColor =
-        isOutlined ? AppColors.primaryColor.withValues(alpha: 0.5) : Colors.transparent;
+    // final backgroundColor = isOutlined
+    //     ? Colors.transparent
+    //     : (isDark ? AppColors.white : AppColors.primaryColor);
+    final borderColor = isOutlined
+        ? AppColors.primaryColor.withValues(alpha: 0.5)
+        : Colors.transparent;
 
+    final bgColor = isOutlined
+        ? Colors.transparent
+        : (backgroundColor ??
+              (isDark ? AppColors.white : AppColors.primaryColor));
     return Material(
-      color: backgroundColor,
+      color: bgColor,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: isLoading ? null : onTap,
@@ -41,7 +48,9 @@ class CustomButton extends StatelessWidget {
           width: double.infinity,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            border: isOutlined ? Border.all(color: borderColor, width: 1.5) : null,
+            border: isOutlined
+                ? Border.all(color: borderColor, width: 1.5)
+                : null,
             borderRadius: BorderRadius.circular(16),
           ),
           child: buildChild(context),
@@ -52,16 +61,20 @@ class CustomButton extends StatelessWidget {
 
   Widget buildChild(BuildContext context) {
     if (isLoading) {
-      return LoadingWidget(color: isOutlined ? AppColors.primaryColor : AppColors.white);
+      return LoadingWidget(
+        color: isOutlined ? AppColors.primaryColor : AppColors.white,
+      );
     } else {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-            Icon(icon,
-                color: isOutlined ? AppColors.primaryColor : AppColors.white,
-                size: 20),
+            Icon(
+              icon,
+              color: isOutlined ? AppColors.primaryColor : AppColors.white,
+              size: 20,
+            ),
             const SizedBox(width: 8),
           ],
           Text(

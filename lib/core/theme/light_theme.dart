@@ -187,13 +187,13 @@ final ThemeData lightTheme = ThemeData(
       fontFamily: 'Poppins',
       fontSize: 16, // Figma: "Full Name" label = 16px
       fontWeight: FontWeight.w500, // Figma: Medium
-      color: AppColors.labelTextColor, // Figma: #334155
+      color: AppColors.darkTextColor, // Figma: #334155
     ),
     titleSmall: TextStyle(
       fontFamily: 'Poppins',
       fontSize: 14,
       fontWeight: FontWeight.w500,
-      color: AppColors.labelTextColor,
+      color: AppColors.darkTextColor,
     ),
 
     // ── Body: Content, descriptions, subtitles ──

@@ -130,7 +130,7 @@ class InfluencerCampaignCard extends StatelessWidget {
                   height: 38.h,
                   child: ElevatedButton(
                     onPressed: () {
-                      AppRouter.route.goNamed(
+                      AppRouter.route.pushNamed(
                         RoutePath.influencerCampaignDetailsScreen,
                       );
                     },
@@ -206,6 +206,86 @@ class _InfoChip extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CampaignCardSkeleton extends StatelessWidget {
+  const CampaignCardSkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16.h),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: .04),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // image placeholder (no Positioned/Stack needed for a flat skeleton)
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+            child: Container(
+              height: 150.h,
+              width: double.infinity,
+              color: Colors.grey.shade300,
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.all(12.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _bar(width: 80.w, height: 10.h),
+                SizedBox(height: 8.h),
+                _bar(width: 160.w, height: 14.h),
+                SizedBox(height: 12.h),
+                Row(
+                  children: [
+                    _chip(width: 70.w),
+                    SizedBox(width: 8.w),
+                    _chip(width: 70.w),
+                  ],
+                ),
+                SizedBox(height: 12.h),
+                _bar(width: double.infinity, height: 38.h, radius: 10.r),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _bar({required double width, required double height, double? radius}) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade300,
+        borderRadius: BorderRadius.circular(radius ?? 4.r),
+      ),
+    );
+  }
+
+  Widget _chip({required double width}) {
+    return Container(
+      width: width,
+      height: 20.h,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade300,
+        borderRadius: BorderRadius.circular(8.r),
       ),
     );
   }

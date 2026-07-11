@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      AppRouter.route.goNamed(RoutePath.chooseLanguageScreen);
+      AppRouter.route.pushNamed(RoutePath.chooseLanguageScreen);
     });
   }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:som_spot/core/router/route_path.dart';
+import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 
 class ApplyButton extends StatelessWidget {
@@ -22,7 +24,11 @@ class ApplyButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(14.r),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              AppRouter.route.pushNamed(
+                RoutePath.influencerApplyCampaignScreen,
+              );
+            },
             child: Text(
               "Apply Now",
               style: TextStyle(

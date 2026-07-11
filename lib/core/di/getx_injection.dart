@@ -16,6 +16,8 @@ import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../features/choose_role/controller/choose_role_controller.dart';
 import '../../features/influencer_all/influencer_discover/controller/influencer_discover_controller.dart';
+import '../../features/influencer_all/influencer_task_screen/controller/influencer_task_controller.dart';
+import '../../features/nav/controller/navigation_controller.dart';
 
 void initGetx() {
   // Global & Common Controllers
@@ -23,6 +25,8 @@ void initGetx() {
   Get.lazyPut(() => AuthController(), fenix: true);
   Get.lazyPut(() => OnboardingController(), fenix: true);
   Get.lazyPut(() => CommonController(), fenix: true);
+
+  Get.put(NavigationControllerMain(), permanent: true);
 
   // Home Feature Controllers
   Get.lazyPut(() => HomeController(), fenix: true);
@@ -40,4 +44,5 @@ void initGetx() {
   // influencer
   Get.lazyPut(() => ChooseRoleController(), fenix: true);
   Get.lazyPut(() => InfluencerDiscoverController(), fenix: true);
+  Get.lazyPut(() => InfluencerTaskController(), fenix: true);
 }

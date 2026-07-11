@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 class InfluencerDiscoverController extends GetxController {
+  static InfluencerDiscoverController get to => Get.find();
   final RxBool isLoading = true.obs;
 
   final RxInt selectedTab = 0.obs;

@@ -6,12 +6,11 @@ import 'package:som_spot/utils/color/app_colors.dart';
 import '../controller/influencer_discover_controller.dart';
 
 class DiscoverCategoryTabs extends StatelessWidget {
-  final InfluencerDiscoverController controller;
-
-  const DiscoverCategoryTabs({super.key, required this.controller});
+  const DiscoverCategoryTabs({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = InfluencerDiscoverController.to;
     return Obx(
       () => Container(
         height: 70.h,

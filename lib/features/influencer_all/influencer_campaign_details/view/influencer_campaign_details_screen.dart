@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/features/influencer_all/influencer_campaign_details/widgets/apply_button.dart';
-import 'package:som_spot/features/influencer_all/influencer_campaign_details/widgets/campaign_banner.dart';
-import 'package:som_spot/features/influencer_all/influencer_campaign_details/widgets/campaign_info_cards.dart';
-import 'package:som_spot/features/influencer_all/influencer_campaign_details/widgets/deliverables_section.dart';
-import 'package:som_spot/features/influencer_all/influencer_campaign_details/widgets/requirements_section.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
 
+import '../../../../utils/color/app_colors.dart';
 import '../../../../utils/extension/base_extension.dart';
+import '../widgets/apply_button.dart';
+import '../widgets/campaign_banner.dart';
+import '../widgets/campaign_info_cards.dart';
+import '../widgets/deliverables_section.dart';
+import '../widgets/requirements_section.dart';
 
 class InfluencerCampaignDetailsScreen extends StatelessWidget {
   const InfluencerCampaignDetailsScreen({super.key});
@@ -25,7 +24,7 @@ class InfluencerCampaignDetailsScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Iconsax.arrow_left_2, size: 22.sp),
           onPressed: () {
-            Get.back();
+            Navigator.of(context).pop();
           },
         ),
 

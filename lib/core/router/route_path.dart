@@ -55,4 +55,16 @@ class RoutePath {
   // individuals
   static const String influencerCampaignDetailsScreen =
       'influencerCampaignDetailsScreen';
+  static const String influencerApplyCampaignScreen =
+      'influencerApplyCampaignScreen';
+
+  static const String influencerSubmitContentScreen =
+      'influencerSubmitContentScreen';
+  static const String influencerYourSubmissionScreen =
+      'influencerYourSubmissionScreen';
+  static const String influencerPublishProofScreen =
+      'influencerPublishProofScreen';
+
+  // success
+  static const String successScreen = 'successScreen';
 }
