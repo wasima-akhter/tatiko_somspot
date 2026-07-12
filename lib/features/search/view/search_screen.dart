@@ -12,9 +12,8 @@ class SearchScreen extends GetView<SearchScreenController> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

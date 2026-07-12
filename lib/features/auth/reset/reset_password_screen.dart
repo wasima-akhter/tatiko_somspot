@@ -31,7 +31,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -83,7 +83,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           title: AppStrings.password.tr,
                           hintText: '**********',
                           isPassword: true,
-                          prefixIcon: const Icon(Icons.lock_outline, size: 20, color: AppColors.hintTextColor),
+                          prefixIcon: const Icon(
+                            Icons.lock_outline,
+                            size: 20,
+                            color: AppColors.hintTextColor,
+                          ),
                         ),
                         const Gap(16),
 
@@ -92,7 +96,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           title: AppStrings.confirmPassword.tr,
                           hintText: '**********',
                           isPassword: true,
-                          prefixIcon: const Icon(Icons.lock_outline, size: 20, color: AppColors.hintTextColor),
+                          prefixIcon: const Icon(
+                            Icons.lock_outline,
+                            size: 20,
+                            color: AppColors.hintTextColor,
+                          ),
                         ),
                         const Gap(40),
 

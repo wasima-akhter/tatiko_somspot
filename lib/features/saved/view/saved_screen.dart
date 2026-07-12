@@ -1,10 +1,10 @@
+import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/features/saved/controller/saved_controller.dart';
-import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
@@ -15,9 +15,8 @@ class SavedScreen extends GetView<SavedScreenController> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: Column(
           children: [
@@ -74,8 +73,9 @@ class SavedScreen extends GetView<SavedScreenController> {
                                   boxShadow: selectedIndex == 0
                                       ? [
                                           BoxShadow(
-                                            color: Colors.black
-                                                .withValues(alpha: 0.04),
+                                            color: Colors.black.withValues(
+                                              alpha: 0.04,
+                                            ),
                                             blurRadius: 4.r,
                                             offset: Offset(0, 2.h),
                                           ),
@@ -110,8 +110,9 @@ class SavedScreen extends GetView<SavedScreenController> {
                                   boxShadow: selectedIndex == 1
                                       ? [
                                           BoxShadow(
-                                            color: Colors.black
-                                                .withValues(alpha: 0.04),
+                                            color: Colors.black.withValues(
+                                              alpha: 0.04,
+                                            ),
                                             blurRadius: 4.r,
                                             offset: Offset(0, 2.h),
                                           ),
@@ -167,7 +168,9 @@ class SavedScreen extends GetView<SavedScreenController> {
   }
 
   Widget _buildBusinessesList(
-      SavedScreenController controller, BuildContext context) {
+    SavedScreenController controller,
+    BuildContext context,
+  ) {
     return ListView.separated(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       itemCount: controller.rxSavedBusinesses.length,
@@ -290,7 +293,9 @@ class SavedScreen extends GetView<SavedScreenController> {
                             ),
                             Gap(6.w),
                             Text(
-                              business.isOpen ? AppStrings.openNow.tr : AppStrings.closed.tr,
+                              business.isOpen
+                                  ? AppStrings.openNow.tr
+                                  : AppStrings.closed.tr,
                               style: context.bodyMedium.copyWith(
                                 color: business.isOpen
                                     ? AppColors.success
@@ -314,7 +319,9 @@ class SavedScreen extends GetView<SavedScreenController> {
   }
 
   Widget _buildOffersList(
-      SavedScreenController controller, BuildContext context) {
+    SavedScreenController controller,
+    BuildContext context,
+  ) {
     return ListView.separated(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       itemCount: controller.rxSavedOffers.length,
@@ -439,8 +446,9 @@ class SavedScreen extends GetView<SavedScreenController> {
                               decoration: BoxDecoration(
                                 color: claimed
                                     ? AppColors.success.withValues(alpha: 0.1)
-                                    : AppColors.primaryColor
-                                        .withValues(alpha: 0.12),
+                                    : AppColors.primaryColor.withValues(
+                                        alpha: 0.12,
+                                      ),
                                 borderRadius: BorderRadius.circular(16.r),
                                 border: Border.all(
                                   color: claimed
@@ -454,7 +462,9 @@ class SavedScreen extends GetView<SavedScreenController> {
                                 vertical: 6.h,
                               ),
                               child: Text(
-                                claimed ? AppStrings.claimed.tr : AppStrings.claim.tr,
+                                claimed
+                                    ? AppStrings.claimed.tr
+                                    : AppStrings.claim.tr,
                                 style: context.bodyMedium.copyWith(
                                   color: claimed
                                       ? AppColors.success

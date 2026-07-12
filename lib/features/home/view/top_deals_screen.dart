@@ -18,7 +18,7 @@ class TopDealsScreen extends StatelessWidget {
     final controller = Get.find<HomeDealsController>();
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Text(
@@ -29,7 +29,10 @@ class TopDealsScreen extends StatelessWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.darkTextColor),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: AppColors.darkTextColor,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -37,9 +40,7 @@ class TopDealsScreen extends StatelessWidget {
         child: Obx(() {
           if (controller.isLoading.value && controller.topDeals.isEmpty) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              ),
+              child: CircularProgressIndicator(color: AppColors.primaryColor),
             );
           }
 
@@ -127,7 +128,8 @@ class TopDealsScreen extends StatelessWidget {
                                       vertical: 2.h,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: AppColors.orangeSecondaryAccentColor,
+                                      color:
+                                          AppColors.orangeSecondaryAccentColor,
                                       borderRadius: BorderRadius.circular(4.r),
                                     ),
                                     child: Text(
@@ -183,7 +185,9 @@ class TopDealsScreen extends StatelessWidget {
                                           color: AppColors.warning.withValues(
                                             alpha: 0.12,
                                           ),
-                                          borderRadius: BorderRadius.circular(6.r),
+                                          borderRadius: BorderRadius.circular(
+                                            6.r,
+                                          ),
                                         ),
                                         child: Row(
                                           children: [
@@ -212,10 +216,11 @@ class TopDealsScreen extends StatelessWidget {
                                           vertical: 6.h,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: AppColors.primaryColor.withValues(
-                                            alpha: 0.12,
+                                          color: AppColors.primaryColor
+                                              .withValues(alpha: 0.12),
+                                          borderRadius: BorderRadius.circular(
+                                            16.r,
                                           ),
-                                          borderRadius: BorderRadius.circular(16.r),
                                         ),
                                         child: Text(
                                           AppStrings.claim.tr,

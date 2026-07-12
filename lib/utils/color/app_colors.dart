@@ -13,6 +13,7 @@ class AppColors {
   static const Color primaryColor = Color(0xFF4DAEFF);
   static const Color secondPrimaryColor = Color(0xFF5E5656);
   static const Color backgroundColor = Color(0xFFFCFCFC);
+  static const Color backgroundColorNew = Color(0xFFEDF7FF);
   static const Color navBarColor = Color(0xFFeaeff3);
   static const Color backgroundsLinesColor = Color(0xFFEBEBEE);
   static const Color orangeSecondaryAccentColor = Color(0xFFFDBA45);

@@ -15,7 +15,7 @@ class AlertsScreen extends GetView<AlertsScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
 
       appBar: AppBar(
         elevation: 0,

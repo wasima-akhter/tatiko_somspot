@@ -5,17 +5,16 @@ import 'package:get/get.dart';
 import 'package:som_spot/core/custom_assets/assets.gen.dart';
 import 'package:som_spot/features/home/controller/merchant_details_controller.dart';
 import 'package:som_spot/features/home/model/merchant_model.dart';
-import 'package:som_spot/helper/toast/toast_helper.dart';
-import 'package:som_spot/helper/launcher/launcher_helper.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
-
 import 'package:som_spot/features/home/widgets/merchant_details/merchant_about_tab.dart';
 import 'package:som_spot/features/home/widgets/merchant_details/merchant_header_backdrop.dart';
 import 'package:som_spot/features/home/widgets/merchant_details/merchant_offers_tab.dart';
 import 'package:som_spot/features/home/widgets/merchant_details/merchant_reviews_tab.dart';
 import 'package:som_spot/features/home/widgets/merchant_details/merchant_sticky_footer.dart';
+import 'package:som_spot/helper/launcher/launcher_helper.dart';
+import 'package:som_spot/helper/toast/toast_helper.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
+import 'package:som_spot/utils/color/app_colors.dart';
+import 'package:som_spot/utils/extension/base_extension.dart';
 
 class MerchantDetailsScreen extends StatelessWidget {
   final MerchantModel merchant;
@@ -28,7 +27,7 @@ class MerchantDetailsScreen extends StatelessWidget {
     final controller = Get.put(MerchantDetailsController());
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       body: Stack(
         children: [
           // Scrollable Content

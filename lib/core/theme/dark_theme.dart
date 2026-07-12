@@ -5,10 +5,10 @@ import 'package:percel_delivery_app/utils/color/app_colors.dart';
 
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
-  scaffoldBackgroundColor: AppColors.backgroundColor,
+  scaffoldbackgroundColor: AppColors.backgroundColorNew,
   fontFamily: GoogleFonts.nunito().fontFamily,
   appBarTheme: const AppBarTheme(
-    backgroundColor: AppColors.backgroundColor,
+    backgroundColor: AppColors.backgroundColorNew,
     elevation: 0,
     centerTitle: true,
     iconTheme: IconThemeData(color: AppColors.brandHoverColor),

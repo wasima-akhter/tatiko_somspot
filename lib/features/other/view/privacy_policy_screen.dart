@@ -12,7 +12,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
@@ -49,7 +49,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
                       ),
                     ],
                     border: Border.all(
-                      color: AppColors.backgroundsLinesColor.withValues(alpha: 0.8),
+                      color: AppColors.backgroundsLinesColor.withValues(
+                        alpha: 0.8,
+                      ),
                       width: 1,
                     ),
                   ),
@@ -111,7 +113,8 @@ class PrivacyPolicyScreen extends StatelessWidget {
                             ),
                             children: [
                               const TextSpan(
-                                text: "For questions about how we handle data, email ",
+                                text:
+                                    "For questions about how we handle data, email ",
                               ),
                               TextSpan(
                                 text: "privacy@somspot.so",

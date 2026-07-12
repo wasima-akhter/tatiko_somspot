@@ -7,8 +7,8 @@ import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/home/controller/home_nearby_controller.dart';
 import 'package:som_spot/features/home/model/deal_model.dart';
 import 'package:som_spot/features/home/model/merchant_model.dart';
-import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/share/widgets/dialog/custom_dialog.dart';
+import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
@@ -21,7 +21,7 @@ class OfferDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Text(
@@ -207,7 +207,9 @@ class OfferDetailsScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16.r),
-                        border: Border.all(color: AppColors.backgroundsLinesColor),
+                        border: Border.all(
+                          color: AppColors.backgroundsLinesColor,
+                        ),
                       ),
                       child: Text(
                         AppStrings.termsText.tr,

@@ -8,7 +8,7 @@ import 'package:som_spot/utils/color/app_colors.dart';
 final ThemeData lightTheme = ThemeData(
   useMaterial3: true,
   brightness: Brightness.light,
-  scaffoldBackgroundColor: AppColors.backgroundColor,
+  scaffoldbackgroundColor: AppColors.backgroundColorNew,
   fontFamily: 'Poppins',
 
   // Semantically mapping branding colors to the standard ColorScheme
@@ -23,7 +23,7 @@ final ThemeData lightTheme = ThemeData(
   ),
 
   appBarTheme: const AppBarTheme(
-    backgroundColor: AppColors.backgroundColor,
+    backgroundColor: AppColors.backgroundColorNew,
     elevation: 0,
     centerTitle: true,
     titleTextStyle: TextStyle(

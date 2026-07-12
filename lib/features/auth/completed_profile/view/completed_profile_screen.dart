@@ -28,7 +28,7 @@ class _CompletedProfileScreenState extends State<CompletedProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: Column(
           children: [

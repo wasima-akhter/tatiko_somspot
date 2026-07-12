@@ -18,7 +18,7 @@ class NearbyYouScreen extends StatelessWidget {
     final controller = Get.find<HomeNearbyController>();
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Text(
@@ -29,7 +29,10 @@ class NearbyYouScreen extends StatelessWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.darkTextColor),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: AppColors.darkTextColor,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -37,9 +40,7 @@ class NearbyYouScreen extends StatelessWidget {
         child: Obx(() {
           if (controller.isLoading.value && controller.merchants.isEmpty) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              ),
+              child: CircularProgressIndicator(color: AppColors.primaryColor),
             );
           }
 
@@ -129,7 +130,8 @@ class NearbyYouScreen extends StatelessWidget {
                                     children: [
                                       Icon(
                                         Icons.star,
-                                        color: AppColors.orangeSecondaryAccentColor,
+                                        color: AppColors
+                                            .orangeSecondaryAccentColor,
                                         size: 14.sp,
                                       ),
                                       Gap(4.w),

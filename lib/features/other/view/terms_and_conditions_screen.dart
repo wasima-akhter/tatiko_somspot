@@ -12,7 +12,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
@@ -49,7 +49,9 @@ class TermsAndConditionsScreen extends StatelessWidget {
                       ),
                     ],
                     border: Border.all(
-                      color: AppColors.backgroundsLinesColor.withValues(alpha: 0.8),
+                      color: AppColors.backgroundsLinesColor.withValues(
+                        alpha: 0.8,
+                      ),
                       width: 1,
                     ),
                   ),

@@ -19,7 +19,7 @@ class CompletedProfileInfluencerScreen extends StatelessWidget {
     final controller = Get.put(CompletedProfileInfluencerController());
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
 
       body: SafeArea(
         child: Padding(
