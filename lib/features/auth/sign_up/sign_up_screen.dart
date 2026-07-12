@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
+import 'package:som_spot/features/auth/controller/auth_controller.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
@@ -45,6 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = AuthController.to;
     return Scaffold(
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
@@ -218,9 +220,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomButton(
                           text: AppStrings.createAccount.tr,
                           onTap: () {
-                            AppRouter.route.pushNamed(
-                              RoutePath.activeOtpScreen,
-                              extra: _emailController.text,
+                            if (!_formKey.currentState!.validate()) {
+                              return;
+                            }
+
+                            if (!_agreedToTerms) {
+                              Get.snackbar(
+                                "Terms Required",
+                                "Please accept terms and privacy policy",
+                              );
+
+                              return;
+                            }
+
+                            controller.register(
+                              name: _nameController.text.trim(),
+                              email: _emailController.text.trim(),
+                              password: _passwordController.text,
+                              confirmPassword: _confirmPasswordController.text,
                             );
                           },
                         ),

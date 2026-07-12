@@ -8,19 +8,7 @@ import 'package:som_spot/utils/color/app_colors.dart';
 final ThemeData lightTheme = ThemeData(
   useMaterial3: true,
   brightness: Brightness.light,
-  scaffoldbackgroundColor: AppColors.backgroundColorNew,
   fontFamily: 'Poppins',
-
-  // Semantically mapping branding colors to the standard ColorScheme
-  colorScheme: const ColorScheme.light(
-    primary: AppColors.primaryColor,
-    secondary: AppColors.secondPrimaryColor,
-    error: AppColors.redColor,
-    surface: AppColors.backgroundColor,
-    onPrimary: AppColors.white,
-    onSecondary: AppColors.white,
-    onSurface: AppColors.blackMainTextColor,
-  ),
 
   appBarTheme: const AppBarTheme(
     backgroundColor: AppColors.backgroundColorNew,
@@ -236,4 +224,13 @@ final ThemeData lightTheme = ThemeData(
       color: AppColors.hintTextColor,
     ),
   ),
+  colorScheme: const ColorScheme.light(
+    primary: AppColors.primaryColor,
+    secondary: AppColors.secondPrimaryColor,
+    error: AppColors.redColor,
+    surface: AppColors.backgroundColor,
+    onPrimary: AppColors.white,
+    onSecondary: AppColors.white,
+    onSurface: AppColors.blackMainTextColor,
+  ).copyWith(surface: AppColors.backgroundColorNew),
 );

@@ -72,6 +72,7 @@ dependencies:
   auto_shimmer_animate: ^0.2.1
   fl_chart: ^1.2.0
   flutter_rating_bar: ^4.0.1
+  get_storage: ^2.1.1
 
 dev_dependencies:
   build_runner: ^2.4.15

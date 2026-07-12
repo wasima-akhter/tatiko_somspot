@@ -58,7 +58,7 @@ class AppRouter {
       GlobalKey<NavigatorState>();
 
   static final GoRouter initRoute = GoRouter(
-    initialLocation: RoutePath.navigationPages.addBasePath,
+    initialLocation: RoutePath.splashScreen.addBasePath,
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     routes: [

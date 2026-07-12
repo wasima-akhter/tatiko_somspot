@@ -14,6 +14,7 @@ import 'package:som_spot/features/search/controller/search_controller.dart';
 import 'package:som_spot/share/controller/language_controller.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
+import '../../features/auth/service/auth_service.dart';
 import '../../features/choose_role/controller/choose_role_controller.dart';
 import '../../features/influencer_all/influencer_discover/controller/influencer_discover_controller.dart';
 import '../../features/influencer_all/influencer_my_campaigns/controller/influencer_my_campaigns_controller.dart';
@@ -25,7 +26,7 @@ import '../../features/other/controller/other_controller.dart';
 void initGetx() {
   // Global & Common Controllers
   Get.lazyPut(() => LanguageController(), fenix: true);
-  Get.lazyPut(() => AuthController(), fenix: true);
+  Get.lazyPut(() => AuthController(Get.find<AuthService>()), fenix: true);
   Get.lazyPut(() => OnboardingController(), fenix: true);
   Get.lazyPut(() => CommonController(), fenix: true);
 
