@@ -6,9 +6,12 @@ import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
+import 'package:som_spot/share/widgets/custom_buttom_sheet/custom_buttom_sheet.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
+
+import '../../../core/custom_assets/assets.gen.dart';
 
 class AboutSomSpotScreen extends StatelessWidget {
   const AboutSomSpotScreen({super.key});
@@ -17,17 +20,22 @@ class AboutSomSpotScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.softBackgroundColor,
         elevation: 0,
-        leadingWidth: 64.w,
+
+        leading: IconButton(
+          icon: Icon(Iconsax.arrow_left_2, size: 18.sp),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+
         title: Text(
           AppStrings.aboutSomSpot.tr,
-          style: context.titleMedium.copyWith(
-            fontWeight: FontWeight.bold,
-            fontSize: 18.sp,
-            color: AppColors.darkTextColor,
-          ),
+          style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
         ),
-        centerTitle: true,
+
+        centerTitle: false,
       ),
       body: SafeArea(
         child: Column(
@@ -43,46 +51,8 @@ class AboutSomSpotScreen extends StatelessWidget {
                     Center(
                       child: Column(
                         children: [
-                          Container(
-                            width: 80.w,
-                            height: 80.h,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  AppColors.primaryColor,
-                                  AppColors.primaryColor.withValues(alpha: 0.8),
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              borderRadius: BorderRadius.circular(20.r),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.primaryColor.withValues(
-                                    alpha: 0.25,
-                                  ),
-                                  blurRadius: 15.r,
-                                  offset: Offset(0, 6.h),
-                                ),
-                              ],
-                            ),
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Iconsax.radar,
-                              color: Colors.white,
-                              size: 40.sp,
-                            ),
-                          ),
-                          Gap(14.h),
-                          Text(
-                            "SomSpot",
-                            style: context.titleLarge.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22.sp,
-                              color: AppColors.darkTextColor,
-                              letterSpacing: 0.5.w,
-                            ),
-                          ),
+                          Assets.images.splashlogo.image(),
+
                           Gap(4.h),
                           Text(
                             "Version 1.0.0",
@@ -117,8 +87,8 @@ class AboutSomSpotScreen extends StatelessWidget {
                         ],
                       ),
                       child: Text(
-                        "SomSpot is Somalia's leading local business discovery and promotional platform. We connect users with top-rated groceries, pharmacies, and restaurants around them. Enjoy exclusive discounts, claim deals directly in-app, and explore Mogadishu's finest spots with ease.",
-                        textAlign: TextAlign.center,
+                        "SomSpot helps you discover the best local\nrestaurants, groceries, pharmacies, and\nsupermarkets across Somalia — and claim\nexclusive deals from merchants near you.",
+                        textAlign: TextAlign.start,
                         style: context.bodyMedium.copyWith(
                           color: AppColors.subtitleTextColor,
                           fontSize: 13.sp,
@@ -129,6 +99,7 @@ class AboutSomSpotScreen extends StatelessWidget {
                     Gap(24.h),
 
                     // Navigation Links List Card
+                    /*
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -181,6 +152,64 @@ class AboutSomSpotScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                 */
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.r),
+                        border: Border.all(
+                          color: AppColors.backgroundsLinesColor.withValues(
+                            alpha: 0.5,
+                          ),
+                        ),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          _buildLinkTile(
+                            context: context,
+                            title: AppStrings.privacyPolicy.tr,
+                            onTap: () {
+                              AppToast.info(
+                                context: context,
+                                message: AppStrings.navigatingToPrivacy.tr,
+                              );
+
+                              AppRouter.route.pushNamed(
+                                RoutePath.privacyPolicyScreen,
+                              );
+                            },
+                          ),
+
+                          _buildDivider(),
+
+                          _buildLinkTile(
+                            context: context,
+                            title: AppStrings.termsConditions.tr,
+                            onTap: () {
+                              AppToast.info(
+                                context: context,
+                                message: AppStrings.navigatingToTerms.tr,
+                              );
+
+                              AppRouter.route.pushNamed(
+                                RoutePath.termsAndConditionsScreen,
+                              );
+                            },
+                          ),
+
+                          _buildDivider(),
+
+                          _buildLinkTile(
+                            context: context,
+                            title: "Rate the App",
+                            onTap: () {
+                              showRatingBottomSheet(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -208,43 +237,35 @@ class AboutSomSpotScreen extends StatelessWidget {
 
   Widget _buildLinkTile({
     required BuildContext context,
-    required IconData icon,
     required String title,
     required VoidCallback onTap,
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16.r),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-        child: Row(
-          children: [
-            Container(
-              width: 32.w,
-              height: 32.h,
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              child: Icon(icon, color: AppColors.primaryColor, size: 16.sp),
-            ),
-            Gap(12.w),
-            Expanded(
-              child: Text(
-                title,
-                style: context.bodyLarge.copyWith(
-                  color: AppColors.darkTextColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14.sp,
+      child: SizedBox(
+        height: 44.h,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  title,
+                  style: context.bodyMedium.copyWith(
+                    color: AppColors.darkTextColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 13.sp,
+                  ),
                 ),
               ),
-            ),
-            Icon(
-              Iconsax.arrow_right_3,
-              color: AppColors.hintTextColor,
-              size: 16.sp,
-            ),
-          ],
+
+              Icon(
+                Iconsax.arrow_right_3,
+                size: 14.sp,
+                color: const Color(0xff9AA8B8),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -252,11 +273,9 @@ class AboutSomSpotScreen extends StatelessWidget {
 
   Widget _buildDivider() {
     return Divider(
-      color: AppColors.backgroundsLinesColor.withValues(alpha: 0.5),
-      height: 1.h,
-      thickness: 1.h,
-      indent: 16.w,
-      endIndent: 16.w,
+      height: 1,
+      thickness: 1,
+      color: AppColors.backgroundsLinesColor.withValues(alpha: 0.4),
     );
   }
 }

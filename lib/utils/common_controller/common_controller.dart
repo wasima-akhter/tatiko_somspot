@@ -2,11 +2,6 @@ import 'package:get/get.dart';
 
 import '../enum/app_enum.dart';
 
-// class CommonController extends GetxController {
-//   static CommonController get to => Get.find();
-//   RxBool isSeller = false.obs;
-// }
-
 class CommonController extends GetxController {
   static CommonController get to => Get.find();
 

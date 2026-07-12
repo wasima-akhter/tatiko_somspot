@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:som_spot/core/router/route_path.dart';
+import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 
 class DiscoverHeader extends StatelessWidget {
@@ -30,32 +32,38 @@ class DiscoverHeader extends StatelessWidget {
 
           SizedBox(height: 18.h),
 
-          Container(
-            height: 48.h,
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              AppRouter.route.pushNamed(RoutePath.influencerSearchScreen);
+            },
+            child: Container(
+              height: 48.h,
 
-            padding: EdgeInsets.symmetric(horizontal: 15.w),
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
 
-            decoration: BoxDecoration(
-              color: Colors.white,
+              decoration: BoxDecoration(
+                color: Colors.white,
 
-              borderRadius: BorderRadius.circular(14.r),
-            ),
+                borderRadius: BorderRadius.circular(14.r),
+              ),
 
-            child: Row(
-              children: [
-                Icon(Icons.search, size: 20.sp, color: Colors.grey),
+              child: Row(
+                children: [
+                  Icon(Icons.search, size: 20.sp, color: Colors.grey),
 
-                SizedBox(width: 10.w),
+                  SizedBox(width: 10.w),
 
-                Expanded(
-                  child: Text(
-                    "Search for restaurants, groceries...",
-                    style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+                  Expanded(
+                    child: Text(
+                      "Search for restaurants, groceries...",
+                      style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+                    ),
                   ),
-                ),
 
-                Icon(Icons.tune, size: 20.sp, color: AppColors.primaryColor),
-              ],
+                  Icon(Icons.tune, size: 20.sp, color: AppColors.primaryColor),
+                ],
+              ),
             ),
           ),
         ],

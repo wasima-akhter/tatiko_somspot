@@ -44,8 +44,6 @@ class _InfluencerDiscoverScreenState extends State<InfluencerDiscoverScreen> {
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final campaign = controller.campaigns[index];
 
-                  // return InfluencerCampaignCard(campaign: campaign);
-
                   return Obx(() {
                     return controller.isLoading.value
                         ? const CampaignCardSkeleton()

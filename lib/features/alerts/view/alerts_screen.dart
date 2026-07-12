@@ -1,9 +1,9 @@
+import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:som_spot/features/alerts/controller/alerts_controller.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
@@ -16,20 +16,20 @@ class AlertsScreen extends GetView<AlertsScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        centerTitle: true,
 
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: AppColors.softBackgroundColor,
+        leading: IconButton(
+          icon: Icon(Iconsax.arrow_left_2, size: 18.sp),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text(
           AppStrings.notifications.tr,
-          style: context.titleLarge.copyWith(
-            color: AppColors.darkTextColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 20.sp,
-          ),
+          style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
         ),
+        centerTitle: false,
+
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 16.w),
@@ -38,10 +38,9 @@ class AlertsScreen extends GetView<AlertsScreenController> {
                 onTap: () => controller.markAllAsRead(),
                 child: Text(
                   AppStrings.markAllRead.tr,
-                  style: context.bodyMedium.copyWith(
+                  style: context.titleSmall.copyWith(
                     color: AppColors.primaryColor,
                     fontWeight: FontWeight.w600,
-                    fontSize: 14.sp,
                   ),
                 ),
               ),

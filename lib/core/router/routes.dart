@@ -25,7 +25,6 @@ import 'package:som_spot/features/home/view/top_deals_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/view/influencer_dashboard_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_discover/view/influencer_discover_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_task_screen/view/influencer_task_screen.dart';
-import 'package:som_spot/features/influencer_all/influencer_wallet_screen/view/influencer_wallet_screen.dart';
 import 'package:som_spot/features/nav/navigation_page.dart';
 import 'package:som_spot/features/offers/view/edit_offer_screen.dart';
 import 'package:som_spot/features/offers/view/offer_details_screen.dart';
@@ -46,8 +45,11 @@ import '../../features/auth/completed_profile_influencer/view/completed_profile_
 import '../../features/choose_role/view/choose_role_screen.dart';
 import '../../features/influencer_all/influencer_apply_campaign/view/influencer_apply_campaign_screen.dart';
 import '../../features/influencer_all/influencer_campaign_details/view/influencer_campaign_details_screen.dart';
+import '../../features/influencer_all/influencer_my_campaigns/view/influencer_my_campaigns_screen.dart';
 import '../../features/influencer_all/influencer_publish_proof/view/influencer_publish_proof_screen.dart';
+import '../../features/influencer_all/influencer_search/view/influencer_search_screen.dart';
 import '../../features/influencer_all/influencer_submit_content/view/influencer_submit_content_screen.dart';
+import '../../features/influencer_all/influencer_wallet/view/influencer_wallet_screen.dart';
 import '../../features/influencer_all/influencer_your_submission/view/influencer_your_submission_screen.dart';
 import '../../features/success/success_screen.dart';
 
@@ -585,6 +587,26 @@ class AppRouter {
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
             child: const InfluencerPublishProofScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.influencerSearchScreen,
+        path: RoutePath.influencerSearchScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const InfluencerSearchScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.influencerMyCampaigns,
+        path: RoutePath.influencerMyCampaigns.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: InfluencerMyCampaignsScreen(),
             state: state,
           );
         },

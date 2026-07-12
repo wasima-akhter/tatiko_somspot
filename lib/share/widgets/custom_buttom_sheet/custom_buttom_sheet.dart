@@ -9,11 +9,14 @@ import 'package:som_spot/helper/launcher/launcher_helper.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 
-Widget makeDismissable(BuildContext context, {required Widget child}) => GestureDetector(
-  behavior: HitTestBehavior.opaque,
-  onTap: () => Navigator.of(context).pop(),
-  child: GestureDetector(onTap: () {}, child: child),
-);
+import 'widgets/app_rating_bottom_sheet.dart';
+
+Widget makeDismissable(BuildContext context, {required Widget child}) =>
+    GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => Navigator.of(context).pop(),
+      child: GestureDetector(onTap: () {}, child: child),
+    );
 
 void showYesNoModal(
   BuildContext context, {
@@ -34,6 +37,16 @@ void showYesNoModal(
         onConfirm: onConfirm,
       );
     },
+  );
+}
+
+//
+void showRatingBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: Colors.transparent,
+    isScrollControlled: true,
+    builder: (_) => const RatingBottomSheet(),
   );
 }
 // ---------------------------------------------
@@ -151,7 +164,9 @@ class DirectionsBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final primaryTextColor = isDarkMode ? AppColors.white : AppColors.blackMainTextColor;
+    final primaryTextColor = isDarkMode
+        ? AppColors.white
+        : AppColors.blackMainTextColor;
 
     return Container(
       decoration: BoxDecoration(
@@ -212,16 +227,16 @@ class DirectionsBottomSheet extends StatelessWidget {
                 width: width,
                 height: height,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF0F172A), // Slate 900 background for contrast
+                  color: const Color(
+                    0xFF0F172A,
+                  ), // Slate 900 background for contrast
                   borderRadius: BorderRadius.circular(16.r),
                 ),
                 child: Stack(
                   children: [
                     // Roads & Route
                     Positioned.fill(
-                      child: CustomPaint(
-                        painter: MockMapPainter(),
-                      ),
+                      child: CustomPaint(painter: MockMapPainter()),
                     ),
                     // Start Node
                     Positioned(
@@ -259,7 +274,10 @@ class DirectionsBottomSheet extends StatelessWidget {
                       left: 12.w,
                       top: 12.h,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 6.h,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10.r),
@@ -273,7 +291,11 @@ class DirectionsBottomSheet extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.navigation, color: Colors.blue, size: 14.sp),
+                            Icon(
+                              Icons.navigation,
+                              color: Colors.blue,
+                              size: 14.sp,
+                            ),
                             Gap(4.w),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -304,7 +326,10 @@ class DirectionsBottomSheet extends StatelessWidget {
                       right: 12.w,
                       top: 12.h,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 8.h,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20.r),
@@ -339,7 +364,9 @@ class DirectionsBottomSheet extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    LauncherHelper.launchGoogleMaps("Maka Al Mukarama Road, Mogadishu");
+                    LauncherHelper.launchGoogleMaps(
+                      "Maka Al Mukarama Road, Mogadishu",
+                    );
                   },
                   icon: const Icon(Icons.map_outlined),
                   label: const Text("Google Maps"),
@@ -350,7 +377,9 @@ class DirectionsBottomSheet extends StatelessWidget {
                 child: ElevatedButton.icon(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    LauncherHelper.launchAppleMaps("Maka Al Mukarama Road, Mogadishu");
+                    LauncherHelper.launchAppleMaps(
+                      "Maka Al Mukarama Road, Mogadishu",
+                    );
                   },
                   icon: const Icon(Icons.apple),
                   label: const Text("Apple Maps"),
@@ -374,7 +403,8 @@ class MockMapPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     final routePaint = Paint()
-      ..color = const Color(0xFF1D4ED8) // Deep blue
+      ..color =
+          const Color(0xFF1D4ED8) // Deep blue
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4
       ..strokeCap = StrokeCap.round;
@@ -384,20 +414,40 @@ class MockMapPainter extends CustomPainter {
       ..color = const Color(0xFF86A789).withValues(alpha: 0.4)
       ..style = PaintingStyle.fill;
     canvas.drawOval(
-      Rect.fromLTWH(size.width * 0.65, size.height * 0.6, size.width * 0.3, size.height * 0.35),
+      Rect.fromLTWH(
+        size.width * 0.65,
+        size.height * 0.6,
+        size.width * 0.3,
+        size.height * 0.35,
+      ),
       parkPaint,
     );
 
     // Draw some road paths
     final roadPath1 = Path()
       ..moveTo(0, size.height * 0.6)
-      ..quadraticBezierTo(size.width * 0.4, size.height * 0.5, size.width, size.height * 0.4);
-    
+      ..quadraticBezierTo(
+        size.width * 0.4,
+        size.height * 0.5,
+        size.width,
+        size.height * 0.4,
+      );
+
     final roadPath2 = Path()
       ..moveTo(size.width * 0.3, 0)
-      ..quadraticBezierTo(size.width * 0.45, size.height * 0.5, size.width * 0.3, size.height)
+      ..quadraticBezierTo(
+        size.width * 0.45,
+        size.height * 0.5,
+        size.width * 0.3,
+        size.height,
+      )
       ..moveTo(size.width * 0.75, 0)
-      ..quadraticBezierTo(size.width * 0.8, size.height * 0.5, size.width * 0.75, size.height);
+      ..quadraticBezierTo(
+        size.width * 0.8,
+        size.height * 0.5,
+        size.width * 0.75,
+        size.height,
+      );
 
     canvas.drawPath(roadPath1, roadPaint);
     canvas.drawPath(roadPath2, roadPaint);
@@ -406,9 +456,12 @@ class MockMapPainter extends CustomPainter {
     final routePath = Path()
       ..moveTo(size.width * 0.15, size.height * 0.75)
       ..cubicTo(
-        size.width * 0.35, size.height * 0.7,
-        size.width * 0.5, size.height * 0.45,
-        size.width * 0.75, size.height * 0.38,
+        size.width * 0.35,
+        size.height * 0.7,
+        size.width * 0.5,
+        size.height * 0.45,
+        size.width * 0.75,
+        size.height * 0.38,
       );
     canvas.drawPath(routePath, routePaint);
   }

@@ -5,11 +5,10 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/core/router/route_path.dart';
-
+import 'package:som_spot/features/nav/controller/navigation_controller.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 
 class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({super.key});
@@ -204,7 +203,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             ValueListenableBuilder<int>(
               valueListenable: _selectedTabIndex,
               builder: (context, tabIndex, _) {
-                final currentPlans = tabIndex == 0 ? _subscriptionPlans : _influencerBoostPlans;
+                final currentPlans = tabIndex == 0
+                    ? _subscriptionPlans
+                    : _influencerBoostPlans;
                 return ValueListenableBuilder<int>(
                   valueListenable: _selectedPlanIndex,
                   builder: (context, selectedIndex, _) {
@@ -272,17 +273,41 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             ],
           ),
           Gap(16.h),
-          _buildConceptRow(context, Iconsax.flash_1, AppColors.orangeColor, 'Hot Deals', 'drive engagement with your customers.'.tr),
+          _buildConceptRow(
+            context,
+            Iconsax.flash_1,
+            AppColors.orangeColor,
+            'Hot Deals',
+            'drive engagement with your customers.'.tr,
+          ),
           Gap(12.h),
-          _buildConceptRow(context, Iconsax.star1, AppColors.purpleAccentColor, 'Influencers', 'drive high-impact business acquisition.'.tr),
+          _buildConceptRow(
+            context,
+            Iconsax.star1,
+            AppColors.purpleAccentColor,
+            'Influencers',
+            'drive high-impact business acquisition.'.tr,
+          ),
           Gap(12.h),
-          _buildConceptRow(context, Iconsax.crown1, AppColors.blueAccentColor, 'Subscriptions', 'drive continuous recurring revenue.'.tr),
+          _buildConceptRow(
+            context,
+            Iconsax.crown1,
+            AppColors.blueAccentColor,
+            'Subscriptions',
+            'drive continuous recurring revenue.'.tr,
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildConceptRow(BuildContext context, IconData icon, Color color, String title, String desc) {
+  Widget _buildConceptRow(
+    BuildContext context,
+    IconData icon,
+    Color color,
+    String title,
+    String desc,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -346,7 +371,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 12.h),
                     decoration: BoxDecoration(
-                      color: selectedIndex == 0 ? AppColors.blueAccentColor : Colors.transparent,
+                      color: selectedIndex == 0
+                          ? AppColors.blueAccentColor
+                          : Colors.transparent,
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     alignment: Alignment.center,
@@ -354,7 +381,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       'Subscriptions'.tr,
                       style: context.titleSmall.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: selectedIndex == 0 ? AppColors.white : AppColors.subtitleTextColor,
+                        color: selectedIndex == 0
+                            ? AppColors.white
+                            : AppColors.subtitleTextColor,
                       ),
                     ),
                   ),
@@ -369,7 +398,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 12.h),
                     decoration: BoxDecoration(
-                      color: selectedIndex == 1 ? AppColors.purpleAccentColor : Colors.transparent,
+                      color: selectedIndex == 1
+                          ? AppColors.purpleAccentColor
+                          : Colors.transparent,
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     alignment: Alignment.center,
@@ -377,7 +408,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       'Influencer Boost'.tr,
                       style: context.titleSmall.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: selectedIndex == 1 ? AppColors.white : AppColors.subtitleTextColor,
+                        color: selectedIndex == 1
+                            ? AppColors.white
+                            : AppColors.subtitleTextColor,
                       ),
                     ),
                   ),
@@ -629,7 +662,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     required VoidCallback onTap,
   }) {
     final bool isDark = plan.isPopular && isSelected;
-    final Color accentColor = isInfluencer ? AppColors.purpleAccentColor : AppColors.blueAccentColor;
+    final Color accentColor = isInfluencer
+        ? AppColors.purpleAccentColor
+        : AppColors.blueAccentColor;
 
     return GestureDetector(
       onTap: onTap,
@@ -719,9 +754,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             style: context.bodySmall.copyWith(
                               fontSize: 11.sp,
                               fontWeight: FontWeight.w600,
-                              color: isDark
-                                  ? AppColors.white
-                                  : accentColor,
+                              color: isDark ? AppColors.white : accentColor,
                             ),
                           ),
                         ],
@@ -736,7 +769,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: '\$${plan.price.toStringAsFixed(plan.price.truncateToDouble() == plan.price ? 0 : 2)}',
+                      text:
+                          '\$${plan.price.toStringAsFixed(plan.price.truncateToDouble() == plan.price ? 0 : 2)}',
                       style: context.headlineMedium.copyWith(
                         fontWeight: FontWeight.bold,
                         color: isDark
@@ -763,7 +797,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 decoration: BoxDecoration(
                   color: isDark
                       ? AppColors.white.withValues(alpha: 0.12)
-                      : (isInfluencer ? AppColors.purpleAccentColor : AppColors.amberYellowColor).withValues(alpha: 0.08),
+                      : (isInfluencer
+                                ? AppColors.purpleAccentColor
+                                : AppColors.amberYellowColor)
+                            .withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Row(
@@ -773,8 +810,12 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       isInfluencer ? Iconsax.star1 : Iconsax.flash_1,
                       size: 16.sp,
                       color: isDark
-                          ? (isInfluencer ? AppColors.white : AppColors.amberYellowColor)
-                          : (isInfluencer ? AppColors.purpleAccentColor : AppColors.amberYellowColor),
+                          ? (isInfluencer
+                                ? AppColors.white
+                                : AppColors.amberYellowColor)
+                          : (isInfluencer
+                                ? AppColors.purpleAccentColor
+                                : AppColors.amberYellowColor),
                     ),
                     Gap(8.w),
                     Text(
@@ -878,7 +919,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           ),
                         ),
                         child: Text(
-                          isInfluencer ? 'Get ${plan.name} Boost'.tr : 'Subscribe to ${plan.name}'.tr,
+                          isInfluencer
+                              ? 'Get ${plan.name} Boost'.tr
+                              : 'Subscribe to ${plan.name}'.tr,
                           style: context.titleSmall.copyWith(
                             fontWeight: FontWeight.bold,
                             color: accentColor,
@@ -908,7 +951,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         ),
                         child: Text(
                           isSelected
-                              ? (isInfluencer ? 'Get ${plan.name} Boost'.tr : 'Subscribe to ${plan.name}'.tr)
+                              ? (isInfluencer
+                                    ? 'Get ${plan.name} Boost'.tr
+                                    : 'Subscribe to ${plan.name}'.tr)
                               : 'Select Plan'.tr,
                           style: context.titleSmall.copyWith(
                             fontWeight: FontWeight.w600,

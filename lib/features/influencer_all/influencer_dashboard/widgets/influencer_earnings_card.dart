@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
@@ -93,17 +94,25 @@ class InfluencerEarningsCard extends StatelessWidget {
                 ],
               ),
 
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 7.h),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                child: Text(
-                  "Withdraw",
-                  style: context.bodySmall.copyWith(
-                    color: AppColors.purpleAccentColor,
-                    fontWeight: FontWeight.w700,
+              GestureDetector(
+                onTap: () {
+                  NavigationControllerMain.to.goToTabWallet();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 18.w,
+                    vertical: 7.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                  child: Text(
+                    "Withdraw",
+                    style: context.bodySmall.copyWith(
+                      color: AppColors.purpleAccentColor,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),

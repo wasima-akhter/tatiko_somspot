@@ -64,6 +64,8 @@ class RoutePath {
       'influencerYourSubmissionScreen';
   static const String influencerPublishProofScreen =
       'influencerPublishProofScreen';
+  static const String influencerSearchScreen = 'influencerSearchScreen';
+  static const String influencerMyCampaigns = 'influencerMyCampaigns';
 
   // success
   static const String successScreen = 'successScreen';

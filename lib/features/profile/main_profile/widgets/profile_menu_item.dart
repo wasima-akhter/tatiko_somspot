@@ -30,10 +30,14 @@ class ProfileMenuItem extends StatelessWidget {
               width: 32.w,
               height: 32.h,
               decoration: BoxDecoration(
-                color: AppColors.primaryColor.withValues(alpha: 0.08),
+                color: AppColors.grayTextSecondaryColor.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(8.r),
               ),
-              child: Icon(icon, color: AppColors.primaryColor, size: 16.sp),
+              child: Icon(
+                icon,
+                color: AppColors.grayTextSecondaryColor,
+                size: 16.sp,
+              ),
             ),
             Gap(12.w),
             Expanded(

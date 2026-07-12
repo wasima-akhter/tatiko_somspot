@@ -22,7 +22,7 @@ class InfluencerCampaignDetailsScreen extends StatelessWidget {
         elevation: 0,
 
         leading: IconButton(
-          icon: Icon(Iconsax.arrow_left_2, size: 22.sp),
+          icon: Icon(Iconsax.arrow_left_2, size: 18.sp),
           onPressed: () {
             Navigator.of(context).pop();
           },

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../../../../core/router/route_path.dart';
+import '../../../../core/router/routes.dart';
 import '../../../../share/widgets/button/custom_button.dart';
 import '../../../../utils/color/app_colors.dart';
 import '../../../../utils/extension/base_extension.dart';
+import '../../../nav/controller/navigation_controller.dart';
+import '../../../success/success_screen.dart';
+import '../../influencer_task_screen/controller/influencer_task_controller.dart';
 import '../../influencer_your_submission/widgets/submission_info_card.dart';
 import '../widgets/influencer_publish_proof_sec.dart';
 import '../widgets/influencer_status_message_card.dart';
@@ -233,7 +239,29 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
           ),
         ),
         SizedBox(height: 22.h),
-        CustomButton(text: "Submit Proof Link", onTap: () {}),
+        CustomButton(
+          text: "Submit Proof Link",
+          onTap: () {
+            AppRouter.route.goNamed(
+              RoutePath.successScreen,
+              extra: SuccessScreenArgs(
+                title: "Proof Submitted!",
+                subtitle:
+                    "We're verifying your post's\nengagement against the\ncampaign target. Your task\nis now in \"Verifying\".",
+                autoNavigateAfter: const Duration(seconds: 3),
+                onAutoNavigate: () {
+                  AppRouter.route.goNamed(RoutePath.navigationPages);
+                  if (Get.isRegistered<NavigationControllerMain>()) {
+                    NavigationControllerMain.to.goToTabTasks();
+                    if (Get.isRegistered<InfluencerTaskController>()) {
+                      InfluencerTaskController.to.selectedTab.value = 1;
+                    }
+                  }
+                },
+              ),
+            );
+          },
+        ),
       ],
     );
   }

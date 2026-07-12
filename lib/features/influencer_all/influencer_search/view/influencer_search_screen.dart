@@ -1,0 +1,108 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
+import 'package:iconsax/iconsax.dart';
+
+import '../../../../utils/color/app_colors.dart';
+import '../../../../utils/extension/base_extension.dart';
+import '../widgets/recent_searches.dart';
+import '../widgets/trending_search.dart';
+
+class InfluencerSearchScreen extends StatelessWidget {
+  const InfluencerSearchScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.softBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: AppColors.softBackgroundColor,
+        elevation: 0,
+
+        leading: IconButton(
+          icon: Icon(Iconsax.arrow_left_2, size: 18.sp),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+
+        title: Text(
+          "Search",
+          style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
+        ),
+
+        centerTitle: false,
+      ),
+
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: [
+              Container(
+                color: Colors.white,
+                padding: EdgeInsets.all(16.w),
+
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                  children: [
+                    // Text(
+                    //   "Search",
+                    //   style: context.headlineSmall.copyWith(
+                    //     fontWeight: FontWeight.w600,
+                    //     color: AppColors.darkTextColor,
+                    //   ),
+                    // ),
+
+                    // Gap(16.h),
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: "Search businesses, deals...",
+
+                        hintStyle: context.bodySmall.copyWith(
+                          color: Colors.grey,
+                        ),
+
+                        prefixIcon: Icon(
+                          Iconsax.search_normal,
+                          size: 18.sp,
+                          color: Colors.grey,
+                        ),
+
+                        filled: true,
+
+                        fillColor: AppColors.softBackgroundColor,
+
+                        contentPadding: EdgeInsets.symmetric(vertical: 12.h),
+
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Gap(20.h),
+
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                  children: [RecentSearches(), Gap(22.h), TrendingSearch()],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

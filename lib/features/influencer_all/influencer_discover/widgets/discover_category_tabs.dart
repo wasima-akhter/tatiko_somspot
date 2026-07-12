@@ -5,6 +5,8 @@ import 'package:som_spot/utils/color/app_colors.dart';
 
 import '../controller/influencer_discover_controller.dart';
 
+double get discoverCategoryTabHeight => 40.h;
+
 class DiscoverCategoryTabs extends StatelessWidget {
   const DiscoverCategoryTabs({super.key});
 
@@ -13,7 +15,7 @@ class DiscoverCategoryTabs extends StatelessWidget {
     final controller = InfluencerDiscoverController.to;
     return Obx(
       () => Container(
-        height: 70.h,
+        height: discoverCategoryTabHeight,
         color: AppColors.softBackgroundColor,
 
         padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -71,10 +73,10 @@ class DiscoverTabsDelegate extends SliverPersistentHeaderDelegate {
   DiscoverTabsDelegate({required this.child});
 
   @override
-  double get minExtent => 70.h;
+  double get minExtent => discoverCategoryTabHeight;
 
   @override
-  double get maxExtent => 70.h;
+  double get maxExtent => discoverCategoryTabHeight;
 
   @override
   Widget build(
@@ -82,7 +84,7 @@ class DiscoverTabsDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return SizedBox(height: 70.h, child: child);
+    return SizedBox(height: discoverCategoryTabHeight, child: child);
   }
 
   @override

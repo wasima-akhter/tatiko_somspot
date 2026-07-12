@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
@@ -68,11 +69,16 @@ class _InfluencerDashboardScreenState extends State<InfluencerDashboardScreen> {
                         ),
                       ),
 
-                      Text(
-                        "View all",
-                        style: context.bodySmall.copyWith(
-                          // color: AppColors.primaryColor,
-                          fontWeight: FontWeight.w600,
+                      GestureDetector(
+                        onTap: () {
+                          NavigationControllerMain.to.goToTabTasks();
+                        },
+                        child: Text(
+                          "View all",
+                          style: context.bodySmall.copyWith(
+                            // color: AppColors.primaryColor,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ],

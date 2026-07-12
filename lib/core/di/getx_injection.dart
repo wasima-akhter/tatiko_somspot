@@ -16,8 +16,11 @@ import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../features/choose_role/controller/choose_role_controller.dart';
 import '../../features/influencer_all/influencer_discover/controller/influencer_discover_controller.dart';
+import '../../features/influencer_all/influencer_my_campaigns/controller/influencer_my_campaigns_controller.dart';
 import '../../features/influencer_all/influencer_task_screen/controller/influencer_task_controller.dart';
+import '../../features/influencer_all/influencer_wallet/controller/influencer_wallet_controller.dart';
 import '../../features/nav/controller/navigation_controller.dart';
+import '../../features/other/controller/other_controller.dart';
 
 void initGetx() {
   // Global & Common Controllers
@@ -45,4 +48,7 @@ void initGetx() {
   Get.lazyPut(() => ChooseRoleController(), fenix: true);
   Get.lazyPut(() => InfluencerDiscoverController(), fenix: true);
   Get.lazyPut(() => InfluencerTaskController(), fenix: true);
+  Get.lazyPut(() => InfluencerWalletController(), fenix: true);
+  Get.lazyPut(() => InfluencerMyCampaignsController(), fenix: true);
+  Get.lazyPut(() => OtherController(), fenix: true);
 }

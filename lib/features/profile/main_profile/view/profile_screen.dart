@@ -7,18 +7,18 @@ import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
-import 'package:som_spot/features/profile/main_profile/view/widgets/language_dialog_content.dart';
-import 'package:som_spot/features/profile/main_profile/view/widgets/profile_menu_card.dart';
-import 'package:som_spot/features/profile/main_profile/view/widgets/profile_menu_item.dart';
-import 'package:som_spot/features/profile/main_profile/view/widgets/profile_section_header.dart';
-import 'package:som_spot/features/profile/main_profile/view/widgets/profile_stat_card.dart';
+import 'package:som_spot/features/profile/main_profile/widgets/language_dialog_content.dart';
+import 'package:som_spot/features/profile/main_profile/widgets/profile_menu_card.dart';
+import 'package:som_spot/features/profile/main_profile/widgets/profile_menu_item.dart';
+import 'package:som_spot/features/profile/main_profile/widgets/profile_section_header.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
 import 'package:som_spot/share/widgets/dialog/custom_dialog.dart';
-import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
+
+import '../widgets/profile_header.dart';
 
 class ProfileScreen extends GetView<ProfileScreenController> {
   const ProfileScreen({super.key});
@@ -32,180 +32,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Blue Curved Header Wave Banner
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor,
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(24.r),
-                ),
-              ),
-              padding: EdgeInsets.fromLTRB(
-                16.w,
-                MediaQuery.of(context).padding.top + 16.h,
-                16.w,
-                24.h,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppStrings.profile.tr,
-                    style: context.titleLarge.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24.sp,
-                    ),
-                  ),
-                  Gap(16.h),
-                  // User details row
-                  Obx(() {
-                    return Row(
-                      children: [
-                        Container(
-                          width: 56.w,
-                          height: 56.h,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 2.w),
-                          ),
-                          child: ClipOval(
-                            child: CustomNetworkImage(
-                              imageUrl: controller.userAvatar.value,
-                              boxShape: BoxShape.circle,
-                            ),
-                          ),
-                        ),
-                        Gap(12.w),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                controller.userName.value,
-                                style: context.titleMedium.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.sp,
-                                ),
-                              ),
-                              Gap(2.h),
-                              Text(
-                                controller.userEmail.value,
-                                style: context.bodyMedium.copyWith(
-                                  color: Colors.white.withValues(alpha: 0.85),
-                                  fontSize: 13.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        // Edit Profile Icon Button
-                        GestureDetector(
-                          onTap: () => AppRouter.route.pushNamed(
-                            RoutePath.editProfileScreen,
-                          ),
-                          child: Container(
-                            width: 36.w,
-                            height: 36.h,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.22),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              Iconsax.edit_2,
-                              color: Colors.white,
-                              size: 16.sp,
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  }),
-                  Gap(20.h),
-                  // Statistics cards
-                  Obx(() {
-                    if (CommonController.to.isMerchandiser) {
-                      return Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 16.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF6BB5FF),
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  AppStrings.currentPlan.tr,
-                                  style: context.bodyMedium.copyWith(
-                                    color: Colors.white.withValues(alpha: 0.9),
-                                  ),
-                                ),
-                                Gap(4.h),
-                                Text(
-                                  AppStrings.proMonthly.tr,
-                                  style: context.titleLarge.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF4A9DF7),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 20.w,
-                                  vertical: 0,
-                                ),
-                                minimumSize: Size(0, 36.h),
-                              ),
-                              child: Text(
-                                AppStrings.upgrade.tr,
-                                style: context.bodyMedium.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    return Row(
-                      children: [
-                        ProfileStatCard(
-                          label: AppStrings.saved.tr,
-                          value: controller.savedCount.value,
-                        ),
-                        Gap(12.w),
-                        ProfileStatCard(
-                          label: AppStrings.claims.tr,
-                          value: controller.claimsCount.value,
-                        ),
-                        Gap(12.w),
-                        ProfileStatCard(
-                          label: AppStrings.reviews.tr,
-                          value: controller.reviewsCount.value,
-                        ),
-                      ],
-                    );
-                  }),
-                ],
-              ),
-            ),
-
+            ProfileHeader(),
             // Scrollable Menu Details
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
@@ -224,8 +51,12 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                           RoutePath.editProfileScreen,
                         ),
                       ),
+
                       Obx(() {
-                        if (CommonController.to.isMerchandiser) {
+                        final commonController = CommonController.to;
+
+                        // Merchandiser Menu
+                        if (commonController.isMerchandiser) {
                           return Column(
                             children: [
                               ProfileMenuItem(
@@ -237,6 +68,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                                   );
                                 },
                               ),
+
                               ProfileMenuItem(
                                 icon: Iconsax.card,
                                 title: AppStrings.subscriptionBilling.tr,
@@ -249,33 +81,60 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                             ],
                           );
                         }
-                        return Column(
-                          children: [
-                            ProfileMenuItem(
-                              icon: Iconsax.archive_1,
-                              title: AppStrings.savedItems.tr,
-                              onTap: () {
-                                AppToast.info(
-                                  context: context,
-                                  message:
-                                      "You can view saved items from the Saved tab.",
-                                );
-                                NavigationControllerMain
-                                        .to
-                                        .selectedNavIndex
-                                        .value =
-                                    2;
-                              },
-                            ),
-                            ProfileMenuItem(
-                              icon: Iconsax.ticket,
-                              title: AppStrings.myClaims.tr,
-                              onTap: () => AppRouter.route.pushNamed(
-                                RoutePath.claimsScreen,
+
+                        // Influencer Menu
+                        if (commonController.isInfluencer) {
+                          return Column(
+                            children: [
+                              ProfileMenuItem(
+                                icon: Icons.bookmark_outline_rounded,
+                                title: "My Campaigns",
+                                onTap: () {
+                                  AppRouter.route.pushNamed(
+                                    RoutePath.influencerMyCampaigns,
+                                  );
+                                },
                               ),
-                            ),
-                          ],
-                        );
+                            ],
+                          );
+                        }
+
+                        // Customer Menu
+                        if (commonController.isCustomer) {
+                          return Column(
+                            children: [
+                              ProfileMenuItem(
+                                icon: Iconsax.archive_1,
+                                title: AppStrings.savedItems.tr,
+                                onTap: () {
+                                  AppToast.info(
+                                    context: context,
+                                    message:
+                                        "You can view saved items from the Saved tab.",
+                                  );
+
+                                  NavigationControllerMain
+                                          .to
+                                          .selectedNavIndex
+                                          .value =
+                                      2;
+                                },
+                              ),
+
+                              ProfileMenuItem(
+                                icon: Iconsax.ticket,
+                                title: AppStrings.myClaims.tr,
+                                onTap: () {
+                                  AppRouter.route.pushNamed(
+                                    RoutePath.claimsScreen,
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        }
+
+                        return const SizedBox.shrink();
                       }),
                     ],
                   ),
@@ -368,7 +227,18 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                       ),
                     ),
                   ),
-                  Gap(20.h),
+                  Gap(15.h),
+
+                  Center(
+                    child: Text(
+                      "SamSpot v1.0.0",
+                      style: context.bodySmall.copyWith(
+                        color: AppColors.grayTextSecondaryColor,
+                      ),
+                    ),
+                  ),
+
+                  Gap(15.h),
                 ],
               ),
             ),

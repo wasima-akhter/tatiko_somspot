@@ -224,8 +224,7 @@ class _InfluencerSubmitContentScreenState
                         onAutoNavigate: () {
                           AppRouter.route.goNamed(RoutePath.navigationPages);
                           if (Get.isRegistered<NavigationControllerMain>()) {
-                            NavigationControllerMain.to.selectedNavIndex.value =
-                                2;
+                            NavigationControllerMain.to.goToTabTasks();
                             if (Get.isRegistered<InfluencerTaskController>()) {
                               InfluencerTaskController.to.selectedTab.value = 1;
                             }
