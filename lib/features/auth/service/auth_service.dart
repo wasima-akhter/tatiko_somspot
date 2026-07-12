@@ -19,9 +19,14 @@
 import 'package:dio/dio.dart';
 
 import '../../../core/service/datasource/local/app_storage.dart';
-import '../models/login_request.dart';
-import '../models/register_request.dart';
+import '../../../core/service/datasource/remote/api_exception.dart';
+import '../../../core/service/datasource/remote/api_parser.dart';
+import '../../../core/service/datasource/remote/api_response.dart';
+import '../../../utils/common_controller/common_controller.dart';
+import '../models/login_model.dart';
 import '../repository/auth_repository.dart';
+import '../requests/login_request.dart';
+import '../requests/register_request.dart';
 
 class AuthService {
   AuthService(this._repository);
@@ -30,16 +35,42 @@ class AuthService {
 
   final AppStorage storage = AppStorage.to;
 
-  Future<Response> login(LoginRequest request) async {
-    final response = await _repository.login(request);
+  Future<ApiResponse<LoginModel>> login(LoginRequest request) async {
+    try {
+      final response = await _repository.login(request);
 
-    if (response.statusCode == 200) {
-      // save token
-      // save profile
-      // save role
+      final result = ApiParser.parse<LoginModel>(
+        response,
+        mapper: (json) => LoginModel.fromJson(json),
+      );
+
+      if (result.success) {
+        final loginData = result.data;
+
+        if (loginData != null) {
+          await storage.setAccessToken(loginData.accessToken);
+
+          await storage.setProfile(loginData.user);
+
+          await storage.setRole(
+            UserRoleExtension.fromString(loginData.user.userRole),
+          );
+
+          await storage.setLoggedIn(true);
+        }
+      }
+
+      return result;
+    } catch (e) {
+      if (e is ApiException) {
+        return ApiResponse.failure(
+          message: e.message,
+          statusCode: e.statusCode,
+        );
+      }
+
+      return ApiResponse.failure(message: "Something went wrong");
     }
-
-    return response;
   }
 
   Future<Response> register(RegisterRequest request) async {

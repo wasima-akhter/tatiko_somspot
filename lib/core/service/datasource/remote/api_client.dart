@@ -1,11 +1,16 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
-import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 import 'package:som_spot/core/service/datasource/local/local_service.dart';
 import 'package:som_spot/utils/multipart/multipart_body.dart';
-import 'network_checker.dart';
 
+import '../../network/network_checker.dart';
+import 'api_exception.dart';
+import 'api_logger.dart';
+
+/*
 class ApiClient {
   final Dio dio;
   final NetworkChecker networkChecker;
@@ -173,5 +178,241 @@ class ApiClient {
     }
 
     return Response(requestOptions: RequestOptions(path: ''), statusCode: 500, data: {'success': false, 'message': 'An unexpected error occurred.', 'details': error.toString()});
+  }
+}
+*/
+
+class ApiClient {
+  final Dio dio;
+  final NetworkChecker networkChecker;
+  final LocalService localService;
+
+  final bool showResponse;
+
+  ApiClient({
+    required this.dio,
+    required this.networkChecker,
+    required this.localService,
+    this.showResponse = false,
+  });
+
+  Future<Map<String, String>> _headers({
+    String? token,
+    bool isJson = true,
+  }) async {
+    final headers = <String, String>{};
+
+    final authToken = token ?? await localService.getToken();
+
+    if (authToken.isNotEmpty) {
+      headers["Authorization"] = "Bearer $authToken";
+    }
+
+    if (isJson) {
+      headers["Content-Type"] = "application/json";
+    }
+
+    return headers;
+  }
+
+  Future<void> _checkConnection() async {
+    final connected = await networkChecker.hasConnection();
+
+    if (!connected) {
+      throw ApiException(message: "No internet connection", statusCode: 0);
+    }
+  }
+
+  Future<Response> get({
+    required String url,
+    Map<String, dynamic>? queryParams,
+    String? token,
+  }) async {
+    await _checkConnection();
+
+    try {
+      final response = await dio.get(
+        url,
+        queryParameters: queryParams,
+        options: Options(headers: await _headers(token: token)),
+      );
+
+      _log(url, response);
+
+      return response;
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<Response> post({
+    required String url,
+    required Map<String, dynamic> body,
+    String? token,
+  }) async {
+    await _checkConnection();
+
+    try {
+      final response = await dio.post(
+        url,
+        data: body,
+        options: Options(headers: await _headers(token: token)),
+      );
+
+      _log(url, response);
+
+      return response;
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<Response> put({
+    required String url,
+    Map<String, dynamic>? body,
+    String? token,
+  }) async {
+    await _checkConnection();
+
+    try {
+      final response = await dio.put(
+        url,
+        data: body,
+        options: Options(headers: await _headers(token: token)),
+      );
+
+      _log(url, response);
+
+      return response;
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<Response> patch({
+    required String url,
+    Map<String, dynamic>? body,
+    String? token,
+  }) async {
+    await _checkConnection();
+
+    try {
+      final response = await dio.patch(
+        url,
+        data: body,
+        options: Options(headers: await _headers(token: token)),
+      );
+
+      _log(url, response);
+
+      return response;
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<Response> delete({
+    required String url,
+    Map<String, dynamic>? body,
+    String? token,
+  }) async {
+    await _checkConnection();
+
+    try {
+      final response = await dio.delete(
+        url,
+        data: body,
+        options: Options(headers: await _headers(token: token, isJson: false)),
+      );
+
+      _log(url, response);
+
+      return response;
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<Response> uploadMultipart({
+    required String url,
+    required List<MultipartBody> files,
+    required String method,
+    String? token,
+    Map<String, String>? fields,
+  }) async {
+    await _checkConnection();
+
+    try {
+      final headers = await _headers(token: token, isJson: false);
+
+      final form = <String, dynamic>{};
+
+      fields?.forEach((key, value) {
+        form[key] = value;
+      });
+
+      for (final file in files) {
+        final mime =
+            lookupMimeType(file.file.path) ?? "application/octet-stream";
+
+        final split = mime.split("/");
+
+        form[file.fieldKey] = await MultipartFile.fromFile(
+          file.file.path,
+          filename: file.file.uri.pathSegments.last,
+          contentType: MediaType(split[0], split[1]),
+        );
+      }
+
+      final response = await dio.request(
+        url,
+        data: FormData.fromMap(form),
+        options: Options(method: method, headers: headers),
+      );
+
+      _log(url, response);
+
+      return response;
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Exception _handleError(dynamic error) {
+    if (error is ApiException) {
+      return error;
+    }
+
+    if (error is DioException) {
+      final response = error.response;
+
+      final statusCode = response?.statusCode ?? 500;
+
+      final body = response?.data;
+
+      String message = "Something went wrong";
+
+      if (body is Map) {
+        message = body["message"]?.toString() ?? message;
+      }
+
+      if (error.type == DioExceptionType.connectionTimeout ||
+          error.type == DioExceptionType.sendTimeout ||
+          error.type == DioExceptionType.receiveTimeout) {
+        message = "Connection timeout";
+      }
+
+      if (error.error is SocketException) {
+        message = "No internet connection";
+      }
+
+      return ApiException(message: message, statusCode: statusCode, data: body);
+    }
+
+    return ApiException(message: error.toString(), statusCode: 500);
+  }
+
+  void _log(String url, Response response) {
+    ApiLogger.showResponse(url: url, response: response, enabled: showResponse);
   }
 }

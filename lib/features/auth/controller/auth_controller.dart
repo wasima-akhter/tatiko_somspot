@@ -2,7 +2,9 @@ import 'package:get/get.dart';
 
 import '../../../core/router/route_path.dart';
 import '../../../core/router/routes.dart';
-import '../models/register_request.dart';
+import '../../../helper/snackbar/api_snackbar.dart';
+import '../requests/login_request.dart';
+import '../requests/register_request.dart';
 import '../service/auth_service.dart';
 
 class AuthController extends GetxController {
@@ -15,6 +17,31 @@ class AuthController extends GetxController {
   final isLoading = false.obs;
 
   final errorMessage = ''.obs;
+
+  Future<void> login(LoginRequest request) async {
+    try {
+      isLoading.value = true;
+
+      errorMessage.value = "";
+
+      final result = await authService.login(request);
+
+      if (result.success) {
+        // navigate here
+
+        // Example:
+        // AppRouter.route.goNamed(
+        //    RoutePath.navigationPages
+        // );
+      } else {
+        errorMessage.value = result.message;
+
+        ApiSnackbar.show(result.message, enabled: true);
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
   Future<void> register({
     required String name,

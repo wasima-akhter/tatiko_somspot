@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:som_spot/core/service/datasource/local/local_service.dart';
 import 'package:som_spot/core/service/datasource/remote/api_client.dart';
-import 'package:som_spot/core/service/datasource/remote/network_checker.dart';
+import 'package:som_spot/core/service/network/network_checker.dart';
 
 final sl = GetIt.instance;
 

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../../../features/auth/models/login_model.dart';
 import '../../../../utils/enum/app_enum.dart';
 
 class AppStorage extends GetxService {
@@ -119,8 +120,8 @@ class AppStorage extends GetxService {
     return Map<String, dynamic>.from(data);
   }
 
-  Future<void> setProfile(Map<String, dynamic> json) =>
-      _storage.write(profileKey, json);
+  Future<void> setProfile(UserModel profile) =>
+      _storage.write(profileKey, profile.toJson());
 
   // -----------------------
   // language
@@ -154,7 +155,7 @@ class AppStorage extends GetxService {
   Future<void> saveSession({
     required String accessToken,
     String? refreshToken,
-    required Map<String, dynamic> profile,
+    required UserModel profile,
     UserRole? role,
   }) async {
     await setLoggedIn(true);

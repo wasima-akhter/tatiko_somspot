@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
+
 class AppToast {
   static void _show({
     BuildContext? context,

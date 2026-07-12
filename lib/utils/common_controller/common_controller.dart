@@ -13,3 +13,29 @@ class CommonController extends GetxController {
 
   void setRole(UserRole newRole) => role.value = newRole;
 }
+
+extension UserRoleExtension on UserRole {
+  String get value {
+    switch (this) {
+      case UserRole.influencer:
+        return 'Influencer';
+      case UserRole.merchandiser:
+        return 'Merchandiser';
+      case UserRole.customer:
+        return 'Customer';
+    }
+  }
+
+  static UserRole fromString(String? value) {
+    switch (value?.toLowerCase()) {
+      case 'influencer':
+        return UserRole.influencer;
+      case 'merchandiser':
+        return UserRole.merchandiser;
+      case 'customer':
+        return UserRole.customer;
+      default:
+        return UserRole.influencer;
+    }
+  }
+}
