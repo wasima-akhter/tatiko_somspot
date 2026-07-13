@@ -6,17 +6,26 @@ import 'package:get/get.dart';
 import 'package:som_spot/share/model/language_model.dart';
 import 'package:som_spot/utils/config/app_config.dart';
 
+import '../../core/service/datasource/local/app_storage.dart';
+
 class LanguageController extends GetxController implements GetxService {
   // ── UI State: Language Selection ──
   final selectedIndex =
       1.obs; // Default: English (index 1 in AppConfig.languages)
 
+  final storage = AppStorage.to;
+
   List<LanguageModel> get languages => AppConfig.languages;
 
   LanguageModel get selectedLanguage => languages[selectedIndex.value];
 
-  void selectLanguage(int index) {
+  void selectLanguage(int index) async {
     selectedIndex.value = index;
+    final lang = selectedLanguage;
+    await storage.setLanguage(
+      languageCode: lang.languageCode,
+      countryCode: lang.countryCode,
+    );
     applyLanguage(); // Instantly update locale
   }
 

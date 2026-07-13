@@ -1,15 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
+import 'package:som_spot/features/auth/requests/auth_request.dart';
 import 'package:som_spot/helper/validator/text_field_validator.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
+
+import '../controller/auth_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,6 +28,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+
+    if (kDebugMode) {
+      _emailController.text = "abc@yopmail.com";
+      _passwordController.text = "123456";
+    }
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -32,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = AuthController.to;
     return Scaffold(
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
@@ -83,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const Gap(24),
 
                         CustomTextField(
-                          validator: TextFieldValidator.password(),
+                          // validator: TextFieldValidator.password(),
                           controller: _passwordController,
                           title: AppStrings.password.tr,
                           hintText: '**********',
@@ -117,14 +132,24 @@ class _LoginScreenState extends State<LoginScreen> {
                         const Gap(40),
 
                         // ── Log In Button ──
-                        CustomButton(
-                          text: AppStrings.logIn.tr,
-                          onTap: () {
-                            // if (_formKey.currentState!.validate()) {
-                            //   // Handle sign in
-                            // }
-                            AppRouter.route.goNamed(RoutePath.navigationPages);
-                          },
+                        Obx(
+                          () => CustomButton(
+                            text: AppStrings.logIn.tr,
+                            isLoading: controller.isLoading.value,
+                            onTap: controller.isLoading.value
+                                ? null
+                                : () {
+                                    if (_formKey.currentState!.validate()) {
+                                      controller.login(
+                                        request: LoginRequest(
+                                          email: _emailController.text.trim(),
+                                          password: _passwordController.text
+                                              .trim(),
+                                        ),
+                                      );
+                                    }
+                                  },
+                          ),
                         ),
                         const Gap(24),
 

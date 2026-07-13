@@ -8,6 +8,7 @@ import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
+import '../../../helper/snackbar/api_snackbar.dart';
 import '../controller/auth_controller.dart';
 
 class ActiveOtpScreen extends StatefulWidget {
@@ -35,12 +36,24 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
     final otp = _pinController.text.trim();
 
     if (otp.length < 4) {
-      Get.snackbar("Invalid OTP", "Please enter the verification code");
-
+      ApiSnackbar.show(
+        "Please enter the verification code",
+        type: SnackbarType.warning,
+      );
       return;
     }
 
-    controller.verifyRegisterOtp(email: widget.email ?? "", otp: otp);
+    final email = widget.email?.trim() ?? "";
+
+    if (email.isEmpty) {
+      ApiSnackbar.show(
+        "Email is missing. Please restart registration.",
+        type: SnackbarType.error,
+      );
+      return;
+    }
+
+    controller.verifyRegisterOtp(email: email, otp: otp);
   }
 
   @override

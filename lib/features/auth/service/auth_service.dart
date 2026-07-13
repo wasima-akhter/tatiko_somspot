@@ -16,89 +16,68 @@
 
 // }
 
-import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:jwt_decode/jwt_decode.dart';
+import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../../core/service/datasource/local/app_storage.dart';
 import '../../../core/service/datasource/remote/api_exception.dart';
 import '../../../core/service/datasource/remote/api_parser.dart';
 import '../../../core/service/datasource/remote/api_response.dart';
-import '../../../utils/common_controller/common_controller.dart';
 import '../models/login_model.dart';
+import '../models/register_response.dart';
 import '../repository/auth_repository.dart';
-import '../requests/login_request.dart';
-import '../requests/register_request.dart';
+import '../requests/auth_request.dart';
 
 class AuthService {
-  AuthService(this._repository);
-
   final AuthRepository _repository;
 
-  final AppStorage storage = AppStorage.to;
+  AuthService(this._repository);
 
-  Future<ApiResponse<LoginModel>> login(LoginRequest request) async {
+  AppStorage get storage => AppStorage.to;
+
+  Future<ApiResponse<LoginResponse>> login(LoginRequest request) async {
     try {
       final response = await _repository.login(request);
 
-      final result = ApiParser.parse<LoginModel>(
+      final result = ApiParser.parse<LoginResponse>(
         response,
-        mapper: (json) => LoginModel.fromJson(json),
+        mapper: (json) => LoginResponse.fromJson(json),
       );
 
-      if (result.success) {
-        final loginData = result.data;
-
-        if (loginData != null) {
-          await storage.setAccessToken(loginData.accessToken);
-
-          await storage.setProfile(loginData.user);
-
-          await storage.setRole(
-            UserRoleExtension.fromString(loginData.user.userRole),
-          );
-
-          await storage.setLoggedIn(true);
-        }
-      }
-
-      return result;
-    } catch (e) {
-      if (e is ApiException) {
+      if (!result.success || result.data == null) {
         return ApiResponse.failure(
-          message: e.message,
-          statusCode: e.statusCode,
+          message: result.message,
+          statusCode: result.statusCode,
         );
       }
+
+      await _saveLoginSession(result.data!);
+
+      return result;
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Login Error: $e");
+
+      debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: "Something went wrong");
     }
   }
 
-  Future<Response> register(RegisterRequest request) async {
+  Future<RegisterResponse> register(RegisterRequest request) async {
     final response = await _repository.register(request);
 
-    final body = response.data;
+    final result = RegisterResponse.fromJson(response.data);
 
-    if (body["success"] == true) {
-      final data = body["data"];
+    if (result.success && result.data?.isActive == false) {
+      await storage.setPendingEmail(request.email);
 
-      final isActive = data["isActive"] ?? false;
-
-      // Account created but waiting activation
-      if (!isActive) {
-        await storage.setPendingEmail(request.email);
-
-        await storage.setPendingRole(request.role);
-      }
-
-      return response;
+      await storage.setPendingRole(request.role);
     }
 
-    // Account already active
-    if (body["data"]?["isActive"] == true) {
-      return response;
-    }
-
-    return response;
+    return result;
   }
 
   Future<void> logout() async {
@@ -109,7 +88,76 @@ class AuthService {
     }
   }
 
-  Future<Object?> verifyRegisterOtp(verifyOtpRequest) async {
-    return null;
+  Future<ApiResponse<LoginResponse>> verifyRegisterOtp(
+    VerifyOtpRequest request,
+  ) async {
+    try {
+      final response = await _repository.verifyRegisterOtp(request);
+
+      final result = ApiParser.parse<LoginResponse>(
+        response,
+        mapper: (json) => LoginResponse.fromJson(json),
+      );
+
+      if (!result.success || result.data == null) {
+        return ApiResponse.failure(
+          message: result.message,
+          statusCode: result.statusCode,
+        );
+      }
+
+      // Save tokens after OTP verification
+      await _saveLoginSession(result.data!);
+
+      // OTP completed, remove pending data
+      await storage.clearPendingRegister();
+
+      return result;
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Verify OTP Error: $e");
+
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
   }
+}
+
+Future<void> _saveLoginSession(LoginResponse login) async {
+  final storage = AppStorage.to;
+  final accessToken = login.data?.accessToken ?? '';
+  final refreshToken = login.data?.refreshToken ?? '';
+
+  if (accessToken.isEmpty) {
+    return;
+  }
+
+  final accessPayload = Jwt.parseJwt(accessToken);
+
+  final refreshPayload = Jwt.parseJwt(refreshToken);
+
+  final userId = accessPayload['userId']?.toString();
+
+  final authId = accessPayload['authId']?.toString();
+
+  final email = accessPayload['email']?.toString();
+
+  final role = accessPayload['role']?.toString();
+
+  await storage.saveSession(
+    accessToken: accessToken,
+    refreshToken: refreshToken,
+    authId: authId,
+    userId: userId,
+    email: email,
+    role: UserRoleExtension.fromString(role),
+  );
+
+  await storage.setTokenExpiry(int.parse(accessPayload['exp'].toString()));
+
+  await storage.setRefreshTokenExpiry(
+    int.parse(refreshPayload['exp'].toString()),
+  );
 }

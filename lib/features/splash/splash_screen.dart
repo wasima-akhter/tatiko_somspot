@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:som_spot/core/custom_assets/assets.gen.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
+import 'package:som_spot/core/service/datasource/local/app_storage.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,9 +17,46 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      AppRouter.route.pushNamed(RoutePath.chooseLanguageScreen);
-    });
+
+    _handleNavigation();
+  }
+
+  Future<void> _handleNavigation() async {
+    await Future.delayed(const Duration(seconds: 3));
+
+    final storage = AppStorage.to;
+
+    // Already logged in
+    if (storage.isLoggedIn && storage.accessToken.isNotEmpty) {
+      AppRouter.route.goNamed(RoutePath.navigationPages);
+
+      return;
+    }
+
+    // Language not selected
+    if (!storage.hasSelectedLanguage) {
+      AppRouter.route.goNamed(RoutePath.chooseLanguageScreen);
+
+      return;
+    }
+
+    // Role not selected
+    if (storage.role == null) {
+      AppRouter.route.goNamed(RoutePath.chooseRoleScreen);
+
+      return;
+    }
+
+    // Role selected but onboarding not completed
+
+    if (!storage.hasSeenOnboarding) {
+      AppRouter.route.goNamed(RoutePath.onboardingScreen);
+
+      return;
+    }
+
+    // Default
+    AppRouter.route.goNamed(RoutePath.loginScreen);
   }
 
   @override
@@ -27,9 +65,12 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+
           children: [
             Assets.images.splashlogo.image(),
+
             const Gap(20),
+
             Text("Discover. Connect. Save.", style: context.headlineSmall),
           ],
         ),
@@ -37,3 +78,34 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
+/*
+
+                 Splash
+                    |
+        --------------------------
+        |                        |
+   Logged in?                 No token
+        |                        |
+     Home              Language selected?
+                              |
+                    ----------------
+                    |              |
+                  No              Yes
+                    |              |
+              Language Screen   Role selected?
+                                    |
+                           ----------------
+                           |              |
+                         No              Yes
+                           |              |
+                      Choose Role    Onboarding done?
+                                          |
+                                   ---------------
+                                   |             |
+                                  No             Yes
+                                   |              |
+                            Onboarding       Login
+
+
+*/

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -6,10 +7,13 @@ import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/auth/controller/auth_controller.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
+import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
+
+import '../../../helper/snackbar/app_snackbar.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -32,6 +36,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void initState() {
     super.initState();
     // Initialize common controller state
+
+    if (kDebugMode) {
+      _nameController.text = "abc";
+      _phoneController.text = "01265465454";
+      _emailController.text = "abc@yopmail.com";
+      _passwordController.text = "123456";
+      _confirmPasswordController.text = "123456";
+    }
   }
 
   @override
@@ -217,29 +229,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const Gap(32),
 
                         // ── Create Account Button ──
-                        CustomButton(
-                          text: AppStrings.createAccount.tr,
-                          onTap: () {
-                            if (!_formKey.currentState!.validate()) {
-                              return;
-                            }
+                        Obx(
+                          () => controller.isLoading.value
+                              ? LoadingWidget()
+                              : CustomButton(
+                                  text: AppStrings.createAccount.tr,
+                                  onTap: () {
+                                    if (!_formKey.currentState!.validate()) {
+                                      return;
+                                    }
 
-                            if (!_agreedToTerms) {
-                              Get.snackbar(
-                                "Terms Required",
-                                "Please accept terms and privacy policy",
-                              );
+                                    if (!_agreedToTerms) {
+                                      UiSnackbar.show(
+                                        context,
+                                        title: "Terms Required",
+                                        message:
+                                            "Please accept terms and privacy policy",
+                                      );
 
-                              return;
-                            }
+                                      return;
+                                    }
 
-                            controller.register(
-                              name: _nameController.text.trim(),
-                              email: _emailController.text.trim(),
-                              password: _passwordController.text,
-                              confirmPassword: _confirmPasswordController.text,
-                            );
-                          },
+                                    controller.register(
+                                      name: _nameController.text.trim(),
+                                      email: _emailController.text.trim(),
+                                      password: _passwordController.text,
+                                      confirmPassword:
+                                          _confirmPasswordController.text,
+                                    );
+                                  },
+                                ),
                         ),
                         const Gap(24),
 

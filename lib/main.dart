@@ -12,6 +12,7 @@ import 'core/service/datasource/local/app_storage.dart';
 import 'core/theme/light_theme.dart';
 import 'helper/device_utils/device_utils.dart';
 import 'share/controller/language_controller.dart';
+import 'utils/app_keys/app_keys.dart';
 
 void main() async {
   debugRepaintTextRainbowEnabled = false;
@@ -19,8 +20,10 @@ void main() async {
   DeviceUtils.lockDevicePortrait();
 
   await initAppStorage();
+
+  await initDependencies();
+
   initGetx();
-  initDependencies();
 
   final Map<String, Map<String, String>> languages =
       await LanguageController.getLanguages();
@@ -52,6 +55,8 @@ class MyApp extends StatelessWidget {
 
       builder: (context, child) => GetMaterialApp.router(
         debugShowCheckedModeBanner: false,
+
+        scaffoldMessengerKey: AppKeys.scaffoldMessengerKey,
 
         // ── DevicePreview integration ──────────────────────────────────────
         // These two lines wire DevicePreview into the app in debug mode.

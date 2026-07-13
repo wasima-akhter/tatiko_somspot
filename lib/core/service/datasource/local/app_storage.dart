@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import '../../../../features/auth/models/login_model.dart';
 import '../../../../utils/enum/app_enum.dart';
 
 class AppStorage extends GetxService {
@@ -19,6 +18,10 @@ class AppStorage extends GetxService {
   static const String accessTokenKey = 'access_token';
   static const String refreshTokenKey = 'refresh_token';
 
+  static const String authIdKey = 'auth_id';
+  static const String userIdKey = 'user_id';
+  static const String emailKey = 'email';
+
   static const String roleKey = 'role';
 
   static const String profileKey = 'profile';
@@ -30,6 +33,8 @@ class AppStorage extends GetxService {
 
   static const String pendingEmailKey = "pending_email";
   static const String pendingRoleKey = "pending_role";
+
+  static const String tokenExpiryKey = 'token_expiry';
 
   // -----------------------
   // onboarding
@@ -120,16 +125,33 @@ class AppStorage extends GetxService {
     return Map<String, dynamic>.from(data);
   }
 
-  Future<void> setProfile(UserModel profile) =>
-      _storage.write(profileKey, profile.toJson());
+  // Future<void> setProfile(UserModel profile) =>
+  //     _storage.write(profileKey, profile.toJson());
 
   // -----------------------
   // language
   // -----------------------
 
-  String get language => _storage.read(languageKey) ?? "en";
+  // -----------------------
+  // language
+  // -----------------------
 
-  Future<void> setLanguage(String value) => _storage.write(languageKey, value);
+  String get languageCode => _storage.read(languageKey) ?? "";
+
+  String get languageCountry => _storage.read("${languageKey}_country") ?? "";
+
+  bool get hasSelectedLanguage => languageCode.isNotEmpty;
+
+  Future<void> setLanguage({
+    required String languageCode,
+    String? countryCode,
+  }) async {
+    await _storage.write(languageKey, languageCode);
+
+    if (countryCode != null) {
+      await _storage.write("${languageKey}_country", countryCode);
+    }
+  }
 
   // -----------------------
   // theme
@@ -155,23 +177,62 @@ class AppStorage extends GetxService {
   Future<void> saveSession({
     required String accessToken,
     String? refreshToken,
-    required UserModel profile,
+    String? authId,
+    String? userId,
+    String? email,
     UserRole? role,
   }) async {
     await setLoggedIn(true);
 
     await setAccessToken(accessToken);
 
-    if (refreshToken != null) {
+    if (refreshToken != null && refreshToken.isNotEmpty) {
       await setRefreshToken(refreshToken);
     }
 
-    await setProfile(profile);
+    if (authId != null && authId.isNotEmpty) {
+      await setAuthId(authId);
+    }
+
+    if (userId != null && userId.isNotEmpty) {
+      await setUserId(userId);
+    }
+
+    if (email != null && email.isNotEmpty) {
+      await setEmail(email);
+    }
 
     if (role != null) {
       await setRole(role);
     }
   }
+
+  // -----------------------
+  // user info from JWT
+  // -----------------------
+
+  String get authId => _storage.read(authIdKey) ?? "";
+
+  Future<void> setAuthId(String value) => _storage.write(authIdKey, value);
+
+  String get userId => _storage.read(userIdKey) ?? "";
+
+  Future<void> setUserId(String value) => _storage.write(userIdKey, value);
+
+  String get email => _storage.read(emailKey) ?? "";
+
+  Future<void> setEmail(String value) => _storage.write(emailKey, value);
+
+  int get tokenExpiry => _storage.read(tokenExpiryKey) ?? 0;
+
+  Future<void> setTokenExpiry(int value) =>
+      _storage.write(tokenExpiryKey, value);
+  static const String refreshTokenExpiryKey = 'refresh_token_expiry';
+
+  int get refreshTokenExpiry => _storage.read(refreshTokenExpiryKey) ?? 0;
+
+  Future<void> setRefreshTokenExpiry(int value) =>
+      _storage.write(refreshTokenExpiryKey, value);
 
   // -----------------------
   // logout
@@ -180,8 +241,17 @@ class AppStorage extends GetxService {
   Future<void> logout() async {
     await _storage.remove(accessTokenKey);
     await _storage.remove(refreshTokenKey);
+
+    await _storage.remove(tokenExpiryKey);
+    await _storage.remove(refreshTokenExpiryKey);
+
+    await _storage.remove(authIdKey);
+    await _storage.remove(userIdKey);
+    await _storage.remove(emailKey);
+
     await _storage.remove(profileKey);
     await _storage.remove(roleKey);
+
     await _storage.remove(isLoggedInKey);
 
     // Keep:

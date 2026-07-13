@@ -4,6 +4,7 @@ import 'package:som_spot/features/profile/main_profile/controller/profile_contro
 import 'package:som_spot/helper/toast/toast_helper.dart';
 
 class EditProfileController extends GetxController {
+  static EditProfileController get to => Get.find<EditProfileController>();
   // Find the parent ProfileScreenController to update the profile state globally
   final profileController = Get.find<ProfileScreenController>();
 

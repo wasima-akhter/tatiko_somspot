@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
@@ -8,13 +9,7 @@ import '../../../utils/enum/app_enum.dart';
 class ChooseRoleController extends GetxController {
   static ChooseRoleController get to => Get.find();
 
-  final List<UserRole> roles = const [
-    UserRole.customer,
-    UserRole.merchandiser,
-    UserRole.influencer,
-  ];
-
-  final List<String> roleTitles = const ["Customer", "Merchant", "Influencer"];
+  final List<String> roleTitles = CommonController.to.roleTitles;
 
   /// Local/pending selection — kept separate from CommonController.role
   /// so we only commit the global role once the user hits Continue.
@@ -35,9 +30,16 @@ class ChooseRoleController extends GetxController {
 
   void confirmAndContinue() {
     final role = selectedRole.value;
-    if (role == null) return;
+
+    if (role == null) {
+      debugPrint("ROLE IS NULL");
+      return;
+    }
+
+    debugPrint("Selected role: ${role.name}");
 
     CommonController.to.setRole(role);
+
     AppRouter.route.goNamed(RoutePath.onboardingScreen);
   }
 }

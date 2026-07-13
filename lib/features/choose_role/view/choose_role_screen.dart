@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
+import 'package:som_spot/utils/common_controller/common_controller.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
 import '../controller/choose_role_controller.dart';
@@ -31,10 +32,10 @@ class ChooseRoleScreen extends GetView<ChooseRoleController> {
 
               Expanded(
                 child: ListView.separated(
-                  itemCount: controller.roles.length,
+                  itemCount: CommonController.to.roles.length,
                   separatorBuilder: (_, _) => const Gap(12),
                   itemBuilder: (context, index) {
-                    final role = controller.roles[index];
+                    final role = CommonController.to.roles[index];
 
                     return Obx(() {
                       final isSelected = controller.selectedRole.value == role;

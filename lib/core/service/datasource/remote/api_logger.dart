@@ -5,11 +5,10 @@ class ApiLogger {
     required String url,
     dynamic request,
     dynamic response,
+    dynamic parsedData,
     bool enabled = false,
   }) {
     if (!enabled) return;
-
-    final encoder = const JsonEncoder.withIndent("  ");
 
     print("""
 
@@ -24,16 +23,36 @@ ${_pretty(request)}
 
 
 STATUS:
-${response?.statusCode}
+${_getStatusCode(response)}
 
 
 BODY:
-${_pretty(response?.data)}
+${_getBody(response)}
+
+
+PARSED:
+${_pretty(parsedData)}
 
 
 ================================================
 
 """);
+  }
+
+  static dynamic _getStatusCode(dynamic response) {
+    try {
+      return response?.statusCode ?? "N/A";
+    } catch (_) {
+      return "N/A";
+    }
+  }
+
+  static dynamic _getBody(dynamic response) {
+    try {
+      return response?.data ?? response;
+    } catch (_) {
+      return response;
+    }
   }
 
   static String _pretty(dynamic data) {

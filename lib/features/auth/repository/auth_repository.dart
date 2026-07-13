@@ -1,41 +1,25 @@
 import 'package:dio/dio.dart';
-import 'package:som_spot/features/auth/requests/resend_otp_request.dart';
 
 import '../../../core/service/datasource/remote/api_client.dart';
-import '../../../core/service/datasource/remote/api_exception.dart';
-import '../../../core/service/datasource/remote/api_parser.dart';
-import '../../../core/service/datasource/remote/api_response.dart';
 import '../../../utils/api_urls/api_urls.dart';
-import '../models/login_model.dart';
-import '../requests/login_request.dart';
-import '../requests/register_request.dart';
-import '../requests/verify_otp_request.dart';
+import '../requests/auth_request.dart';
 
 class AuthRepository {
-  AuthRepository(this._apiClient);
-
   final ApiClient _apiClient;
+
+  AuthRepository(this._apiClient);
 
   Future<Response> register(RegisterRequest request) {
     return _apiClient.post(url: ApiUrls.register(), body: request.toJson());
   }
 
-  Future<ApiResponse<LoginModel>> login(LoginRequest request) async {
-    try {
-      final response = await _apiClient.post(
-        url: ApiUrls.login(),
-        body: request.toJson(),
-      );
-
-      return ApiParser.parse(response);
-    } on ApiException catch (e) {
-      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
-    }
+  Future<Response> login(LoginRequest request) {
+    return _apiClient.post(url: ApiUrls.login(), body: request.toJson());
   }
 
   Future<Response> verifyRegisterOtp(VerifyOtpRequest request) {
     return _apiClient.post(
-      url: ApiUrls.verifyPhoneOtp(),
+      url: ApiUrls.activateAccount(),
       body: request.toJson(),
     );
   }

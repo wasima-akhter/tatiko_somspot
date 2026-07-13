@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/features/alerts/view/alerts_screen.dart';
@@ -41,8 +42,11 @@ import 'package:som_spot/features/subscription/subscription_screen.dart';
 import 'package:som_spot/features/wellcome/view/welcome_screen.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
+import '../../features/auth/binding/auth_binding.dart';
 import '../../features/auth/completed_profile_influencer/view/completed_profile_influencer_screen.dart';
 import '../../features/choose_role/view/choose_role_screen.dart';
+import '../../features/home/binding/home_binding.dart';
+import '../../features/influencer_all/binding/influencer_binding.dart';
 import '../../features/influencer_all/influencer_apply_campaign/view/influencer_apply_campaign_screen.dart';
 import '../../features/influencer_all/influencer_campaign_details/view/influencer_campaign_details_screen.dart';
 import '../../features/influencer_all/influencer_my_campaigns/view/influencer_my_campaigns_screen.dart';
@@ -51,6 +55,8 @@ import '../../features/influencer_all/influencer_search/view/influencer_search_s
 import '../../features/influencer_all/influencer_submit_content/view/influencer_submit_content_screen.dart';
 import '../../features/influencer_all/influencer_wallet/view/influencer_wallet_screen.dart';
 import '../../features/influencer_all/influencer_your_submission/view/influencer_your_submission_screen.dart';
+import '../../features/onboarding/binding/onboard_binding.dart';
+import '../../features/profile/binding/profile_binding.dart';
 import '../../features/success/success_screen.dart';
 
 class AppRouter {
@@ -62,7 +68,9 @@ class AppRouter {
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     routes: [
-      ///======================= Initial Route =======================
+      // =====================================================
+      // INITIAL ROUTES
+      // =====================================================
       GoRoute(
         name: RoutePath.splashScreen,
         path: RoutePath.splashScreen.addBasePath,
@@ -73,158 +81,183 @@ class AppRouter {
           );
         },
       ),
+
+      // =====================================================
+      // ONBOARDING ROUTES
+      // =====================================================
       GoRoute(
         name: RoutePath.chooseLanguageScreen,
         path: RoutePath.chooseLanguageScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: ChooseLanguageScreen(),
             state: state,
+            child: ChooseLanguageScreen(),
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.chooseRoleScreen,
         path: RoutePath.chooseRoleScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: ChooseRoleScreen(),
             state: state,
+            child: BindingWrapper(
+              binding: OnboardingBinding(),
+              child: ChooseRoleScreen(),
+            ),
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.onboardingScreen,
         path: RoutePath.onboardingScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: OnboardingScreen(),
             state: state,
+            child: BindingWrapper(
+              binding: OnboardingBinding(),
+              child: OnboardingScreen(),
+            ),
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.welcomeScreen,
         path: RoutePath.welcomeScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const WelcomeScreen(),
             state: state,
+            child: const WelcomeScreen(),
           );
         },
       ),
+
+      // =====================================================
+      // AUTHENTICATION ROUTES
+      // =====================================================
       GoRoute(
         name: RoutePath.loginScreen,
         path: RoutePath.loginScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const LoginScreen(),
             state: state,
+            child: BindingWrapper(
+              binding: AuthBinding(),
+              child: const LoginScreen(),
+            ),
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.signUpScreen,
         path: RoutePath.signUpScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const SignUpScreen(),
             state: state,
+            child: BindingWrapper(
+              binding: AuthBinding(),
+              child: const SignUpScreen(),
+            ),
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.forgetPasswordScreen,
         path: RoutePath.forgetPasswordScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const ForgetPasswordScreen(),
             state: state,
+            child: BindingWrapper(
+              binding: AuthBinding(),
+              child: const ForgetPasswordScreen(),
+            ),
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.resetPasswordScreen,
         path: RoutePath.resetPasswordScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const ResetPasswordScreen(),
             state: state,
+            child: BindingWrapper(
+              binding: AuthBinding(),
+              child: const ResetPasswordScreen(),
+            ),
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.activeOtpScreen,
         path: RoutePath.activeOtpScreen.addBasePath,
         pageBuilder: (context, state) {
           final email = state.extra as String?;
+
           return _buildPageWithAnimation(
-            child: ActiveOtpScreen(email: email),
             state: state,
+            child: BindingWrapper(
+              binding: AuthBinding(),
+              child: ActiveOtpScreen(email: email),
+            ),
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.forgetOtpScreen,
         path: RoutePath.forgetOtpScreen.addBasePath,
         pageBuilder: (context, state) {
           final email = state.extra as String?;
+
           return _buildPageWithAnimation(
-            child: ForgetOtpScreen(email: email),
             state: state,
+            child: BindingWrapper(
+              binding: AuthBinding(),
+              child: ForgetOtpScreen(email: email),
+            ),
           );
         },
       ),
+
+      // =====================================================
+      // MAIN NAVIGATION
+      // =====================================================
       GoRoute(
         name: RoutePath.navigationPages,
         path: RoutePath.navigationPages.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const NavigationPage(),
+            child: BindingWrapper(
+              binding: HomeBinding(),
+              child: const NavigationPage(),
+            ),
             state: state,
           );
         },
-      ),
+      ), // =====================================================
+      // PROFILE ROUTES
+      // =====================================================
       GoRoute(
         name: RoutePath.editProfileScreen,
         path: RoutePath.editProfileScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const EditProfileScreen(),
+            child: BindingWrapper(
+              binding: ProfileBinding(),
+              child: const EditProfileScreen(),
+            ),
             state: state,
           );
         },
       ),
-      GoRoute(
-        name: RoutePath.claimsScreen,
-        path: RoutePath.claimsScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const ClaimsScreen(),
-            state: state,
-          );
-        },
-      ),
-      GoRoute(
-        name: RoutePath.helpAndSupportScreen,
-        path: RoutePath.helpAndSupportScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const HelpAndSupportScreen(),
-            state: state,
-          );
-        },
-      ),
-      GoRoute(
-        name: RoutePath.aboutSomSpotScreen,
-        path: RoutePath.aboutSomSpotScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const AboutSomSpotScreen(),
-            state: state,
-          );
-        },
-      ),
+
       GoRoute(
         name: RoutePath.completedProfileScreen,
         path: RoutePath.completedProfileScreen.addBasePath,
@@ -235,6 +268,7 @@ class AppRouter {
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.completedProfileInfluencerScreen,
         path: RoutePath.completedProfileInfluencerScreen.addBasePath,
@@ -245,6 +279,10 @@ class AppRouter {
           );
         },
       ),
+
+      // =====================================================
+      // APPLICATION STATUS ROUTES
+      // =====================================================
       GoRoute(
         name: RoutePath.applicationSubmittedScreen,
         path: RoutePath.applicationSubmittedScreen.addBasePath,
@@ -255,6 +293,7 @@ class AppRouter {
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.applicationUnderReviewScreen,
         path: RoutePath.applicationUnderReviewScreen.addBasePath,
@@ -265,46 +304,68 @@ class AppRouter {
           );
         },
       ),
-      // GoRoute(
-      //   name: RoutePath.chooseGenderScreen,
-      //   path: RoutePath.chooseGenderScreen.addBasePath,
-      //   pageBuilder: (context, state) {
-      //     return _buildPageWithAnimation(
-      //       child: const ChooseGenderScreen(),
-      //       state: state,
-      //     );
-      //   },
-      // ),
-      // GoRoute(
-      //   name: RoutePath.chooseHeightWeightScreen,
-      //   path: RoutePath.chooseHeightWeightScreen.addBasePath,
-      //   pageBuilder: (context, state) {
-      //     return _buildPageWithAnimation(
-      //       child: const ChooseHeightWeightScreen(),
-      //       state: state,
-      //     );
-      //   },
-      // ),
-      // GoRoute(
-      //   name: RoutePath.dateOfBirthScreen,
-      //   path: RoutePath.dateOfBirthScreen.addBasePath,
-      //   pageBuilder: (context, state) {
-      //     return _buildPageWithAnimation(
-      //       child: const DateOfBirthScreen(),
-      //       state: state,
-      //     );
-      //   },
-      // ),
-      // GoRoute(
-      //   name: RoutePath.thankYouScreen,
-      //   path: RoutePath.thankYouScreen.addBasePath,
-      //   pageBuilder: (context, state) {
-      //     return _buildPageWithAnimation(
-      //       child: const ThankYouScreen(),
-      //       state: state,
-      //     );
-      //   },
-      // ),
+
+      // =====================================================
+      // STATIC INFORMATION ROUTES
+      // =====================================================
+      GoRoute(
+        name: RoutePath.claimsScreen,
+        path: RoutePath.claimsScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const ClaimsScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RoutePath.helpAndSupportScreen,
+        path: RoutePath.helpAndSupportScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const HelpAndSupportScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RoutePath.aboutSomSpotScreen,
+        path: RoutePath.aboutSomSpotScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const AboutSomSpotScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RoutePath.privacyPolicyScreen,
+        path: RoutePath.privacyPolicyScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const PrivacyPolicyScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RoutePath.termsAndConditionsScreen,
+        path: RoutePath.termsAndConditionsScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const TermsAndConditionsScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      // =====================================================
+      // ACCOUNT SETTINGS ROUTES
+      // =====================================================
       GoRoute(
         name: RoutePath.subscriptionScreen,
         path: RoutePath.subscriptionScreen.addBasePath,
@@ -315,40 +376,7 @@ class AppRouter {
           );
         },
       ),
-      // GoRoute(
-      //   name: RoutePath.navigationPages,
-      //   path: RoutePath.navigationPages.addBasePath,
-      //   pageBuilder: (context, state) {
-      //     return _buildPageWithAnimation(
-      //       child: const NavigationPage(),
-      //       state: state,
-      //     );
-      //   },
-      // ),
-      //
-      // //=================Profile ===================
-      // GoRoute(
-      //   name: RoutePath.editProfileScreen,
-      //   path: RoutePath.editProfileScreen.addBasePath,
-      //   pageBuilder: (context, state) {
-      //     return _buildPageWithAnimation(
-      //       child: EditProfileScreen(),
-      //       state: state,
-      //     );
-      //   },
-      // ),
-      //
-      // //=============Setting==========
-      // GoRoute(
-      //   name: RoutePath.settingScreen,
-      //   path: RoutePath.settingScreen.addBasePath,
-      //   pageBuilder: (context, state) {
-      //     return _buildPageWithAnimation(
-      //       child: const SettingScreen(),
-      //       state: state,
-      //     );
-      //   },
-      // ),
+
       GoRoute(
         name: RoutePath.changePasswordScreen,
         path: RoutePath.changePasswordScreen.addBasePath,
@@ -360,100 +388,104 @@ class AppRouter {
         },
       ),
 
-      // GoRoute(
-      //   name: RoutePath.contactAndSupportScreen,
-      //   path: RoutePath.contactAndSupportScreen.addBasePath,
-      //   pageBuilder: (context, state) {
-      //     return _buildPageWithAnimation(
-      //       child: const ContactAndSupportScreen(),
-      //       state: state,
-      //     );
-      //   },
-      // ),
-      GoRoute(
-        name: RoutePath.privacyPolicyScreen,
-        path: RoutePath.privacyPolicyScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const PrivacyPolicyScreen(),
-            state: state,
-          );
-        },
-      ),
-      GoRoute(
-        name: RoutePath.termsAndConditionsScreen,
-        path: RoutePath.termsAndConditionsScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const TermsAndConditionsScreen(),
-            state: state,
-          );
-        },
-      ),
+      // =====================================================
+      // CUSTOMER DEALS & DISCOVERY ROUTES
+      // =====================================================
       GoRoute(
         name: RoutePath.topDealsScreen,
         path: RoutePath.topDealsScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const TopDealsScreen(),
             state: state,
+            child: BindingWrapper(
+              binding: HomeBinding(),
+              child: const TopDealsScreen(),
+            ),
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.nearbyYouScreen,
         path: RoutePath.nearbyYouScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const NearbyYouScreen(),
             state: state,
+            child: BindingWrapper(
+              binding: HomeBinding(),
+              child: const NearbyYouScreen(),
+            ),
           );
         },
       ),
-      GoRoute(
-        name: RoutePath.merchantDetailsScreen,
-        path: RoutePath.merchantDetailsScreen.addBasePath,
-        pageBuilder: (context, state) {
-          final merchant = state.extra as MerchantModel;
-          return _buildPageWithAnimation(
-            child: MerchantDetailsScreen(merchant: merchant),
-            state: state,
-          );
-        },
-      ),
+
       GoRoute(
         name: RoutePath.categoryMerchantsScreen,
         path: RoutePath.categoryMerchantsScreen.addBasePath,
         pageBuilder: (context, state) {
           final categoryName = (state.extra as String?) ?? 'Category';
+
           return _buildPageWithAnimation(
-            child: CategoryMerchantsScreen(categoryName: categoryName),
             state: state,
+            child: BindingWrapper(
+              binding: HomeBinding(),
+              child: CategoryMerchantsScreen(categoryName: categoryName),
+            ),
           );
         },
       ),
+
+      GoRoute(
+        name: RoutePath.merchantDetailsScreen,
+        path: RoutePath.merchantDetailsScreen.addBasePath,
+        pageBuilder: (context, state) {
+          final merchant = state.extra as MerchantModel;
+
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: HomeBinding(),
+              child: MerchantDetailsScreen(merchant: merchant),
+            ),
+          );
+        },
+      ),
+
       GoRoute(
         name: RoutePath.offerDetailsScreen,
         path: RoutePath.offerDetailsScreen.addBasePath,
         pageBuilder: (context, state) {
           final deal = state.extra as DealModel;
+
           return _buildPageWithAnimation(
-            child: OfferDetailsScreen(deal: deal),
             state: state,
+            child: BindingWrapper(
+              binding: HomeBinding(),
+              child: OfferDetailsScreen(deal: deal),
+            ),
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.claimedOfferDetailsScreen,
         path: RoutePath.claimedOfferDetailsScreen.addBasePath,
         pageBuilder: (context, state) {
           final deal = state.extra as DealModel;
+
           return _buildPageWithAnimation(
-            child: ClaimedOfferDetailsScreen(deal: deal),
             state: state,
+            child: BindingWrapper(
+              binding: HomeBinding(),
+              child: ClaimedOfferDetailsScreen(deal: deal),
+            ),
           );
         },
       ),
+
+      // =====================================================
+      // BUSINESS ROUTES
+      // =====================================================
       GoRoute(
         name: RoutePath.createOfferScreen,
         path: RoutePath.createOfferScreen.addBasePath,
@@ -464,17 +496,20 @@ class AppRouter {
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.editOfferScreen,
         path: RoutePath.editOfferScreen.addBasePath,
         pageBuilder: (context, state) {
           final deal = state.extra as DealModel;
+
           return _buildPageWithAnimation(
             child: EditOfferScreen(deal: deal),
             state: state,
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.businessInfoScreen,
         path: RoutePath.businessInfoScreen.addBasePath,
@@ -485,6 +520,7 @@ class AppRouter {
           );
         },
       ),
+
       GoRoute(
         name: RoutePath.alertScreen,
         path: RoutePath.alertScreen.addBasePath,
@@ -496,123 +532,172 @@ class AppRouter {
         },
       ),
 
-      // Influencer ---->
+      // =====================================================
+      // INFLUENCER ROUTES
+      // =====================================================
+
+      // Dashboard
       GoRoute(
         name: RoutePath.influencerDashboardScreen,
         path: RoutePath.influencerDashboardScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const InfluencerDashboardScreen(),
             state: state,
+            child: BindingWrapper(
+              binding: InfluencerBinding(),
+              child: const InfluencerDashboardScreen(),
+            ),
           );
         },
       ),
+
+      // Discovery
       GoRoute(
         name: RoutePath.influencerDiscoverScreen,
         path: RoutePath.influencerDiscoverScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const InfluencerDiscoverScreen(),
             state: state,
-          );
-        },
-      ),
-      GoRoute(
-        name: RoutePath.influencerTaskScreen,
-        path: RoutePath.influencerTaskScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const InfluencerTaskScreen(),
-            state: state,
-          );
-        },
-      ),
-      GoRoute(
-        name: RoutePath.influencerWalletScreen,
-        path: RoutePath.influencerWalletScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const InfluencerWalletScreen(),
-            state: state,
+            child: BindingWrapper(
+              binding: InfluencerBinding(),
+              child: const InfluencerDiscoverScreen(),
+            ),
           );
         },
       ),
 
-      //
-
-      // Individual screens
-      GoRoute(
-        name: RoutePath.influencerCampaignDetailsScreen,
-        path: RoutePath.influencerCampaignDetailsScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const InfluencerCampaignDetailsScreen(),
-            state: state,
-          );
-        },
-      ),
-      GoRoute(
-        name: RoutePath.influencerApplyCampaignScreen,
-        path: RoutePath.influencerApplyCampaignScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const ApplyCampaignScreen(),
-            state: state,
-          );
-        },
-      ),
-      GoRoute(
-        name: RoutePath.influencerSubmitContentScreen,
-        path: RoutePath.influencerSubmitContentScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const InfluencerSubmitContentScreen(),
-            state: state,
-          );
-        },
-      ),
-      GoRoute(
-        name: RoutePath.influencerYourSubmissionScreen,
-        path: RoutePath.influencerYourSubmissionScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const InfluencerYourSubmissionScreen(),
-            state: state,
-          );
-        },
-      ),
-      GoRoute(
-        name: RoutePath.influencerPublishProofScreen,
-        path: RoutePath.influencerPublishProofScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child: const InfluencerPublishProofScreen(),
-            state: state,
-          );
-        },
-      ),
       GoRoute(
         name: RoutePath.influencerSearchScreen,
         path: RoutePath.influencerSearchScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const InfluencerSearchScreen(),
             state: state,
+            child: BindingWrapper(
+              binding: InfluencerBinding(),
+              child: const InfluencerSearchScreen(),
+            ),
           );
         },
       ),
+
+      // Tasks & Wallet
+      GoRoute(
+        name: RoutePath.influencerTaskScreen,
+        path: RoutePath.influencerTaskScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: InfluencerBinding(),
+              child: const InfluencerTaskScreen(),
+            ),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RoutePath.influencerWalletScreen,
+        path: RoutePath.influencerWalletScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: InfluencerBinding(),
+              child: const InfluencerWalletScreen(),
+            ),
+          );
+        },
+      ),
+
+      // Campaign Management
+      GoRoute(
+        name: RoutePath.influencerCampaignDetailsScreen,
+        path: RoutePath.influencerCampaignDetailsScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: InfluencerBinding(),
+              child: const InfluencerCampaignDetailsScreen(),
+            ),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RoutePath.influencerApplyCampaignScreen,
+        path: RoutePath.influencerApplyCampaignScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: InfluencerBinding(),
+              child: const ApplyCampaignScreen(),
+            ),
+          );
+        },
+      ),
+
       GoRoute(
         name: RoutePath.influencerMyCampaigns,
         path: RoutePath.influencerMyCampaigns.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: InfluencerMyCampaignsScreen(),
             state: state,
+            child: BindingWrapper(
+              binding: InfluencerBinding(),
+              child: InfluencerMyCampaignsScreen(),
+            ),
+          );
+        },
+      ), // =====================================================
+      // INFLUENCER CONTENT SUBMISSION ROUTES
+      // =====================================================
+      GoRoute(
+        name: RoutePath.influencerSubmitContentScreen,
+        path: RoutePath.influencerSubmitContentScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: InfluencerBinding(),
+              child: const InfluencerSubmitContentScreen(),
+            ),
           );
         },
       ),
 
-      // success -----> screen
+      GoRoute(
+        name: RoutePath.influencerYourSubmissionScreen,
+        path: RoutePath.influencerYourSubmissionScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: InfluencerBinding(),
+              child: const InfluencerYourSubmissionScreen(),
+            ),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RoutePath.influencerPublishProofScreen,
+        path: RoutePath.influencerPublishProofScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: InfluencerBinding(),
+              child: const InfluencerPublishProofScreen(),
+            ),
+          );
+        },
+      ),
+
+      // =====================================================
+      // COMMON SUCCESS ROUTE
+      // =====================================================
       GoRoute(
         name: RoutePath.successScreen,
         path: RoutePath.successScreen.addBasePath,
@@ -632,24 +717,113 @@ class AppRouter {
           );
         },
       ),
-      //
-      // GoRoute(
-      //   name: RoutePath.healthTrackingScreen,
-      //   path: RoutePath.healthTrackingScreen.addBasePath,
-      //   pageBuilder: (context, state) {
-      //     return _buildPageWithAnimation(
-      //       child: const HealthTrackingScreen(),
-      //       state: state,
-      //     );
-      //   },
-      // ),
-      // GoRoute(
-      //   name: RoutePath.bookingsScreen,
-      //   path: RoutePath.bookingsScreen.addBasePath,
-      //   pageBuilder: (context, state) {
-      //     return _buildPageWithAnimation(child: BookingsScreen(), state: state);
-      //   },
-      // ),
+
+      /*
+      GoRoute(
+        name: RoutePath.contactAndSupportScreen,
+        path: RoutePath.contactAndSupportScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const ContactAndSupportScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.navigationPages,
+        path: RoutePath.navigationPages.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const NavigationPage(),
+            state: state,
+          );
+        },
+      ),
+
+      //=================Profile ===================
+      GoRoute(
+        name: RoutePath.editProfileScreen,
+        path: RoutePath.editProfileScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: EditProfileScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      //=============Setting==========
+      GoRoute(
+        name: RoutePath.settingScreen,
+        path: RoutePath.settingScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const SettingScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RoutePath.healthTrackingScreen,
+        path: RoutePath.healthTrackingScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const HealthTrackingScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.bookingsScreen,
+        path: RoutePath.bookingsScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(child: BookingsScreen(), state: state);
+        },
+      ),
+
+      GoRoute(
+        name: RoutePath.chooseGenderScreen,
+        path: RoutePath.chooseGenderScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const ChooseGenderScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.chooseHeightWeightScreen,
+        path: RoutePath.chooseHeightWeightScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const ChooseHeightWeightScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.dateOfBirthScreen,
+        path: RoutePath.dateOfBirthScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const DateOfBirthScreen(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.thankYouScreen,
+        path: RoutePath.thankYouScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: const ThankYouScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      */
       /*GoRoute(
         name: RoutePath.categoryEventsScreen,
         path: RoutePath.categoryEventsScreen.addBasePath,
@@ -689,3 +863,91 @@ class AppRouter {
 
   static GoRouter get route => initRoute;
 }
+
+class BindingWrapper extends StatelessWidget {
+  final Bindings binding;
+  final Widget child;
+
+  const BindingWrapper({super.key, required this.binding, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    binding.dependencies();
+    return child;
+  }
+}
+
+/*
+1. Initial Routes
+   └── Splash
+
+2. Onboarding Routes
+   ├── Choose Language
+   ├── Choose Role
+   ├── Onboarding
+   └── Welcome
+
+3. Authentication Routes
+   ├── Login
+   ├── Signup
+   ├── Forgot Password
+   ├── Reset Password
+   ├── Active OTP
+   └── Forgot OTP
+
+4. Main Navigation
+   └── Navigation Page
+
+5. Profile Routes
+   ├── Edit Profile
+   ├── Completed Profile
+   └── Completed Influencer Profile
+
+6. Application Status
+   ├── Submitted
+   └── Under Review
+
+7. Static Information
+   ├── Claims
+   ├── Help & Support
+   ├── About
+   ├── Privacy Policy
+   └── Terms & Conditions
+
+8. Account Settings
+   ├── Subscription
+   └── Change Password
+
+9. Customer/Home Routes
+   ├── Top Deals
+   ├── Nearby
+   ├── Category Merchants
+   ├── Merchant Details
+   ├── Offer Details
+   └── Claimed Offer Details
+
+10. Business Routes
+   ├── Create Offer
+   ├── Edit Offer
+   ├── Business Info
+   └── Alerts
+
+11. Influencer Routes
+   ├── Dashboard
+   ├── Discover
+   ├── Search
+   ├── Tasks
+   ├── Wallet
+   ├── Campaign Details
+   ├── Apply Campaign
+   ├── My Campaigns
+   ├── Submit Content
+   ├── Your Submission
+   └── Publish Proof
+
+12. Common
+   └── Success
+
+
+
+*/

@@ -2,15 +2,16 @@ import 'package:get/get.dart';
 
 import '../../../core/router/route_path.dart';
 import '../../../core/router/routes.dart';
+import '../../../core/service/datasource/local/app_storage.dart';
 import '../../../helper/snackbar/api_snackbar.dart';
-import '../requests/login_request.dart';
-import '../requests/register_request.dart';
+import '../../../utils/common_controller/common_controller.dart';
+import '../requests/auth_request.dart';
 import '../service/auth_service.dart';
 
 class AuthController extends GetxController {
-  AuthController(this.authService);
+  final AuthService _service;
 
-  final AuthService authService;
+  AuthController(this._service);
 
   static AuthController get to => Get.find();
 
@@ -18,26 +19,32 @@ class AuthController extends GetxController {
 
   final errorMessage = ''.obs;
 
-  Future<void> login(LoginRequest request) async {
+  Future<void> login({required LoginRequest request}) async {
     try {
       isLoading.value = true;
+      errorMessage.value = '';
 
-      errorMessage.value = "";
+      print("LOGIN SERVICE START");
 
-      final result = await authService.login(request);
+      final result = await _service.login(request);
 
-      if (result.success) {
-        // navigate here
+      print("LOGIN SERVICE RESPONSE: ${result.success}");
+      print("LOGIN SERVICE MESSAGE: ${result.message}");
+      print("LOGIN SERVICE DATA: ${result.data}");
 
-        // Example:
-        // AppRouter.route.goNamed(
-        //    RoutePath.navigationPages
-        // );
-      } else {
-        errorMessage.value = result.message;
+      if (!result.success || result.data == null) {
+        errorMessage.value = result.message.isNotEmpty
+            ? result.message
+            : "Login failed";
 
-        ApiSnackbar.show(result.message, enabled: true);
+        Future.delayed(const Duration(milliseconds: 300), () {
+          ApiSnackbar.show(errorMessage.value, type: SnackbarType.error);
+        });
+
+        return;
       }
+
+      AppRouter.route.goNamed(RoutePath.navigationPages);
     } finally {
       isLoading.value = false;
     }
@@ -51,10 +58,11 @@ class AuthController extends GetxController {
   }) async {
     try {
       isLoading.value = true;
+      final selectedRole = CommonController.to.role.value;
 
-      final response = await authService.register(
+      final result = await _service.register(
         RegisterRequest(
-          role: "USER",
+          role: selectedRole.value,
           name: name,
           email: email,
           password: password,
@@ -62,23 +70,13 @@ class AuthController extends GetxController {
         ),
       );
 
-      final body = response.data;
-
-      if (body["success"] == true) {
+      if (result.success) {
         AppRouter.route.pushNamed(RoutePath.activeOtpScreen, extra: email);
 
         return;
       }
 
-      final isActive = body["data"]?["isActive"] ?? false;
-
-      if (isActive) {
-        Get.snackbar("Account Exists", "Account active. Please login");
-
-        AppRouter.route.goNamed(RoutePath.loginScreen);
-      } else {
-        Get.snackbar("Error", body["message"] ?? "Registration failed");
-      }
+      ApiSnackbar.show(result.message);
     } finally {
       isLoading.value = false;
     }
@@ -91,25 +89,24 @@ class AuthController extends GetxController {
     try {
       isLoading.value = true;
 
-      // final response = await authService.verifyRegisterOtp(
-      //   VerifyOtpRequest(email: email, otp: otp),
-      // );
+      final response = await _service.verifyRegisterOtp(
+        VerifyOtpRequest(email: email, activationCode: otp),
+      );
 
-      // final body = response.data;
+      if (!response.success || response.data == null) {
+        ApiSnackbar.show(response.message, type: SnackbarType.error);
+        return;
+      }
 
-      // if (body["success"] == true) {
-      //   final role = AppStorage.to.role;
+      final role = AppStorage.to.role;
 
-      //   if (role?.isMerchandiser == true) {
-      //     AppRouter.route.goNamed(RoutePath.completedProfileScreen);
-      //   } else if (role?.isInfluencer == true) {
-      //     AppRouter.route.goNamed(RoutePath.completedProfileInfluencerScreen);
-      //   } else {
-      //     AppRouter.route.goNamed(RoutePath.navigationPages);
-      //   }
-      // } else {
-      //   Get.snackbar("Verification Failed", body["message"] ?? "Invalid OTP");
-      // }
+      if (role?.isMerchandiser == true) {
+        AppRouter.route.goNamed(RoutePath.completedProfileScreen);
+      } else if (role?.isInfluencer == true) {
+        AppRouter.route.goNamed(RoutePath.completedProfileInfluencerScreen);
+      } else {
+        AppRouter.route.goNamed(RoutePath.navigationPages);
+      }
     } finally {
       isLoading.value = false;
     }

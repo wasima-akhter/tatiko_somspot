@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -19,7 +20,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final controller = Get.put(EditProfileController());
+  final controller = EditProfileController.to;
   final _formKey = GlobalKey<FormState>();
 
   late TextEditingController nameController;
@@ -28,8 +29,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController(text: controller.profileController.userName.value);
-    phoneController = TextEditingController(text: controller.profileController.userPhone.value);
+    nameController = TextEditingController(
+      text: controller.profileController.userName.value,
+    );
+    phoneController = TextEditingController(
+      text: controller.profileController.userPhone.value,
+    );
     // Clear selected local image on entry
     controller.selectedImage.value = null;
   }
@@ -92,7 +97,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           fit: BoxFit.cover,
                                         )
                                       : CustomNetworkImage(
-                                          imageUrl: controller.profileController.userAvatar.value,
+                                          imageUrl: controller
+                                              .profileController
+                                              .userAvatar
+                                              .value,
                                           boxShape: BoxShape.circle,
                                         ),
                                 ),

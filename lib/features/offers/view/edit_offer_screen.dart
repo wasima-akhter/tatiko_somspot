@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -7,12 +8,11 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/features/home/model/deal_model.dart';
 import 'package:som_spot/features/offers/controller/offer_controller.dart';
-
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 class EditOfferScreen extends StatefulWidget {
   final DealModel deal;
@@ -106,7 +106,9 @@ class _EditOfferScreenState extends State<EditOfferScreen> {
                         ),
                         image: controller.imagePath.value.isNotEmpty
                             ? DecorationImage(
-                                image: FileImage(File(controller.imagePath.value)),
+                                image: FileImage(
+                                  File(controller.imagePath.value),
+                                ),
                                 fit: BoxFit.cover,
                               )
                             : null,
@@ -186,9 +188,7 @@ class _EditOfferScreenState extends State<EditOfferScreen> {
                             hintText: 'DD/MM/YYYY',
                             fillColor: AppColors.white,
                             readOnly: true,
-                            onTap: () {
-                              
-                            },
+                            onTap: () {},
                           ),
                         ],
                       ),

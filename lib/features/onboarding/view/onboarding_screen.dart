@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
+import 'package:som_spot/core/service/datasource/local/app_storage.dart';
 import 'package:som_spot/features/onboarding/widgets/onboarding_page_card.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
@@ -16,6 +17,12 @@ class OnboardingScreen extends StatelessWidget {
 
   final _controller = Get.find<OnboardingController>();
 
+  Future<void> _completeOnboarding() async {
+    await AppStorage.to.setSeenOnboarding(true);
+
+    AppRouter.route.goNamed(RoutePath.loginScreen);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,16 +30,11 @@ class OnboardingScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // ── Top Bar: Dots & Skip ──
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24.0,
-                vertical: 16.0,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Dot Indicators
                   Row(
                     children: List.generate(
                       _controller.onboardingList.length,
@@ -40,10 +42,8 @@ class OnboardingScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // Skip Button
                   GestureDetector(
-                    onTap: () =>
-                        AppRouter.route.goNamed(RoutePath.welcomeScreen),
+                    onTap: _completeOnboarding,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
@@ -68,14 +68,15 @@ class OnboardingScreen extends StatelessWidget {
               ),
             ),
 
-            // ── Page View: Image & Text ──
             Expanded(
               child: PageView.builder(
                 controller: _controller.pageController,
                 itemCount: _controller.onboardingList.length,
+
                 onPageChanged: (index) {
                   _controller.currentIndex.value = index;
                 },
+
                 itemBuilder: (context, index) {
                   return OnboardingPageCard(
                     model: _controller.onboardingList[index],
@@ -84,9 +85,8 @@ class OnboardingScreen extends StatelessWidget {
               ),
             ),
 
-            // ── Bottom Button ──
             Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(24),
               child: Obx(() {
                 final isLast =
                     _controller.currentIndex.value ==
@@ -98,9 +98,10 @@ class OnboardingScreen extends StatelessWidget {
                             ? AppStrings.startEarning.tr
                             : AppStrings.getStarted.tr)
                       : AppStrings.next.tr,
-                  onTap: () {
+
+                  onTap: () async {
                     if (isLast) {
-                      AppRouter.route.goNamed(RoutePath.welcomeScreen);
+                      await _completeOnboarding();
                     } else {
                       _controller.pageController.nextPage(
                         duration: const Duration(milliseconds: 300),
@@ -122,16 +123,20 @@ class OnboardingScreen extends StatelessWidget {
       padding: const EdgeInsets.only(right: 6),
       child: Obx(() {
         final isActive = _controller.currentIndex.value == index;
+
         return AnimatedContainer(
           duration: const Duration(milliseconds: 300),
+
           height: 8,
+
           width: isActive ? 24 : 8,
+
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
+
             color: isActive
-                ? AppColors
-                      .primaryColor // Blue from Figma
-                : AppColors.primaryColor.withValues(alpha: 0.2), // Light blue
+                ? AppColors.primaryColor
+                : AppColors.primaryColor.withValues(alpha: 0.2),
           ),
         );
       }),

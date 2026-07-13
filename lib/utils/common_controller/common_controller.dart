@@ -5,6 +5,14 @@ import '../enum/app_enum.dart';
 class CommonController extends GetxController {
   static CommonController get to => Get.find();
 
+  final List<String> roleTitles = const ["Customer", "Merchant", "Influencer"];
+
+  final List<UserRole> roles = const [
+    UserRole.customer,
+    UserRole.merchandiser,
+    UserRole.influencer,
+  ];
+
   final Rx<UserRole> role = UserRole.influencer.obs;
 
   bool get isMerchandiser => role.value.isMerchandiser;
@@ -18,11 +26,11 @@ extension UserRoleExtension on UserRole {
   String get value {
     switch (this) {
       case UserRole.influencer:
-        return 'Influencer';
+        return 'Influencer'.toUpperCase();
       case UserRole.merchandiser:
-        return 'Merchandiser';
+        return 'Merchandiser'.toUpperCase();
       case UserRole.customer:
-        return 'Customer';
+        return 'User'.toUpperCase();
     }
   }
 
@@ -32,7 +40,7 @@ extension UserRoleExtension on UserRole {
         return UserRole.influencer;
       case 'merchandiser':
         return UserRole.merchandiser;
-      case 'customer':
+      case 'user':
         return UserRole.customer;
       default:
         return UserRole.influencer;

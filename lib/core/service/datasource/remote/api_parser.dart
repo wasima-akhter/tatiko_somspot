@@ -1,3 +1,4 @@
+import 'api_logger.dart';
 import 'api_response.dart';
 
 class ApiParser {
@@ -8,6 +9,12 @@ class ApiParser {
     if (response == null) {
       return ApiResponse.failure(message: "Empty response");
     }
+
+    ApiLogger.showResponse(
+      url: response.requestOptions.uri.toString(),
+      response: response,
+      enabled: true, // change to your config flag
+    );
 
     final body = response.data;
 
@@ -25,21 +32,34 @@ class ApiParser {
     final message = body["message"]?.toString() ?? "Something went wrong";
 
     if (success) {
+      final parsedData = mapper != null ? mapper(body) : body["data"];
+
+      ApiLogger.showResponse(
+        url: response.requestOptions.uri.toString(),
+        response: response,
+        parsedData: parsedData,
+        enabled: true,
+      );
+
       return ApiResponse.success(
         statusCode: statusCode,
-
         message: message,
-
-        data: mapper != null ? mapper(body["data"]) : body["data"],
+        data: parsedData,
       );
     }
 
+    final errors = _parseErrors(body);
+
+    ApiLogger.showResponse(
+      url: response.requestOptions.uri.toString(),
+      response: {"parsed_errors": errors, "message": message, "success": false},
+      enabled: true,
+    );
+
     return ApiResponse.failure(
       statusCode: statusCode,
-
       message: message,
-
-      errors: _parseErrors(body),
+      errors: errors,
     );
   }
 
