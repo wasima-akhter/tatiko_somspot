@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/helper/validator/text_field_validator.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
+import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
+
+import '../../auth/controller/auth_controller.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -87,7 +89,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               size: 20.sp,
                               color: AppColors.hintTextColor,
                             ),
-                            validator: TextFieldValidator.password(),
+                            // validator: TextFieldValidator.password(),
                           ),
                           Gap(20.h),
 
@@ -102,7 +104,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               size: 20.sp,
                               color: AppColors.hintTextColor,
                             ),
-                            validator: TextFieldValidator.password(),
+                            // validator: TextFieldValidator.password(),
                           ),
                           Gap(20.h),
 
@@ -130,22 +132,25 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 Gap(16.h),
 
                 // ── Action Button ──
-                CustomButton(
-                  text: AppStrings.saveChanges.tr,
-                  onTap: () {
-                    if (_formKey.currentState?.validate() ?? false) {
-                      // Perform save logic here
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            AppStrings.passwordChangedSuccessfully.tr,
-                          ),
-                          backgroundColor: AppColors.success,
+                Obx(
+                  () => AuthController.to.isLoading.value
+                      ? LoadingWidget()
+                      : CustomButton(
+                          text: AppStrings.saveChanges.tr,
+                          onTap: () {
+                            if (!(_formKey.currentState?.validate() ?? false)) {
+                              return;
+                            }
+
+                            AuthController.to.changePassword(
+                              oldPassword: _currentPasswordController.text
+                                  .trim(),
+                              newPassword: _newPasswordController.text.trim(),
+                              confirmPassword: _confirmPasswordController.text
+                                  .trim(),
+                            );
+                          },
                         ),
-                      );
-                      AppRouter.route.pop();
-                    }
-                  },
                 ),
                 Gap(24.h),
               ],

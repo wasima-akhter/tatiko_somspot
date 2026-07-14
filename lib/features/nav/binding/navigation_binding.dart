@@ -2,12 +2,14 @@ import 'package:get/get.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
 
+import '../../../core/di/injection.dart';
 import '../../alerts/controller/alerts_controller.dart';
 import '../../home/controller/home_controller.dart';
 import '../../influencer_all/influencer_discover/controller/influencer_discover_controller.dart';
 import '../../influencer_all/influencer_task_screen/controller/influencer_task_controller.dart';
 import '../../influencer_all/influencer_wallet/controller/influencer_wallet_controller.dart';
 import '../../offers/controller/offer_controller.dart';
+import '../../profile/service/profile_service.dart';
 import '../../saved/controller/saved_controller.dart';
 import '../../search/controller/search_controller.dart';
 
@@ -24,7 +26,7 @@ class NavigationBinding extends Bindings {
 
     // Profile tab controller
     Get.lazyPut<ProfileScreenController>(
-      () => ProfileScreenController(),
+      () => ProfileScreenController(sl<ProfileService>()),
       fenix: true,
     );
 

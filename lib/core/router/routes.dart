@@ -340,7 +340,10 @@ class AppRouter {
         path: RoutePath.helpAndSupportScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const HelpAndSupportScreen(),
+            child: BindingWrapper(
+              binding: OtherBinding(),
+              child: const HelpAndSupportScreen(),
+            ),
             state: state,
           );
         },
@@ -398,7 +401,10 @@ class AppRouter {
         path: RoutePath.changePasswordScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const ChangePasswordScreen(),
+            child: BindingWrapper(
+              binding: AuthBinding(),
+              child: const ChangePasswordScreen(),
+            ),
             state: state,
           );
         },

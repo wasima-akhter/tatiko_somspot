@@ -37,4 +37,9 @@ class ApiUrls {
   static String resetPassword() => '$base/auth/reset-password';
 
   static String changePassword() => '$base/auth/change-password';
+
+  // profile
+  static String editProfile() => '$base/user/edit-profile';
+
+  static String userProfile() => '$base/user/profile';
 }

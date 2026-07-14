@@ -185,4 +185,34 @@ class AuthController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future<void> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    try {
+      isLoading.value = true;
+
+      final result = await _service.changePassword(
+        ChangePasswordRequest(
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+          confirmPassword: confirmPassword,
+        ),
+      );
+
+      if (!result.success) {
+        ApiSnackbar.show(result.message, type: SnackbarType.error);
+
+        return;
+      }
+
+      ApiSnackbar.show(result.message, type: SnackbarType.success);
+
+      AppRouter.route.pop();
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

@@ -178,6 +178,25 @@ class AuthService {
       return ApiResponse.failure(message: "Something went wrong");
     }
   }
+
+  Future<ApiResponse<void>> changePassword(
+    ChangePasswordRequest request,
+  ) async {
+    try {
+      final response = await _repository.changePassword(request);
+
+      final result = ApiParser.parse<void>(response, mapper: (_) {});
+
+      return result;
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Change Password Error: $e");
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
 }
 
 Future<void> _saveLoginSession(LoginResponse login) async {

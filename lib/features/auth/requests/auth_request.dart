@@ -53,24 +53,6 @@ class ResendOtpRequest {
   Map<String, dynamic> toJson() => {"email": email};
 }
 
-class ChangePasswordRequest {
-  final String oldPassword;
-  final String newPassword;
-  final String confirmPassword;
-
-  ChangePasswordRequest({
-    required this.oldPassword,
-    required this.newPassword,
-    required this.confirmPassword,
-  });
-
-  Map<String, dynamic> toJson() => {
-    "oldPassword": oldPassword,
-    "newPassword": newPassword,
-    "confirmPassword": confirmPassword,
-  };
-}
-
 class ForgotPasswordRequest {
   final String email;
 
@@ -106,6 +88,26 @@ class ResetPasswordRequest {
   Map<String, dynamic> toJson() {
     return {
       "email": email,
+      "newPassword": newPassword,
+      "confirmPassword": confirmPassword,
+    };
+  }
+}
+
+class ChangePasswordRequest {
+  final String oldPassword;
+  final String newPassword;
+  final String confirmPassword;
+
+  ChangePasswordRequest({
+    required this.oldPassword,
+    required this.newPassword,
+    required this.confirmPassword,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "oldPassword": oldPassword,
       "newPassword": newPassword,
       "confirmPassword": confirmPassword,
     };

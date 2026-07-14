@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/features/profile/edit_profile/controller/edit_profile_controller.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
+import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
@@ -222,28 +223,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                   // Save Changes button
                   Obx(
-                    () => CustomButton(
-                      text: AppStrings.saveChanges.tr,
-                      isLoading: controller.isUpdateLoading.value,
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          controller.updateProfile(
-                            name: nameController.text.trim(),
-                            phone: phoneController.text.trim(),
-                          );
-                          final navigator = Navigator.of(context);
-                          // Pop back after a slight delay to let user see updated details
-                          Future.delayed(
-                            const Duration(milliseconds: 1200),
-                            () {
-                              if (mounted) {
-                                navigator.pop();
+                    () => controller.isUpdateLoading.value
+                        ? LoadingWidget()
+                        : CustomButton(
+                            text: AppStrings.saveChanges.tr,
+                            onTap: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+
+                              if (!(_formKey.currentState?.validate() ??
+                                  false)) {
+                                return;
                               }
+
+                              EditProfileController.to.updateProfile(
+                                name: nameController.text.trim(),
+                                phone: phoneController.text.trim(),
+                              );
                             },
-                          );
-                        }
-                      },
-                    ),
+                          ),
                   ),
                 ],
               ),

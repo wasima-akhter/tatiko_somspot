@@ -13,7 +13,12 @@ class InfluencerBinding extends Bindings {
     // Get.lazyPut(() => InfluencerWalletController());
 
     Get.lazyPut(() => InfluencerMyCampaignsController());
+  }
+}
 
+class OtherBinding extends Bindings {
+  @override
+  void dependencies() {
     Get.lazyPut(() => OtherController());
   }
 }

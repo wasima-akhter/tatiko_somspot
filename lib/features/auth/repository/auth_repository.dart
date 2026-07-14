@@ -54,6 +54,13 @@ class AuthRepository {
     );
   }
 
+  Future<Response> changePassword(ChangePasswordRequest request) {
+    return _apiClient.patch(
+      url: ApiUrls.changePassword(),
+      body: request.toJson(),
+    );
+  }
+
   Future<Response> logout() {
     return _apiClient.post(url: ApiUrls.logout(), body: {});
   }

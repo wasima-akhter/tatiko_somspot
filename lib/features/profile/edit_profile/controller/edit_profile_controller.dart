@@ -1,48 +1,78 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
 
-class EditProfileController extends GetxController {
-  static EditProfileController get to => Get.find<EditProfileController>();
-  // Find the parent ProfileScreenController to update the profile state globally
-  final profileController = Get.find<ProfileScreenController>();
+import '../../../../core/router/routes.dart';
+import '../../request/edit_profile_request.dart';
+import '../../service/profile_service.dart';
 
-  // Selected local image path for preview
+class EditProfileController extends GetxController {
+  final ProfileService _service;
+
+  EditProfileController(this._service);
+
+  static EditProfileController get to => Get.find();
+
+  final profileController = ProfileScreenController.to;
+
   final selectedImage = RxnString();
 
-  // Loading state for profile update
   final isUpdateLoading = false.obs;
 
   final ImagePicker _picker = ImagePicker();
 
   Future<void> pickImage() async {
-    try {
-      final XFile? image = await _picker.pickImage(
-        source: ImageSource.gallery,
-        imageQuality: 80,
-      );
-      if (image != null) {
-        selectedImage.value = image.path;
-      }
-    } catch (e) {
-      AppToast.error(message: "Failed to pick image: $e");
+    final image = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
+
+    if (image != null) {
+      selectedImage.value = image.path;
     }
   }
 
-  void updateProfile({required String name, required String phone}) {
-    isUpdateLoading.value = true;
+  Future<void> updateProfile({
+    required String name,
+    required String phone,
+  }) async {
+    try {
+      isUpdateLoading.value = true;
 
-    // Simulate API update
-    Future.delayed(const Duration(seconds: 1), () {
-      profileController.userName.value = name;
-      profileController.userPhone.value = phone;
-      if (selectedImage.value != null) {
-        profileController.userAvatar.value = selectedImage.value!;
+      final result = await _service.editProfile(
+        EditProfileRequest(
+          name: name,
+          phone: phone,
+          profileImage: selectedImage.value == null
+              ? null
+              : File(selectedImage.value!),
+        ),
+      );
+
+      if (!result.success || result.data == null) {
+        AppToast.error(message: result.message);
+
+        return;
       }
-      isUpdateLoading.value = false;
 
-      AppToast.success(message: "Profile updated successfully!");
-    });
+      final profile = result.data!;
+
+      profileController.userName.value = profile.name;
+
+      profileController.userPhone.value = profile.phone ?? "";
+
+      if (profile.profileImage != null) {
+        profileController.userAvatar.value = profile.profileImage!;
+      }
+
+      AppToast.success(message: result.message);
+
+      AppRouter.route.pop();
+    } finally {
+      isUpdateLoading.value = false;
+    }
   }
 }

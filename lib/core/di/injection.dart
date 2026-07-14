@@ -5,6 +5,8 @@ import 'package:som_spot/core/service/network/network_checker.dart';
 
 import '../../features/auth/repository/auth_repository.dart';
 import '../../features/auth/service/auth_service.dart';
+import '../../features/profile/repository/profile_repository.dart';
+import '../../features/profile/service/profile_service.dart';
 
 final sl = GetIt.instance;
 
@@ -32,5 +34,17 @@ Future<void> initDependencies() async {
   // Auth business layer
   sl.registerLazySingleton<AuthService>(
     () => AuthService(sl<AuthRepository>()),
+  );
+
+  // =====================
+  // Profile
+  // =====================
+
+  sl.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<ProfileService>(
+    () => ProfileService(sl<ProfileRepository>()),
   );
 }

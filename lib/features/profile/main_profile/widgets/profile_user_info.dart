@@ -4,8 +4,6 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../core/router/route_path.dart';
-import '../../../../core/router/routes.dart';
 import '../../../../share/widgets/network_image/custom_network_image.dart';
 import '../../../../utils/extension/base_extension.dart';
 import '../controller/profile_controller.dart';
@@ -17,78 +15,57 @@ class ProfileUserInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = ProfileScreenController.to;
 
-    return Obx(() {
-      return Row(
-        children: [
-          Container(
+    return Row(
+      children: [
+        Obx(
+          () => Container(
             width: 56.w,
             height: 56.h,
-
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-
               border: Border.all(color: Colors.white, width: 2.w),
             ),
-
             child: ClipOval(
-              child: CustomNetworkImage(
-                imageUrl: controller.userAvatar.value,
-
-                boxShape: BoxShape.circle,
-              ),
+              child: controller.userAvatar.value.isEmpty
+                  ? Icon(Iconsax.user, color: Colors.white, size: 30.sp)
+                  : CustomNetworkImage(
+                      imageUrl: controller.userAvatar.value,
+                      boxShape: BoxShape.circle,
+                    ),
             ),
           ),
+        ),
 
-          Gap(12.w),
+        Gap(12.w),
 
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-
-              children: [
-                Text(
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Obx(
+                () => Text(
                   controller.userName.value,
-
                   style: context.titleMedium.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18.sp,
                   ),
                 ),
-
-                Gap(2.h),
-
-                Text(
-                  controller.userEmail.value,
-
-                  style: context.bodyMedium.copyWith(
-                    color: Colors.white.withValues(alpha: .85),
-
-                    fontSize: 13.sp,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          GestureDetector(
-            onTap: () => AppRouter.route.pushNamed(RoutePath.editProfileScreen),
-
-            child: Container(
-              width: 36.w,
-              height: 36.h,
-
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: .22),
-
-                shape: BoxShape.circle,
               ),
 
-              child: Icon(Iconsax.edit_2, color: Colors.white, size: 16.sp),
-            ),
+              Gap(2.h),
+
+              Obx(
+                () => Text(
+                  controller.userEmail.value,
+                  style: context.bodyMedium.copyWith(
+                    color: Colors.white.withValues(alpha: .85),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      );
-    });
+        ),
+      ],
+    );
   }
 }
