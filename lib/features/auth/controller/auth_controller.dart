@@ -111,4 +111,78 @@ class AuthController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  ///
+  ///
+  ///
+  Future<void> forgotPassword({required String email}) async {
+    try {
+      isLoading.value = true;
+
+      final result = await _service.forgotPassword(
+        ForgotPasswordRequest(email: email),
+      );
+
+      if (!result.success) {
+        ApiSnackbar.show(result.message, type: SnackbarType.error);
+        return;
+      }
+
+      AppRouter.route.pushNamed(RoutePath.forgetOtpScreen, extra: email);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> verifyForgotPasswordOtp({
+    required String email,
+    required String code,
+  }) async {
+    try {
+      isLoading.value = true;
+
+      final result = await _service.verifyForgotPasswordOtp(
+        VerifyForgotPasswordOtpRequest(email: email, code: code),
+      );
+
+      if (!result.success) {
+        ApiSnackbar.show(result.message, type: SnackbarType.error);
+        return;
+      }
+
+      AppRouter.route.pushNamed(RoutePath.resetPasswordScreen, extra: email);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> resetPassword({
+    required String email,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    try {
+      isLoading.value = true;
+
+      final result = await _service.resetPassword(
+        ResetPasswordRequest(
+          email: email,
+          newPassword: password,
+          confirmPassword: confirmPassword,
+        ),
+      );
+
+      if (!result.success) {
+        ApiSnackbar.show(result.message, type: SnackbarType.error);
+
+        return;
+      }
+
+      ApiSnackbar.show(result.message, type: SnackbarType.success);
+
+      AppRouter.route.goNamed(RoutePath.loginScreen);
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

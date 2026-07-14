@@ -25,7 +25,10 @@ class AppDialog {
     Duration transitionDuration = const Duration(milliseconds: 350),
     Curve curve = Curves.easeOutBack,
     Curve reverseCurve = Curves.easeInCubic,
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(
+      horizontal: 20,
+      vertical: 16,
+    ),
     double maxWidth = 380,
   }) {
     IconData defaultIcon;
@@ -55,39 +58,68 @@ class AppDialog {
     }
 
     List<Widget> defaultButtons = [];
+
     if (showDefaultButtons) {
       if (onCancel != null) {
         defaultButtons.add(
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context, false);
-              onCancel();
-            },
-            child: Text(cancelText),
+          Expanded(
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.grayTextSecondaryColor,
+                side: BorderSide(
+                  color: AppColors.grayTextSecondaryColor.withValues(alpha: .3),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+              onPressed: () {
+                Navigator.pop(context, false);
+                onCancel();
+              },
+              child: Text(
+                cancelText,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ),
           ),
         );
+
+        defaultButtons.add(const SizedBox(width: 12));
       }
+
       defaultButtons.add(
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: typeColor,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        Expanded(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: typeColor,
+              foregroundColor: Colors.white,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+            ),
+            onPressed: () {
+              Navigator.pop(context, true);
+              if (onConfirm != null) onConfirm();
+            },
+            child: Text(
+              confirmText,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
           ),
-          onPressed: () {
-            Navigator.pop(context, true);
-            if (onConfirm != null) onConfirm();
-          },
-          child: Text(confirmText),
         ),
       );
     }
-
     return showGeneralDialog(
       context: context,
       barrierDismissible: dismissible,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       transitionDuration: transitionDuration,
-      pageBuilder: (context, animation, secondaryAnimation) => const SizedBox.shrink(),
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const SizedBox.shrink(),
       transitionBuilder: (context, animation, secondaryAnimation, _) {
         final curvedAnimation = CurvedAnimation(
           parent: animation,
@@ -103,7 +135,9 @@ class AppDialog {
               child: ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: maxWidth),
                 child: Dialog(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(borderRadius),
+                  ),
                   backgroundColor: backgroundColor ?? AppColors.white,
                   elevation: 10,
                   child: Padding(
@@ -119,16 +153,19 @@ class AppDialog {
                               color: typeColor.withValues(alpha: 0.15),
                             ),
                             padding: const EdgeInsets.all(12),
-                            child: icon ?? Icon(defaultIcon, color: typeColor, size: 38),
+                            child:
+                                icon ??
+                                Icon(defaultIcon, color: typeColor, size: 38),
                           ),
                         if (title?.isNotEmpty ?? false)
                           Text(
                             title!,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: titleColor ?? AppColors.black,
-                            ),
+                            style: Theme.of(context).textTheme.titleLarge
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: titleColor ?? AppColors.black,
+                                ),
                           ),
                         if (subtitle?.isNotEmpty ?? false)
                           Padding(
@@ -136,9 +173,10 @@ class AppDialog {
                             child: Text(
                               subtitle!,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: subtitleColor ?? AppColors.white,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(
+                                    color: subtitleColor ?? AppColors.white,
+                                  ),
                             ),
                           ),
                         if (content != null)
@@ -146,7 +184,8 @@ class AppDialog {
                             padding: const EdgeInsets.only(top: 8, bottom: 16),
                             child: content,
                           ),
-                        if ((actions?.isNotEmpty ?? false) || showDefaultButtons)
+                        if ((actions?.isNotEmpty ?? false) ||
+                            showDefaultButtons)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: actions ?? defaultButtons,

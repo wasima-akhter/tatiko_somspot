@@ -123,6 +123,61 @@ class AuthService {
       return ApiResponse.failure(message: "Something went wrong");
     }
   }
+
+  Future<ApiResponse<void>> forgotPassword(
+    ForgotPasswordRequest request,
+  ) async {
+    try {
+      final response = await _repository.forgotPassword(request);
+
+      final result = ApiParser.parse<void>(response, mapper: (_) {});
+
+      return result;
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Forgot Password Error: $e");
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
+
+  Future<ApiResponse<void>> verifyForgotPasswordOtp(
+    VerifyForgotPasswordOtpRequest request,
+  ) async {
+    try {
+      final response = await _repository.verifyForgotPasswordOtp(request);
+
+      final result = ApiParser.parse<void>(response, mapper: (_) {});
+
+      return result;
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Verify Forgot OTP Error: $e");
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
+
+  Future<ApiResponse<void>> resetPassword(ResetPasswordRequest request) async {
+    try {
+      final response = await _repository.resetPassword(request);
+
+      final result = ApiParser.parse<void>(response, mapper: (_) {});
+
+      return result;
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Reset Password Error: $e");
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
 }
 
 Future<void> _saveLoginSession(LoginResponse login) async {

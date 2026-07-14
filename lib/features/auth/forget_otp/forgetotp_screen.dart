@@ -1,13 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/share/widgets/text_field/otp_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
+
+import '../../../share/widgets/loading/loading_widget.dart';
+import '../controller/auth_controller.dart';
 
 class ForgetOtpScreen extends StatefulWidget {
   final String? email;
@@ -20,8 +24,41 @@ class ForgetOtpScreen extends StatefulWidget {
 class _ForgetOtpScreenState extends State<ForgetOtpScreen> {
   final _pinController = TextEditingController();
 
+  Timer? _timer;
+  int _seconds = 33;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+
+    _seconds = 33;
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_seconds == 0) {
+        timer.cancel();
+      } else {
+        setState(() {
+          _seconds--;
+        });
+      }
+    });
+  }
+
+  String get _formattedTime {
+    final minutes = (_seconds ~/ 60).toString().padLeft(2, '0');
+    final seconds = (_seconds % 60).toString().padLeft(2, '0');
+
+    return '$minutes:$seconds';
+  }
+
   @override
   void dispose() {
+    _timer?.cancel();
     _pinController.dispose();
     super.dispose();
   }
@@ -111,9 +148,9 @@ class _ForgetOtpScreenState extends State<ForgetOtpScreen> {
                             ),
                             children: [
                               TextSpan(text: '${AppStrings.resendCodeIn.tr} '),
-                              const TextSpan(
-                                text: '0:33', // Static for now, can use a timer
-                                style: TextStyle(
+                              TextSpan(
+                                text: _formattedTime,
+                                style: const TextStyle(
                                   color: AppColors.darkTextColor,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -122,17 +159,25 @@ class _ForgetOtpScreenState extends State<ForgetOtpScreen> {
                           ),
                         ),
                       ),
-                      const Gap(40),
+                      const Gap(30),
 
                       // ── Verify & Continue Button ──
-                      CustomButton(
-                        text: AppStrings.verifyAndContinue.tr,
-                        onTap: () {
-                          // Usually goes to create new password or home depending on flow
-                          AppRouter.route.pushNamed(
-                            RoutePath.resetPasswordScreen,
-                          );
-                        },
+                      Obx(
+                        () => AuthController.to.isLoading.value
+                            ? LoadingWidget()
+                            : CustomButton(
+                                text: AppStrings.verifyAndContinue.tr,
+                                onTap: () {
+                                  if (_pinController.text.trim().isEmpty) {
+                                    return;
+                                  }
+
+                                  AuthController.to.verifyForgotPasswordOtp(
+                                    email: widget.email ?? '',
+                                    code: _pinController.text.trim(),
+                                  );
+                                },
+                              ),
                       ),
                     ],
                   ),

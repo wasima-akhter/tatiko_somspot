@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
@@ -9,8 +8,13 @@ import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
+import '../../../share/widgets/loading/loading_widget.dart';
+import '../controller/auth_controller.dart';
+
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  final String? email;
+
+  const ResetPasswordScreen({super.key, this.email});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -105,12 +109,25 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         const Gap(40),
 
                         // ── Save Password Button ──
-                        CustomButton(
-                          text: AppStrings.savePassword.tr,
-                          onTap: () {
-                            // Logic to save password and go back to login
-                            AppRouter.route.goNamed(RoutePath.loginScreen);
-                          },
+                        Obx(
+                          () => AuthController.to.isLoading.value
+                              ? LoadingWidget()
+                              : CustomButton(
+                                  text: AppStrings.savePassword.tr,
+                                  onTap: () {
+                                    if (!_formKey.currentState!.validate()) {
+                                      return;
+                                    }
+
+                                    AuthController.to.resetPassword(
+                                      email: widget.email ?? '',
+                                      password: _passwordController.text.trim(),
+                                      confirmPassword:
+                                          _confirmPasswordController.text
+                                              .trim(),
+                                    );
+                                  },
+                                ),
                         ),
                       ],
                     ),

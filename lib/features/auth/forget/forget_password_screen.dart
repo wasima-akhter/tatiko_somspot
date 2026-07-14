@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/helper/validator/text_field_validator.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
+import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
+
+import '../controller/auth_controller.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -91,14 +93,20 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         const Gap(40),
 
                         // ── Send Code Button ──
-                        CustomButton(
-                          text: AppStrings.sendVerificationCode.tr,
-                          onTap: () {
-                            AppRouter.route.pushNamed(
-                              RoutePath.forgetOtpScreen,
-                              extra: _emailController.text,
-                            );
-                          },
+                        Obx(
+                          () => AuthController.to.isLoading.value
+                              ? LoadingWidget()
+                              : CustomButton(
+                                  text: AppStrings.sendVerificationCode.tr,
+                                  onTap: () {
+                                    if (!_formKey.currentState!.validate())
+                                      return;
+
+                                    AuthController.to.forgotPassword(
+                                      email: _emailController.text.trim(),
+                                    );
+                                  },
+                                ),
                         ),
                         const Gap(24),
 

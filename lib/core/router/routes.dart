@@ -37,6 +37,7 @@ import 'package:som_spot/features/other/view/privacy_policy_screen.dart';
 import 'package:som_spot/features/other/view/terms_and_conditions_screen.dart';
 // Feature screens imports
 import 'package:som_spot/features/profile/edit_profile/view/edit_profile_screen.dart';
+import 'package:som_spot/features/profile/main_profile/view/profile_screen.dart';
 import 'package:som_spot/features/splash/splash_screen.dart';
 import 'package:som_spot/features/subscription/subscription_screen.dart';
 import 'package:som_spot/features/wellcome/view/welcome_screen.dart';
@@ -55,6 +56,7 @@ import '../../features/influencer_all/influencer_search/view/influencer_search_s
 import '../../features/influencer_all/influencer_submit_content/view/influencer_submit_content_screen.dart';
 import '../../features/influencer_all/influencer_wallet/view/influencer_wallet_screen.dart';
 import '../../features/influencer_all/influencer_your_submission/view/influencer_your_submission_screen.dart';
+import '../../features/nav/binding/navigation_binding.dart';
 import '../../features/onboarding/binding/onboard_binding.dart';
 import '../../features/profile/binding/profile_binding.dart';
 import '../../features/success/success_screen.dart';
@@ -188,7 +190,7 @@ class AppRouter {
             state: state,
             child: BindingWrapper(
               binding: AuthBinding(),
-              child: const ResetPasswordScreen(),
+              child: ResetPasswordScreen(email: state.extra as String?),
             ),
           );
         },
@@ -235,15 +237,29 @@ class AppRouter {
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
             child: BindingWrapper(
-              binding: HomeBinding(),
+              binding: NavigationBinding(),
               child: const NavigationPage(),
             ),
             state: state,
           );
         },
-      ), // =====================================================
+      ),
+      // =====================================================
       // PROFILE ROUTES
       // =====================================================
+      GoRoute(
+        name: RoutePath.profileScreen,
+        path: RoutePath.profileScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: BindingWrapper(
+              binding: NavigationBinding(),
+              child: const ProfileScreen(),
+            ),
+            state: state,
+          );
+        },
+      ),
       GoRoute(
         name: RoutePath.editProfileScreen,
         path: RoutePath.editProfileScreen.addBasePath,
@@ -532,6 +548,8 @@ class AppRouter {
         },
       ),
 
+      //customer
+
       // =====================================================
       // INFLUENCER ROUTES
       // =====================================================
@@ -544,7 +562,7 @@ class AppRouter {
           return _buildPageWithAnimation(
             state: state,
             child: BindingWrapper(
-              binding: InfluencerBinding(),
+              binding: NavigationBinding(),
               child: const InfluencerDashboardScreen(),
             ),
           );
@@ -559,7 +577,7 @@ class AppRouter {
           return _buildPageWithAnimation(
             state: state,
             child: BindingWrapper(
-              binding: InfluencerBinding(),
+              binding: NavigationBinding(),
               child: const InfluencerDiscoverScreen(),
             ),
           );
@@ -588,7 +606,7 @@ class AppRouter {
           return _buildPageWithAnimation(
             state: state,
             child: BindingWrapper(
-              binding: InfluencerBinding(),
+              binding: NavigationBinding(),
               child: const InfluencerTaskScreen(),
             ),
           );
@@ -602,7 +620,7 @@ class AppRouter {
           return _buildPageWithAnimation(
             state: state,
             child: BindingWrapper(
-              binding: InfluencerBinding(),
+              binding: NavigationBinding(),
               child: const InfluencerWalletScreen(),
             ),
           );
@@ -864,16 +882,41 @@ class AppRouter {
   static GoRouter get route => initRoute;
 }
 
-class BindingWrapper extends StatelessWidget {
+// class BindingWrapper extends StatelessWidget {
+//   final Bindings binding;
+//   final Widget child;
+
+//   const BindingWrapper({super.key, required this.binding, required this.child});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     binding.dependencies();
+//     return child;
+//   }
+// }
+class BindingWrapper extends StatefulWidget {
   final Bindings binding;
   final Widget child;
 
   const BindingWrapper({super.key, required this.binding, required this.child});
 
   @override
+  State<BindingWrapper> createState() => _BindingWrapperState();
+}
+
+class _BindingWrapperState extends State<BindingWrapper> {
+  @override
+  void initState() {
+    super.initState();
+
+    debugPrint("BindingWrapper init");
+    widget.binding.dependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    binding.dependencies();
-    return child;
+    debugPrint("BindingWrapper build");
+    return widget.child;
   }
 }
 

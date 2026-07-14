@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -25,8 +27,41 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
 
   final AuthController controller = Get.find<AuthController>();
 
+  Timer? _timer;
+  int _seconds = 33;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+
+    _seconds = 33;
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_seconds == 0) {
+        timer.cancel();
+      } else {
+        setState(() {
+          _seconds--;
+        });
+      }
+    });
+  }
+
+  String get _formattedTime {
+    final minutes = (_seconds ~/ 60).toString().padLeft(2, '0');
+    final seconds = (_seconds % 60).toString().padLeft(2, '0');
+
+    return '$minutes:$seconds';
+  }
+
   @override
   void dispose() {
+    _timer?.cancel();
     _pinController.dispose();
 
     super.dispose();
@@ -157,8 +192,8 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
                             children: [
                               TextSpan(text: '${AppStrings.resendCodeIn.tr} '),
 
-                              const TextSpan(
-                                text: '0:33',
+                              TextSpan(
+                                text: _formattedTime,
 
                                 style: TextStyle(
                                   color: AppColors.darkTextColor,

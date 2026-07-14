@@ -24,16 +24,32 @@ class AuthRepository {
     );
   }
 
-  Future<Response> verifyForgotPasswordOtp(VerifyOtpRequest request) {
+  Future<Response> resendOtp(ResendOtpRequest request) {
+    return _apiClient.post(
+      url: ApiUrls.activationCodeResend(),
+      body: request.toJson(),
+    );
+  }
+
+  Future<Response> forgotPassword(ForgotPasswordRequest request) {
+    return _apiClient.post(
+      url: ApiUrls.forgotPassword(),
+      body: request.toJson(),
+    );
+  }
+
+  Future<Response> verifyForgotPasswordOtp(
+    VerifyForgotPasswordOtpRequest request,
+  ) {
     return _apiClient.post(
       url: ApiUrls.verifyForgetPasswordOtp(),
       body: request.toJson(),
     );
   }
 
-  Future<Response> resendOtp(ResendOtpRequest request) {
+  Future<Response> resetPassword(ResetPasswordRequest request) {
     return _apiClient.post(
-      url: ApiUrls.activationCodeResend(),
+      url: ApiUrls.resetPassword(),
       body: request.toJson(),
     );
   }
