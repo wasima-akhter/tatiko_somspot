@@ -4,6 +4,7 @@ import 'package:som_spot/features/home/model/category_model.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 class HomeCategoryController extends GetxController {
+  static HomeCategoryController get to => Get.find();
   final RxList<CategoryModel> categories = <CategoryModel>[].obs;
   final RxBool isLoading = false.obs;
 

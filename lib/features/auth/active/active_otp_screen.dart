@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
+import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/text_field/otp_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
@@ -57,6 +58,26 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
     final seconds = (_seconds % 60).toString().padLeft(2, '0');
 
     return '$minutes:$seconds';
+  }
+
+  bool get _canResend => _seconds == 0;
+  Future<void> _resendOtp() async {
+    if (!_canResend) return;
+
+    final email = widget.email?.trim() ?? "";
+    if (email.isEmpty) {
+      ApiSnackbar.show(
+        "Email is missing. Please restart registration.",
+        type: SnackbarType.error,
+      );
+      return;
+    }
+
+    await controller.resendOtp(email: email);
+
+    // restart the countdown regardless of outcome, so the user
+    // can't spam-tap while the previous request is in flight or failed
+    _startTimer();
   }
 
   @override
@@ -181,29 +202,52 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
                       ),
 
                       const Gap(24),
-
+                      // ── Resend row: countdown OR tappable resend ──
                       Center(
-                        child: RichText(
-                          text: TextSpan(
-                            style: context.bodyMedium.copyWith(
-                              color: AppColors.subtitleTextColor,
-                            ),
+                        child: Obx(() {
+                          if (controller.isResending.value) {
+                            return const SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: LoadingWidget(),
+                            );
+                          }
 
-                            children: [
-                              TextSpan(text: '${AppStrings.resendCodeIn.tr} '),
-
-                              TextSpan(
-                                text: _formattedTime,
-
-                                style: TextStyle(
-                                  color: AppColors.darkTextColor,
-
-                                  fontWeight: FontWeight.bold,
+                          if (!_canResend) {
+                            return RichText(
+                              text: TextSpan(
+                                style: context.bodyMedium.copyWith(
+                                  color: AppColors.subtitleTextColor,
                                 ),
+                                children: [
+                                  TextSpan(
+                                    text: '${AppStrings.resendCodeIn.tr} ',
+                                  ),
+                                  TextSpan(
+                                    text: _formattedTime,
+                                    style: const TextStyle(
+                                      color: AppColors.darkTextColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            );
+                          }
+
+                          return GestureDetector(
+                            onTap: _resendOtp,
+                            child: Text(
+                              "Resend Code"
+                                  .tr, // add this string; falls back to plain text if missing
+                              style: context.bodyMedium.copyWith(
+                                color: AppColors
+                                    .primaryColor, // adjust to your actual accent color
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        }),
                       ),
 
                       const Gap(40),

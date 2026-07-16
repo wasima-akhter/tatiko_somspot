@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
+import 'package:som_spot/features/auth/controller/auth_controller.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
 
 import '../../../../helper/image/image_helper.dart';
@@ -41,6 +42,7 @@ class ProfileScreenController extends GetxController {
   final reviewsCount = 5.obs;
 
   void logout() {
+    AuthController.to.logout();
     AppToast.success(message: "You have successfully logged out.");
     AppRouter.route.goNamed(RoutePath.loginScreen);
   }

@@ -39,10 +39,14 @@ class ProfileService {
     try {
       final response = await _repository.getProfile();
 
+      debugPrint("response before parsing: ${response.data}");
+
       final result = ApiParser.parse<ProfileModel>(
         response,
         mapper: (json) => ProfileModel.fromJson(json),
       );
+
+      debugPrint("result after parsing: ${result.data?.email}");
 
       return result;
     } on ApiException catch (e) {

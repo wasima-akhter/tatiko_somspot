@@ -10,17 +10,30 @@ class AuthRepository {
   AuthRepository(this._apiClient);
 
   Future<Response> register(RegisterRequest request) {
-    return _apiClient.post(url: ApiUrls.register(), body: request.toJson());
+    return _apiClient.post(
+      url: ApiUrls.register(),
+      body: request.toJson(),
+      skipAuth: true,
+    );
   }
 
   Future<Response> login(LoginRequest request) {
-    return _apiClient.post(url: ApiUrls.login(), body: request.toJson());
+    return _apiClient.post(
+      url: ApiUrls.login(),
+      body: request.toJson(),
+      skipAuth: true,
+    );
+  }
+
+  Future<Response> me() {
+    return _apiClient.get(url: ApiUrls.me());
   }
 
   Future<Response> verifyRegisterOtp(VerifyOtpRequest request) {
     return _apiClient.post(
       url: ApiUrls.activateAccount(),
       body: request.toJson(),
+      skipAuth: true,
     );
   }
 
@@ -28,6 +41,7 @@ class AuthRepository {
     return _apiClient.post(
       url: ApiUrls.activationCodeResend(),
       body: request.toJson(),
+      skipAuth: true,
     );
   }
 

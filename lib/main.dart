@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'core/di/getx_injection.dart';
-import 'core/di/injection.dart';
+import 'core/di/global_binding.dart';
+import 'core/di/repo_service_injection.dart';
 import 'core/router/routes.dart';
 import 'core/service/datasource/local/app_storage.dart';
 import 'core/theme/light_theme.dart';
@@ -23,7 +23,7 @@ void main() async {
 
   await initDependencies();
 
-  initGetx();
+  initGlobalBinding();
 
   final Map<String, Map<String, String>> languages =
       await LanguageController.getLanguages();

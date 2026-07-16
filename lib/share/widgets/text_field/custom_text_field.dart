@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:som_spot/share/widgets/align/custom_align_text.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
+
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
     this.inputFormatters,
@@ -100,10 +101,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
         return Column(
           spacing: 8,
           children: [
-            if(widget.title != null)
-              CustomAlignText(text: widget.title ?? "",style: context.bodyLarge,),
+            if (widget.title != null)
+              CustomAlignText(
+                text: widget.title ?? "",
+                style: context.titleMedium,
+              ),
             TextFormField(
-            
               onTap: widget.onTap,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               inputFormatters: widget.inputFormatters,
@@ -124,7 +127,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
               validator: widget.validator,
               decoration: InputDecoration(
                 fillColor: widget.fillColor,
-                contentPadding: widget.contentPadding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 12.0),
+                contentPadding:
+                    widget.contentPadding ??
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12.0),
                 isCollapsed: widget.isCollapsed,
                 isDense: widget.isDense,
                 errorMaxLines: 2,
@@ -134,14 +139,22 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 prefixIcon: widget.prefixIcon,
                 prefix: widget.prefix,
                 suffix: widget.suffix,
-                suffixIcon: widget.isPassword ? GestureDetector(
-                  onTap: toggle,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-                    child: obscureText ? const Icon(Icons.visibility_off_outlined,) :
-                    const Icon(Icons.visibility_outlined),
-                  ),
-                ) : widget.suffixIcon,
+                suffixIcon: widget.isPassword
+                    ? GestureDetector(
+                        onTap: toggle,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10,
+                          ),
+                          child: obscureText
+                              ? const Icon(Icons.visibility_off_outlined)
+                              : const Icon(Icons.visibility_outlined),
+                        ),
+                      )
+                    : widget.suffixIcon,
                 suffixIconColor: widget.suffixIconColor,
                 border: widget.border,
                 focusedBorder: widget.focusedBorder,

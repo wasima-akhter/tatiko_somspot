@@ -16,7 +16,7 @@ class HomeTopDealsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<HomeDealsController>();
+    final controller = HomeDealsController.to;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,8 +193,11 @@ class HomeTopDealsWidget extends StatelessWidget {
                                         vertical: 6.h,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: AppColors.primaryColor.withValues(alpha: 0.1),
-                                        borderRadius: BorderRadius.circular(12.r),
+                                        color: AppColors.primaryColor
+                                            .withValues(alpha: 0.1),
+                                        borderRadius: BorderRadius.circular(
+                                          12.r,
+                                        ),
                                       ),
                                       child: Center(
                                         child: Text(

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../enum/app_enum.dart';
@@ -13,7 +14,7 @@ class CommonController extends GetxController {
     UserRole.influencer,
   ];
 
-  final Rx<UserRole> role = UserRole.influencer.obs;
+  final Rx<UserRole> role = UserRole.customer.obs;
 
   bool get isMerchandiser => role.value.isMerchandiser;
   bool get isCustomer => role.value.isCustomer;
@@ -26,9 +27,9 @@ extension UserRoleExtension on UserRole {
   String get value {
     switch (this) {
       case UserRole.influencer:
-        return 'Influencer'.toUpperCase();
+        return 'creator'.toUpperCase();
       case UserRole.merchandiser:
-        return 'Merchandiser'.toUpperCase();
+        return 'merchant'.toUpperCase();
       case UserRole.customer:
         return 'User'.toUpperCase();
     }
@@ -36,14 +37,17 @@ extension UserRoleExtension on UserRole {
 
   static UserRole fromString(String? value) {
     switch (value?.toLowerCase()) {
-      case 'influencer':
+      case 'creator':
         return UserRole.influencer;
-      case 'merchandiser':
+      case 'merchant':
         return UserRole.merchandiser;
       case 'user':
         return UserRole.customer;
       default:
-        return UserRole.influencer;
+        debugPrint(
+          "⚠️ [UserRole] Unrecognized role value: '$value' — defaulting to customer",
+        );
+        return UserRole.customer; // safer default than influencer
     }
   }
 }

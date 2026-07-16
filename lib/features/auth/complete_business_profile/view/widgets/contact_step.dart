@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/features/auth/completed_profile/controller/completed_profile_controller.dart';
+import 'package:som_spot/features/auth/complete_business_profile/controller/complete_business_profile_controller.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
@@ -14,7 +14,7 @@ class ContactStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<CompletedProfileController>();
+    final controller = CompleteBusinessProfileController.to;
 
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -105,85 +105,86 @@ class ContactStep extends StatelessWidget {
           Gap(20.h),
 
           // ── WhatsApp Number ──
-          Obx(() => CustomTextField(
-            controller: controller.whatsAppController,
-            title: AppStrings.whatsappNumber.tr,
-            hintText: AppStrings.enterWhatsappNumber.tr,
-            keyboardType: TextInputType.phone,
-            readOnly: controller.sameAsPhone.value,
-            prefixIcon: Icon(
-              Icons.chat_outlined,
-              size: 20.sp,
-              color: controller.sameAsPhone.value
-                  ? AppColors.hintTextColor.withValues(alpha: 0.5)
-                  : AppColors.hintTextColor,
-            ),
-            fillColor: controller.sameAsPhone.value
-                ? AppColors.grayTabBgColor
-                : AppColors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: const BorderSide(
-                color: AppColors.backgroundsLinesColor,
-                width: 1,
+          Obx(
+            () => CustomTextField(
+              controller: controller.whatsAppController,
+              title: AppStrings.whatsappNumber.tr,
+              hintText: AppStrings.enterWhatsappNumber.tr,
+              keyboardType: TextInputType.phone,
+              readOnly: controller.sameAsPhone.value,
+              prefixIcon: Icon(
+                Icons.chat_outlined,
+                size: 20.sp,
+                color: controller.sameAsPhone.value
+                    ? AppColors.hintTextColor.withValues(alpha: 0.5)
+                    : AppColors.hintTextColor,
+              ),
+              fillColor: controller.sameAsPhone.value
+                  ? AppColors.grayTabBgColor
+                  : AppColors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.r),
+                borderSide: const BorderSide(
+                  color: AppColors.backgroundsLinesColor,
+                  width: 1,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.r),
+                borderSide: const BorderSide(
+                  color: AppColors.backgroundsLinesColor,
+                  width: 1,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.r),
+                borderSide: const BorderSide(
+                  color: AppColors.primaryColor,
+                  width: 1.5,
+                ),
               ),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: const BorderSide(
-                color: AppColors.backgroundsLinesColor,
-                width: 1,
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: const BorderSide(
-                color: AppColors.primaryColor,
-                width: 1.5,
-              ),
-            ),
-          )),
+          ),
           Gap(12.h),
 
           // ── Same as phone checkbox ──
-          Obx(() => GestureDetector(
-            onTap: () => controller.sameAsPhone.value = !controller.sameAsPhone.value,
-            child: Row(
-              children: [
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  height: 22.h,
-                  width: 22.w,
-                  decoration: BoxDecoration(
-                    color: controller.sameAsPhone.value
-                        ? AppColors.primaryColor
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(6.r),
-                    border: Border.all(
+          Obx(
+            () => GestureDetector(
+              onTap: () =>
+                  controller.sameAsPhone.value = !controller.sameAsPhone.value,
+              child: Row(
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    height: 22.h,
+                    width: 22.w,
+                    decoration: BoxDecoration(
                       color: controller.sameAsPhone.value
                           ? AppColors.primaryColor
-                          : AppColors.linesDarkColor,
-                      width: 1.5,
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(6.r),
+                      border: Border.all(
+                        color: controller.sameAsPhone.value
+                            ? AppColors.primaryColor
+                            : AppColors.linesDarkColor,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: controller.sameAsPhone.value
+                        ? Icon(Icons.check, size: 14.sp, color: AppColors.white)
+                        : null,
+                  ),
+                  Gap(10.w),
+                  Text(
+                    AppStrings.sameAsPhone.tr,
+                    style: context.bodyMedium.copyWith(
+                      color: AppColors.subtitleTextColor,
                     ),
                   ),
-                  child: controller.sameAsPhone.value
-                      ? Icon(
-                          Icons.check,
-                          size: 14.sp,
-                          color: AppColors.white,
-                        )
-                      : null,
-                ),
-                Gap(10.w),
-                Text(
-                  AppStrings.sameAsPhone.tr,
-                  style: context.bodyMedium.copyWith(
-                    color: AppColors.subtitleTextColor,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          )),
+          ),
           Gap(32.h),
         ],
       ),

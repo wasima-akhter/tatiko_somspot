@@ -23,10 +23,10 @@ class ApiClient {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          // Skip token logic entirely for public endpoints like login/register
-          if (options.path.contains('/auth/login') ||
-              options.path.contains('/auth/register')) {
-            return handler.next(options);
+          final skipAuth = options.extra["skipAuth"] == true;
+
+          if (skipAuth) {
+            return handler.next(options); // no token check at all
           }
 
           if (TokenManager.isAccessTokenExpired) {
@@ -57,17 +57,22 @@ class ApiClient {
       ),
     );
   }
-
   Future<Map<String, String>> headers({
     String? token,
     bool isJson = true,
+    bool skipAuth = false,
   }) async {
     final headers = <String, String>{};
 
-    final authToken = token ?? AppStorage.to.accessToken;
+    if (!skipAuth) {
+      final authToken =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoSWQiOiI2YTU4NmZhZDUzNzYyOGI4NGYwMmRhZTAiLCJ1c2VySWQiOiI2YTU4NmZhZDUzNzYyOGI4NGYwMmRhZTEiLCJlbWFpbCI6Im1hcmNoYW50QHlvcG1haWwuY29tIiwicm9sZSI6Ik1FUkNIQU5UIiwiaXNBY3RpdmUiOnRydWUsImlhdCI6MTc4NDE4OTY4MSwiZXhwIjoxODE1NzI1NjgxfQ.-LSGmBvhhbg3suzZiGNtB98W9Tlvpn2B4ncwFABTXDw" ??
+          token ??
+          AppStorage.to.accessToken;
 
-    if (authToken.isNotEmpty) {
-      headers["Authorization"] = "Bearer $authToken";
+      if (authToken.isNotEmpty) {
+        headers["Authorization"] = "Bearer $authToken";
+      }
     }
 
     if (isJson) {
@@ -89,6 +94,7 @@ class ApiClient {
     required String url,
     Map<String, dynamic>? queryParams,
     String? token,
+    bool skipAuth = false,
   }) async {
     await checkConnection();
 
@@ -96,7 +102,10 @@ class ApiClient {
       final response = await dio.get(
         url,
         queryParameters: queryParams,
-        options: Options(headers: await headers(token: token)),
+        options: Options(
+          headers: await headers(token: token, skipAuth: skipAuth),
+          extra: {"skipAuth": skipAuth},
+        ),
       );
 
       log(url, response);
@@ -111,6 +120,7 @@ class ApiClient {
     required String url,
     required Map<String, dynamic> body,
     String? token,
+    bool skipAuth = false,
   }) async {
     await checkConnection();
 
@@ -121,7 +131,10 @@ class ApiClient {
       final response = await dio.post(
         url,
         data: body,
-        options: Options(headers: await headers(token: token)),
+        options: Options(
+          headers: await headers(token: token, skipAuth: skipAuth),
+          extra: {"skipAuth": skipAuth}, // 👈 interceptor reads this
+        ),
       );
 
       log(url, response);

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:som_spot/features/home/model/merchant_model.dart';
 
 class HomeNearbyController extends GetxController {
+  static HomeNearbyController get to => Get.find();
+
   final RxList<MerchantModel> merchants = <MerchantModel>[].obs;
   final RxBool isLoading = false.obs;
 
@@ -25,7 +27,8 @@ class HomeNearbyController extends GetxController {
       final List<MerchantModel> loadedMerchants = [
         MerchantModel(
           id: 'nearby_1',
-          imageUrl: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600&auto=format&fit=crop",
+          imageUrl:
+              "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600&auto=format&fit=crop",
           title: "Hilib Macaan Restaurant",
           category: "Restaurant",
           distance: "1.2 km",
@@ -34,7 +37,8 @@ class HomeNearbyController extends GetxController {
         ),
         MerchantModel(
           id: 'nearby_2',
-          imageUrl: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=600&auto=format&fit=crop",
+          imageUrl:
+              "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=600&auto=format&fit=crop",
           title: "Suuqa Bakaaraha Grocery",
           category: "Grocery",
           distance: "1.2 km",
@@ -43,7 +47,8 @@ class HomeNearbyController extends GetxController {
         ),
         MerchantModel(
           id: 'nearby_3',
-          imageUrl: "https://images.unsplash.com/photo-1586015555751-63bb77f4322a?q=80&w=600&auto=format&fit=crop",
+          imageUrl:
+              "https://images.unsplash.com/photo-1586015555751-63bb77f4322a?q=80&w=600&auto=format&fit=crop",
           title: "Banadir Pharmacy",
           category: "Pharmacy",
           distance: "1.2 km",

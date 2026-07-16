@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/features/alerts/view/alerts_screen.dart';
 import 'package:som_spot/features/auth/active/active_otp_screen.dart';
-import 'package:som_spot/features/auth/completed_profile/view/application_submitted_screen.dart';
-import 'package:som_spot/features/auth/completed_profile/view/application_under_review_screen.dart';
-import 'package:som_spot/features/auth/completed_profile/view/completed_profile_screen.dart';
+import 'package:som_spot/features/auth/complete_business_profile/view/application_submitted_screen.dart';
+import 'package:som_spot/features/auth/complete_business_profile/view/application_under_review_screen.dart';
+import 'package:som_spot/features/auth/complete_business_profile/view/complete_business_profile_screen.dart';
 import 'package:som_spot/features/auth/forget/forget_password_screen.dart';
 import 'package:som_spot/features/auth/forget_otp/forgetotp_screen.dart';
 import 'package:som_spot/features/auth/login/login_screen.dart';
@@ -44,6 +44,11 @@ import 'package:som_spot/features/wellcome/view/welcome_screen.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
 import '../../features/auth/binding/auth_binding.dart';
+import '../../features/auth/complete_business_profile/binding/complete_business_profile_binding.dart'
+    show CompleteBusinessProfileBinding;
+import '../../features/auth/completed_profile_customer/binding/complete_profile_binding.dart';
+import '../../features/auth/completed_profile_customer/view/completed_profile_customer_args.dart';
+import '../../features/auth/completed_profile_customer/view/completed_profile_customer_screen.dart';
 import '../../features/auth/completed_profile_influencer/view/completed_profile_influencer_screen.dart';
 import '../../features/choose_role/view/choose_role_screen.dart';
 import '../../features/home/binding/home_binding.dart';
@@ -275,11 +280,29 @@ class AppRouter {
       ),
 
       GoRoute(
-        name: RoutePath.completedProfileScreen,
-        path: RoutePath.completedProfileScreen.addBasePath,
+        name: RoutePath.completeBusinessProfileScreen,
+        path: RoutePath.completeBusinessProfileScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const CompletedProfileScreen(),
+            child: BindingWrapper(
+              binding: CompleteBusinessProfileBinding(),
+              child: const CompleteBusinessProfileScreen(),
+            ),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.completedProfileCustomerScreen,
+        path: RoutePath.completedProfileCustomerScreen.addBasePath,
+        pageBuilder: (context, state) {
+          final args = state.extra as CompletedProfileCustomerArgs;
+
+          return _buildPageWithAnimation(
+            child: BindingWrapper(
+              binding: CompleteProfileBinding(),
+              child: CompletedProfileCustomerScreen(args: args),
+            ),
             state: state,
           );
         },

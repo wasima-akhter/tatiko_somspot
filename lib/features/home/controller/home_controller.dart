@@ -4,6 +4,7 @@ import 'package:som_spot/features/home/controller/home_deals_controller.dart';
 import 'package:som_spot/features/home/controller/home_nearby_controller.dart';
 
 class HomeController extends GetxController {
+  static HomeController get to => Get.find();
   // User profile and greeting state (clean MVC pattern)
   final RxString userName = "Jorge Walton".obs;
   final RxString userLocation = "Maka Al Mukarama, Mogadishu".obs;
@@ -18,7 +19,7 @@ class HomeController extends GetxController {
     isRefreshing.value = true;
     try {
       // Fetch instances of all registered controllers
-      final categoryController = Get.find<HomeCategoryController>();
+      final categoryController = HomeCategoryController.to;
       final dealsController = Get.find<HomeDealsController>();
       final nearbyController = Get.find<HomeNearbyController>();
 

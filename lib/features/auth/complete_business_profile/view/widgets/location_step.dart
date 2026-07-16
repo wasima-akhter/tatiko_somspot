@@ -5,7 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:som_spot/features/auth/completed_profile/controller/completed_profile_controller.dart';
+import 'package:som_spot/features/auth/complete_business_profile/controller/complete_business_profile_controller.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
@@ -16,7 +16,7 @@ class LocationStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<CompletedProfileController>();
+    final controller = CompleteBusinessProfileController.to;
 
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -104,9 +104,8 @@ class LocationStep extends StatelessWidget {
                                       shape: BoxShape.circle,
                                       boxShadow: [
                                         BoxShadow(
-                                          color: AppColors.primaryColor.withValues(
-                                            alpha: 0.4,
-                                          ),
+                                          color: AppColors.primaryColor
+                                              .withValues(alpha: 0.4),
                                           blurRadius: 10,
                                           offset: const Offset(0, 4),
                                         ),

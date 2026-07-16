@@ -6,6 +6,8 @@ import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/core/service/datasource/local/app_storage.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
+import '../../core/router/role_router.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -28,8 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // Already logged in
     if (storage.isLoggedIn && storage.accessToken.isNotEmpty) {
-      AppRouter.route.goNamed(RoutePath.navigationPages);
-
+      RoleRouter.navigateByRole();
       return;
     }
 

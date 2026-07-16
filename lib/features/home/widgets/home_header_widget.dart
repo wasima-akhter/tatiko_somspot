@@ -15,7 +15,7 @@ class HomeHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<HomeController>();
+    final controller = HomeController.to;
 
     return Container(
       width: double.infinity,

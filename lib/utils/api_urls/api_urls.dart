@@ -15,6 +15,8 @@ class ApiUrls {
 
   static String login() => '$base/auth/login';
 
+  static String me() => '$base/auth/me';
+
   static String logout() => '$base/auth/logout';
 
   // =========================
@@ -42,4 +44,11 @@ class ApiUrls {
   static String editProfile() => '$base/user/edit-profile';
 
   static String userProfile() => '$base/user/profile';
+
+  // business profile
+  static String createBusiness() => '$base/business/create';
+
+  // core
+  // categories
+  static String getCategories() => '$base/category/get-all';
 }

@@ -239,7 +239,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
 
                     Center(
                       child: Text(
-                        "SamSpot v1.0.0",
+                        "SomSpot v1.0.0",
                         style: context.bodySmall.copyWith(
                           color: AppColors.grayTextSecondaryColor,
                         ),

@@ -16,6 +16,8 @@
 
 // }
 
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
@@ -24,6 +26,7 @@ import '../../../core/service/datasource/local/app_storage.dart';
 import '../../../core/service/datasource/remote/api_exception.dart';
 import '../../../core/service/datasource/remote/api_parser.dart';
 import '../../../core/service/datasource/remote/api_response.dart';
+import '../models/curr_user_response.dart';
 import '../models/login_model.dart';
 import '../models/register_response.dart';
 import '../repository/auth_repository.dart';
@@ -66,10 +69,28 @@ class AuthService {
     }
   }
 
+  Future<ApiResponse<CurrentUserResponse>> me() async {
+    try {
+      final response = await _repository.me();
+
+      return ApiParser.parse(
+        response,
+        mapper: (json) => CurrentUserResponse.fromJson(json),
+      );
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (_) {
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
+
   Future<RegisterResponse> register(RegisterRequest request) async {
     final response = await _repository.register(request);
 
-    final result = RegisterResponse.fromJson(response.data);
+    final result = ApiParser.parse<RegisterResponse>(
+      response,
+      mapper: (json) => RegisterResponse.fromJson(json),
+    );
 
     if (result.success && result.data?.isActive == false) {
       await storage.setPendingEmail(request.email);
@@ -77,7 +98,7 @@ class AuthService {
       await storage.setPendingRole(request.role);
     }
 
-    return result;
+    return result.data!;
   }
 
   Future<void> logout() async {
@@ -118,6 +139,23 @@ class AuthService {
     } catch (e, s) {
       debugPrint("Verify OTP Error: $e");
 
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
+
+  Future<ApiResponse<void>> resendOtp(ResendOtpRequest request) async {
+    try {
+      final response = await _repository.resendOtp(request);
+
+      final result = ApiParser.parse<void>(response);
+
+      return result;
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Resend OTP Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: "Something went wrong");
@@ -201,8 +239,8 @@ class AuthService {
 
 Future<void> _saveLoginSession(LoginResponse login) async {
   final storage = AppStorage.to;
-  final accessToken = login.data?.accessToken ?? '';
-  final refreshToken = login.data?.refreshToken ?? '';
+  final accessToken = login.accessToken ?? '';
+  final refreshToken = login.refreshToken ?? '';
 
   if (accessToken.isEmpty) {
     return;
@@ -219,6 +257,11 @@ Future<void> _saveLoginSession(LoginResponse login) async {
   final email = accessPayload['email']?.toString();
 
   final role = accessPayload['role']?.toString();
+
+  debugPrint("🔍 [JWT] raw role claim: $role");
+  debugPrint("🔍 [JWT] full payload:  ");
+
+  debugPrint(const JsonEncoder.withIndent('  ').convert(accessPayload));
 
   await storage.saveSession(
     accessToken: accessToken,

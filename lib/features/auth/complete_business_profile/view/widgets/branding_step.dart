@@ -1,10 +1,11 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/features/auth/completed_profile/controller/completed_profile_controller.dart';
+import 'package:som_spot/features/auth/complete_business_profile/controller/complete_business_profile_controller.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
@@ -14,7 +15,7 @@ class BrandingStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<CompletedProfileController>();
+    final controller = CompleteBusinessProfileController.to;
 
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -172,12 +173,11 @@ class BrandingStep extends StatelessWidget {
                         ? null
                         : AppColors.primaryColor.withValues(alpha: 0.04),
                     border: imagePath != null
-                        ? Border.all(
-                            color: AppColors.primaryColor,
-                            width: 3,
-                          )
+                        ? Border.all(color: AppColors.primaryColor, width: 3)
                         : Border.all(
-                            color: AppColors.primaryColor.withValues(alpha: 0.3),
+                            color: AppColors.primaryColor.withValues(
+                              alpha: 0.3,
+                            ),
                             width: 1.5,
                           ),
                     image: imagePath != null
@@ -189,7 +189,9 @@ class BrandingStep extends StatelessWidget {
                     boxShadow: imagePath != null
                         ? [
                             BoxShadow(
-                              color: AppColors.primaryColor.withValues(alpha: 0.15),
+                              color: AppColors.primaryColor.withValues(
+                                alpha: 0.15,
+                              ),
                               blurRadius: 16,
                               offset: const Offset(0, 4),
                             ),
@@ -224,7 +226,9 @@ class BrandingStep extends StatelessWidget {
                             Icon(
                               Iconsax.gallery_add,
                               size: 28.sp,
-                              color: AppColors.primaryColor.withValues(alpha: 0.6),
+                              color: AppColors.primaryColor.withValues(
+                                alpha: 0.6,
+                              ),
                             ),
                             Gap(6.h),
                             Text(
@@ -264,11 +268,7 @@ class _UploadPlaceholder extends StatelessWidget {
             color: AppColors.primaryColor.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
-          child: Icon(
-            icon,
-            size: 32.sp,
-            color: AppColors.primaryColor,
-          ),
+          child: Icon(icon, size: 32.sp, color: AppColors.primaryColor),
         ),
         Gap(12.h),
         Text(
@@ -281,9 +281,7 @@ class _UploadPlaceholder extends StatelessWidget {
         Gap(4.h),
         Text(
           'JPG, PNG',
-          style: context.bodySmall.copyWith(
-            color: AppColors.hintTextColor,
-          ),
+          style: context.bodySmall.copyWith(color: AppColors.hintTextColor),
         ),
       ],
     );

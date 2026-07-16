@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 
 import '../../../core/router/route_path.dart';
 import '../../../core/router/routes.dart';
-import '../../../core/service/datasource/local/app_storage.dart';
 import '../../../helper/snackbar/api_snackbar.dart';
 import '../../../utils/common_controller/common_controller.dart';
+import '../completed_profile_customer/view/completed_profile_customer_args.dart';
 import '../requests/auth_request.dart';
 import '../service/auth_service.dart';
 
@@ -24,13 +26,7 @@ class AuthController extends GetxController {
       isLoading.value = true;
       errorMessage.value = '';
 
-      print("LOGIN SERVICE START");
-
       final result = await _service.login(request);
-
-      print("LOGIN SERVICE RESPONSE: ${result.success}");
-      print("LOGIN SERVICE MESSAGE: ${result.message}");
-      print("LOGIN SERVICE DATA: ${result.data}");
 
       if (!result.success || result.data == null) {
         errorMessage.value = result.message.isNotEmpty
@@ -38,13 +34,14 @@ class AuthController extends GetxController {
             : "Login failed";
 
         Future.delayed(const Duration(milliseconds: 300), () {
+          log("something went wrong snack");
           ApiSnackbar.show(errorMessage.value, type: SnackbarType.error);
         });
 
         return;
       }
 
-      AppRouter.route.goNamed(RoutePath.navigationPages);
+      await _handlePostLogin();
     } finally {
       isLoading.value = false;
     }
@@ -70,11 +67,7 @@ class AuthController extends GetxController {
         ),
       );
 
-      if (result.success) {
-        AppRouter.route.pushNamed(RoutePath.activeOtpScreen, extra: email);
-
-        return;
-      }
+      AppRouter.route.pushNamed(RoutePath.activeOtpScreen, extra: email);
 
       ApiSnackbar.show(result.message);
     } finally {
@@ -98,21 +91,36 @@ class AuthController extends GetxController {
         return;
       }
 
-      final role = AppStorage.to.role;
-
-      if (role?.isMerchandiser == true) {
-        AppRouter.route.goNamed(RoutePath.completedProfileScreen);
-      } else if (role?.isInfluencer == true) {
-        AppRouter.route.goNamed(RoutePath.completedProfileInfluencerScreen);
-      } else {
-        AppRouter.route.goNamed(RoutePath.navigationPages);
-      }
+      await _handlePostLogin();
     } finally {
       isLoading.value = false;
     }
   }
 
-  ///
+  final RxBool isResending = false.obs;
+
+  Future<void> resendOtp({required String email}) async {
+    if (isResending.value) return; // guard against double-taps
+
+    isResending.value = true;
+
+    final request = ResendOtpRequest(
+      email: email,
+    ); // adjust field name if different
+    final result = await _service.resendOtp(request);
+
+    isResending.value = false;
+
+    if (result.success) {
+      ApiSnackbar.show(
+        result.message.isNotEmpty ? result.message : "Verification code resent",
+        type: SnackbarType.success,
+      );
+    } else {
+      ApiSnackbar.show(result.message, type: SnackbarType.error);
+    }
+  }
+
   ///
   ///
   Future<void> forgotPassword({required String email}) async {
@@ -214,5 +222,102 @@ class AuthController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  // logout -->
+
+  Future<void> logout() async {
+    try {
+      isLoading.value = true;
+
+      final result = await _service.logout();
+
+      // if (!result.success) {
+      //   ApiSnackbar.show(result.message, type: SnackbarType.error);
+
+      //   return;
+      // }
+
+      // ApiSnackbar.show(result.message, type: SnackbarType.success);
+
+      AppRouter.route.pop();
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  //
+  //
+  Future<void> _handlePostLogin() async {
+    final me = await _service.me();
+
+    if (!me.success || me.data == null) {
+      ApiSnackbar.show(me.message);
+      return;
+    }
+
+    final user = me.data!;
+
+    // inactive account
+    if (!user.isActive) {
+      final resend = await _service.resendOtp(
+        ResendOtpRequest(email: user.email),
+      );
+
+      if (!resend.success) {
+        ApiSnackbar.show(resend.message);
+        return;
+      }
+
+      AppRouter.route.goNamed(RoutePath.activeOtpScreen, extra: user.email);
+
+      return;
+    }
+
+    // Personal profile not completed
+    if (!user.isProfileComplete) {
+      switch (user.role) {
+        case "MERCHANT":
+          AppRouter.route.goNamed(
+            RoutePath.completedProfileCustomerScreen,
+            extra: CompletedProfileCustomerArgs(
+              email: user.email,
+              role: user.role,
+            ),
+          );
+          return;
+
+        case "CREATOR":
+          AppRouter.route.goNamed(RoutePath.completedProfileInfluencerScreen);
+          return;
+
+        case "USER":
+          AppRouter.route.goNamed(
+            RoutePath.completedProfileCustomerScreen,
+            extra: CompletedProfileCustomerArgs(
+              email: user.email,
+              role: user.role,
+            ),
+          );
+          return;
+
+        default:
+          ApiSnackbar.show(
+            "Unknown role ${user.role}",
+            type: SnackbarType.error,
+          );
+          return;
+      }
+    }
+
+    // Personal profile completed.
+    // Merchant may still need to complete business profile.
+    if (user.role == "MERCHANT" && user.missing.contains("business.business")) {
+      AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
+      return;
+    }
+
+    // profile completed
+    AppRouter.route.goNamed(RoutePath.navigationPages);
   }
 }

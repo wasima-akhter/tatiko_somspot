@@ -56,10 +56,14 @@ ${_pretty(parsedData)}
   }
 
   static String _pretty(dynamic data) {
-    try {
-      return const JsonEncoder.withIndent("  ").convert(data);
-    } catch (_) {
-      return data.toString();
+    if (data == null) return "null";
+    if (data is Map || data is List) {
+      try {
+        return const JsonEncoder.withIndent("  ").convert(data);
+      } catch (_) {
+        return data.toString();
+      }
     }
+    return data.toString();
   }
 }

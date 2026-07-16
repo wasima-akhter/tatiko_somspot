@@ -16,7 +16,7 @@ class HomeNearbyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<HomeNearbyController>();
+    final controller = HomeNearbyController.to;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +138,8 @@ class HomeNearbyWidget extends StatelessWidget {
                                   children: [
                                     Icon(
                                       Icons.star,
-                                      color: AppColors.orangeSecondaryAccentColor,
+                                      color:
+                                          AppColors.orangeSecondaryAccentColor,
                                       size: 14.sp,
                                     ),
                                     Gap(4.w),

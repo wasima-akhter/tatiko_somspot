@@ -2,8 +2,9 @@ import 'package:get/get.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
 
-import '../../../core/di/injection.dart';
+import '../../../core/di/repo_service_injection.dart';
 import '../../alerts/controller/alerts_controller.dart';
+import '../../home/binding/home_binding.dart';
 import '../../home/controller/home_controller.dart';
 import '../../influencer_all/influencer_discover/controller/influencer_discover_controller.dart';
 import '../../influencer_all/influencer_task_screen/controller/influencer_task_controller.dart';
@@ -54,6 +55,8 @@ class NavigationBinding extends Bindings {
     // customer
     Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
 
+    HomeBinding().dependencies();
+
     Get.lazyPut<SearchScreenController>(
       () => SearchScreenController(),
       fenix: true,
@@ -68,3 +71,18 @@ class NavigationBinding extends Bindings {
     );
   }
 }
+/*
+NavigationBinding
+      |
+      ├── HomeBinding
+      |      ├── HomeController
+      |      ├── HomeCategoryController
+      |      ├── HomeDealsController
+      |      └── HomeNearbyController
+      |
+      ├── ProfileBinding
+      |
+      ├── SearchBinding
+      |
+      └── AlertsBinding
+      */

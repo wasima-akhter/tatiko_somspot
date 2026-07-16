@@ -32,7 +32,10 @@ class ApiParser {
     final message = body["message"]?.toString() ?? "Something went wrong";
 
     if (success) {
-      final parsedData = mapper != null ? mapper(body) : body["data"];
+      final rawData = body["data"];
+      final parsedData = mapper != null
+          ? (rawData != null ? mapper(rawData) : null)
+          : rawData;
 
       ApiLogger.showResponse(
         url: response.requestOptions.uri.toString(),
@@ -47,7 +50,6 @@ class ApiParser {
         data: parsedData,
       );
     }
-
     final errors = _parseErrors(body);
 
     ApiLogger.showResponse(

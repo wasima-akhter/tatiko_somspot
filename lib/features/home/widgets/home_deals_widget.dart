@@ -14,7 +14,7 @@ class HomeDealsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<HomeDealsController>();
+    final controller = HomeDealsController.to;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

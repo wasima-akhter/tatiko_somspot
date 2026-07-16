@@ -36,6 +36,8 @@ class AppStorage extends GetxService {
 
   static const String tokenExpiryKey = 'token_expiry';
 
+  static const String profileCompletedKey = 'profile_completed';
+
   // -----------------------
   // onboarding
   // -----------------------
@@ -124,6 +126,11 @@ class AppStorage extends GetxService {
 
     return Map<String, dynamic>.from(data);
   }
+
+  bool get hasCompletedProfile => _storage.read(profileCompletedKey) ?? false;
+
+  Future<void> setProfileCompleted(bool value) =>
+      _storage.write(profileCompletedKey, value);
 
   // Future<void> setProfile(UserModel profile) =>
   //     _storage.write(profileKey, profile.toJson());

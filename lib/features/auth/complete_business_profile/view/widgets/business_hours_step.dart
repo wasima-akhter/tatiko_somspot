@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/features/auth/completed_profile/controller/completed_profile_controller.dart';
+import 'package:som_spot/features/auth/complete_business_profile/controller/complete_business_profile_controller.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
@@ -13,7 +13,7 @@ class BusinessHoursStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<CompletedProfileController>();
+    final controller = CompleteBusinessProfileController.to;
 
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -116,7 +116,7 @@ class _DayRow extends StatelessWidget {
   final VoidCallback onToggle;
   final VoidCallback onOpenTimeTap;
   final VoidCallback onCloseTimeTap;
-  final CompletedProfileController controller;
+  final CompleteBusinessProfileController controller;
 
   const _DayRow({
     required this.dayKey,
@@ -135,9 +135,7 @@ class _DayRow extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 10.h),
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       decoration: BoxDecoration(
-        color: isOpen
-            ? AppColors.white
-            : AppColors.grayTabBgColor,
+        color: isOpen ? AppColors.white : AppColors.grayTabBgColor,
         borderRadius: BorderRadius.circular(14.r),
         border: Border.all(
           color: isOpen
@@ -193,9 +191,7 @@ class _DayRow extends StatelessWidget {
               Text(
                 isOpen ? AppStrings.openNow.tr : AppStrings.closed.tr,
                 style: context.bodySmall.copyWith(
-                  color: isOpen
-                      ? AppColors.success
-                      : AppColors.hintTextColor,
+                  color: isOpen ? AppColors.success : AppColors.hintTextColor,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -206,7 +202,9 @@ class _DayRow extends StatelessWidget {
                 child: Switch.adaptive(
                   value: isOpen,
                   onChanged: (_) => onToggle(),
-                  activeTrackColor: AppColors.primaryColor.withValues(alpha: 0.3),
+                  activeTrackColor: AppColors.primaryColor.withValues(
+                    alpha: 0.3,
+                  ),
                   thumbColor: WidgetStateProperty.resolveWith((states) {
                     if (states.contains(WidgetState.selected)) {
                       return AppColors.primaryColor;
@@ -277,19 +275,12 @@ class _TimeChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(10.r),
-          border: Border.all(
-            color: AppColors.backgroundsLinesColor,
-            width: 1,
-          ),
+          border: Border.all(color: AppColors.backgroundsLinesColor, width: 1),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Iconsax.clock,
-              size: 14.sp,
-              color: AppColors.primaryColor,
-            ),
+            Icon(Iconsax.clock, size: 14.sp, color: AppColors.primaryColor),
             Gap(6.w),
             Text(
               label,

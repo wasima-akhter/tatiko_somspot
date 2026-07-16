@@ -1,4 +1,4 @@
-package com.example.som_spot
+package com.somspot.app
 
 import io.flutter.embedding.android.FlutterActivity
 
