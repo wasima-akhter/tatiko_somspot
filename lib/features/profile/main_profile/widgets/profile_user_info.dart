@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../../../helper/text_utils/string_extension.dart';
 import '../../../../share/widgets/network_image/custom_network_image.dart';
 import '../../../../utils/extension/base_extension.dart';
 import '../controller/profile_controller.dart';
@@ -44,7 +45,7 @@ class ProfileUserInfo extends StatelessWidget {
             children: [
               Obx(
                 () => Text(
-                  controller.userName.value,
+                  controller.userName.value.capitalizeWords(),
                   style: context.titleMedium.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

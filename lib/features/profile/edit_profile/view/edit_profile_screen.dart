@@ -24,27 +24,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final controller = EditProfileController.to;
   final _formKey = GlobalKey<FormState>();
 
-  late TextEditingController nameController;
-  late TextEditingController phoneController;
-
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController(
-      text: controller.profileController.userName.value,
-    );
-    phoneController = TextEditingController(
-      text: controller.profileController.userPhone.value,
-    );
+    controller.nameController.text =
+        controller.profileController.userName.value;
+    controller.phoneController.text =
+        controller.profileController.userPhone.value;
+
     // Clear selected local image on entry
     controller.selectedImage.value = null;
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    phoneController.dispose();
-    super.dispose();
   }
 
   @override
@@ -141,7 +130,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   // Full Name Field
                   CustomTextField(
                     title: AppStrings.fullName.tr,
-                    controller: nameController,
+                    controller: controller.nameController,
                     fillColor: AppColors.white,
                     hintText: AppStrings.fullName.tr,
                     prefixIcon: Icon(
@@ -182,7 +171,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   // Phone Number Field
                   CustomTextField(
                     title: AppStrings.phoneNumber.tr,
-                    controller: phoneController,
+                    controller: controller.phoneController,
                     fillColor: AppColors.white,
                     hintText: AppStrings.phoneNumber.tr,
                     keyboardType: TextInputType.phone,
@@ -236,8 +225,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               }
 
                               EditProfileController.to.updateProfile(
-                                name: nameController.text.trim(),
-                                phone: phoneController.text.trim(),
+                                name: controller.nameController.text.trim(),
+                                phone: controller.phoneController.text.trim(),
                               );
                             },
                           ),

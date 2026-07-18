@@ -1,25 +1,3 @@
-// class CurrentUserResponse {
-//   final bool success;
-//   final String message;
-//   final CurrentUserData? data;
-
-//   CurrentUserResponse({
-//     required this.success,
-//     required this.message,
-//     this.data,
-//   });
-
-//   factory CurrentUserResponse.fromJson(Map<String, dynamic> json) {
-//     return CurrentUserResponse(
-//       success: json["success"] ?? false,
-//       message: json["message"] ?? "",
-//       data: json["data"] == null
-//           ? null
-//           : CurrentUserData.fromJson(json["data"]),
-//     );
-//   }
-// }
-
 class CurrentUserResponse {
   final String authId;
   final String userId;
@@ -28,6 +6,7 @@ class CurrentUserResponse {
   final bool isActive;
   final bool isProfileComplete;
   final List<String> missing;
+  final UserSections sections;
 
   CurrentUserResponse({
     required this.authId,
@@ -37,6 +16,7 @@ class CurrentUserResponse {
     required this.isActive,
     required this.isProfileComplete,
     required this.missing,
+    required this.sections,
   });
 
   factory CurrentUserResponse.fromJson(Map<String, dynamic> json) {
@@ -47,6 +27,35 @@ class CurrentUserResponse {
       role: json["role"],
       isActive: json["isActive"],
       isProfileComplete: json["isProfileComplete"],
+      missing: List<String>.from(json["missing"] ?? []),
+      sections: UserSections.fromJson(json["sections"] ?? {}),
+    );
+  }
+}
+
+class UserSections {
+  final ProfileSection personal;
+  final ProfileSection business;
+
+  UserSections({required this.personal, required this.business});
+
+  factory UserSections.fromJson(Map<String, dynamic> json) {
+    return UserSections(
+      personal: ProfileSection.fromJson(json["personal"] ?? {}),
+      business: ProfileSection.fromJson(json["business"] ?? {}),
+    );
+  }
+}
+
+class ProfileSection {
+  final bool complete;
+  final List<String> missing;
+
+  ProfileSection({required this.complete, required this.missing});
+
+  factory ProfileSection.fromJson(Map<String, dynamic> json) {
+    return ProfileSection(
+      complete: json["complete"] ?? false,
       missing: List<String>.from(json["missing"] ?? []),
     );
   }

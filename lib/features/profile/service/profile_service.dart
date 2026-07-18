@@ -4,7 +4,7 @@ import '../../../core/service/datasource/remote/api_exception.dart';
 import '../../../core/service/datasource/remote/api_parser.dart';
 import '../../../core/service/datasource/remote/api_response.dart';
 import '../models/edit_profile_response.dart';
-import '../models/profile_response.dart';
+import '../models/get_profile_model.dart';
 import '../repository/profile_repository.dart';
 import '../request/edit_profile_request.dart';
 
@@ -35,15 +35,15 @@ class ProfileService {
     }
   }
 
-  Future<ApiResponse<ProfileModel>> getProfile() async {
+  Future<ApiResponse<GetProfileModel>> getProfile() async {
     try {
       final response = await _repository.getProfile();
 
       debugPrint("response before parsing: ${response.data}");
 
-      final result = ApiParser.parse<ProfileModel>(
+      final result = ApiParser.parse<GetProfileModel>(
         response,
-        mapper: (json) => ProfileModel.fromJson(json),
+        mapper: (json) => GetProfileModel.fromJson(json),
       );
 
       debugPrint("result after parsing: ${result.data?.email}");

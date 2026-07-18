@@ -25,6 +25,7 @@ class CompletedProfileCustomerController extends GetxController {
   final isLoading = false.obs;
 
   final nameController = TextEditingController();
+  final phoneController = TextEditingController();
   final emailController = TextEditingController();
 
   final ImagePicker _picker = ImagePicker();
@@ -47,6 +48,13 @@ class CompletedProfileCustomerController extends GetxController {
       ApiSnackbar.show("Please enter your name", type: SnackbarType.error);
       return;
     }
+    if (phoneController.text.trim().isEmpty) {
+      ApiSnackbar.show(
+        "Please enter your phone number",
+        type: SnackbarType.error,
+      );
+      return;
+    }
 
     if (profileImagePath.value == null) {
       ApiSnackbar.show(
@@ -62,6 +70,7 @@ class CompletedProfileCustomerController extends GetxController {
       final result = await _service.completeProfile(
         CompleteProfileRequest(
           name: nameController.text.trim(),
+          phoneNumber: phoneController.text.trim(),
           profileImage: File(profileImagePath.value!),
         ),
       );

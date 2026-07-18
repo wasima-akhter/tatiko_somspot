@@ -12,8 +12,8 @@ import 'package:som_spot/utils/extension/base_extension.dart';
 
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 import '../../../../utils/app_strings/app_strings.dart';
-import 'completed_profile_customer_args.dart';
 import '../controller/completed_profile_customer_controller.dart';
+import 'completed_profile_customer_args.dart';
 
 class CompletedProfileCustomerScreen extends StatelessWidget {
   final CompletedProfileCustomerArgs args;
@@ -142,16 +142,32 @@ class CompletedProfileCustomerScreen extends StatelessWidget {
               // full name && email with title:
               Form(
                 key: formKey,
-                child: CustomTextField(
-                  controller: controller.nameController,
-                  title: AppStrings.fullName.tr,
-                  hintText: AppStrings.ahmedMohamed.tr,
-                  prefixIcon: const Icon(
-                    Icons.person_outline,
-                    size: 20,
-                    color: AppColors.hintTextColor,
-                  ),
-                  validator: TextFieldValidator.name(),
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      controller: controller.nameController,
+                      title: AppStrings.fullName.tr,
+                      hintText: AppStrings.ahmedMohamed.tr,
+                      prefixIcon: const Icon(
+                        Icons.person_outline,
+                        size: 20,
+                        color: AppColors.hintTextColor,
+                      ),
+                      validator: TextFieldValidator.name(),
+                    ),
+                    const Gap(16),
+                    CustomTextField(
+                      controller: controller.phoneController,
+                      title: AppStrings.phoneNumber.tr,
+                      hintText: "XXXXXXXXXXX",
+                      prefixIcon: const Icon(
+                        Icons.person_outline,
+                        size: 20,
+                        color: AppColors.hintTextColor,
+                      ),
+                      validator: TextFieldValidator.phone(),
+                    ),
+                  ],
                 ),
               ),
               const Gap(16),

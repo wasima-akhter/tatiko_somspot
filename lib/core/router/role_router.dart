@@ -6,6 +6,7 @@ import '../../features/auth/completed_profile_customer/view/completed_profile_cu
 import '../../features/auth/requests/auth_request.dart';
 import '../../features/auth/service/auth_service.dart';
 import '../../helper/snackbar/api_snackbar.dart';
+import '../../utils/common_controller/common_controller.dart';
 import '../di/repo_service_injection.dart';
 
 class RoleRouter {
@@ -20,6 +21,9 @@ class RoleRouter {
     }
 
     final user = response.data!;
+
+    //  // Save role globally
+    CommonController.to.setRole(UserRoleExtension.fromString(user.role));
 
     if (!user.isActive) {
       final resend = await service.resendOtp(
@@ -71,7 +75,13 @@ class RoleRouter {
 
     // Personal profile completed.
     // Merchant may still need to complete business profile.
-    if (user.role == "MERCHANT" && user.missing.contains("business.business")) {
+    // if (user.role == "MERCHANT" && user.missing.contains("business.business")) {
+    //   AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
+    //   return;
+    // }
+
+    // Business profile incomplete
+    if (user.role == "MERCHANT" && !user.sections.business.complete) {
       AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
       return;
     }

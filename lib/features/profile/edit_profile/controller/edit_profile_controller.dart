@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
@@ -17,6 +18,9 @@ class EditProfileController extends GetxController {
   static EditProfileController get to => Get.find();
 
   final profileController = ProfileScreenController.to;
+
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
 
   final selectedImage = RxnString();
 
@@ -74,5 +78,52 @@ class EditProfileController extends GetxController {
     } finally {
       isUpdateLoading.value = false;
     }
+  }
+
+  final isProfileLoading = false.obs;
+
+  Future<void> getProfile() async {
+    try {
+      isProfileLoading.value = true;
+
+      final result = await _service.getProfile();
+
+      if (!result.success || result.data == null) {
+        AppToast.error(message: result.message);
+        return;
+      }
+
+      final profile = result.data!;
+
+      // Assign form fields
+      nameController.text = profile.name;
+
+      phoneController.text = profile.phone ?? "";
+
+      // Update profile controller
+      profileController.userName.value = profile.name;
+
+      profileController.userPhone.value = profile.phone ?? "";
+
+      if (profile.profileImage != null) {
+        profileController.userAvatar.value = profile.profileImage!;
+      }
+    } finally {
+      isProfileLoading.value = false;
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getProfile();
+  }
+
+  @override
+  void onClose() {
+    nameController.dispose();
+    phoneController.dispose();
+
+    super.onClose();
   }
 }

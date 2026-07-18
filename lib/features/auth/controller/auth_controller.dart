@@ -258,6 +258,9 @@ class AuthController extends GetxController {
 
     final user = me.data!;
 
+    //  // Save role globally
+    CommonController.to.setRole(UserRoleExtension.fromString(user.role));
+
     // inactive account
     if (!user.isActive) {
       final resend = await _service.resendOtp(
@@ -312,7 +315,13 @@ class AuthController extends GetxController {
 
     // Personal profile completed.
     // Merchant may still need to complete business profile.
-    if (user.role == "MERCHANT" && user.missing.contains("business.business")) {
+    // if (user.role == "MERCHANT" && user.missing.contains("business.business")) {
+    //   AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
+    //   return;
+    // }
+
+    // Business profile incomplete
+    if (user.role == "MERCHANT" && !user.sections.business.complete) {
       AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
       return;
     }
