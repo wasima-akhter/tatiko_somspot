@@ -5,8 +5,10 @@ import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../features/auth/controller/auth_controller.dart';
 import '../../features/auth/service/auth_service.dart';
+import '../../features/core/business/binding/business_binding.dart';
 import '../../features/core/category/category_binding.dart';
 import '../../features/nav/controller/navigation_controller.dart';
+import '../../features/other/controller/other_binding.dart';
 import 'repo_service_injection.dart';
 
 void initGlobalBinding() {
@@ -22,4 +24,8 @@ void initGlobalBinding() {
   debugPrint('✅ [main] AuthController registered');
 
   CategoryBinding().dependencies();
+
+  OtherBinding().dependencies();
+
+  BusinessBinding().dependencies();
 }

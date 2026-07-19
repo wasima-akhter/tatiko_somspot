@@ -29,7 +29,7 @@ class _EditOfferScreenState extends State<EditOfferScreen> {
   late final TextEditingController _endDateController;
   late final TextEditingController _descriptionController;
 
-  final OfferController controller = Get.put(OfferController());
+  final OffersController controller = OffersController.to;
 
   @override
   void initState() {

@@ -16,10 +16,9 @@ import 'api_exception.dart';
 import 'api_logger.dart';
 
 class ApiClient {
-  final bool showResponse;
   final Dio dio;
 
-  ApiClient({required this.dio, this.showResponse = false}) {
+  ApiClient({required this.dio}) {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
@@ -65,10 +64,7 @@ class ApiClient {
     final headers = <String, String>{};
 
     if (!skipAuth) {
-      final authToken =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoSWQiOiI2YTU4NmZhZDUzNzYyOGI4NGYwMmRhZTAiLCJ1c2VySWQiOiI2YTU4NmZhZDUzNzYyOGI4NGYwMmRhZTEiLCJlbWFpbCI6Im1hcmNoYW50QHlvcG1haWwuY29tIiwicm9sZSI6Ik1FUkNIQU5UIiwiaXNBY3RpdmUiOnRydWUsImlhdCI6MTc4NDE4OTY4MSwiZXhwIjoxODE1NzI1NjgxfQ.-LSGmBvhhbg3suzZiGNtB98W9Tlvpn2B4ncwFABTXDw" ??
-          token ??
-          AppStorage.to.accessToken;
+      final authToken = token ?? AppStorage.to.accessToken;
 
       if (authToken.isNotEmpty) {
         headers["Authorization"] = "Bearer $authToken";
@@ -95,6 +91,7 @@ class ApiClient {
     Map<String, dynamic>? queryParams,
     String? token,
     bool skipAuth = false,
+    bool showResponse = false,
   }) async {
     await checkConnection();
 
@@ -108,7 +105,7 @@ class ApiClient {
         ),
       );
 
-      log(url, response);
+      log(url, response, queryParams: queryParams, showResponse: showResponse);
 
       return response;
     } catch (e) {
@@ -121,6 +118,7 @@ class ApiClient {
     required Map<String, dynamic> body,
     String? token,
     bool skipAuth = false,
+    bool showResponse = false,
   }) async {
     await checkConnection();
 
@@ -137,7 +135,7 @@ class ApiClient {
         ),
       );
 
-      log(url, response);
+      log(url, response, showResponse: showResponse);
 
       return response;
     } catch (e, stack) {
@@ -152,6 +150,7 @@ class ApiClient {
     required String url,
     Map<String, dynamic>? body,
     String? token,
+    bool showResponse = false,
   }) async {
     await checkConnection();
 
@@ -162,7 +161,7 @@ class ApiClient {
         options: Options(headers: await headers(token: token)),
       );
 
-      log(url, response);
+      log(url, response, showResponse: showResponse);
 
       return response;
     } catch (e) {
@@ -174,6 +173,7 @@ class ApiClient {
     required String url,
     Map<String, dynamic>? body,
     String? token,
+    bool showResponse = false,
   }) async {
     await checkConnection();
 
@@ -184,7 +184,7 @@ class ApiClient {
         options: Options(headers: await headers(token: token)),
       );
 
-      log(url, response);
+      log(url, response, showResponse: showResponse);
 
       return response;
     } catch (e) {
@@ -196,6 +196,7 @@ class ApiClient {
     required String url,
     Map<String, dynamic>? body,
     String? token,
+    bool showResponse = false,
   }) async {
     await checkConnection();
 
@@ -206,7 +207,7 @@ class ApiClient {
         options: Options(headers: await headers(token: token, isJson: false)),
       );
 
-      log(url, response);
+      log(url, response, showResponse: showResponse);
 
       return response;
     } catch (e) {
@@ -220,6 +221,7 @@ class ApiClient {
     required String method,
     String? token,
     Map<String, String>? fields,
+    bool showResponse = false,
   }) async {
     await checkConnection();
 
@@ -251,7 +253,7 @@ class ApiClient {
         options: Options(method: method, headers: multipartHeaders),
       );
 
-      log(url, response);
+      log(url, response, showResponse: showResponse);
 
       return response;
     } catch (e) {
@@ -295,8 +297,22 @@ class ApiClient {
     return ApiException(message: error.toString(), statusCode: 500);
   }
 
-  void log(String url, Response response) {
-    ApiLogger.showResponse(url: url, response: response, enabled: showResponse);
+  void log(
+    String url,
+    Response response, {
+    Map<String, dynamic>? queryParams,
+    dynamic request,
+    dynamic parsedData,
+    bool showResponse = true,
+  }) {
+    ApiLogger.showResponse(
+      url: url,
+      response: response,
+      request: request,
+      parsedData: parsedData,
+      queryParams: queryParams,
+      enabled: showResponse,
+    );
   }
 
   Future<void> _refreshToken() async {

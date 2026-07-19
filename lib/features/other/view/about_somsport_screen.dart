@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -12,15 +13,18 @@ import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
 import '../../../core/custom_assets/assets.gen.dart';
+import '../../../share/widgets/ui_status_builder/api_status_builder.dart';
+import '../controller/other_controller.dart';
 
 class AboutSomSpotScreen extends StatelessWidget {
   const AboutSomSpotScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = OtherController.to;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.softBackgroundColor,
+        backgroundColor: AppColors.backgroundColorNew,
         elevation: 0,
 
         leading: IconButton(
@@ -86,73 +90,33 @@ class AboutSomSpotScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Text(
-                        "SomSpot helps you discover the best local\nrestaurants, groceries, pharmacies, and\nsupermarkets across Somalia — and claim\nexclusive deals from merchants near you.",
-                        textAlign: TextAlign.start,
-                        style: context.bodyMedium.copyWith(
-                          color: AppColors.subtitleTextColor,
-                          fontSize: 13.sp,
-                          height: 1.5,
+                      child: Obx(
+                        () => ApiStatusBuilder(
+                          status: controller.aboutLoading.value,
+                          errorMessage: controller.errorMessage.value,
+                          onRetry: controller.getAboutUs,
+
+                          builder: (context) {
+                            return Html(
+                              data: controller.aboutDescription.value,
+
+                              style: {
+                                "body": Style(
+                                  margin: Margins.zero,
+                                  padding: HtmlPaddings.zero,
+                                  color: AppColors.subtitleTextColor,
+                                  fontSize: FontSize(13.sp),
+                                  lineHeight: LineHeight(1.5),
+                                ),
+                              },
+                            );
+                          },
                         ),
                       ),
                     ),
                     Gap(24.h),
 
                     // Navigation Links List Card
-                    /*
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16.r),
-                        border: Border.all(
-                          color: AppColors.backgroundsLinesColor.withValues(
-                            alpha: 0.8,
-                          ),
-                          width: 1,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.01),
-                            blurRadius: 8.r,
-                            offset: Offset(0, 2.h),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          _buildLinkTile(
-                            context: context,
-                            icon: Iconsax.shield_security,
-                            title: AppStrings.privacyPolicy.tr,
-                            onTap: () {
-                              AppToast.info(
-                                context: context,
-                                message: AppStrings.navigatingToPrivacy.tr,
-                              );
-                              AppRouter.route.pushNamed(
-                                RoutePath.privacyPolicyScreen,
-                              );
-                            },
-                          ),
-                          _buildDivider(),
-                          _buildLinkTile(
-                            context: context,
-                            icon: Iconsax.document_text,
-                            title: AppStrings.termsConditions.tr,
-                            onTap: () {
-                              AppToast.info(
-                                context: context,
-                                message: AppStrings.navigatingToTerms.tr,
-                              );
-                              AppRouter.route.pushNamed(
-                                RoutePath.termsAndConditionsScreen,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                 */
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,

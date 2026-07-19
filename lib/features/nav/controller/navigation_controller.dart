@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/features/alerts/view/alerts_screen.dart';
-import 'package:som_spot/features/dashboard/view/dashboard_screen.dart';
+import 'package:som_spot/features/dashboard/dashboard_merchant/view/dashboard_merchant_screen.dart';
 import 'package:som_spot/features/home/view/home_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/view/influencer_dashboard_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_discover/view/influencer_discover_screen.dart';
@@ -27,7 +27,7 @@ class NavigationControllerMain extends GetxController {
     switch (CommonController.to.role.value) {
       case UserRole.merchandiser:
         return const [
-          DashboardScreen(),
+          DashboardMerchantScreen(),
           ListingScreen(),
           OffersScreen(),
           StatsScreen(),

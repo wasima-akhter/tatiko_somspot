@@ -51,4 +51,45 @@ class ApiUrls {
   // core
   // categories
   static String getCategories() => '$base/category/get-all';
+
+  // Other
+  static String postFeedback() => '$base/feedback/post-feedback';
+
+  static String getTermsConditions() {
+    return '$base/manage/get-terms-conditions';
+  }
+
+  static String getPrivacyPolicy() {
+    return '$base/manage/get-privacy-policy';
+  }
+
+  static String rateApp() {
+    return '$base/user/rate-app';
+  }
+
+  static String getAboutUs() {
+    return '$base/manage/get-about-us';
+  }
+
+  //Business
+
+  static String myBusinesses({required int page, required int limit}) {
+    return '$base/business/my?page=$page&limit=$limit';
+  }
+
+  // Create Offer (merchant)
+
+  static String createOffer() {
+    return '$base/offer/create';
+  }
+
+  static String getOffers() {
+    return '$base/offer/get-all';
+  }
+
+  // MEERCHANT
+
+  static String merchantDashboard() {
+    return "$base/merchant/dashboard";
+  }
 }

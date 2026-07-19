@@ -4,28 +4,19 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
 
-class OffersHeader extends StatefulWidget {
+import '../controller/offer_controller.dart';
+import '../helper/offer_helper.dart';
+
+class OffersHeader extends StatelessWidget {
   const OffersHeader({super.key});
 
   @override
-  State<OffersHeader> createState() => _OffersHeaderState();
-}
-
-class _OffersHeaderState extends State<OffersHeader> {
-  final ValueNotifier<int> _selectedTabIndex = ValueNotifier<int>(0);
-
-  @override
-  void dispose() {
-    _selectedTabIndex.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = OffersController.to;
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -68,49 +59,50 @@ class _OffersHeaderState extends State<OffersHeader> {
             ],
           ),
           Gap(20.h),
-          ValueListenableBuilder<int>(
-            valueListenable: _selectedTabIndex,
-            builder: (context, selectedIndex, child) {
-              return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                child: Row(
-                  children: [
-                    _buildTabPill(
-                      context: context,
-                      title: AppStrings.active.tr,
-                      count: '3',
-                      isActive: selectedIndex == 0,
-                      onTap: () => _selectedTabIndex.value = 0,
+
+          SizedBox(
+            height: 42.h,
+            child: Stack(
+              children: [
+                Obx(
+                  () => SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    controller: controller.tabScrollController,
+                    child: Row(
+                      children: OfferStatus.values.map((status) {
+                        return Padding(
+                          padding: EdgeInsets.only(right: 12.w),
+                          child: _buildTabPill(
+                            context: context,
+                            title: status.title,
+                            count: (controller.statusCounts[status] ?? 0)
+                                .toString(),
+                            isActive: controller.selectedStatus.value == status,
+                            onTap: () => controller.changeStatus(status),
+                          ),
+                        );
+                      }).toList(),
                     ),
-                    Gap(12.w),
-                    _buildTabPill(
-                      context: context,
-                      title: AppStrings.scheduled.tr,
-                      count: '2',
-                      isActive: selectedIndex == 1,
-                      onTap: () => _selectedTabIndex.value = 1,
-                    ),
-                    Gap(12.w),
-                    _buildTabPill(
-                      context: context,
-                      title: AppStrings.paused.tr,
-                      count: '1',
-                      isActive: selectedIndex == 2,
-                      onTap: () => _selectedTabIndex.value = 2,
-                    ),
-                    Gap(12.w),
-                    _buildTabPill(
-                      context: context,
-                      title: AppStrings.expired.tr,
-                      count: '2',
-                      isActive: selectedIndex == 3,
-                      onTap: () => _selectedTabIndex.value = 3,
-                    ),
-                  ],
+                  ),
                 ),
-              );
-            },
+
+                Obx(
+                  () =>
+                      controller.showLeft.value ? LeftFade() : const SizedBox(),
+                ),
+
+                Obx(
+                  () => controller.showRight.value
+                      ? RightFade()
+                      : const SizedBox(),
+                ),
+
+                /// Left fade
+
+                /// Right fade
+              ],
+            ),
           ),
         ],
       ),
@@ -156,13 +148,61 @@ class _OffersHeaderState extends State<OffersHeader> {
               child: Text(
                 count,
                 style: context.bodySmall.copyWith(
-                  color: isActive ? AppColors.white : AppColors.subtitleTextColor,
+                  color: isActive
+                      ? AppColors.white
+                      : AppColors.subtitleTextColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 10.sp,
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class LeftFade extends StatelessWidget {
+  const LeftFade({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          width: 24.w,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [AppColors.white, AppColors.white.withValues(alpha: 0)],
+            ),
+          ),
+
+          // child: Icon(Icons.arrow_back_ios),
+        ),
+      ),
+    );
+  }
+}
+
+class RightFade extends StatelessWidget {
+  const RightFade({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Container(
+          width: 24.w,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft,
+              colors: [AppColors.white, AppColors.white.withValues(alpha: 0)],
+            ),
+          ),
         ),
       ),
     );

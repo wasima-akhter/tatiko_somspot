@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:som_spot/share/export/repo_export.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final String imageUrl;
@@ -71,7 +72,7 @@ class CustomNetworkImage extends StatelessWidget {
     }
 
     return CachedNetworkImage(
-      imageUrl: imageUrl,
+      imageUrl: getImageUrl(imageUrl, ApiUrls.base),
       fit: fit,
       imageBuilder: (context, imageProvider) => Container(
         height: height,
@@ -119,4 +120,18 @@ class CustomNetworkImage extends StatelessWidget {
       },
     );
   }
+}
+
+String getImageUrl(String? imageUrl, String baseUrl) {
+  if (imageUrl == null || imageUrl.trim().isEmpty) {
+    return '';
+  }
+
+  final url = imageUrl.trim();
+
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+
+  return '${baseUrl.replaceAll(RegExp(r'/$'), '')}/${url.replaceFirst(RegExp(r'^/'), '')}';
 }

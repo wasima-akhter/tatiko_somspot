@@ -9,8 +9,16 @@ import '../../features/auth/completed_profile_customer/repository/complete_profi
 import '../../features/auth/completed_profile_customer/service/complete_profile_service.dart';
 import '../../features/auth/repository/auth_repository.dart';
 import '../../features/auth/service/auth_service.dart';
+import '../../features/core/business/repository/business-repository.dart';
+import '../../features/core/business/service/business-service.dart';
 import '../../features/core/category/repository/category_repository.dart';
 import '../../features/core/category/service/category_service.dart';
+import '../../features/dashboard/create_offer/repository/create_offer_repository.dart';
+import '../../features/dashboard/create_offer/service/create_offer_service.dart';
+import '../../features/dashboard/dashboard_merchant/repository/dashboard_merchant_repository.dart';
+import '../../features/dashboard/dashboard_merchant/service/dashboard_merchant_service.dart';
+import '../../features/other/repository/other_repository.dart';
+import '../../features/other/service/other_service.dart';
 import '../../features/profile/repository/profile_repository.dart';
 import '../../features/profile/service/profile_service.dart';
 
@@ -88,5 +96,53 @@ Future<void> initDependencies() async {
 
   sl.registerLazySingleton<CategoryService>(
     () => CategoryService(sl<CategoryRepository>()),
+  );
+
+  // =====================
+  // Other
+  // =====================
+
+  sl.registerLazySingleton<OtherRepository>(
+    () => OtherRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<OtherService>(
+    () => OtherService(sl<OtherRepository>()),
+  );
+
+  // =====================
+  // Business
+  // =====================
+
+  sl.registerLazySingleton<BusinessRepository>(
+    () => BusinessRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<BusinessService>(
+    () => BusinessService(sl<BusinessRepository>()),
+  );
+
+  // =====================
+  // Offer
+  // =====================
+
+  sl.registerLazySingleton<OfferRepository>(
+    () => OfferRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<OfferService>(
+    () => OfferService(sl<OfferRepository>()),
+  );
+
+  // =====================
+  // Merchant Dashboard
+  // =====================
+
+  sl.registerLazySingleton<DashboardMerchantRepository>(
+    () => DashboardMerchantRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<DashboardMerchantService>(
+    () => DashboardMerchantService(sl<DashboardMerchantRepository>()),
   );
 }

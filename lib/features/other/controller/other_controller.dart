@@ -2,17 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../helper/toast/toast_helper.dart';
+import '../../../share/base_controller/base_form_controller.dart';
 import '../../../utils/app_strings/app_strings.dart';
+import '../../../utils/enum/app_enum.dart';
+import '../request/help_support-request.dart';
+import '../request/rate_app_request.dart';
+import '../service/other_service.dart';
 
-class OtherController extends GetxController {
+class OtherController extends BaseFormController {
+  final OtherService _service;
+
+  OtherController(this._service);
+
   static OtherController get to => Get.find();
 
   final formKey = GlobalKey<FormState>();
 
   final subjectController = TextEditingController();
   final messageController = TextEditingController();
-
-  final isSubmitting = false.obs;
 
   final List<FaqModel> faqs = const [
     FaqModel(
@@ -36,20 +43,137 @@ class OtherController extends GetxController {
           "Claimed deals will automatically expire if they are not used within their validity period. There is no need to manually cancel or remove them.",
     ),
   ];
-
   Future<void> submitMessage() async {
     if (!formKey.currentState!.validate()) return;
 
-    isSubmitting.value = true;
+    beginSubmit();
 
-    await Future.delayed(const Duration(seconds: 1));
+    try {
+      final result = await _service.postFeedback(
+        FeedbackRequest(
+          subject: subjectController.text.trim(),
+          feedback: messageController.text.trim(),
+        ),
+      );
 
-    subjectController.clear();
-    messageController.clear();
+      if (!result.success) {
+        submitFailure(result.message);
+        return;
+      }
 
-    isSubmitting.value = false;
+      resetForm(
+        formKey: formKey,
+        controllers: [subjectController, messageController],
+      );
 
-    AppToast.success(message: AppStrings.messageSubmitted.tr);
+      submitSuccess();
+
+      showSuccess(AppStrings.messageSubmitted.tr);
+    } catch (_) {
+      submitFailure("Something went wrong.");
+    }
+  }
+
+  /// TERMS & CONDITIONS
+  ///
+  /// // Terms & Conditions
+
+  final Rx<ApiStatus> termsLoading = ApiStatus.completed.obs;
+
+  void termsLoadingMethod(ApiStatus status) {
+    termsLoading.value = status;
+  }
+
+  final termsDescription = "".obs;
+
+  Future<void> getTermsConditions() async {
+    termsLoadingMethod(ApiStatus.loading);
+    errorMessage.value = null;
+
+    try {
+      final result = await _service.getTermsConditions();
+
+      if (!result.success) {
+        errorMessage.value = result.message;
+
+        termsLoadingMethod(ApiStatus.error);
+
+        return;
+      }
+
+      final data = result.data;
+
+      if (data == null) {
+        termsLoadingMethod(ApiStatus.noDataFound);
+
+        return;
+      }
+
+      termsDescription.value = data.description;
+
+      termsLoadingMethod(ApiStatus.completed);
+    } catch (_) {
+      errorMessage.value = "Something went wrong.";
+
+      termsLoadingMethod(ApiStatus.error);
+    }
+  }
+
+  ///
+  // Privacy Policy
+
+  final Rx<ApiStatus> privacyLoading = ApiStatus.completed.obs;
+
+  void privacyLoadingMethod(ApiStatus status) {
+    privacyLoading.value = status;
+  }
+
+  final privacyDescription = "".obs;
+
+  Future<void> getPrivacyPolicy() async {
+    privacyLoadingMethod(ApiStatus.loading);
+
+    errorMessage.value = null;
+
+    try {
+      final result = await _service.getPrivacyPolicy();
+
+      if (!result.success) {
+        errorMessage.value = result.message;
+
+        privacyLoadingMethod(ApiStatus.error);
+
+        return;
+      }
+
+      final data = result.data;
+
+      if (data == null) {
+        privacyLoadingMethod(ApiStatus.noDataFound);
+
+        return;
+      }
+
+      privacyDescription.value = data.description;
+
+      privacyLoadingMethod(ApiStatus.completed);
+    } catch (_) {
+      errorMessage.value = "Something went wrong.";
+
+      privacyLoadingMethod(ApiStatus.error);
+    }
+  }
+
+  /// ---------------
+  ///
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    getTermsConditions();
+    getPrivacyPolicy();
+    getAboutUs();
   }
 
   @override
@@ -61,19 +185,96 @@ class OtherController extends GetxController {
 
   //
   // Rating app -->
-  double rating = 3;
+  final RxDouble rating = 3.0.obs;
 
   String get ratingText {
-    if (rating <= 1) return "Poor";
-    if (rating <= 2) return "Fair";
-    if (rating <= 3) return "Okay";
-    if (rating <= 4) return "Good";
+    if (rating.value <= 1) return "Poor";
+    if (rating.value <= 2) return "Fair";
+    if (rating.value <= 3) return "Okay";
+    if (rating.value <= 4) return "Good";
+
     return "Excellent";
   }
 
   void updateRating(double value) {
-    rating = value;
-    update();
+    rating.value = value;
+  }
+
+  final Rx<ApiStatus> ratingLoading = ApiStatus.completed.obs;
+
+  void ratingLoadingMethod(ApiStatus status) {
+    ratingLoading.value = status;
+  }
+
+  Future<void> submitRating({VoidCallback? onSuccess}) async {
+    ratingLoadingMethod(ApiStatus.loading);
+
+    final request = RateAppRequest(rating: rating.value.toInt());
+
+    try {
+      final result = await _service.rateApp(request);
+
+      if (!result.success) {
+        ratingLoadingMethod(ApiStatus.error);
+
+        AppToast.error(message: result.message);
+
+        return;
+      }
+
+      ratingLoadingMethod(ApiStatus.completed);
+
+      AppToast.success(message: "Thank you for rating SomSpot");
+      onSuccess?.call();
+    } catch (_) {
+      ratingLoadingMethod(ApiStatus.error);
+
+      AppToast.error(message: "Something went wrong");
+    }
+  }
+
+  // about us:
+  // About Us
+
+  final Rx<ApiStatus> aboutLoading = ApiStatus.completed.obs;
+
+  void aboutLoadingMethod(ApiStatus status) {
+    aboutLoading.value = status;
+  }
+
+  final aboutDescription = "".obs;
+  Future<void> getAboutUs() async {
+    aboutLoadingMethod(ApiStatus.loading);
+
+    errorMessage.value = null;
+
+    try {
+      final result = await _service.getAboutUs();
+
+      if (!result.success) {
+        errorMessage.value = result.message;
+
+        aboutLoadingMethod(ApiStatus.error);
+
+        return;
+      }
+
+      final data = result.data;
+
+      if (data == null) {
+        aboutLoadingMethod(ApiStatus.noDataFound);
+
+        return;
+      }
+
+      aboutDescription.value = data.description;
+
+      aboutLoadingMethod(ApiStatus.completed);
+    } catch (_) {
+      errorMessage.value = "Something went wrong.";
+
+      aboutLoadingMethod(ApiStatus.error);
+    }
   }
 }
 

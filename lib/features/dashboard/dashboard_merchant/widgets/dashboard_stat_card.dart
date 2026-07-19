@@ -1,3 +1,4 @@
+import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -9,6 +10,7 @@ class DashboardStatCard extends StatelessWidget {
   final String value;
   final IconData icon;
   final Color iconColor;
+  final bool isLoading;
 
   const DashboardStatCard({
     super.key,
@@ -16,6 +18,7 @@ class DashboardStatCard extends StatelessWidget {
     required this.value,
     required this.icon,
     required this.iconColor,
+    this.isLoading = false,
   });
 
   @override
@@ -45,7 +48,9 @@ class DashboardStatCard extends StatelessWidget {
             ),
             child: Icon(icon, color: iconColor, size: 16.sp),
           ),
+
           Gap(8.h),
+
           Text(
             title,
             style: context.bodySmall.copyWith(
@@ -53,12 +58,17 @@ class DashboardStatCard extends StatelessWidget {
               fontSize: 10.sp,
             ),
           ),
+
           Gap(2.h),
-          Text(
-            value,
-            style: context.titleMedium.copyWith(
-              fontWeight: FontWeight.bold,
-              color: AppColors.darkTextColor,
+
+          AutoShimmerAnimate(
+            isLoading: isLoading,
+            child: Text(
+              value,
+              style: context.titleMedium.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.darkTextColor,
+              ),
             ),
           ),
         ],

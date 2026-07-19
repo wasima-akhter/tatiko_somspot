@@ -6,16 +6,19 @@ class ApiLogger {
     dynamic request,
     dynamic response,
     dynamic parsedData,
+    Map<String, dynamic>? queryParams,
     bool enabled = false,
   }) {
     if (!enabled) return;
 
     print("""
-
 ================ API RESPONSE ================
 
 URL:
 $url
+
+QUERY PARAMS:
+${_pretty(queryParams)}
 
 
 REQUEST:
@@ -35,7 +38,6 @@ ${_pretty(parsedData)}
 
 
 ================================================
-
 """);
   }
 
@@ -57,6 +59,7 @@ ${_pretty(parsedData)}
 
   static String _pretty(dynamic data) {
     if (data == null) return "null";
+
     if (data is Map || data is List) {
       try {
         return const JsonEncoder.withIndent("  ").convert(data);
@@ -64,6 +67,7 @@ ${_pretty(parsedData)}
         return data.toString();
       }
     }
+
     return data.toString();
   }
 }

@@ -5,7 +5,6 @@ import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
-import '../../../common_components/dash_common_header.dart';
 import '../../../common_components/dash_common_header_cont.dart';
 import '../widgets/influencer_active_tasks.dart';
 import '../widgets/influencer_earnings_card.dart';
@@ -35,7 +34,7 @@ class _InfluencerDashboardScreenState extends State<InfluencerDashboardScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DashboardCommonHeaderSec(),
+                  // DashboardCommonHeaderSec(),
                   Gap(16.h),
                   InfluencerEarningsCard(),
                 ],

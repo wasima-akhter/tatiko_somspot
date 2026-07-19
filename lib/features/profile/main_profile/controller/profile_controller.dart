@@ -2,11 +2,13 @@ import 'package:get/get.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/auth/controller/auth_controller.dart';
+import 'package:som_spot/features/profile/models/get_profile_model.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
 
 import '../../../../helper/image/image_helper.dart';
+import '../../../../helper/location_converter/location-converter.dart';
 import '../../../../utils/common_controller/common_controller.dart';
-import '../../models/profile_response.dart';
+import '../../../../utils/enum/app_enum.dart';
 import '../../service/profile_service.dart';
 import '../widgets/profile_statistics_section.dart';
 
@@ -16,19 +18,14 @@ class ProfileScreenController extends GetxController {
   ProfileScreenController(this._service);
   static ProfileScreenController get to => Get.find();
 
-  final isLoading = false.obs;
+  /// ============================= GET Profile =====================================
+  final Rx<ApiStatus> profileLoading = ApiStatus.completed.obs;
+  void profileLoadingMethod(ApiStatus status) => profileLoading.value = status;
 
   @override
   void onInit() {
     super.onInit();
-
     getProfile();
-  }
-
-  void setProfileData(ProfileModel data) {
-    userName.value = data.name ?? '';
-    userEmail.value = data.email ?? '';
-    userAvatar.value = data.profileImage ?? '';
   }
 
   // User Profile details
@@ -36,10 +33,39 @@ class ProfileScreenController extends GetxController {
   final userEmail = "".obs;
   final userPhone = "".obs;
   final userAvatar = "".obs;
+  final userLocationCords = LocationCoordinates(
+    type: "Point",
+    coordinates: [0.0, 0.0],
+  ).obs;
+  final userLocationString = "".obs;
+
   // Statistics
   final savedCount = 12.obs;
   final claimsCount = 8.obs;
   final reviewsCount = 5.obs;
+
+  Future<void> setProfileData(GetProfileModel data) async {
+    print("PROFILE CONTROLLER: $hashCode");
+    userName.value = data.name;
+    userEmail.value = data.email;
+    userPhone.value = data.phone ?? "";
+    userAvatar.value = data.profileImage != null
+        ? AppImageHelper.profile(data.profileImage!)
+        : "";
+
+    userLocationCords.value = data.locationCoordinates!;
+    final coordinates = data.locationCoordinates;
+    if (coordinates != null && coordinates.coordinates.length == 2) {
+      userLocationString.value = await LocationHelper.getAddressFromCoordinates(
+        latitude: coordinates.coordinates[0],
+        longitude: coordinates.coordinates[1],
+      );
+    } else {
+      userLocationString.value = LocationHelper.fallbackAddress;
+    }
+
+    update();
+  }
 
   void logout() {
     AuthController.to.logout();
@@ -51,65 +77,44 @@ class ProfileScreenController extends GetxController {
     if (CommonController.to.isInfluencer) {
       return [
         ProfileStatModel(title: "Followers", value: "50K"),
-
         ProfileStatModel(title: "Engagement", value: "4.2%"),
-
         ProfileStatModel(title: "Campaigns", value: "12"),
       ];
     }
-
     if (CommonController.to.isCustomer) {
       return [
         ProfileStatModel(title: "Saved", value: "25"),
-
         ProfileStatModel(title: "Claims", value: "18"),
-
         ProfileStatModel(title: "Reviews", value: "12"),
       ];
     }
-
-    if (CommonController.to.isMerchandiser) {
-      return [];
-    }
-
-    return [];
+    return []; // merchandiser / fallback
   }
+
+  final Rx<String?> errorMessage = Rx<String?>(null);
 
   Future<void> getProfile() async {
-    print("PROFILE CONTROLLER: $hashCode");
+    profileLoadingMethod(ApiStatus.loading);
+    errorMessage.value = null;
     try {
-      isLoading.value = true;
-
       final result = await _service.getProfile();
-
-      if (!result.success || result.data == null) {
-        AppToast.error(message: result.message);
-
+      if (!result.success) {
+        errorMessage.value = result.message;
+        profileLoadingMethod(ApiStatus.error);
         return;
       }
-
-      final profile = result.data!;
-
-      userName.value = profile.name;
-
-      userEmail.value = profile.email;
-
-      userPhone.value = profile.phone ?? "";
-
-      if (profile.profileImage != null) {
-        userAvatar.value = AppImageHelper.profile(profile.profileImage!);
+      final profile = result.data;
+      if (profile == null) {
+        profileLoadingMethod(ApiStatus.noDataFound);
+        return;
       }
-
-      print("UPDATED PROFILE:");
-
-      print("result.data: profile: ${result.data!.email}");
-      print(userName.value);
-      print(userEmail.value);
-      print(userAvatar.value);
-
-      update();
-    } finally {
-      isLoading.value = false;
+      await setProfileData(profile);
+      profileLoadingMethod(ApiStatus.completed);
+    } catch (_) {
+      errorMessage.value = "Something went wrong.";
+      profileLoadingMethod(ApiStatus.error);
     }
   }
+
+  //
 }

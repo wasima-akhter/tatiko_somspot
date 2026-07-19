@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 import '../../../../features/other/controller/other_controller.dart';
 import '../../../../utils/color/app_colors.dart';
+import '../../../../utils/enum/app_enum.dart';
 import '../../../../utils/extension/base_extension.dart';
 
 class RatingBottomSheet extends StatelessWidget {
@@ -98,7 +100,7 @@ class RatingBottomSheet extends StatelessWidget {
                   Gap(18.h),
 
                   RatingBar.builder(
-                    initialRating: controller.rating,
+                    initialRating: controller.rating.value,
                     minRating: 1,
                     allowHalfRating: false,
                     itemCount: 5,
@@ -114,11 +116,13 @@ class RatingBottomSheet extends StatelessWidget {
 
                   Gap(16.h),
 
-                  Text(
-                    controller.ratingText,
-                    style: context.titleMedium.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.blackMainTextColor,
+                  Obx(
+                    () => Text(
+                      controller.ratingText,
+                      style: context.titleMedium.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.blackMainTextColor,
+                      ),
                     ),
                   ),
                 ],
@@ -128,32 +132,45 @@ class RatingBottomSheet extends StatelessWidget {
             Gap(28.h),
 
             /// Submit Button
-            SizedBox(
-              width: double.infinity,
-              height: 50.h,
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.send, size: 20.sp),
-                label: Text(
-                  "Submit Rating",
-                  style: context.bodyMedium.copyWith(
-                    color: Colors.white,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+            Obx(
+              () => SizedBox(
+                width: double.infinity,
+                height: 50.h,
+                child: ElevatedButton.icon(
+                  onPressed: controller.ratingLoading.value == ApiStatus.loading
+                      ? null
+                      : () {
+                          controller.submitRating(
+                            onSuccess: () {
+                              Navigator.pop(context);
+                            },
+                          );
+                        },
+
+                  icon: controller.ratingLoading.value == ApiStatus.loading
+                      ? SizedBox(
+                          height: 18.h,
+                          width: 18.w,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : Icon(Icons.send, size: 20.sp),
+
+                  label: Text(
+                    "Submit Rating",
+                    style: context.bodyMedium.copyWith(
+                      color: Colors.white,
+                      fontSize: 14.sp,
+                    ),
                   ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xff4DA3FF),
-                  foregroundColor: Colors.white,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
-                  textStyle: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
+
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xff4DA3FF),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
                   ),
                 ),
               ),

@@ -15,7 +15,7 @@ import 'package:som_spot/features/auth/sign_up/sign_up_screen.dart';
 import 'package:som_spot/features/business_info/view/business_info_screen.dart';
 import 'package:som_spot/features/choose_language/view/choose_language_screen.dart';
 import 'package:som_spot/features/claims/view/claims_screen.dart';
-import 'package:som_spot/features/dashboard/view/create_offer_screen.dart';
+import 'package:som_spot/features/dashboard/create_offer/binding/create_offer_binding.dart';
 import 'package:som_spot/features/home/model/deal_model.dart';
 import 'package:som_spot/features/home/model/merchant_model.dart';
 import 'package:som_spot/features/home/view/category_merchants_screen.dart';
@@ -51,6 +51,7 @@ import '../../features/auth/completed_profile_customer/view/completed_profile_cu
 import '../../features/auth/completed_profile_customer/view/completed_profile_customer_screen.dart';
 import '../../features/auth/completed_profile_influencer/view/completed_profile_influencer_screen.dart';
 import '../../features/choose_role/view/choose_role_screen.dart';
+import '../../features/dashboard/create_offer/view/create_offer_screen.dart';
 import '../../features/home/binding/home_binding.dart';
 import '../../features/influencer_all/binding/influencer_binding.dart';
 import '../../features/influencer_all/influencer_apply_campaign/view/influencer_apply_campaign_screen.dart';
@@ -63,6 +64,7 @@ import '../../features/influencer_all/influencer_wallet/view/influencer_wallet_s
 import '../../features/influencer_all/influencer_your_submission/view/influencer_your_submission_screen.dart';
 import '../../features/nav/binding/navigation_binding.dart';
 import '../../features/onboarding/binding/onboard_binding.dart';
+import '../../features/other/controller/other_binding.dart';
 import '../../features/profile/binding/profile_binding.dart';
 import '../../features/success/success_screen.dart';
 
@@ -363,10 +365,7 @@ class AppRouter {
         path: RoutePath.helpAndSupportScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: BindingWrapper(
-              binding: OtherBinding(),
-              child: const HelpAndSupportScreen(),
-            ),
+            child: HelpAndSupportScreen(),
             state: state,
           );
         },
@@ -377,7 +376,10 @@ class AppRouter {
         path: RoutePath.aboutSomSpotScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const AboutSomSpotScreen(),
+            child: BindingWrapper(
+              binding: OtherBinding(),
+              child: const AboutSomSpotScreen(),
+            ),
             state: state,
           );
         },
@@ -388,7 +390,10 @@ class AppRouter {
         path: RoutePath.privacyPolicyScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const PrivacyPolicyScreen(),
+            child: BindingWrapper(
+              binding: OtherBinding(),
+              child: const PrivacyPolicyScreen(),
+            ),
             state: state,
           );
         },
@@ -399,7 +404,10 @@ class AppRouter {
         path: RoutePath.termsAndConditionsScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const TermsAndConditionsScreen(),
+            child: BindingWrapper(
+              binding: OtherBinding(),
+              child: const TermsAndConditionsScreen(),
+            ),
             state: state,
           );
         },
@@ -536,7 +544,10 @@ class AppRouter {
         path: RoutePath.createOfferScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const CreateOfferScreen(),
+            child: BindingWrapper(
+              binding: CreateOfferBinding(),
+              child: const CreateOfferScreen(),
+            ),
             state: state,
           );
         },

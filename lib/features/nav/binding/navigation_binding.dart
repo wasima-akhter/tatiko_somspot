@@ -4,12 +4,14 @@ import 'package:som_spot/features/profile/main_profile/controller/profile_contro
 
 import '../../../core/di/repo_service_injection.dart';
 import '../../alerts/controller/alerts_controller.dart';
+import '../../dashboard/dashboard_merchant/controller/dashboard_merchant_controller.dart';
+import '../../dashboard/dashboard_merchant/service/dashboard_merchant_service.dart';
 import '../../home/binding/home_binding.dart';
 import '../../home/controller/home_controller.dart';
 import '../../influencer_all/influencer_discover/controller/influencer_discover_controller.dart';
 import '../../influencer_all/influencer_task_screen/controller/influencer_task_controller.dart';
 import '../../influencer_all/influencer_wallet/controller/influencer_wallet_controller.dart';
-import '../../offers/controller/offer_controller.dart';
+import '../../offers/binding/offers_binding.dart';
 import '../../profile/service/profile_service.dart';
 import '../../saved/controller/saved_controller.dart';
 import '../../search/controller/search_controller.dart';
@@ -34,10 +36,6 @@ class NavigationBinding extends Bindings {
     // Add other tab controllers here
     //
 
-    // Get.lazyPut<ListingController>(() => ListingController(), fenix: true);
-    Get.lazyPut<OfferController>(() => OfferController(), fenix: true);
-    // Get.lazyPut<StatsController>(() => StatsController(), fenix: true);
-
     // influencer
     Get.lazyPut<InfluencerDiscoverController>(
       () => InfluencerDiscoverController(),
@@ -52,7 +50,13 @@ class NavigationBinding extends Bindings {
       fenix: true,
     );
 
+    //Merchant Dashboard
+    Get.lazyPut<DashboardMerchantController>(
+      () => DashboardMerchantController(sl<DashboardMerchantService>()),
+      fenix: true,
+    );
     // customer
+
     Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
 
     HomeBinding().dependencies();
@@ -69,8 +73,13 @@ class NavigationBinding extends Bindings {
       () => AlertsScreenController(),
       fenix: true,
     );
+
+    //
+    // Offers
+    OffersBinding().dependencies();
   }
 }
+
 /*
 NavigationBinding
       |

@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/features/home/model/deal_model.dart';
+import 'package:som_spot/helper/text_utils/string_extension.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
@@ -116,7 +117,7 @@ class OfferListCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          restaurantName,
+                          restaurantName.capitalizeWords(),
                           style: context.bodySmall.copyWith(
                             color: AppColors.primaryColor,
                             fontWeight: FontWeight.w600,
@@ -126,7 +127,7 @@ class OfferListCard extends StatelessWidget {
                         ),
                         Gap(4.h),
                         Text(
-                          title,
+                          title.capitalizeWords(),
                           style: context.bodyMedium.copyWith(
                             fontWeight: FontWeight.bold,
                             color: AppColors.darkTextColor,

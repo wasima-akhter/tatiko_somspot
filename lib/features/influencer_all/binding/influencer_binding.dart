@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-import '../../other/controller/other_controller.dart';
 import '../influencer_my_campaigns/controller/influencer_my_campaigns_controller.dart';
 
 class InfluencerBinding extends Bindings {
@@ -13,12 +12,5 @@ class InfluencerBinding extends Bindings {
     // Get.lazyPut(() => InfluencerWalletController());
 
     Get.lazyPut(() => InfluencerMyCampaignsController());
-  }
-}
-
-class OtherBinding extends Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut(() => OtherController());
   }
 }

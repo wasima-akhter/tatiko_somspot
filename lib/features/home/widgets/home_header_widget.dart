@@ -17,6 +17,10 @@ class HomeHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = HomeController.to;
 
+    print(
+      "HOME PROFILE INSTANCE: ${identityHashCode(HomeController.to.profileController)}",
+    );
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -123,7 +127,7 @@ class HomeHeaderWidget extends StatelessWidget {
               Expanded(
                 child: Obx(
                   () => Text(
-                    controller.userLocation.value,
+                    controller.userAddress.value,
                     style: context.bodyMedium.copyWith(
                       color: Colors.white.withValues(alpha: 0.9),
                       fontWeight: FontWeight.w500,
