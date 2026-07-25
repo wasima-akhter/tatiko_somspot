@@ -2,9 +2,9 @@
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 
-import '../../features/auth/completed_profile_customer/view/completed_profile_customer_args.dart';
-import '../../features/auth/requests/auth_request.dart';
-import '../../features/auth/service/auth_service.dart';
+import '../../features/auth/completed_profile_customer_merchandiser/view/completed_profile_customer_args.dart';
+import '../../features/auth/core/requests/auth_request.dart';
+import '../../features/auth/core/service/auth_service.dart';
 import '../../helper/snackbar/api_snackbar.dart';
 import '../../utils/common_controller/common_controller.dart';
 import '../di/repo_service_injection.dart';
@@ -60,7 +60,10 @@ class RoleRouter {
         case "USER":
           AppRouter.route.goNamed(
             RoutePath.completedProfileCustomerScreen,
-            extra: user.email,
+            extra: CompletedProfileCustomerArgs(
+              email: user.email,
+              role: user.role,
+            ),
           );
           return;
 

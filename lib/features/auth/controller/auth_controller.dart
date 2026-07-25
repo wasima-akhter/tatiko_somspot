@@ -6,9 +6,9 @@ import '../../../core/router/route_path.dart';
 import '../../../core/router/routes.dart';
 import '../../../helper/snackbar/api_snackbar.dart';
 import '../../../utils/common_controller/common_controller.dart';
-import '../completed_profile_customer/view/completed_profile_customer_args.dart';
-import '../requests/auth_request.dart';
-import '../service/auth_service.dart';
+import '../completed_profile_customer_merchandiser/view/completed_profile_customer_args.dart';
+import '../core/requests/auth_request.dart';
+import '../core/service/auth_service.dart';
 
 class AuthController extends GetxController {
   final AuthService _service;

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:som_spot/core/router/route_path.dart';
-import 'package:som_spot/features/home/model/deal_model.dart';
+import 'package:som_spot/features/customer/home/model/deal_model.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';

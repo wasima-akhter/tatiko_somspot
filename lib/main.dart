@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:media_kit/media_kit.dart';
 
 import 'core/di/global_binding.dart';
 import 'core/di/repo_service_injection.dart';
@@ -18,6 +19,13 @@ void main() async {
   debugRepaintTextRainbowEnabled = false;
   WidgetsFlutterBinding.ensureInitialized();
   DeviceUtils.lockDevicePortrait();
+
+  try {
+    MediaKit.ensureInitialized();
+  } catch (e, st) {
+    print("  MediaKit.ensureInitialized() failed");
+    debugPrint('MediaKit.ensureInitialized() failed: $e\n$st');
+  }
 
   await initAppStorage();
 

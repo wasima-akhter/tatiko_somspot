@@ -13,30 +13,37 @@ class CustomButton extends StatelessWidget {
   final bool isOutlined;
   final Color? backgroundColor;
 
+  // NEW
+  final Color? outlineColor;
+  final Color? foregroundColor;
+
   const CustomButton({
     required this.text,
     this.onTap,
     this.isLoading = false,
     this.icon,
     this.isOutlined = false,
-    super.key,
     this.backgroundColor,
+    this.outlineColor,
+    this.foregroundColor,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    // final backgroundColor = isOutlined
-    //     ? Colors.transparent
-    //     : (isDark ? AppColors.white : AppColors.primaryColor);
-    final borderColor = isOutlined
-        ? AppColors.primaryColor.withValues(alpha: 0.5)
-        : Colors.transparent;
+
+    final borderColor =
+        outlineColor ??
+        (isOutlined
+            ? AppColors.primaryColor.withValues(alpha: 0.5)
+            : Colors.transparent);
 
     final bgColor = isOutlined
         ? Colors.transparent
         : (backgroundColor ??
               (isDark ? AppColors.white : AppColors.primaryColor));
+
     return Material(
       color: bgColor,
       borderRadius: BorderRadius.circular(16),
@@ -60,31 +67,24 @@ class CustomButton extends StatelessWidget {
   }
 
   Widget buildChild(BuildContext context) {
+    final textColor =
+        foregroundColor ??
+        (isOutlined ? AppColors.primaryColor : AppColors.white);
+
     if (isLoading) {
-      return LoadingWidget(
-        color: isOutlined ? AppColors.primaryColor : AppColors.white,
-      );
-    } else {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (icon != null) ...[
-            Icon(
-              icon,
-              color: isOutlined ? AppColors.primaryColor : AppColors.white,
-              size: 20,
-            ),
-            const SizedBox(width: 8),
-          ],
-          Text(
-            text,
-            style: context.titleMedium.copyWith(
-              color: isOutlined ? AppColors.primaryColor : AppColors.white,
-            ),
-          ),
-        ],
-      );
+      return LoadingWidget(color: textColor);
     }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (icon != null) ...[
+          Icon(icon, color: textColor, size: 20),
+          const SizedBox(width: 8),
+        ],
+        Text(text, style: context.titleMedium.copyWith(color: textColor)),
+      ],
+    );
   }
 }

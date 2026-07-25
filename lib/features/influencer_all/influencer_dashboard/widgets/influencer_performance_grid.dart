@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 
-import '../../../dashboard/dashboard_merchant/widgets/dashboard_stat_card.dart';
+import '../../../merchant/dashboard_merchant/widgets/dashboard_stat_card.dart';
 
 class InfluencerPerformanceGrid extends StatelessWidget {
   const InfluencerPerformanceGrid({super.key});

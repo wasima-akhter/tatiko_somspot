@@ -5,7 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
-import 'package:som_spot/features/auth/requests/auth_request.dart';
+import 'package:som_spot/features/auth/core/requests/auth_request.dart';
 import 'package:som_spot/helper/validator/text_field_validator.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';

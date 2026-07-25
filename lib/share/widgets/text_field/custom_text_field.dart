@@ -156,6 +156,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       )
                     : widget.suffixIcon,
                 suffixIconColor: widget.suffixIconColor,
+
                 border: widget.border,
                 focusedBorder: widget.focusedBorder,
                 enabledBorder: widget.enabledBorder,

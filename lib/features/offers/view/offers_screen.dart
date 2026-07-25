@@ -54,6 +54,7 @@ class _OffersScreenState extends State<OffersScreen> {
                   return CustomRefreshIndicator(
                     onRefresh: controller.refreshOffers,
                     child: ListView.builder(
+                      shrinkWrap: true,
                       controller: controller.listScrollController,
                       physics: const BouncingScrollPhysics(
                         parent: AlwaysScrollableScrollPhysics(),

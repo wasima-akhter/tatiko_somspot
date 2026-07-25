@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/features/alerts/view/alerts_screen.dart';
-import 'package:som_spot/features/dashboard/dashboard_merchant/view/dashboard_merchant_screen.dart';
-import 'package:som_spot/features/home/view/home_screen.dart';
+import 'package:som_spot/features/customer/home/view/home_screen.dart';
+import 'package:som_spot/features/customer/saved/view/saved_screen.dart';
+import 'package:som_spot/features/customer/search/view/search_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/view/influencer_dashboard_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_discover/view/influencer_discover_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_task_screen/view/influencer_task_screen.dart';
-import 'package:som_spot/features/listings/view/listing_screen.dart';
+import 'package:som_spot/features/merchant/dashboard_merchant/view/dashboard_merchant_screen.dart';
+import 'package:som_spot/features/merchant/listings/view/listing_screen.dart';
+import 'package:som_spot/features/merchant/stats/view/stats_screen.dart';
 import 'package:som_spot/features/offers/view/offers_screen.dart';
 import 'package:som_spot/features/profile/main_profile/view/profile_screen.dart';
-import 'package:som_spot/features/saved/view/saved_screen.dart';
-import 'package:som_spot/features/search/view/search_screen.dart';
-import 'package:som_spot/features/stats/view/stats_screen.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
@@ -46,7 +45,7 @@ class NavigationControllerMain extends GetxController {
           HomeScreen(),
           SearchScreen(),
           SavedScreen(),
-          AlertsScreen(),
+          // AlertsScreen(),
           ProfileScreen(),
         ];
     }
@@ -75,7 +74,7 @@ class NavigationControllerMain extends GetxController {
           Iconsax.home,
           Iconsax.search_normal,
           Iconsax.bookmark,
-          Iconsax.notification,
+          // Iconsax.notification,
           Iconsax.user,
         ];
     }
@@ -104,7 +103,7 @@ class NavigationControllerMain extends GetxController {
           AppStrings.home,
           AppStrings.search,
           AppStrings.saved,
-          AppStrings.alerts,
+          // AppStrings.alerts,
           AppStrings.profile,
         ];
     }

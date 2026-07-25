@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -10,6 +9,9 @@ import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
+
+import '../../../../common_components/location/app_location_picker.dart';
+import '../../../../common_components/location/app_location_suggestions.dart';
 
 class LocationStep extends StatelessWidget {
   const LocationStep({super.key});
@@ -70,6 +72,7 @@ class LocationStep extends StatelessWidget {
                 final isSearching = controller.isMapSearching.value;
                 return Stack(
                   children: [
+                    /*
                     FlutterMap(
                       mapController: controller.mapController,
                       options: MapOptions(
@@ -81,10 +84,45 @@ class LocationStep extends StatelessWidget {
                       ),
                       children: [
                         // ── Tile Layer (OpenStreetMap) ──
+                        // TileLayer(
+                        //   urlTemplate:
+                        //       'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        //   userAgentPackageName: 'com.somspot.app',
+                        // ),
                         TileLayer(
                           urlTemplate:
-                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                              'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${AppConfig.mapTilerApiKey}',
                           userAgentPackageName: 'com.somspot.app',
+
+                          //
+
+                          // Smooth fade-in
+                          tileDisplay: const TileDisplay.fadeIn(
+                            duration: Duration(milliseconds: 250),
+                          ),
+
+                          // Allow overzooming
+                          maxNativeZoom: 22,
+                          maxZoom: 24,
+
+                          // Keep nearby tiles in memory
+                          keepBuffer: 3,
+                          panBuffer: 2,
+
+                          // Better error handling
+                          errorTileCallback: (tile, error, stackTrace) {
+                            debugPrint(
+                              'Tile failed: ${tile.coordinates} - $error',
+                            );
+                          },
+
+                          // Show placeholder while loading
+                          tileBuilder: (context, child, tile) {
+                            return AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 200),
+                              child: child,
+                            );
+                          },
                         ),
 
                         // ── Marker ──
@@ -136,7 +174,16 @@ class LocationStep extends StatelessWidget {
                         ),
                       ],
                     ),
+*/
+                    AppLocationPicker(
+                      mapController: controller.mapController,
+                      selectedLatLng: controller.selectedLatLng.value,
+                      isSearching: controller.isMapSearching.value,
+                      onMapTap: controller.updateMapPosition,
+                    ),
+
                     if (isSearching)
+                      /*
                       Container(
                         color: Colors.black.withValues(alpha: 0.3),
                         child: Center(
@@ -181,6 +228,11 @@ class LocationStep extends StatelessWidget {
                             ),
                           ),
                         ),
+                      ),
+             */
+                      AppLocationSuggestions(
+                        suggestions: controller.suggestions,
+                        onTap: controller.selectSuggestion,
                       ),
                   ],
                 );
@@ -277,6 +329,7 @@ class LocationStep extends StatelessWidget {
               ),
             );
           }),
+
           Gap(16.h),
 
           // ── City ──

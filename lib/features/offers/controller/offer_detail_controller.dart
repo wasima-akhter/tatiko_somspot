@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../dashboard/create_offer/service/create_offer_service.dart';
+import '../../merchant/create_offer/service/create_offer_service.dart';
 
 class OfferDetailsController extends GetxController {
   final String offerId = Get.arguments;

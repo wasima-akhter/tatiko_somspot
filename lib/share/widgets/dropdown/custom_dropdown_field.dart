@@ -33,8 +33,9 @@ class CustomDropdownField<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final message = "Field Is Required";
 
-    String? Function(T?)? validation =
-    (isRequired ? (val) => (val == null) ? message : null : null);
+    String? Function(T?)? validation = (isRequired
+        ? (val) => (val == null) ? message : null
+        : null);
     final validationFunction = validator ?? validation;
 
     final bool hasError = errorText != null && errorText!.isNotEmpty;
@@ -43,11 +44,16 @@ class CustomDropdownField<T> extends StatelessWidget {
       isExpanded: true,
       value: items.contains(value) ? value : null,
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 12,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(
-            color: hasError ? AppColors.redColor : AppColors.bgSecondaryButtonColor,
+            color: hasError
+                ? AppColors.redColor
+                : AppColors.bgSecondaryButtonColor,
             width: 1.2,
           ),
         ),
@@ -58,14 +64,32 @@ class CustomDropdownField<T> extends StatelessWidget {
       ),
       hint: Text(
         hintText,
-      ),
-      items: items.map((item) => DropdownMenuItem<T>(
-        value: item,
-        child: Text(
-          labelBuilder?.call(item) ?? item.toString(),
-          style: context.bodyMedium,
+        style: context.bodyMedium.copyWith(
+          color: AppColors.grayTertiaryTextColor,
+          fontWeight: FontWeight.w400,
         ),
-      )).toList(),
+      ),
+      items: items.map((item) {
+        final isSelected = item == value;
+
+        return DropdownMenuItem<T>(
+          value: item,
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Text(
+              labelBuilder?.call(item) ?? item.toString(),
+              style: context.bodyMedium.copyWith(
+                fontSize: 15,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                color: isSelected
+                    ? AppColors.primaryColor
+                    : AppColors.darkTextColor,
+              ),
+            ),
+          ),
+        );
+      }).toList(),
       onChanged: enabled ? onChanged : null,
       validator: validationFunction,
       style: context.bodyMedium,
@@ -73,9 +97,28 @@ class CustomDropdownField<T> extends StatelessWidget {
         padding: EdgeInsets.only(right: 8),
       ),
       iconStyleData: const IconStyleData(
-        icon: Icon(Icons.keyboard_arrow_down, color: AppColors.grayTertiaryTextColor),
+        icon: Icon(
+          Icons.keyboard_arrow_down,
+          color: AppColors.grayTertiaryTextColor,
+        ),
         iconSize: 24,
       ),
+      selectedItemBuilder: (context) {
+        return items.map((item) {
+          return Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              labelBuilder?.call(item) ?? item.toString(),
+              style: context.bodyMedium.copyWith(
+                fontWeight: FontWeight.w600,
+                color: AppColors.darkTextColor,
+                letterSpacing: 0.2,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          );
+        }).toList();
+      },
       dropdownStyleData: DropdownStyleData(
         maxHeight: 300,
         decoration: BoxDecoration(

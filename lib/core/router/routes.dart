@@ -9,27 +9,30 @@ import 'package:som_spot/features/auth/complete_business_profile/view/applicatio
 import 'package:som_spot/features/auth/complete_business_profile/view/complete_business_profile_screen.dart';
 import 'package:som_spot/features/auth/forget/forget_password_screen.dart';
 import 'package:som_spot/features/auth/forget_otp/forgetotp_screen.dart';
+import 'package:som_spot/features/auth/intro/choose_language/view/choose_language_screen.dart';
+import 'package:som_spot/features/auth/intro/onboarding/view/onboarding_screen.dart';
+import 'package:som_spot/features/auth/intro/splash/splash_screen.dart';
+import 'package:som_spot/features/auth/intro/wellcome/view/welcome_screen.dart';
 import 'package:som_spot/features/auth/login/login_screen.dart';
 import 'package:som_spot/features/auth/reset/reset_password_screen.dart';
 import 'package:som_spot/features/auth/sign_up/sign_up_screen.dart';
 import 'package:som_spot/features/business_info/view/business_info_screen.dart';
-import 'package:som_spot/features/choose_language/view/choose_language_screen.dart';
 import 'package:som_spot/features/claims/view/claims_screen.dart';
-import 'package:som_spot/features/dashboard/create_offer/binding/create_offer_binding.dart';
-import 'package:som_spot/features/home/model/deal_model.dart';
-import 'package:som_spot/features/home/model/merchant_model.dart';
-import 'package:som_spot/features/home/view/category_merchants_screen.dart';
-import 'package:som_spot/features/home/view/merchant_details_screen.dart';
-import 'package:som_spot/features/home/view/nearby_you_screen.dart';
-import 'package:som_spot/features/home/view/offer_details_screen.dart';
-import 'package:som_spot/features/home/view/top_deals_screen.dart';
+import 'package:som_spot/features/customer/home/model/deal_model.dart';
+import 'package:som_spot/features/customer/home/view/category_merchants_screen.dart';
+import 'package:som_spot/features/customer/home/view/nearby_you_screen.dart';
+import 'package:som_spot/features/customer/home/view/offer_details_screen.dart';
+import 'package:som_spot/features/customer/home/view/top_deals_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/view/influencer_dashboard_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_discover/view/influencer_discover_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_task_screen/view/influencer_task_screen.dart';
+import 'package:som_spot/features/merchant/create_offer/binding/create_offer_binding.dart';
+import 'package:som_spot/features/merchant/merchant_campaign_details/view/merchant_campaign_details_screen.dart';
+import 'package:som_spot/features/merchant/merchant_campaigns/view/merchant_campaigns_screen.dart';
+import 'package:som_spot/features/merchant/merchant_new_campaign/view/merchant_new_campaign_screen.dart';
 import 'package:som_spot/features/nav/navigation_page.dart';
 import 'package:som_spot/features/offers/view/edit_offer_screen.dart';
 import 'package:som_spot/features/offers/view/offer_details_screen.dart';
-import 'package:som_spot/features/onboarding/view/onboarding_screen.dart';
 import 'package:som_spot/features/other/view/about_somsport_screen.dart';
 import 'package:som_spot/features/other/view/change_password_screen.dart';
 import 'package:som_spot/features/other/view/help_and_support_screen.dart';
@@ -38,21 +41,19 @@ import 'package:som_spot/features/other/view/terms_and_conditions_screen.dart';
 // Feature screens imports
 import 'package:som_spot/features/profile/edit_profile/view/edit_profile_screen.dart';
 import 'package:som_spot/features/profile/main_profile/view/profile_screen.dart';
-import 'package:som_spot/features/splash/splash_screen.dart';
 import 'package:som_spot/features/subscription/subscription_screen.dart';
-import 'package:som_spot/features/wellcome/view/welcome_screen.dart';
 import 'package:som_spot/utils/extension/base_extension.dart';
 
-import '../../features/auth/binding/auth_binding.dart';
 import '../../features/auth/complete_business_profile/binding/complete_business_profile_binding.dart'
     show CompleteBusinessProfileBinding;
-import '../../features/auth/completed_profile_customer/binding/complete_profile_binding.dart';
-import '../../features/auth/completed_profile_customer/view/completed_profile_customer_args.dart';
-import '../../features/auth/completed_profile_customer/view/completed_profile_customer_screen.dart';
+import '../../features/auth/completed_profile_customer_merchandiser/binding/complete_profile_binding.dart';
+import '../../features/auth/completed_profile_customer_merchandiser/view/completed_profile_customer_args.dart';
+import '../../features/auth/completed_profile_customer_merchandiser/view/completed_profile_customer_screen.dart';
 import '../../features/auth/completed_profile_influencer/view/completed_profile_influencer_screen.dart';
-import '../../features/choose_role/view/choose_role_screen.dart';
-import '../../features/dashboard/create_offer/view/create_offer_screen.dart';
-import '../../features/home/binding/home_binding.dart';
+import '../../features/auth/core/binding/auth_binding.dart';
+import '../../features/auth/intro/choose_role/view/choose_role_screen.dart';
+import '../../features/auth/intro/onboarding/binding/onboard_binding.dart';
+import '../../features/customer/home/binding/home_binding.dart';
 import '../../features/influencer_all/binding/influencer_binding.dart';
 import '../../features/influencer_all/influencer_apply_campaign/view/influencer_apply_campaign_screen.dart';
 import '../../features/influencer_all/influencer_campaign_details/view/influencer_campaign_details_screen.dart';
@@ -62,8 +63,11 @@ import '../../features/influencer_all/influencer_search/view/influencer_search_s
 import '../../features/influencer_all/influencer_submit_content/view/influencer_submit_content_screen.dart';
 import '../../features/influencer_all/influencer_wallet/view/influencer_wallet_screen.dart';
 import '../../features/influencer_all/influencer_your_submission/view/influencer_your_submission_screen.dart';
+import '../../features/merchant/create_offer/view/create_offer_screen.dart';
+import '../../features/merchant/merchant_campaign_details/binding/merchant_campaign_details_binding.dart';
+import '../../features/merchant/merchant_campaign_details/view/merchant_campaign_content_details_screen.dart';
+import '../../features/merchant/merchant_campaigns/binding/merchant_campaigns_binding.dart';
 import '../../features/nav/binding/navigation_binding.dart';
-import '../../features/onboarding/binding/onboard_binding.dart';
 import '../../features/other/controller/other_binding.dart';
 import '../../features/profile/binding/profile_binding.dart';
 import '../../features/success/success_screen.dart';
@@ -74,6 +78,7 @@ class AppRouter {
 
   static final GoRouter initRoute = GoRouter(
     initialLocation: RoutePath.splashScreen.addBasePath,
+
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     routes: [
@@ -488,17 +493,65 @@ class AppRouter {
         },
       ),
 
+      // =====================================================
+      // MERCHANT ROUTES
+      // =====================================================
       GoRoute(
-        name: RoutePath.merchantDetailsScreen,
-        path: RoutePath.merchantDetailsScreen.addBasePath,
+        name: RoutePath.merchantCampaignsScreen,
+        path: RoutePath.merchantCampaignsScreen.addBasePath,
         pageBuilder: (context, state) {
-          final merchant = state.extra as MerchantModel;
+          // final merchant = state.extra as MerchantModel;
 
           return _buildPageWithAnimation(
             state: state,
             child: BindingWrapper(
-              binding: HomeBinding(),
-              child: MerchantDetailsScreen(merchant: merchant),
+              binding: MerchantCampaignsBinding(),
+              child: MerchantCampaignScreen(),
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.merchantCampaignDetailsScreen,
+        path: RoutePath.merchantCampaignDetailsScreen.addBasePath,
+        pageBuilder: (context, state) {
+          // final merchant = state.extra as MerchantModel;
+
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: MerchantCampaignDetailsBinding(),
+              child: MerchantCampaignDetailsScreen(),
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.merchantCampaignContentDetailsScreen,
+        path: RoutePath.merchantCampaignContentDetailsScreen.addBasePath,
+        pageBuilder: (context, state) {
+          // final merchant = state.extra as MerchantModel;
+
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: MerchantCampaignContentDetailsBinding(),
+              child: MerchantCampaignContentDetailsScreen(),
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.merchantNewCampaignScreen,
+        path: RoutePath.merchantNewCampaignScreen.addBasePath,
+        pageBuilder: (context, state) {
+          // final merchant = state.extra as MerchantModel;
+
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: MerchantNewCampaignBinding(),
+              child: MerchantNewCampaignScreen(),
             ),
           );
         },

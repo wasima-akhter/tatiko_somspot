@@ -4,12 +4,14 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/core/custom_assets/assets.gen.dart';
 import 'package:som_spot/core/router/routes.dart';
-import 'package:som_spot/features/home/model/merchant_model.dart';
+import 'package:som_spot/features/customer/home/model/merchant_model.dart';
 import 'package:som_spot/helper/launcher/launcher_helper.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 
+import '../../../features/merchant/merchant_campaign_details/widgets/merchant_campaign_influencer_card.dart';
 import 'widgets/app_rating_bottom_sheet.dart';
+import 'widgets/influencer_request_bottom_sheet.dart';
 
 Widget makeDismissable(BuildContext context, {required Widget child}) =>
     GestureDetector(
@@ -49,7 +51,18 @@ void showRatingBottomSheet(BuildContext context) {
     builder: (_) => const RatingBottomSheet(),
   );
 }
-// ---------------------------------------------
+
+void showInfluencerRequestBottomSheet(
+  BuildContext context, {
+  required InfluencerModel influencer,
+}) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (_) => InfluencerRequestBottomSheet(influencer: influencer),
+  );
+}
 
 class ConfirmationModalBottomSheet extends StatelessWidget {
   final String title;

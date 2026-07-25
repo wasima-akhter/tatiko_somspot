@@ -73,4 +73,13 @@ class RoutePath {
 
   // success
   static const String successScreen = 'successScreen';
+
+  // Merchant
+
+  static const String merchantCampaignsScreen = 'merchantCampaignsScreen';
+  static const String merchantCampaignDetailsScreen =
+      'merchantCampaignDetailsScreen';
+  static const String merchantCampaignContentDetailsScreen =
+      'merchantCampaignContentDetailsScreen';
+  static const String merchantNewCampaignScreen = 'merchantNewCampaignScreen';
 }

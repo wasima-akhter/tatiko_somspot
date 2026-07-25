@@ -34,6 +34,8 @@ class AppConfig {
     ),
   ];
 
+  static const String mapTilerApiKey = 'iZOT5cBIqXvIjbqVsEBm';
+
   /*
   static final List<Map<String, dynamic>> factFastList = [
     {"icon": Icon(Iconsax.location), "title": AppStrings.location, "subTitle": "Los Angeles, CA – Griffith Park Fields"},

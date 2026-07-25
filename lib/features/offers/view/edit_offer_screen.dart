@@ -6,7 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/features/home/model/deal_model.dart';
+import 'package:som_spot/features/customer/home/model/deal_model.dart';
 import 'package:som_spot/features/offers/controller/offer_controller.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';

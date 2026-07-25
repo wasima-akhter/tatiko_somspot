@@ -4,7 +4,7 @@ import 'package:som_spot/helper/toast/toast_helper.dart';
 
 import '../../../share/export/service_export.dart';
 import '../../../share/widgets/paginator/paginator.dart';
-import '../../dashboard/create_offer/service/create_offer_service.dart';
+import '../../merchant/create_offer/service/create_offer_service.dart';
 import '../helper/offer_helper.dart';
 import '../response/offers_response.dart';
 

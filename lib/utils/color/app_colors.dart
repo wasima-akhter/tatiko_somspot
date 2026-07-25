@@ -52,6 +52,7 @@ class AppColors {
   // ─── Accent Colors ───
   static const Color softBackgroundColor = Color(0xFFF4F7FA);
   static const Color blueAccentColor = Color(0xFF3B82F6);
+  static const Color deepBlueColor = Color(0xFF0B74CC);
   static const Color purpleAccentColor = Color(0xFF8B5CF6);
   static const Color emeraldGreenColor = Color(0xFF10B981);
   static const Color amberYellowColor = Color(0xFFF59E0B);

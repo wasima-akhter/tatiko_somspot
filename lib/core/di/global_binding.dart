@@ -4,7 +4,7 @@ import 'package:som_spot/share/controller/language_controller.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../features/auth/controller/auth_controller.dart';
-import '../../features/auth/service/auth_service.dart';
+import '../../features/auth/core/service/auth_service.dart';
 import '../../features/core/business/binding/business_binding.dart';
 import '../../features/core/category/category_binding.dart';
 import '../../features/nav/controller/navigation_controller.dart';

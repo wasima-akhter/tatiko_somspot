@@ -1,3 +1,4 @@
+import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -139,14 +140,12 @@ class DashboardCommonHeaderSec extends StatelessWidget {
   }
 }
 
-/*
-class DashboardCommonHeaderSec extends StatelessWidget {
-  const DashboardCommonHeaderSec({super.key});
+// Shimmer
+class DashboardCommonHeaderSecShimmer extends StatelessWidget {
+  const DashboardCommonHeaderSecShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = DashboardController.to;
-
     return Column(
       children: [
         Row(
@@ -154,24 +153,16 @@ class DashboardCommonHeaderSec extends StatelessWidget {
           children: [
             Row(
               children: [
-                // Profile Image
-                Obx(
-                  () => Container(
-                    width: 48.w,
-                    height: 48.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 2.w),
-                    ),
-                    child: ClipOval(
-                      child: CustomNetworkImage(
-                        imageUrl: controller.userProfileImage.value,
-                        boxShape: BoxShape.circle,
-                      ),
+                ClipOval(
+                  child: AutoShimmerAnimate(
+                    isLoading: true,
+                    child: Container(
+                      width: 48.w,
+                      height: 48.w,
+                      color: Colors.white.withValues(alpha: 0.5),
                     ),
                   ),
                 ),
-
                 Gap(12.w),
 
                 Column(
@@ -180,18 +171,20 @@ class DashboardCommonHeaderSec extends StatelessWidget {
                     Text(
                       getGreeting(),
                       style: context.bodySmall.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
+                        color: Colors.white.withValues(alpha: 0.5),
                       ),
                     ),
 
-                    Obx(
-                      () => Text(
-                        controller.userName.value.isEmpty
-                            ? "User"
-                            : controller.userName.value.capitalizeWords(),
-                        style: context.titleLarge.copyWith(
-                          fontWeight: FontWeight.bold,
+                    Gap(6.h),
+
+                    AutoShimmerAnimate(
+                      isLoading: true,
+                      child: Container(
+                        width: 120.w,
+                        height: 18.h,
+                        decoration: BoxDecoration(
                           color: Colors.white,
+                          borderRadius: BorderRadius.circular(4.r),
                         ),
                       ),
                     ),
@@ -200,24 +193,19 @@ class DashboardCommonHeaderSec extends StatelessWidget {
               ],
             ),
 
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(RoutePath.alertScreen);
-              },
-              child: Container(
-                padding: EdgeInsets.all(10.w),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Badge(
-                  backgroundColor: AppColors.redColor,
-                  smallSize: 8,
-                  child: Icon(
-                    Iconsax.notification,
-                    size: 20.sp,
-                    color: Colors.white,
-                  ),
+            Container(
+              padding: EdgeInsets.all(10.w),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                shape: BoxShape.circle,
+              ),
+              child: Badge(
+                backgroundColor: AppColors.redColor,
+                smallSize: 8,
+                child: Icon(
+                  Iconsax.notification,
+                  size: 20.sp,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -226,7 +214,6 @@ class DashboardCommonHeaderSec extends StatelessWidget {
 
         Gap(16.h),
 
-        // Location
         Row(
           children: [
             Icon(
@@ -234,20 +221,16 @@ class DashboardCommonHeaderSec extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.9),
               size: 16.sp,
             ),
-
             Gap(6.w),
-
             Expanded(
-              child: Obx(
-                () => Text(
-                  controller.userAddress.value.isEmpty
-                      ? "Loading location..."
-                      : controller.userAddress.value,
-                  style: context.bodyMedium.copyWith(
-                    color: Colors.white.withValues(alpha: 0.9),
+              child: AutoShimmerAnimate(
+                isLoading: true,
+                child: Container(
+                  height: 14.h,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.5),
+                    borderRadius: BorderRadius.circular(4.r),
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
@@ -257,4 +240,3 @@ class DashboardCommonHeaderSec extends StatelessWidget {
     );
   }
 }
-*/

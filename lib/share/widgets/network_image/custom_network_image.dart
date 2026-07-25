@@ -90,20 +90,7 @@ class CustomNetworkImage extends StatelessWidget {
         ),
         child: child,
       ),
-      placeholder: (context, url) => Container(
-        height: height,
-        width: width,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade300,
-          borderRadius: borderRadius,
-          shape: boxShape,
-        ),
-        child: Shimmer.fromColors(
-          baseColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade100,
-          child: Container(color: Colors.white),
-        ),
-      ),
+      placeholder: (context, url) => _buildPlaceholder(),
       errorWidget: (context, url, error) {
         return errorWidget ??
             Container(
@@ -118,6 +105,29 @@ class CustomNetworkImage extends StatelessWidget {
               child: const Icon(Icons.error),
             );
       },
+    );
+  }
+
+  Widget _buildPlaceholder() {
+    return Container(
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        border: border,
+        borderRadius: borderRadius,
+        shape: boxShape,
+        color: backgroundColor ?? Colors.grey.shade300,
+      ),
+      child: ClipRRect(
+        borderRadius: boxShape == BoxShape.rectangle
+            ? (borderRadius ?? BorderRadius.zero)
+            : BorderRadius.zero,
+        child: Shimmer.fromColors(
+          baseColor: Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: Container(color: Colors.white, child: child),
+        ),
+      ),
     );
   }
 }
