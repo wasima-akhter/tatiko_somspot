@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-
-import '../../../../utils/color/app_colors.dart';
-import '../../../../utils/extension/base_extension.dart';
+import '../../../../share/controller/screen_export.dart';
 import '../controller/influencer_my_campaigns_controller.dart';
 import '../widgets/my_campaign_card.dart';
 import '../widgets/my_campaign_tab_switcher.dart';
@@ -15,7 +9,7 @@ class InfluencerMyCampaignsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = InfluencerMyCampaignsController.to;
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.softBackgroundColor,
       appBar: AppBar(
         elevation: 0,

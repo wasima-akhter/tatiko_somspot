@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 class TopDealsAnalyticsList extends StatelessWidget {
   const TopDealsAnalyticsList({super.key});
@@ -137,7 +130,9 @@ class TopDealsAnalyticsList extends StatelessWidget {
             percentage,
             style: context.bodyMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isWarning ? AppColors.warning : AppColors.emeraldGreenColor,
+              color: isWarning
+                  ? AppColors.warning
+                  : AppColors.emeraldGreenColor,
             ),
           ),
         ],

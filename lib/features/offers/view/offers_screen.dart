@@ -1,12 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:som_spot/features/offers/widgets/offer_list_card.dart';
 import 'package:som_spot/features/offers/widgets/offers_header.dart';
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
 
+import '../../../share/controller/screen_export.dart';
 import '../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../controller/offer_controller.dart';
 

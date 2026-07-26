@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/features/customer/home/view/home_screen.dart';
+import 'package:som_spot/features/customer/customer_home/view/customer_home_screen.dart';
 import 'package:som_spot/features/customer/saved/view/saved_screen.dart';
 import 'package:som_spot/features/customer/search/view/search_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/view/influencer_dashboard_screen.dart';
-import 'package:som_spot/features/influencer_all/influencer_discover/view/influencer_discover_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_task_screen/view/influencer_task_screen.dart';
 import 'package:som_spot/features/merchant/dashboard_merchant/view/dashboard_merchant_screen.dart';
 import 'package:som_spot/features/merchant/listings/view/listing_screen.dart';
@@ -35,14 +34,14 @@ class NavigationControllerMain extends GetxController {
       case UserRole.influencer:
         return const [
           InfluencerDashboardScreen(),
-          InfluencerDiscoverScreen(),
+          // InfluencerDiscoverScreen(),
           InfluencerTaskScreen(), // change the pages
           InfluencerWalletScreen(),
           ProfileScreen(),
         ];
       case UserRole.customer:
         return const [
-          HomeScreen(),
+          CustomerHomeScreen(),
           SearchScreen(),
           SavedScreen(),
           // AlertsScreen(),
@@ -64,7 +63,7 @@ class NavigationControllerMain extends GetxController {
       case UserRole.influencer:
         return [
           Iconsax.element_3,
-          Iconsax.discover,
+          // Iconsax.discover,
           Iconsax.video,
           Iconsax.wallet,
           Iconsax.user,
@@ -93,7 +92,7 @@ class NavigationControllerMain extends GetxController {
       case UserRole.influencer:
         return [
           AppStrings.dashboard,
-          AppStrings.discover, // change the names
+          // AppStrings.discover, // change the names
           AppStrings.tasks,
           AppStrings.wallet,
           AppStrings.profile,

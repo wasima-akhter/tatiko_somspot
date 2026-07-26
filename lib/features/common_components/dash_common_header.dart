@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
 import '../../core/router/route_path.dart';
@@ -36,56 +37,62 @@ class DashboardCommonHeaderSec extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Obx(
-                  () => Container(
-                    width: 48.w,
-                    height: 48.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 2.w),
-                    ),
-                    child: ClipOval(
-                      child: CustomNetworkImage(
-                        imageUrl: data.userProfileImage.value,
-                        boxShape: BoxShape.circle,
+            Expanded(
+              child: Row(
+                children: [
+                  Obx(
+                    () => Container(
+                      width: 48.w,
+                      height: 48.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 2.w),
                       ),
-                    ),
-                  ),
-                ),
-
-                Gap(12.w),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      getGreeting(),
-                      style: context.bodySmall.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
-                      ),
-                    ),
-
-                    Obx(
-                      () => Text(
-                        data.userName.value.isEmpty
-                            ? "User"
-                            : data.userName.value.capitalizeWords(),
-                        style: context.titleLarge.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                      child: ClipOval(
+                        child: CustomNetworkImage(
+                          imageUrl: data.userProfileImage.value,
+                          boxShape: BoxShape.circle,
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+
+                  Gap(12.w),
+
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          getGreeting(),
+                          style: context.bodySmall.copyWith(
+                            color: Colors.white.withValues(alpha: 0.9),
+                          ),
+                        ),
+
+                        Obx(
+                          () => Text(
+                            data.userName.value.isEmpty
+                                ? "User"
+                                : data.userName.value.capitalizeWords(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.titleLarge.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
 
             GestureDetector(
               onTap: () {
-                Get.toNamed(RoutePath.alertScreen);
+                AppRouter.route.pushNamed(RoutePath.alertScreen);
               },
               child: Container(
                 padding: EdgeInsets.all(10.w),

@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:som_spot/core/custom_assets/assets.gen.dart';
-import 'package:som_spot/core/router/route_path.dart';
-import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/core/service/datasource/local/app_storage.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 import '../../../../core/router/role_router.dart';
 
@@ -62,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -14,7 +14,7 @@ class MerchantCampaignDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
 
       appBar: AppBar(

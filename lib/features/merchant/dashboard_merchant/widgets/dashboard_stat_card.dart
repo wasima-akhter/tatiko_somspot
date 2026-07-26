@@ -1,9 +1,5 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 class DashboardStatCard extends StatelessWidget {
   final String title;

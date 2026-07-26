@@ -1,11 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:iconsax/iconsax.dart';
-
-import '../../../../share/widgets/button/custom_button.dart';
+import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
-import '../../../../utils/color/app_colors.dart';
-import '../../../../utils/extension/base_extension.dart';
 import '../widgets/influencer_apply_account_card.dart';
 import '../widgets/influencer_apply_campaign_card.dart';
 
@@ -29,7 +23,7 @@ class _ApplyCampaignScreenState extends State<ApplyCampaignScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: Padding(

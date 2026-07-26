@@ -4,17 +4,18 @@ import 'package:som_spot/features/profile/main_profile/controller/profile_contro
 
 import '../../../core/di/repo_service_injection.dart';
 import '../../alerts/controller/alerts_controller.dart';
-import '../../merchant/dashboard_merchant/controller/dashboard_merchant_controller.dart';
-import '../../merchant/dashboard_merchant/service/dashboard_merchant_service.dart';
-import '../../customer/home/binding/home_binding.dart';
-import '../../customer/home/controller/home_controller.dart';
+import '../../customer/customer_home/binding/home_binding.dart';
+import '../../customer/customer_home/controller/home_controller.dart';
+import '../../customer/saved/controller/saved_controller.dart';
+import '../../customer/search/controller/search_controller.dart';
+import '../../influencer_all/influencer_dashboard/controller/influencer_dashboard_controller.dart';
 import '../../influencer_all/influencer_discover/controller/influencer_discover_controller.dart';
 import '../../influencer_all/influencer_task_screen/controller/influencer_task_controller.dart';
 import '../../influencer_all/influencer_wallet/controller/influencer_wallet_controller.dart';
+import '../../merchant/dashboard_merchant/controller/dashboard_merchant_controller.dart';
+import '../../merchant/dashboard_merchant/service/dashboard_merchant_service.dart';
 import '../../offers/binding/offers_binding.dart';
 import '../../profile/service/profile_service.dart';
-import '../../customer/saved/controller/saved_controller.dart';
-import '../../customer/search/controller/search_controller.dart';
 
 // import other controllers here
 
@@ -53,6 +54,12 @@ class NavigationBinding extends Bindings {
     //Merchant Dashboard
     Get.lazyPut<DashboardMerchantController>(
       () => DashboardMerchantController(sl<DashboardMerchantService>()),
+      fenix: true,
+    );
+
+    //Influencer Dashboard
+    Get.lazyPut<InfluencerDashboardController>(
+      () => InfluencerDashboardController(),
       fenix: true,
     );
     // customer

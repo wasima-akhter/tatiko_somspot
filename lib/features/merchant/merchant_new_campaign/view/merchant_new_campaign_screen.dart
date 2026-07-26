@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/core/router/routes.dart';
-
+import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 import '../controller/merchant_new_campaign_controller.dart';
@@ -15,13 +9,12 @@ import '../widgets/campaign_section_title.dart';
 import '../widgets/campaign_text_field.dart';
 
 class MerchantNewCampaignScreen extends StatelessWidget {
-  MerchantNewCampaignScreen({super.key});
-
-  final controller = Get.put(MerchantNewCampaignController());
+  const MerchantNewCampaignScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final controller = MerchantNewCampaignController.to;
+    return ScaffoldWrapper(
       backgroundColor: const Color(0xffF5FAFF),
 
       appBar: AppBar(
@@ -32,11 +25,15 @@ class MerchantNewCampaignScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Iconsax.arrow_left_2, size: 18.sp),
           onPressed: () {
-            AppRouter.route.pop();
+            AppRouter.route.goNamed(RoutePath.navigationPages);
           },
         ),
 
-        title: const Text("New Campaign"),
+        title: Text(
+          "New Campaign",
+          style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
+        ),
+        centerTitle: false,
       ),
 
       body: Column(
@@ -199,13 +196,7 @@ class MerchantNewCampaignScreen extends StatelessWidget {
             ),
           ),
 
-          CampaignBottomButtons(
-            onNext: () {
-              if (controller.validate()) {
-                // next screen
-              }
-            },
-          ),
+          CampaignBottomButtons(onNext: controller.onTapNext),
         ],
       ),
     );

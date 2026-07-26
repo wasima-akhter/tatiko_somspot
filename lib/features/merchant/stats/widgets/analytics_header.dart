@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 class AnalyticsHeader extends StatefulWidget {
   const AnalyticsHeader({super.key});
@@ -96,7 +90,9 @@ class _AnalyticsHeaderState extends State<AnalyticsHeader> {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         decoration: BoxDecoration(
-          color: isActive ? AppColors.blueAccentColor : AppColors.softBackgroundColor,
+          color: isActive
+              ? AppColors.blueAccentColor
+              : AppColors.softBackgroundColor,
           borderRadius: BorderRadius.circular(20.r),
         ),
         child: Text(

@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class DeviceUtils{
-
+class DeviceUtils {
   static void lockDevicePortrait() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -9,3 +9,6 @@ class DeviceUtils{
     ]);
   }
 }
+
+double bottomPadding(BuildContext context) =>
+    MediaQuery.of(context).viewPadding.bottom;

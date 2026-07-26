@@ -1,12 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
-
+import '../../../share/controller/screen_export.dart';
 import '../widgets/help_support_faq_section.dart';
 import '../widgets/help_support_form_card.dart';
 
@@ -15,7 +7,7 @@ class HelpAndSupportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.softBackgroundColor,
 
       appBar: AppBar(

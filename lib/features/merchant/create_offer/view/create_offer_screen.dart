@@ -1,17 +1,9 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
 
+import '../../../../share/controller/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/controller/business-controller.dart';
 import '../controller/create_offer_controller.dart';
@@ -60,7 +52,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
       appBar: AppBar(
         backgroundColor: AppColors.backgroundColorNew,

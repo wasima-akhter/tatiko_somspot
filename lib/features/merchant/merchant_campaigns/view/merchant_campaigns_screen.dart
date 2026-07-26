@@ -1,5 +1,3 @@
-import 'package:som_spot/core/router/route_path.dart';
-import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/merchant/merchant_campaigns/widgets/merchant_campaign_header.dart';
 
 import '../../../../share/controller/screen_export.dart';

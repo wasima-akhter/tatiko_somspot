@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:som_spot/features/auth/intro/onboarding/model/onboarding_model.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 class OnboardingPageCard extends StatelessWidget {
   final OnboardingModel model;

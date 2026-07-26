@@ -1,11 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/features/customer/search/controller/search_controller.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+
+import '../../../../share/controller/screen_export.dart';
 
 class SearchScreen extends GetView<SearchScreenController> {
   const SearchScreen({super.key});
@@ -14,6 +9,7 @@ class SearchScreen extends GetView<SearchScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColorNew,
+      appBar: AppBar(toolbarHeight: 0, backgroundColor: AppColors.white),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

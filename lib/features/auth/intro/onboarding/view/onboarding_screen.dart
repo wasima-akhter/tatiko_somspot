@@ -1,13 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:som_spot/core/router/route_path.dart';
-import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/core/service/datasource/local/app_storage.dart';
 import 'package:som_spot/features/auth/intro/onboarding/widgets/onboarding_page_card.dart';
-import 'package:som_spot/share/widgets/button/custom_button.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 import '../../../../../utils/common_controller/common_controller.dart';
 import '../controller/onboarding_controller.dart';
@@ -25,7 +18,7 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: Column(

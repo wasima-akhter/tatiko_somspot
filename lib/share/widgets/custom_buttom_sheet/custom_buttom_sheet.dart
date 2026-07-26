@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/core/custom_assets/assets.gen.dart';
 import 'package:som_spot/core/router/routes.dart';
-import 'package:som_spot/features/customer/home/model/merchant_model.dart';
+import 'package:som_spot/features/customer/customer_home/model/merchant_model.dart';
 import 'package:som_spot/helper/launcher/launcher_helper.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/utils/color/app_colors.dart';

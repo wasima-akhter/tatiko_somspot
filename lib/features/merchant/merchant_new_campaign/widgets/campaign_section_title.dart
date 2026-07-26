@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 class CampaignSectionTitle extends StatelessWidget {
   final String title;

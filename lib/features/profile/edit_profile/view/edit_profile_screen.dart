@@ -1,17 +1,11 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/features/profile/edit_profile/controller/edit_profile_controller.dart';
-import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
+
+import '../../../../share/controller/screen_export.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -38,7 +32,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Text(AppStrings.editProfile.tr),

@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
-
-import '../../../../utils/color/app_colors.dart';
-import '../../../../utils/extension/base_extension.dart';
+import '../../../../share/controller/screen_export.dart';
 import '../widgets/apply_button.dart';
 import '../widgets/campaign_banner.dart';
 import '../widgets/campaign_info_cards.dart';
@@ -15,7 +10,7 @@ class InfluencerCampaignDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.softBackgroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.softBackgroundColor,

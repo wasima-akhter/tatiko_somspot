@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
+import 'package:som_spot/features/influencer_all/influencer_dashboard/controller/influencer_dashboard_controller.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 
+import '../../../../share/controller/screen_export.dart';
+import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
+import '../../../common_components/dash_common_header.dart';
 import '../../../common_components/dash_common_header_cont.dart';
 import '../widgets/influencer_active_tasks.dart';
 import '../widgets/influencer_earnings_card.dart';
@@ -21,77 +21,104 @@ class InfluencerDashboardScreen extends StatefulWidget {
 class _InfluencerDashboardScreenState extends State<InfluencerDashboardScreen> {
   @override
   Widget build(BuildContext context) {
+    final controller = InfluencerDashboardController.to;
+    final profileController = controller.profileController;
     return Scaffold(
       backgroundColor: AppColors.softBackgroundColor,
 
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+      body: CustomRefreshIndicator(
+        onRefresh: () async {
+          await controller.profileController.getProfile();
+        },
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
 
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            DashCommonHeaderCont(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // DashboardCommonHeaderSec(),
-                  Gap(16.h),
-                  InfluencerEarningsCard(),
-                ],
-              ),
-            ),
-            Gap(12.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DashCommonHeaderCont(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Obx(
+                      () => ApiStatusBuilder(
+                        status: profileController.profileLoading.value,
+                        errorMessage: profileController.errorMessage.value,
+                        onRetry: profileController.getProfile,
 
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Performance",
-                    style: context.titleMedium.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.darkTextColor,
-                    ),
-                  ),
-                  Gap(12.h),
-
-                  InfluencerPerformanceGrid(),
-                  Gap(20.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Active Tasks",
-                        style: context.titleMedium.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-
-                      GestureDetector(
-                        onTap: () {
-                          NavigationControllerMain.to.goToTabTasks();
+                        loadingWidget: DashboardCommonHeaderSecShimmer(),
+                        builder: (_) {
+                          return DashboardCommonHeaderSec(
+                            data: DashboardHeaderModel(
+                              userName: controller.userName,
+                              userProfileImage: controller.userProfileImage,
+                              userAddress: controller.userAddress,
+                            ),
+                          );
                         },
-                        child: Text(
-                          "View all",
-                          style: context.bodySmall.copyWith(
-                            // color: AppColors.primaryColor,
-                            fontWeight: FontWeight.w600,
+                      ),
+                    ),
+
+                    Gap(16.h),
+                    InfluencerEarningsCard(),
+                  ],
+                ),
+              ),
+              Gap(12.h),
+
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Performance",
+                      style: context.titleMedium.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.darkTextColor,
+                      ),
+                    ),
+                    Gap(12.h),
+
+                    InfluencerPerformanceGrid(),
+                    Gap(20.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Active Tasks",
+                          style: context.titleMedium.copyWith(
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
 
-                  Gap(12.h),
+                        GestureDetector(
+                          onTap: () {
+                            NavigationControllerMain.to.goToTabTasks();
+                          },
+                          child: Text(
+                            "View all",
+                            style: context.bodySmall.copyWith(
+                              // color: AppColors.primaryColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
 
-                  InfluencerActiveTasks(),
-                ],
+                    Gap(12.h),
+
+                    InfluencerActiveTasks(),
+                  ],
+                ),
               ),
-            ),
 
-            Gap(30.h),
-          ],
+              Gap(30.h),
+            ],
+          ),
         ),
       ),
     );

@@ -1,10 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/core/router/route_path.dart';
-import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
 import 'package:som_spot/features/profile/main_profile/widgets/language_dialog_content.dart';
@@ -13,11 +6,9 @@ import 'package:som_spot/features/profile/main_profile/widgets/profile_menu_item
 import 'package:som_spot/features/profile/main_profile/widgets/profile_section_header.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
 import 'package:som_spot/share/widgets/dialog/custom_dialog.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
 
+import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/refresh_indicator/refresh_indicator.dart';
 import '../widgets/profile_header.dart';
 

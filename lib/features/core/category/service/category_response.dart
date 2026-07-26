@@ -1,4 +1,4 @@
-import '../../../customer/home/model/category_model.dart';
+import '../../../customer/customer_home/model/category_model.dart';
 
 class CategoryResponse {
   final List<CategoryModel> result;

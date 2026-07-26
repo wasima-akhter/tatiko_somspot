@@ -1,17 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/share/widgets/button/custom_button.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
-
+import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
-import '../../../../utils/app_strings/app_strings.dart';
 import '../../../common_components/location/app_location_picker.dart';
 import '../../../common_components/location/app_location_suggestions.dart';
 import '../controller/completed_profile_influencer_controller.dart';
@@ -150,10 +141,10 @@ class CompletedProfileInfluencerScreen extends StatelessWidget {
                 CustomDropdownField<String>(
                   hintText: "Select Influencer Type",
                   items: controller.influencerTypes,
-                  value: controller.selectedInfluencerType?.value,
+                  value: controller.selectedInfluencerType.value,
                   isRequired: true,
                   onChanged: (value) {
-                    controller.selectedInfluencerType?.value = value ?? '';
+                    controller.selectedInfluencerType.value = value ?? '';
                   },
                 ),
                 Gap(24.h),

@@ -1,7 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
-import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/features/alerts/view/alerts_screen.dart';
 import 'package:som_spot/features/auth/active/active_otp_screen.dart';
 import 'package:som_spot/features/auth/complete_business_profile/view/application_submitted_screen.dart';
@@ -18,11 +14,11 @@ import 'package:som_spot/features/auth/reset/reset_password_screen.dart';
 import 'package:som_spot/features/auth/sign_up/sign_up_screen.dart';
 import 'package:som_spot/features/business_info/view/business_info_screen.dart';
 import 'package:som_spot/features/claims/view/claims_screen.dart';
-import 'package:som_spot/features/customer/home/model/deal_model.dart';
-import 'package:som_spot/features/customer/home/view/category_merchants_screen.dart';
-import 'package:som_spot/features/customer/home/view/nearby_you_screen.dart';
-import 'package:som_spot/features/customer/home/view/offer_details_screen.dart';
-import 'package:som_spot/features/customer/home/view/top_deals_screen.dart';
+import 'package:som_spot/features/customer/customer_home/model/deal_model.dart';
+import 'package:som_spot/features/customer/customer_home/view/category_merchants_screen.dart';
+import 'package:som_spot/features/customer/customer_home/view/nearby_you_screen.dart';
+import 'package:som_spot/features/customer/customer_home/view/offer_details_screen.dart';
+import 'package:som_spot/features/customer/customer_home/view/top_deals_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/view/influencer_dashboard_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_discover/view/influencer_discover_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_task_screen/view/influencer_task_screen.dart';
@@ -30,6 +26,7 @@ import 'package:som_spot/features/merchant/create_offer/binding/create_offer_bin
 import 'package:som_spot/features/merchant/merchant_campaign_details/view/merchant_campaign_details_screen.dart';
 import 'package:som_spot/features/merchant/merchant_campaigns/view/merchant_campaigns_screen.dart';
 import 'package:som_spot/features/merchant/merchant_new_campaign/view/merchant_new_campaign_screen.dart';
+import 'package:som_spot/features/merchant/merchant_new_campaign/view/preview_campaign_screen.dart';
 import 'package:som_spot/features/nav/navigation_page.dart';
 import 'package:som_spot/features/offers/view/edit_offer_screen.dart';
 import 'package:som_spot/features/offers/view/offer_details_screen.dart';
@@ -42,7 +39,7 @@ import 'package:som_spot/features/other/view/terms_and_conditions_screen.dart';
 import 'package:som_spot/features/profile/edit_profile/view/edit_profile_screen.dart';
 import 'package:som_spot/features/profile/main_profile/view/profile_screen.dart';
 import 'package:som_spot/features/subscription/subscription_screen.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 import '../../features/auth/complete_business_profile/binding/complete_business_profile_binding.dart'
     show CompleteBusinessProfileBinding;
@@ -53,7 +50,7 @@ import '../../features/auth/completed_profile_influencer/view/completed_profile_
 import '../../features/auth/core/binding/auth_binding.dart';
 import '../../features/auth/intro/choose_role/view/choose_role_screen.dart';
 import '../../features/auth/intro/onboarding/binding/onboard_binding.dart';
-import '../../features/customer/home/binding/home_binding.dart';
+import '../../features/customer/customer_home/binding/home_binding.dart';
 import '../../features/influencer_all/binding/influencer_binding.dart';
 import '../../features/influencer_all/influencer_apply_campaign/view/influencer_apply_campaign_screen.dart';
 import '../../features/influencer_all/influencer_campaign_details/view/influencer_campaign_details_screen.dart';
@@ -67,9 +64,11 @@ import '../../features/merchant/create_offer/view/create_offer_screen.dart';
 import '../../features/merchant/merchant_campaign_details/binding/merchant_campaign_details_binding.dart';
 import '../../features/merchant/merchant_campaign_details/view/merchant_campaign_content_details_screen.dart';
 import '../../features/merchant/merchant_campaigns/binding/merchant_campaigns_binding.dart';
+import '../../features/merchant/merchant_new_campaign/view/pricing_packages_screen.dart';
 import '../../features/nav/binding/navigation_binding.dart';
 import '../../features/other/controller/other_binding.dart';
 import '../../features/profile/binding/profile_binding.dart';
+import '../../features/subscription/binding/subscription_binding.dart';
 import '../../features/success/success_screen.dart';
 
 class AppRouter {
@@ -426,7 +425,10 @@ class AppRouter {
         path: RoutePath.subscriptionScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const SubscriptionScreen(),
+            child: BindingWrapper(
+              binding: SubscriptionBinding(),
+              child: const SubscriptionScreen(),
+            ),
             state: state,
           );
         },
@@ -552,6 +554,36 @@ class AppRouter {
             child: BindingWrapper(
               binding: MerchantNewCampaignBinding(),
               child: MerchantNewCampaignScreen(),
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.merchantPricingPackagesScreen,
+        path: RoutePath.merchantPricingPackagesScreen.addBasePath,
+        pageBuilder: (context, state) {
+          // final merchant = state.extra as MerchantModel;
+
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: MerchantPricingBinding(),
+              child: MerchantPricingPackagesScreen(),
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.mrchantPreviewCampaignScreen,
+        path: RoutePath.mrchantPreviewCampaignScreen.addBasePath,
+        pageBuilder: (context, state) {
+          // final merchant = state.extra as MerchantModel;
+
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: MerchantPricingBinding(),
+              child: MerchantPreviewCampaignScreen(),
             ),
           );
         },

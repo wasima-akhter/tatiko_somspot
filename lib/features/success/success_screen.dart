@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:som_spot/share/widgets/button/custom_button.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+
+
+import '../../share/controller/screen_export.dart';
 
 class SuccessScreenArgs {
   const SuccessScreenArgs({
@@ -69,7 +66,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         maintainBottomViewPadding: true,

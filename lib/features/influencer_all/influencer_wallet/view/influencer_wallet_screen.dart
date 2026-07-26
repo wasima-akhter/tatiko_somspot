@@ -1,11 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:som_spot/features/influencer_all/influencer_wallet/widgets/earnings_trend_chart.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
 
-import '../../../../utils/extension/base_extension.dart';
+import '../../../../share/controller/screen_export.dart';
 import '../controller/influencer_wallet_controller.dart';
 import '../widgets/active_tasks.dart';
 import '../widgets/performance_grid.dart';
@@ -19,7 +14,7 @@ class InfluencerWalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = InfluencerWalletController.to;
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.softBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(

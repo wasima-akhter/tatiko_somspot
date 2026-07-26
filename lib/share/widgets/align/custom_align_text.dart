@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 class CustomAlignText extends StatelessWidget {
   const CustomAlignText({

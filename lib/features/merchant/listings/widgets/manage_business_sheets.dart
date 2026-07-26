@@ -1,13 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/share/widgets/button/custom_button.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 // ════════════════════════════════════════════════════════════
 // Common helper for showing bottom sheets
@@ -22,8 +14,11 @@ void _showManageSheet(BuildContext context, {required Widget child}) {
   );
 }
 
-Widget _buildSheetHeader(BuildContext context,
-    {required String title, required String subtitle}) {
+Widget _buildSheetHeader(
+  BuildContext context, {
+  required String title,
+  required String subtitle,
+}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -47,7 +42,11 @@ Widget _buildSheetHeader(BuildContext context,
                 color: AppColors.softSlateBgColor,
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.close, size: 18.sp, color: AppColors.subtitleTextColor),
+              child: Icon(
+                Icons.close,
+                size: 18.sp,
+                color: AppColors.subtitleTextColor,
+              ),
             ),
           ),
         ],
@@ -125,7 +124,11 @@ class _EditBusinessProfileSheet extends StatelessWidget {
                       CircleAvatar(
                         radius: 40.r,
                         backgroundColor: AppColors.softSlateBgColor,
-                        child: Icon(Iconsax.shop, size: 32.sp, color: AppColors.blueAccentColor),
+                        child: Icon(
+                          Iconsax.shop,
+                          size: 32.sp,
+                          color: AppColors.blueAccentColor,
+                        ),
                       ),
                       Positioned(
                         bottom: 0,
@@ -135,9 +138,16 @@ class _EditBusinessProfileSheet extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: AppColors.blueAccentColor,
                             shape: BoxShape.circle,
-                            border: Border.all(color: AppColors.white, width: 2),
+                            border: Border.all(
+                              color: AppColors.white,
+                              width: 2,
+                            ),
                           ),
-                          child: Icon(Iconsax.camera, size: 14.sp, color: AppColors.white),
+                          child: Icon(
+                            Iconsax.camera,
+                            size: 14.sp,
+                            color: AppColors.white,
+                          ),
                         ),
                       ),
                     ],
@@ -244,12 +254,18 @@ class _ManageGallerySheet extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(color: AppColors.backgroundsLinesColor),
+                      border: Border.all(
+                        color: AppColors.backgroundsLinesColor,
+                      ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.add, size: 28.sp, color: AppColors.blueAccentColor),
+                        Icon(
+                          Icons.add,
+                          size: 28.sp,
+                          color: AppColors.blueAccentColor,
+                        ),
                         Gap(4.h),
                         Text(
                           AppStrings.add.tr,
@@ -271,7 +287,11 @@ class _ManageGallerySheet extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Center(
-                      child: Icon(Iconsax.image, size: 28.sp, color: AppColors.hintTextColor),
+                      child: Icon(
+                        Iconsax.image,
+                        size: 28.sp,
+                        color: AppColors.hintTextColor,
+                      ),
                     ),
                   ),
                   Positioned(
@@ -283,7 +303,11 @@ class _ManageGallerySheet extends StatelessWidget {
                         color: AppColors.blueAccentColor,
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.close, size: 12.sp, color: AppColors.white),
+                      child: Icon(
+                        Icons.close,
+                        size: 12.sp,
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                 ],
@@ -320,8 +344,13 @@ class _OperatingHoursSheet extends StatefulWidget {
 class _OperatingHoursSheetState extends State<_OperatingHoursSheet> {
   final List<String> _days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   final Map<String, bool> _enabled = {
-    'Mon': true, 'Tue': true, 'Wed': true, 'Thu': true,
-    'Fri': true, 'Sat': true, 'Sun': true,
+    'Mon': true,
+    'Tue': true,
+    'Wed': true,
+    'Thu': true,
+    'Fri': true,
+    'Sat': true,
+    'Sun': true,
   };
 
   @override
@@ -383,7 +412,12 @@ class _OperatingHoursSheetState extends State<_OperatingHoursSheet> {
           _buildTimeBox(context, '09:00'),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: Text('–', style: context.bodyMedium.copyWith(color: AppColors.hintTextColor)),
+            child: Text(
+              '–',
+              style: context.bodyMedium.copyWith(
+                color: AppColors.hintTextColor,
+              ),
+            ),
           ),
           _buildTimeBox(context, '22:00'),
           const Spacer(),
@@ -533,7 +567,12 @@ class _LocationMapPainter extends CustomPainter {
       ..color = const Color(0xFF86A789).withValues(alpha: 0.3)
       ..style = PaintingStyle.fill;
     canvas.drawOval(
-      Rect.fromLTWH(size.width * 0.1, size.height * 0.08, size.width * 0.18, size.height * 0.22),
+      Rect.fromLTWH(
+        size.width * 0.1,
+        size.height * 0.08,
+        size.width * 0.18,
+        size.height * 0.22,
+      ),
       parkPaint,
     );
   }

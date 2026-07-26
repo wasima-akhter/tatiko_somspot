@@ -1,12 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-
-import '../../../../core/router/route_path.dart';
-import '../../../../core/router/routes.dart';
-import '../../../../share/widgets/button/custom_button.dart';
-import '../../../../utils/color/app_colors.dart';
-import '../../../../utils/extension/base_extension.dart';
+import '../../../../share/controller/screen_export.dart';
 import '../../../nav/controller/navigation_controller.dart';
 import '../../../success/success_screen.dart';
 import '../../influencer_task_screen/controller/influencer_task_controller.dart';
@@ -43,7 +35,7 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: Colors.blue.shade50,
       appBar: AppBar(
         elevation: 0,

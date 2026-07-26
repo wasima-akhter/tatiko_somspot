@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
+
+import '../../share/controller/screen_export.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key, this.index = 0});

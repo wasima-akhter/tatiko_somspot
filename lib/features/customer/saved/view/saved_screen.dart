@@ -1,14 +1,8 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/features/customer/saved/controller/saved_controller.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+
+import '../../../../share/controller/screen_export.dart';
 
 class SavedScreen extends GetView<SavedScreenController> {
   const SavedScreen({super.key});
@@ -16,6 +10,7 @@ class SavedScreen extends GetView<SavedScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(toolbarHeight: 0, backgroundColor: AppColors.white),
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: Column(

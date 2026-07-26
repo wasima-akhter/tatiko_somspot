@@ -1,14 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/features/claims/controller/claims_controller.dart';
 import 'package:som_spot/features/claims/widgets/offer_claimed_dialog.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+
+import '../../../share/controller/screen_export.dart';
 
 class ClaimsScreen extends StatelessWidget {
   const ClaimsScreen({super.key});
@@ -17,7 +11,7 @@ class ClaimsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(ClaimsController());
 
-    return Scaffold(
+    return ScaffoldWrapper(
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Text(AppStrings.myClaims.tr),

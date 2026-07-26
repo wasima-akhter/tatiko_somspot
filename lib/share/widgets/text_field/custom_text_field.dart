@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 import 'package:som_spot/share/widgets/align/custom_align_text.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({

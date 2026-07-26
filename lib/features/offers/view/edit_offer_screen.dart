@@ -1,18 +1,9 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/features/customer/home/model/deal_model.dart';
+import 'package:som_spot/features/customer/customer_home/model/deal_model.dart';
 import 'package:som_spot/features/offers/controller/offer_controller.dart';
-import 'package:som_spot/share/widgets/button/custom_button.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
 
 class EditOfferScreen extends StatefulWidget {
   final DealModel deal;
@@ -55,7 +46,7 @@ class _EditOfferScreenState extends State<EditOfferScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 0,

@@ -1,16 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/core/router/route_path.dart';
-import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 import 'package:som_spot/share/widgets/custom_buttom_sheet/custom_buttom_sheet.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
 
 import '../../../core/custom_assets/assets.gen.dart';
 import '../../../share/widgets/ui_status_builder/api_status_builder.dart';
@@ -22,7 +13,7 @@ class AboutSomSpotScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = OtherController.to;
-    return Scaffold(
+    return ScaffoldWrapper(
       appBar: AppBar(
         backgroundColor: AppColors.backgroundColorNew,
         elevation: 0,

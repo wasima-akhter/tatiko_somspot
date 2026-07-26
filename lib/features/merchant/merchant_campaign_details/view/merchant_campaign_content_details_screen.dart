@@ -12,7 +12,7 @@ class MerchantCampaignContentDetailsScreen
   Widget build(BuildContext context) {
     final data = controller.content;
 
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
 
       appBar: AppBar(

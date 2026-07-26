@@ -1,17 +1,9 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/helper/validator/text_field_validator.dart';
-import 'package:som_spot/share/widgets/button/custom_button.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
 
+import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
-import '../../../../utils/app_strings/app_strings.dart';
 import '../controller/completed_profile_customer_controller.dart';
 import 'completed_profile_customer_args.dart';
 
@@ -26,7 +18,7 @@ class CompletedProfileCustomerScreen extends StatelessWidget {
 
     controller.initialize(email: args.email);
     final formKey = GlobalKey<FormState>();
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
 
       body: SafeArea(

@@ -44,7 +44,7 @@
 //       border: Border.all(color: AppColors.primaryColor),
 //     );
 //
-//     return Scaffold(
+//     return ScaffoldWrapper(
 //       backgroundColor: AppColors.white,
 //       body: SafeArea(
 //         child: Padding(

@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 class OfferClaimedDialog extends StatelessWidget {
   final String claimCode;
@@ -19,9 +15,7 @@ class OfferClaimedDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.r),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       backgroundColor: Colors.white,
       insetPadding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Padding(
@@ -113,9 +107,7 @@ class OfferClaimedDialog extends StatelessWidget {
               child: SizedBox(
                 width: 140.w,
                 height: 140.h,
-                child: CustomPaint(
-                  painter: _QrCodePainter(),
-                ),
+                child: CustomPaint(painter: _QrCodePainter()),
               ),
             ),
             Gap(16.h),
@@ -228,22 +220,48 @@ class _QrCodePainter extends CustomPainter {
           final x = startX + (c * pixelSize * 1.5);
           final y = startY + (r * pixelSize * 1.5);
           if (x < size.width && y < size.height) {
-            canvas.drawRect(
-              Rect.fromLTWH(x, y, pixelSize, pixelSize),
-              paint,
-            );
+            canvas.drawRect(Rect.fromLTWH(x, y, pixelSize, pixelSize), paint);
           }
         }
       }
     }
 
     // Add extra decorative outer small data blocks
-    canvas.drawRect(Rect.fromLTWH(size.width - 18.w, size.height - 18.h, pixelSize * 2, pixelSize * 2), paint);
-    canvas.drawRect(Rect.fromLTWH(size.width - 28.w, size.height - 12.h, pixelSize, pixelSize), paint);
-    canvas.drawRect(Rect.fromLTWH(size.width - 12.w, size.height - 28.h, pixelSize, pixelSize), paint);
+    canvas.drawRect(
+      Rect.fromLTWH(
+        size.width - 18.w,
+        size.height - 18.h,
+        pixelSize * 2,
+        pixelSize * 2,
+      ),
+      paint,
+    );
+    canvas.drawRect(
+      Rect.fromLTWH(
+        size.width - 28.w,
+        size.height - 12.h,
+        pixelSize,
+        pixelSize,
+      ),
+      paint,
+    );
+    canvas.drawRect(
+      Rect.fromLTWH(
+        size.width - 12.w,
+        size.height - 28.h,
+        pixelSize,
+        pixelSize,
+      ),
+      paint,
+    );
   }
 
-  void _drawPositioningBlock(Canvas canvas, Offset offset, double size, Paint paint) {
+  void _drawPositioningBlock(
+    Canvas canvas,
+    Offset offset,
+    double size,
+    Paint paint,
+  ) {
     // Outer Border Box
     paint.style = PaintingStyle.stroke;
     paint.strokeWidth = 4.w;
@@ -259,7 +277,12 @@ class _QrCodePainter extends CustomPainter {
     paint.style = PaintingStyle.fill;
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(offset.dx + 9.w, offset.dy + 9.h, size - 18.w, size - 18.h),
+        Rect.fromLTWH(
+          offset.dx + 9.w,
+          offset.dy + 9.h,
+          size - 18.w,
+          size - 18.h,
+        ),
         Radius.circular(2.r),
       ),
       paint,

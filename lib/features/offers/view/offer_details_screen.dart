@@ -1,16 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/core/router/route_path.dart';
-import 'package:som_spot/core/router/routes.dart';
-import 'package:som_spot/features/customer/home/model/deal_model.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
+import 'package:som_spot/features/customer/customer_home/model/deal_model.dart';
 
+import '../../../share/controller/screen_export.dart';
 import '../../../share/widgets/network_image/custom_network_image.dart';
 
 class ClaimedOfferDetailsScreen extends StatelessWidget {
@@ -19,7 +9,7 @@ class ClaimedOfferDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.softBackgroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.softBackgroundColor,
@@ -317,26 +307,26 @@ class ClaimedOfferDetailsScreen extends StatelessWidget {
             // ── Bottom Action Buttons ──
             Row(
               children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () {},
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: AppColors.primaryColor),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      padding: EdgeInsets.symmetric(vertical: 14.h),
-                    ),
-                    child: Text(
-                      AppStrings.pause.tr,
-                      style: context.titleSmall.copyWith(
-                        color: AppColors.primaryColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-                Gap(16.w),
+                // Expanded(
+                //   child: OutlinedButton(
+                //     onPressed: () {},
+                //     style: OutlinedButton.styleFrom(
+                //       side: const BorderSide(color: AppColors.primaryColor),
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(10.r),
+                //       ),
+                //       padding: EdgeInsets.symmetric(vertical: 14.h),
+                //     ),
+                //     child: Text(
+                //       AppStrings.pause.tr,
+                //       style: context.titleSmall.copyWith(
+                //         color: AppColors.primaryColor,
+                //         fontWeight: FontWeight.w600,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // Gap(16.w),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () => AppRouter.route.pushNamed(

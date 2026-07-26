@@ -1,11 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:som_spot/features/merchant/listings/widgets/manage_business_sheets.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-import 'package:som_spot/utils/extension/base_extension.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 class ManageBusinessMenu extends StatelessWidget {
   const ManageBusinessMenu({super.key});
@@ -98,11 +92,7 @@ class ManageBusinessMenu extends StatelessWidget {
                 color: AppColors.softSlateBgColor,
                 borderRadius: BorderRadius.circular(8.r),
               ),
-              child: Icon(
-                icon,
-                color: AppColors.blueTextColor400,
-                size: 18.sp,
-              ),
+              child: Icon(icon, color: AppColors.blueTextColor400, size: 18.sp),
             ),
             SizedBox(width: 16.w),
             Expanded(

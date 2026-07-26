@@ -150,10 +150,10 @@ class CompletedProfileInfluencerController extends GetxController {
   Future<void> searchLocationFromAddress() async {
     final address = addressController.text.trim();
 
-    if (address.isEmpty) {
-      AppToast.warning(message: "Please enter an address to search");
-      return;
-    }
+    // if (address.isEmpty) {
+    //   AppToast.warning(message: "Please enter an address to search");
+    //   return;
+    // }
 
     await searchSuggestions(address);
   }

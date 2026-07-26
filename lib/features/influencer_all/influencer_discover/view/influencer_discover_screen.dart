@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
-
+import '../../../../share/controller/screen_export.dart';
 import '../controller/influencer_discover_controller.dart';
 import '../widgets/discover_category_tabs.dart';
 import '../widgets/discover_header.dart';
@@ -24,7 +20,7 @@ class _InfluencerDiscoverScreenState extends State<InfluencerDiscoverScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Scaffold(
+      child: ScaffoldWrapper(
         backgroundColor: AppColors.softBackgroundColor,
 
         body: CustomScrollView(

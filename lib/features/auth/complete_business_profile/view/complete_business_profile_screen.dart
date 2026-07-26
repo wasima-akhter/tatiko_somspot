@@ -1,17 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:som_spot/features/auth/complete_business_profile/controller/complete_business_profile_controller.dart';
 import 'package:som_spot/features/auth/complete_business_profile/view/widgets/branding_step.dart';
 import 'package:som_spot/features/auth/complete_business_profile/view/widgets/business_hours_step.dart';
 import 'package:som_spot/features/auth/complete_business_profile/view/widgets/business_info_step.dart';
 import 'package:som_spot/features/auth/complete_business_profile/view/widgets/contact_step.dart';
 import 'package:som_spot/features/auth/complete_business_profile/view/widgets/location_step.dart';
-import 'package:som_spot/share/widgets/button/custom_button.dart';
-import 'package:som_spot/utils/app_strings/app_strings.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
 
+import '../../../../share/controller/screen_export.dart';
 import '../../../core/category/controller/category_controller.dart';
 
 class CompleteBusinessProfileScreen extends StatefulWidget {
@@ -32,7 +26,7 @@ class _CompleteBusinessProfileScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: Column(

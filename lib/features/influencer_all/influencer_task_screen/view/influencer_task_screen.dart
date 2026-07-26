@@ -1,8 +1,6 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
 
+import '../../../../share/controller/screen_export.dart';
 import '../widgets/completed_task_card.dart';
 import '../widgets/influencer_task_card.dart';
 import '../widgets/review_tab.dart';
@@ -88,7 +86,7 @@ class _InfluencerTaskScreenState extends State<InfluencerTaskScreen>
     ];
     return SafeArea(
       top: false,
-      child: Scaffold(
+      child: ScaffoldWrapper(
         backgroundColor: AppColors.softBackgroundColor,
         body: CustomScrollView(
           physics: const BouncingScrollPhysics(),

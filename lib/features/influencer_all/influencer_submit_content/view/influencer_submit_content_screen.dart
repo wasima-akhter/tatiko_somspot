@@ -1,18 +1,10 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/instance_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
-import 'package:som_spot/share/widgets/button/custom_button.dart';
 
-import '../../../../core/router/route_path.dart';
-import '../../../../core/router/routes.dart';
+import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
-import '../../../../utils/color/app_colors.dart';
-import '../../../../utils/extension/base_extension.dart';
 import '../../../success/success_screen.dart';
 import '../../influencer_task_screen/controller/influencer_task_controller.dart';
 
@@ -50,7 +42,7 @@ class _InfluencerSubmitContentScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       backgroundColor: AppColors.softBackgroundColor,
       body: SafeArea(
         child: Padding(
