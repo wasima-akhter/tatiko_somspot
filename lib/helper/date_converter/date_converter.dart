@@ -134,4 +134,19 @@ class DateConverter {
 
     return date.toUtc().toIso8601String();
   }
+
+  static String formatTimeToAmPm(String time) {
+    try {
+      final parts = time.split(":");
+      final hour = int.parse(parts[0]);
+      final minute = int.parse(parts[1]);
+
+      final period = hour >= 12 ? "PM" : "AM";
+      final displayHour = hour % 12 == 0 ? 12 : hour % 12;
+
+      return "$displayHour:${minute.toString().padLeft(2, '0')} $period";
+    } catch (_) {
+      return time;
+    }
+  }
 }

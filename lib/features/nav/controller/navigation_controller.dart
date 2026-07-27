@@ -15,6 +15,7 @@ import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../../utils/enum/app_enum.dart';
+import '../../claims/view/claims_screen.dart';
 import '../../influencer_all/influencer_wallet/view/influencer_wallet_screen.dart';
 
 class NavigationControllerMain extends GetxController {
@@ -43,8 +44,8 @@ class NavigationControllerMain extends GetxController {
         return const [
           CustomerHomeScreen(),
           SearchScreen(),
+          ClaimsScreen(),
           SavedScreen(),
-          // AlertsScreen(),
           ProfileScreen(),
         ];
     }
@@ -72,8 +73,8 @@ class NavigationControllerMain extends GetxController {
         return [
           Iconsax.home,
           Iconsax.search_normal,
+          Iconsax.ticket,
           Iconsax.bookmark,
-          // Iconsax.notification,
           Iconsax.user,
         ];
     }
@@ -101,8 +102,8 @@ class NavigationControllerMain extends GetxController {
         return [
           AppStrings.home,
           AppStrings.search,
+          AppStrings.myClaims,
           AppStrings.saved,
-          // AppStrings.alerts,
           AppStrings.profile,
         ];
     }

@@ -1,15 +1,19 @@
+import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
+
 import '../../../../share/controller/screen_export.dart';
 
 class CampaignCardNavigator extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback? onTap;
+  final bool isLoading;
 
   const CampaignCardNavigator({
     super.key,
     required this.title,
     required this.subtitle,
     this.onTap,
+    this.isLoading = false,
   });
 
   @override
@@ -17,7 +21,7 @@ class CampaignCardNavigator extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: onTap,
+        onTap: isLoading ? null : onTap,
         borderRadius: BorderRadius.circular(14.r),
         child: Ink(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
@@ -65,14 +69,19 @@ class CampaignCardNavigator extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
+
                     Gap(4.h),
-                    Text(
-                      subtitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.bodySmall.copyWith(
-                        color: Colors.white.withValues(alpha: .9),
-                        fontSize: 11.sp,
+
+                    AutoShimmerAnimate(
+                      isLoading: isLoading,
+                      child: Text(
+                        subtitle,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.bodySmall.copyWith(
+                          color: Colors.white.withValues(alpha: .9),
+                          fontSize: 11.sp,
+                        ),
                       ),
                     ),
                   ],

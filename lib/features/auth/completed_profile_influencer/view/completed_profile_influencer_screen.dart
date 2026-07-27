@@ -3,8 +3,8 @@ import 'dart:io';
 import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
-import '../../../common_components/location/app_location_picker.dart';
-import '../../../common_components/location/app_location_suggestions.dart';
+import '../../../core/location/widgets/app_location_picker.dart';
+import '../../../core/location/widgets/app_location_suggestions.dart';
 import '../controller/completed_profile_influencer_controller.dart';
 
 class CompletedProfileInfluencerScreen extends StatelessWidget {

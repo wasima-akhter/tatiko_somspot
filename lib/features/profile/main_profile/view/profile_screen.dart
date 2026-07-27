@@ -1,4 +1,3 @@
-import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
 import 'package:som_spot/features/profile/main_profile/widgets/language_dialog_content.dart';
 import 'package:som_spot/features/profile/main_profile/widgets/profile_menu_card.dart';
@@ -58,16 +57,15 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                           if (commonController.isMerchandiser) {
                             return Column(
                               children: [
-                                ProfileMenuItem(
-                                  icon: Iconsax.shop,
-                                  title: AppStrings.businessInfo.tr,
-                                  onTap: () {
-                                    AppRouter.route.pushNamed(
-                                      RoutePath.businessInfoScreen,
-                                    );
-                                  },
-                                ),
-
+                                // ProfileMenuItem(
+                                //   icon: Iconsax.shop,
+                                //   title: AppStrings.businessInfo.tr,
+                                //   onTap: () {
+                                //     AppRouter.route.pushNamed(
+                                //       RoutePath.businessInfoScreen,
+                                //     );
+                                //   },
+                                // ),
                                 ProfileMenuItem(
                                   icon: Iconsax.card,
                                   title: AppStrings.subscriptionBilling.tr,
@@ -102,33 +100,33 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                           if (commonController.isCustomer) {
                             return Column(
                               children: [
-                                ProfileMenuItem(
-                                  icon: Iconsax.archive_1,
-                                  title: AppStrings.savedItems.tr,
-                                  onTap: () {
-                                    AppToast.info(
-                                      context: context,
-                                      message:
-                                          "You can view saved items from the Saved tab.",
-                                    );
+                                // ProfileMenuItem(
+                                //   icon: Iconsax.archive_1,
+                                //   title: AppStrings.savedItems.tr,
+                                //   onTap: () {
+                                //     AppToast.info(
+                                //       context: context,
+                                //       message:
+                                //           "You can view saved items from the Saved tab.",
+                                //     );
 
-                                    NavigationControllerMain
-                                            .to
-                                            .selectedNavIndex
-                                            .value =
-                                        2;
-                                  },
-                                ),
+                                //     NavigationControllerMain
+                                //             .to
+                                //             .selectedNavIndex
+                                //             .value =
+                                //        3;
+                                //   },
+                                // ),
 
-                                ProfileMenuItem(
-                                  icon: Iconsax.ticket,
-                                  title: AppStrings.myClaims.tr,
-                                  onTap: () {
-                                    AppRouter.route.pushNamed(
-                                      RoutePath.claimsScreen,
-                                    );
-                                  },
-                                ),
+                                // ProfileMenuItem(
+                                //   icon: Iconsax.ticket,
+                                //   title: AppStrings.myClaims.tr,
+                                //   onTap: () {
+                                //     AppRouter.route.pushNamed(
+                                //       RoutePath.claimsScreen,
+                                //     );
+                                //   },
+                                // ),
                               ],
                             );
                           }

@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:som_spot/core/service/datasource/remote/api_client.dart';
 import 'package:som_spot/core/service/network/network_checker.dart';
+import 'package:som_spot/features/merchant/listings/repository/manage_business_repository.dart';
+import 'package:som_spot/features/merchant/listings/service/manage_listing_service.dart';
 
 import '../../features/auth/complete_business_profile/repository/complete_business_profile_repository.dart';
 import '../../features/auth/complete_business_profile/service/complete_business_profile_service.dart';
@@ -145,5 +147,17 @@ Future<void> initDependencies() async {
 
   sl.registerLazySingleton<DashboardMerchantService>(
     () => DashboardMerchantService(sl<DashboardMerchantRepository>()),
+  );
+
+  // =====================
+  // Merchant Business Profile Update
+  // =====================
+
+  sl.registerLazySingleton<ManageBusinessRepository>(
+    () => ManageBusinessRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<ManageBusinessService>(
+    () => ManageBusinessService(sl<ManageBusinessRepository>()),
   );
 }

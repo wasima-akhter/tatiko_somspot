@@ -8,6 +8,7 @@ class BusinessRepository {
   Future<Response> getMyBusinesses({required int page, required int limit}) {
     return _apiClient.get(
       url: ApiUrls.myBusinesses(page: page, limit: limit),
+      showResponse: true,
     );
   }
 }

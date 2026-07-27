@@ -5,36 +5,48 @@ import '../../../common_components/dash_common_header.dart';
 import '../../../common_components/dash_common_header_cont.dart';
 import '../controller/dashboard_merchant_controller.dart';
 
+/*
+class DashboardHeader extends StatelessWidget { const DashboardHeader({super.key}); @override Widget build(BuildContext context) { final controller = DashboardMerchantController.to; final profileController = controller.profileController; return DashCommonHeaderCont( child: Column( crossAxisAlignment: CrossAxisAlignment.start, children: [ Obx( () => ApiStatusBuilder( status: profileController.profileLoading.value, errorMessage: profileController.errorMessage.value, onRetry: profileController.getProfile, loadingWidget: DashboardCommonHeaderSecShimmer(), builder: (_) { return DashboardCommonHeaderSec( data: DashboardHeaderModel( userName: controller.userName, userProfileImage: controller.userProfileImage, userAddress: controller.userAddress, ), ); }, ), ), Gap(16.h), _CreateOfferSection(), ], ), ); } }
+
+*/
+
 class DashboardHeader extends StatelessWidget {
   const DashboardHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = DashboardMerchantController.to;
-    final profileController = controller.profileController;
+
     return DashCommonHeaderCont(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Obx(
             () => ApiStatusBuilder(
-              status: profileController.profileLoading.value,
-              errorMessage: profileController.errorMessage.value,
-              onRetry: profileController.getProfile,
+              status: controller.dashboardStatus.value,
+              errorMessage: controller.errorMessage.value,
+              onRetry: controller.getDashboardOverview,
 
               loadingWidget: DashboardCommonHeaderSecShimmer(),
+
               builder: (_) {
+                final dashboard = controller.dashboardData;
+
                 return DashboardCommonHeaderSec(
                   data: DashboardHeaderModel(
-                    userName: controller.userName,
-                    userProfileImage: controller.userProfileImage,
-                    userAddress: controller.userAddress,
+                    userName: (dashboard?.merchant?.name ?? '').obs,
+                    userProfileImage:
+                        (dashboard?.merchant?.profileImage ?? '').obs,
+                    userAddress:
+                        (dashboard?.primaryBusiness?.address ?? '').obs,
                   ),
                 );
               },
             ),
           ),
+
           Gap(16.h),
+
           _CreateOfferSection(),
         ],
       ),

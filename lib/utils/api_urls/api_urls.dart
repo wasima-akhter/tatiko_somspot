@@ -47,6 +47,7 @@ class ApiUrls {
 
   // business profile
   static String createBusiness() => '$base/business/create';
+  static String updateBusiness() => '$base/business/update';
 
   // core
   // categories

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -247,20 +248,90 @@ class ApiClient {
         );
       }
 
+      // ─────────────────────────────────────────────
+      // REQUEST LOG
+      // ─────────────────────────────────────────────
+      debugPrint("");
+      debugPrint("━━━━━━━━━━ MULTIPART REQUEST ━━━━━━━━━━");
+      debugPrint("URL     : $url");
+      debugPrint("METHOD  : $method");
+
+      debugPrint("FIELDS:");
+      if (fields == null || fields.isEmpty) {
+        debugPrint("  (none)");
+      } else {
+        fields.forEach((key, value) {
+          debugPrint("  • $key : $value");
+        });
+      }
+
+      debugPrint("FILES:");
+      if (files.isEmpty) {
+        debugPrint("  (none)");
+      } else {
+        for (final file in files) {
+          final length = await file.file.length();
+
+          debugPrint('''
+  • field    : ${file.fieldKey}
+    name     : ${file.file.uri.pathSegments.last}
+    path     : ${file.file.path}
+    size     : ${(length / 1024).toStringAsFixed(2)} KB
+''');
+        }
+      }
+
+      debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
       final response = await dio.request(
         url,
         data: FormData.fromMap(form),
         options: Options(method: method, headers: multipartHeaders),
       );
 
+      // ─────────────────────────────────────────────
+      // RESPONSE LOG
+      // ─────────────────────────────────────────────
+      debugPrint("");
+      debugPrint("━━━━━━━━━━ MULTIPART RESPONSE ━━━━━━━━━━");
+      debugPrint(
+        response.statusCode.toString().startsWith("2")
+            ? "✅ SUCCESS"
+            : "❌ FAILED",
+      );
+      debugPrint("STATUS : ${response.statusCode}");
+      debugPrint("URL    : $url");
+      debugPrint("BODY:");
+      debugPrint(response.data.toString());
+      debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
       log(url, response, showResponse: showResponse);
 
       return response;
+    } on DioException catch (e) {
+      debugPrint("");
+      debugPrint("━━━━━━━━━━ MULTIPART ERROR ━━━━━━━━━━");
+      debugPrint("URL : $url");
+
+      if (e.response != null) {
+        debugPrint("STATUS : ${e.response?.statusCode}");
+        debugPrint("BODY:");
+        debugPrint(jsonEncode(e.response?.data));
+      }
+
+      debugPrint("MESSAGE : ${e.message}");
+      debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
+      throw handleError(e);
     } catch (e) {
+      debugPrint("");
+      debugPrint("━━━━━━━━━━ MULTIPART ERROR ━━━━━━━━━━");
+      debugPrint("URL : $url");
+      debugPrint("ERROR : $e");
+      debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
       throw handleError(e);
     }
-
-    //
   }
 
   Exception handleError(dynamic error) {

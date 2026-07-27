@@ -5,7 +5,7 @@ class ApplicationUnderReviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWrapper(
+    return Scaffold(
       backgroundColor: const Color(0xFFF6F9FC),
       body: SingleChildScrollView(
         child: Column(

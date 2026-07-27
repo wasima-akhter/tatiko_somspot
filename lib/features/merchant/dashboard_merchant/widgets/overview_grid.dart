@@ -34,7 +34,7 @@ class OverviewGrid extends StatelessWidget {
       children: [
         DashboardStatCard(
           title: AppStrings.totalViews.tr,
-          value: data.businessCount.toString(),
+          value: data.totalViews.toString(),
           icon: Iconsax.profile_2user,
           iconColor: AppColors.blueAccentColor,
           isLoading: isLoading,

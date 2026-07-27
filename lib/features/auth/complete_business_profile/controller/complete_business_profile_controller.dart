@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
@@ -12,6 +10,7 @@ import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../core/router/route_path.dart';
 import '../../../../core/router/routes.dart';
+import '../../../core/location/controller/business_location_controller.dart';
 import '../service/complete_business_profile_request.dart';
 import '../service/complete_business_profile_service.dart';
 
@@ -34,13 +33,6 @@ class CompleteBusinessProfileController extends GetxController {
   // category
   final selectedCategoryId = "".obs;
 
-  // ── Step 1: Location ──
-  final addressController = TextEditingController();
-  final cityController = TextEditingController();
-  final mapController = MapController();
-  // Default: Aqua Tower, Mohakhali, Dhaka
-  final selectedLatLng = const LatLng(23.78081, 90.40749).obs;
-
   // ── Step 2: Business Hours ──
   final businessHours = <String, Map<String, dynamic>>{}.obs;
 
@@ -60,6 +52,9 @@ class CompleteBusinessProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    BusinessLocationController.to.reset(
+      initialLatLng: const LatLng(23.78081, 90.40749),
+    );
     _initBusinessHours();
 
     // Sync WhatsApp with phone when "same as phone" is toggled
@@ -180,226 +175,6 @@ class CompleteBusinessProfileController extends GetxController {
     }
   }
 
-  // ── Map ──
-  final isMapSearching = false.obs;
-
-  // ── Map ──
-  void updateMapPosition(LatLng latLng) {
-    selectedLatLng.value = latLng;
-    mapController.move(latLng, mapController.camera.zoom);
-    reverseGeocode(latLng); // ⬅ NEW: sync address/city on direct map tap
-  }
-
-  Future<void> reverseGeocode(LatLng latLng) async {
-    try {
-      isMapSearching.value = true;
-
-      debugPrint(
-        '[Location][ReverseGeocode][Request] lat=${latLng.latitude}, lon=${latLng.longitude}',
-      );
-
-      final dio = Dio();
-      final response = await dio.get(
-        'https://nominatim.openstreetmap.org/reverse',
-        queryParameters: {
-          'lat': latLng.latitude,
-          'lon': latLng.longitude,
-          'format': 'json',
-          'addressdetails': 1,
-        },
-        options: Options(headers: {'User-Agent': 'som_spot/1.0'}),
-      );
-
-      if (response.statusCode == 200 && response.data != null) {
-        final data = response.data;
-        final displayName = (data['display_name'] ?? '').toString();
-        final address = data['address'] as Map<String, dynamic>?;
-
-        // prevent the address text-change listener from re-triggering suggestion search
-        _isSelectingSuggestion = true;
-        addressController.text = displayName;
-
-        String city = '';
-        if (address != null) {
-          city =
-              (address['city'] ??
-                      address['town'] ??
-                      address['village'] ??
-                      address['suburb'] ??
-                      address['state'] ??
-                      '')
-                  .toString();
-          cityController.text = city;
-        }
-
-        debugPrint(
-          '[Location][ReverseGeocode][Result] '
-          'lat=${latLng.latitude}, '
-          'lon=${latLng.longitude}, '
-          'address="${displayName.isEmpty ? "N/A" : displayName}", '
-          'city="${city.isEmpty ? "N/A" : city}"',
-        );
-
-        Future.delayed(const Duration(milliseconds: 100), () {
-          _isSelectingSuggestion = false;
-        });
-      } else {
-        debugPrint(
-          '[Location][ReverseGeocode][Error] status=${response.statusCode}',
-        );
-        AppToast.error(message: AppStrings.errorSearchingLocation.tr);
-      }
-    } catch (e) {
-      debugPrint('[Location][ReverseGeocode][Exception] error=$e');
-      AppToast.error(message: AppStrings.errorSearchingLocation.tr);
-    } finally {
-      isMapSearching.value = false;
-    }
-  }
-
-  Future<void> searchLocationFromAddress() async {
-    final street = addressController.text.trim();
-    final city = cityController.text.trim();
-
-    if (street.isEmpty && city.isEmpty) {
-      AppToast.warning(message: AppStrings.pleaseEnterAddressToSearch.tr);
-      return;
-    }
-
-    final queryParts = <String>[];
-    if (street.isNotEmpty) queryParts.add(street);
-    if (city.isNotEmpty) queryParts.add(city);
-    final query = queryParts.join(', ');
-
-    try {
-      isMapSearching.value = true;
-      final dio = Dio();
-      final response = await dio.get(
-        'https://nominatim.openstreetmap.org/search',
-        queryParameters: {'q': query, 'format': 'json', 'limit': 1},
-        options: Options(headers: {'User-Agent': 'som_spot/1.0'}),
-      );
-
-      if (response.statusCode == 200 && response.data != null) {
-        final data = response.data;
-        if (data is List && data.isNotEmpty) {
-          final firstResult = data[0];
-          final lat = double.tryParse(firstResult['lat'].toString());
-          final lon = double.tryParse(firstResult['lon'].toString());
-          if (lat != null && lon != null) {
-            final latLng = LatLng(lat, lon);
-            updateMapPosition(latLng);
-            AppToast.success(message: AppStrings.locationUpdatedOnMap.tr);
-
-            //
-            debugPrint(
-              '[Location][AddressSearch][Result] '
-              'lat=$lat, lon=$lon, '
-              'query="$query"',
-            );
-          } else {
-            AppToast.error(message: AppStrings.noLocationMatchesFound.tr);
-          }
-        } else {
-          AppToast.error(message: AppStrings.noLocationMatchesFound.tr);
-        }
-      } else {
-        AppToast.error(message: AppStrings.errorSearchingLocation.tr);
-      }
-    } catch (e) {
-      AppToast.error(message: AppStrings.errorSearchingLocation.tr);
-    } finally {
-      isMapSearching.value = false;
-    }
-  }
-
-  // ── Search Suggestions ──
-  Timer? _debounce;
-  final suggestions = <Map<String, dynamic>>[].obs;
-  final isSearchingSuggestions = false.obs;
-  bool _isSelectingSuggestion = false;
-
-  void onAddressChanged(String query) {
-    if (_isSelectingSuggestion) return;
-
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 600), () {
-      if (query.trim().length > 2) {
-        fetchSuggestions(query);
-      } else {
-        suggestions.clear();
-      }
-    });
-  }
-
-  Future<void> fetchSuggestions(String query) async {
-    try {
-      isSearchingSuggestions.value = true;
-      final dio = Dio();
-      final response = await dio.get(
-        'https://nominatim.openstreetmap.org/search',
-        queryParameters: {
-          'q': query,
-          'format': 'json',
-          'limit': 5,
-          'addressdetails': 1,
-        },
-        options: Options(headers: {'User-Agent': 'som_spot/1.0'}),
-      );
-
-      if (response.statusCode == 200 && response.data != null) {
-        final data = response.data;
-        if (data is List) {
-          suggestions.value = List<Map<String, dynamic>>.from(data);
-        }
-      }
-    } catch (e) {
-      // Fail silently to not disrupt typing
-    } finally {
-      isSearchingSuggestions.value = false;
-    }
-  }
-
-  void selectSuggestion(Map<String, dynamic> suggestion) {
-    _isSelectingSuggestion = true;
-
-    final displayName = suggestion['display_name'] ?? '';
-    final address = suggestion['address'] as Map<String, dynamic>?;
-
-    addressController.text = displayName;
-
-    if (address != null) {
-      final city =
-          address['city'] ??
-          address['town'] ??
-          address['village'] ??
-          address['suburb'] ??
-          address['state'] ??
-          '';
-      cityController.text = city.toString();
-    }
-
-    suggestions.clear();
-
-    var lat = double.tryParse(suggestion['lat'].toString());
-    var lon = double.tryParse(suggestion['lon'].toString());
-    if (lat != null && lon != null) {
-      updateMapPosition(LatLng(lat, lon));
-
-      //
-      debugPrint(
-        '[Location][SuggestionSelected] '
-        'lat=${lat ?? "N/A"}, lon=${lon ?? "N/A"}, '
-        'address="${addressController.text.isEmpty ? "N/A" : addressController.text}", '
-        'city="${cityController.text.isEmpty ? "N/A" : cityController.text}"',
-      );
-    }
-
-    Future.delayed(const Duration(milliseconds: 100), () {
-      _isSelectingSuggestion = false;
-    });
-  }
-
   // ── Phone sync ──
   void syncWhatsApp() {
     if (sameAsPhone.value) {
@@ -430,6 +205,8 @@ class CompleteBusinessProfileController extends GetxController {
         }
       });
 
+      final location = BusinessLocationController.to;
+
       final request = CompleteBusinessProfileRequest(
         name: businessNameController.text.trim(),
 
@@ -439,11 +216,11 @@ class CompleteBusinessProfileController extends GetxController {
 
         phone: phoneController.text.trim(),
 
-        address: addressController.text.trim(),
+        address: location.addressController.text.trim(),
 
-        lng: selectedLatLng.value.longitude,
+        lng: location.selectedLatLng.value.longitude,
 
-        lat: selectedLatLng.value.latitude,
+        lat: location.selectedLatLng.value.latitude,
 
         openingHours: openingHours,
 
@@ -451,7 +228,6 @@ class CompleteBusinessProfileController extends GetxController {
 
         coverImage: File(coverImagePath.value!),
       );
-
       final response = await _service.createBusiness(request);
 
       if (response.success) {
@@ -499,13 +275,9 @@ class CompleteBusinessProfileController extends GetxController {
 
   @override
   void onClose() {
-    _debounce?.cancel();
     pageController.dispose();
-    mapController.dispose();
     businessNameController.dispose();
     shortDescriptionController.dispose();
-    addressController.dispose();
-    cityController.dispose();
     phoneController.dispose();
     whatsAppController.dispose();
     super.onClose();
@@ -549,8 +321,11 @@ class CompleteBusinessProfileController extends GetxController {
   }
 
   bool validateLocation() {
-    if (addressController.text.trim().isEmpty) {
+    final location = BusinessLocationController.to;
+
+    if (location.addressController.text.trim().isEmpty) {
       AppToast.error(message: "Please select business location");
+
       return false;
     }
 

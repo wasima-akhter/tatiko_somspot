@@ -14,6 +14,7 @@ import '../../influencer_all/influencer_task_screen/controller/influencer_task_c
 import '../../influencer_all/influencer_wallet/controller/influencer_wallet_controller.dart';
 import '../../merchant/dashboard_merchant/controller/dashboard_merchant_controller.dart';
 import '../../merchant/dashboard_merchant/service/dashboard_merchant_service.dart';
+import '../../merchant/listings/binding/merchant_listing_binding.dart';
 import '../../offers/binding/offers_binding.dart';
 import '../../profile/service/profile_service.dart';
 
@@ -56,6 +57,8 @@ class NavigationBinding extends Bindings {
       () => DashboardMerchantController(sl<DashboardMerchantService>()),
       fenix: true,
     );
+
+    MerchantListingBinding().dependencies();
 
     //Influencer Dashboard
     Get.lazyPut<InfluencerDashboardController>(

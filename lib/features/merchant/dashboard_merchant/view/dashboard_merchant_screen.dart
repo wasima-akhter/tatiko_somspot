@@ -135,13 +135,34 @@ class _DashboardMerchantScreenState extends State<DashboardMerchantScreen> {
   // Activity Summary Section
   // ==========================================================
   Widget _activitySummarySection(BuildContext context) {
+    final controller = DashboardMerchantController.to;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DashboardSectionTitle(title: AppStrings.activitySummary.tr),
+
         Gap(12.h),
 
-        const ActivityGrid(),
+        Obx(
+          () => ApiStatusBuilder(
+            status: controller.dashboardStatus.value,
+            errorMessage: controller.errorMessage.value,
+            onRetry: controller.getDashboardOverview,
+
+            loadingWidget: ActivityGrid(
+              isLoading: true,
+              data: MerchantDashboardModel.empty(),
+            ),
+
+            builder: (_) {
+              return ActivityGrid(
+                isLoading: false,
+                data: controller.dashboardData!,
+              );
+            },
+          ),
+        ),
       ],
     );
   }
@@ -150,6 +171,8 @@ class _DashboardMerchantScreenState extends State<DashboardMerchantScreen> {
   // Top Deals Section
   // ==========================================================
   Widget _topDealsSection(BuildContext context) {
+    final controller = DashboardMerchantController.to;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -182,7 +205,25 @@ class _DashboardMerchantScreenState extends State<DashboardMerchantScreen> {
 
         Gap(12.h),
 
-        const TopDealsList(),
+        Obx(
+          () => ApiStatusBuilder(
+            status: controller.dashboardStatus.value,
+            errorMessage: controller.errorMessage.value,
+            onRetry: controller.getDashboardOverview,
+
+            loadingWidget: TopDealsList(
+              isLoading: true,
+              deals: MerchantDashboardModel.empty().topDeals,
+            ),
+
+            builder: (_) {
+              return TopDealsList(
+                isLoading: false,
+                deals: controller.dashboardData!.topDeals,
+              );
+            },
+          ),
+        ),
       ],
     );
   }
@@ -191,6 +232,8 @@ class _DashboardMerchantScreenState extends State<DashboardMerchantScreen> {
   // Recent Claims Section
   // ==========================================================
   Widget _recentClaimsSection(BuildContext context) {
+    final controller = DashboardMerchantController.to;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -198,18 +241,60 @@ class _DashboardMerchantScreenState extends State<DashboardMerchantScreen> {
 
         Gap(12.h),
 
-        const RecentClaimsList(),
+        Obx(
+          () => ApiStatusBuilder(
+            status: controller.dashboardStatus.value,
+            errorMessage: controller.errorMessage.value,
+            onRetry: controller.getDashboardOverview,
+
+            loadingWidget: RecentClaimsList(
+              isLoading: true,
+              claims: MerchantDashboardModel.empty().recentClaims,
+            ),
+
+            builder: (_) {
+              return RecentClaimsList(
+                claims: controller.dashboardData!.recentClaims,
+                isLoading: false,
+              );
+            },
+          ),
+        ),
       ],
     );
   }
 
   Widget _influencerCampaignSection(BuildContext context) {
-    return CampaignCardNavigator(
-      title: "Influencer Campaigns",
-      subtitle: "2 new applicants · 3 to review",
-      onTap: () {
-        AppRouter.route.pushNamed(RoutePath.merchantCampaignsScreen);
-      },
+    final controller = DashboardMerchantController.to;
+
+    final campaignStatus = controller.dashboardData?.campaignStatus;
+
+    return Obx(
+      () => ApiStatusBuilder(
+        status: controller.dashboardStatus.value,
+        errorMessage: controller.errorMessage.value,
+        onRetry: controller.getDashboardOverview,
+
+        loadingWidget: CampaignCardNavigator(
+          title: "Influencer Campaigns",
+          subtitle: "0 new applicants · 0 to review",
+          isLoading: true,
+          onTap: null,
+        ),
+
+        builder: (_) {
+          return CampaignCardNavigator(
+            title: "Influencer Campaigns",
+            subtitle:
+                "${campaignStatus?.inReview ?? 0} new applicants · "
+                "${campaignStatus?.active ?? 0} to review",
+            isLoading: false,
+            onTap: () {
+              AppRouter.route.pushNamed(RoutePath.merchantCampaignsScreen);
+            },
+          );
+        },
+      ),
     );
   }
 }

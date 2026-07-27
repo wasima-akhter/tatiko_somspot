@@ -14,6 +14,7 @@ class CompleteBusinessProfileRequest {
 
   final File logo;
   final File coverImage;
+  final List<File>? gallery;
 
   CompleteBusinessProfileRequest({
     required this.name,
@@ -26,5 +27,6 @@ class CompleteBusinessProfileRequest {
     required this.openingHours,
     required this.logo,
     required this.coverImage,
+    this.gallery,
   });
 }

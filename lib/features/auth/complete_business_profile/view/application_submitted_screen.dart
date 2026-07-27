@@ -5,7 +5,7 @@ class ApplicationSubmittedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWrapper(
+    return Scaffold(
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: Padding(

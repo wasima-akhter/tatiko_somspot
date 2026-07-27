@@ -1,6 +1,8 @@
 import 'package:som_spot/features/merchant/listings/widgets/manage_business_sheets.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 
+import '../controller/merchant_listing_controller.dart';
+
 class ManageBusinessMenu extends StatelessWidget {
   const ManageBusinessMenu({super.key});
 
@@ -45,7 +47,28 @@ class ManageBusinessMenu extends StatelessWidget {
             context: context,
             title: AppStrings.updateLocation.tr,
             icon: Iconsax.location,
-            onTap: () => showUpdateLocationSheet(context),
+            onTap: () {
+              final controller = MerchantListingController.to;
+              final business = controller.selectedBusiness.value;
+
+              if (business != null) {
+                controller.prepareLocation(
+                  address: business.address,
+                  city: business.city,
+                  lat: business.latitude,
+                  lng: business.longitude,
+                );
+              } else {
+                controller.prepareLocation(
+                  address: "",
+                  city: "",
+                  lat: 23.78081,
+                  lng: 90.40749,
+                );
+              }
+
+              showUpdateLocationSheet(context);
+            },
           ),
           _buildDivider(),
           _buildMenuItem(

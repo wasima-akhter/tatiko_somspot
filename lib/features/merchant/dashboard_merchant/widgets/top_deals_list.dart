@@ -1,36 +1,40 @@
+import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
+import 'package:som_spot/helper/text_utils/string_extension.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 
+import '../response/dashboard_merchant_response.dart';
+
 class TopDealsList extends StatelessWidget {
-  const TopDealsList({super.key});
+  final List<TopDeal> deals;
+  final bool isLoading;
+
+  const TopDealsList({super.key, required this.deals, required this.isLoading});
 
   @override
   Widget build(BuildContext context) {
+    if (!isLoading && deals.isEmpty) {
+      return const EmptyTopDeals();
+    }
+
     return Column(
-      children: [
-        _buildTopDealItem(
-          context: context,
-          title: '20% Off Family Platter',
-          subtitle: 'Hilib Macaan • 184 claims',
-          percentage: '18%',
-          percentageColor: AppColors.emeraldGreenColor,
-        ),
-        Gap(12.h),
-        _buildTopDealItem(
-          context: context,
-          title: '20% Off Family Platter',
-          subtitle: 'Hayat Supermarket • 142 claims',
-          percentage: '12%',
-          percentageColor: AppColors.emeraldGreenColor,
-        ),
-        Gap(12.h),
-        _buildTopDealItem(
-          context: context,
-          title: '20% Off Family Platter',
-          subtitle: 'Hilib Macaan • 96 claims',
-          percentage: '4%',
-          percentageColor: AppColors.orangeColor,
-        ),
-      ],
+      children: List.generate(deals.length, (index) {
+        final deal = deals[index];
+
+        return Column(
+          children: [
+            _buildTopDealItem(
+              context: context,
+              title: deal.title,
+              subtitle: '${deal.businessName} • ${deal.totalClaims} claims',
+              percentage: deal.discountLabel,
+              percentageColor: AppColors.emeraldGreenColor,
+              isLoading: isLoading,
+            ),
+
+            if (index != deals.length - 1) Gap(12.h),
+          ],
+        );
+      }),
     );
   }
 
@@ -40,6 +44,7 @@ class TopDealsList extends StatelessWidget {
     required String subtitle,
     required String percentage,
     required Color percentageColor,
+    required bool isLoading,
   }) {
     return Container(
       padding: EdgeInsets.all(12.w),
@@ -56,6 +61,98 @@ class TopDealsList extends StatelessWidget {
       ),
       child: Row(
         children: [
+          AutoShimmerAnimate(
+            isLoading: isLoading,
+            child: Container(
+              padding: EdgeInsets.all(12.w),
+              decoration: const BoxDecoration(
+                color: AppColors.softSlateBgColor,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Iconsax.tag,
+                color: AppColors.slateIconColor,
+                size: 20.sp,
+              ),
+            ),
+          ),
+
+          Gap(12.w),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoShimmerAnimate(
+                  isLoading: isLoading,
+                  child: Text(
+                    title.isEmpty
+                        ? 'Loading deal title'
+                        : title.capitalizeWords(),
+                    style: context.bodyMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.darkTextColor,
+                    ),
+                  ),
+                ),
+
+                Gap(4.h),
+
+                AutoShimmerAnimate(
+                  isLoading: isLoading,
+                  child: Text(
+                    subtitle.isEmpty
+                        ? 'Loading business • 0 claims'
+                        : subtitle.capitalizeWords(),
+                    style: context.bodySmall.copyWith(
+                      color: AppColors.subtitleTextColor,
+                      fontSize: 11.sp,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          Gap(8.w),
+
+          AutoShimmerAnimate(
+            isLoading: isLoading,
+            child: Text(
+              percentage.isEmpty ? '0%' : percentage,
+              style: context.bodySmall.copyWith(
+                fontWeight: FontWeight.bold,
+                color: percentageColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class EmptyTopDeals extends StatelessWidget {
+  const EmptyTopDeals({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
           Container(
             padding: EdgeInsets.all(12.w),
             decoration: const BoxDecoration(
@@ -64,39 +161,29 @@ class TopDealsList extends StatelessWidget {
             ),
             child: Icon(
               Iconsax.tag,
+              size: 24.sp,
               color: AppColors.slateIconColor,
-              size: 20.sp,
             ),
           ),
-          Gap(12.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: context.bodyMedium.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.darkTextColor,
-                  ),
-                ),
-                Gap(2.h),
-                Text(
-                  subtitle,
-                  style: context.bodySmall.copyWith(
-                    color: AppColors.subtitleTextColor,
-                    fontSize: 11.sp,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Gap(8.w),
+
+          Gap(12.h),
+
           Text(
-            percentage,
+            "No Top Deals",
+            style: context.bodyMedium.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.darkTextColor,
+            ),
+          ),
+
+          Gap(4.h),
+
+          Text(
+            "Your best performing deals will appear here.",
+            textAlign: TextAlign.center,
             style: context.bodySmall.copyWith(
-              fontWeight: FontWeight.bold,
-              color: percentageColor,
+              color: AppColors.subtitleTextColor,
+              fontSize: 11.sp,
             ),
           ),
         ],

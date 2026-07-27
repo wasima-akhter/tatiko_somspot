@@ -1,17 +1,17 @@
 import 'package:latlong2/latlong.dart';
-import 'package:som_spot/features/auth/complete_business_profile/controller/complete_business_profile_controller.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
-import '../../../../common_components/location/app_location_picker.dart';
-import '../../../../common_components/location/app_location_suggestions.dart';
+import '../../../../core/location/controller/business_location_controller.dart';
+import '../../../../core/location/widgets/app_location_picker.dart';
+import '../../../../core/location/widgets/app_location_suggestions.dart';
 
 class LocationStep extends StatelessWidget {
   const LocationStep({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = CompleteBusinessProfileController.to;
+    final controller = BusinessLocationController.to;
 
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -65,109 +65,6 @@ class LocationStep extends StatelessWidget {
                 final isSearching = controller.isMapSearching.value;
                 return Stack(
                   children: [
-                    /*
-                    FlutterMap(
-                      mapController: controller.mapController,
-                      options: MapOptions(
-                        initialCenter: latLng,
-                        initialZoom: 14.0,
-                        onTap: (tapPosition, point) {
-                          controller.updateMapPosition(point);
-                        },
-                      ),
-                      children: [
-                        // ── Tile Layer (OpenStreetMap) ──
-                        // TileLayer(
-                        //   urlTemplate:
-                        //       'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                        //   userAgentPackageName: 'com.somspot.app',
-                        // ),
-                        TileLayer(
-                          urlTemplate:
-                              'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${AppConfig.mapTilerApiKey}',
-                          userAgentPackageName: 'com.somspot.app',
-
-                          //
-
-                          // Smooth fade-in
-                          tileDisplay: const TileDisplay.fadeIn(
-                            duration: Duration(milliseconds: 250),
-                          ),
-
-                          // Allow overzooming
-                          maxNativeZoom: 22,
-                          maxZoom: 24,
-
-                          // Keep nearby tiles in memory
-                          keepBuffer: 3,
-                          panBuffer: 2,
-
-                          // Better error handling
-                          errorTileCallback: (tile, error, stackTrace) {
-                            debugPrint(
-                              'Tile failed: ${tile.coordinates} - $error',
-                            );
-                          },
-
-                          // Show placeholder while loading
-                          tileBuilder: (context, child, tile) {
-                            return AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 200),
-                              child: child,
-                            );
-                          },
-                        ),
-
-                        // ── Marker ──
-                        MarkerLayer(
-                          markers: [
-                            Marker(
-                              point: latLng,
-                              width: 50,
-                              height: 50,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(6),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: AppColors.primaryColor
-                                              .withValues(alpha: 0.4),
-                                          blurRadius: 10,
-                                          offset: const Offset(0, 4),
-                                        ),
-                                      ],
-                                    ),
-                                    child: const Icon(
-                                      Iconsax.location5,
-                                      color: AppColors.white,
-                                      size: 18,
-                                    ),
-                                  ),
-                                  // Pin shadow dot
-                                  Container(
-                                    width: 6,
-                                    height: 6,
-                                    margin: const EdgeInsets.only(top: 2),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primaryColor.withValues(
-                                        alpha: 0.3,
-                                      ),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-*/
                     AppLocationPicker(
                       mapController: controller.mapController,
                       selectedLatLng: controller.selectedLatLng.value,
@@ -176,53 +73,6 @@ class LocationStep extends StatelessWidget {
                     ),
 
                     if (isSearching)
-                      /*
-                      Container(
-                        color: Colors.black.withValues(alpha: 0.3),
-                        child: Center(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 12.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(12.r),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.1),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(
-                                  width: 18.w,
-                                  height: 18.w,
-                                  child: const CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      AppColors.primaryColor,
-                                    ),
-                                  ),
-                                ),
-                                Gap(12.w),
-                                Text(
-                                  AppStrings.searchingLocation.tr,
-                                  style: context.bodyMedium.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.darkTextColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-             */
                       AppLocationSuggestions(
                         suggestions: controller.suggestions,
                         onTap: controller.selectSuggestion,

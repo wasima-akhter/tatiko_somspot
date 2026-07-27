@@ -10,7 +10,7 @@ class ListingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.softBackgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
@@ -39,6 +39,13 @@ class ListingScreen extends StatelessWidget {
                     ),
                   ),
                   Gap(12.h),
+
+                  TextButton(
+                    onPressed: () => AppRouter.route.pushNamed(
+                      RoutePath.completeBusinessProfileScreen,
+                    ),
+                    child: Text("to complete bussiness profile"),
+                  ),
                   const ManageBusinessMenu(),
                   Gap(40.h),
                 ],

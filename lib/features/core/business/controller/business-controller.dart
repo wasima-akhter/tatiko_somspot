@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../share/widgets/paginator/paginator.dart';
@@ -17,11 +18,21 @@ class BusinessController extends GetxController {
   void onInit() {
     super.onInit();
 
+    debugPrint("BusinessController onInit");
+
     myBusinessesPaginator = Paginator<BusinessModel>(
-      fetchPage: (page, limit) {
-        return _service.getMyBusinesses(page, limit);
+      fetchPage: (page, limit) async {
+        debugPrint("Fetching businesses page=$page limit=$limit");
+
+        final result = await _service.getMyBusinesses(page, limit);
+
+        debugPrint("Businesses received: ${result.data.length}");
+
+        return result;
       },
     );
+
+    debugPrint("Calling loadInitial");
 
     myBusinessesPaginator.loadInitial();
   }

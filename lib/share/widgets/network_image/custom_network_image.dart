@@ -40,6 +40,7 @@ class CustomNetworkImage extends StatelessWidget {
       return Container(
         height: height,
         width: width,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           border: border,
           color: Colors.grey.withValues(alpha: 0.6),
@@ -92,19 +93,28 @@ class CustomNetworkImage extends StatelessWidget {
       ),
       placeholder: (context, url) => _buildPlaceholder(),
       errorWidget: (context, url, error) {
-        return errorWidget ??
-            Container(
-              height: height,
-              width: width,
-              decoration: BoxDecoration(
-                border: border,
-                color: Colors.grey.withValues(alpha: 0.6),
-                borderRadius: borderRadius,
-                shape: boxShape,
-              ),
-              child: const Icon(Icons.error),
-            );
+        return _buildErrorWidget();
       },
+    );
+  }
+
+  Widget _buildErrorWidget() {
+    return Container(
+      height: height,
+      width: width,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        border: border,
+        color: Colors.grey.withValues(alpha: 0.6),
+        borderRadius: borderRadius,
+        shape: boxShape,
+      ),
+      child:
+          errorWidget ??
+          Icon(
+            Icons.error,
+            size: (height != null && height! < 40) ? (height! * 0.5) : null,
+          ),
     );
   }
 
@@ -119,9 +129,9 @@ class CustomNetworkImage extends StatelessWidget {
         color: backgroundColor ?? Colors.grey.shade300,
       ),
       child: ClipRRect(
-        borderRadius: boxShape == BoxShape.rectangle
-            ? (borderRadius ?? BorderRadius.zero)
-            : BorderRadius.zero,
+        borderRadius: boxShape == BoxShape.circle
+            ? BorderRadius.circular(9999)
+            : (borderRadius ?? BorderRadius.zero),
         child: Shimmer.fromColors(
           baseColor: Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
