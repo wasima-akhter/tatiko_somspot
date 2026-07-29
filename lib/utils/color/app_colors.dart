@@ -33,6 +33,9 @@ class AppColors {
   static const Color appbarTextColor = Color(0xFFE94E6C);
   static const Color orangeSecondaryAccentColorNormal = Color(0xFFFFD700);
 
+  //
+  static const Color shimmerBaseColor = Color(0xFFF7F7F7);
+
   // ─── Figma Design Token Colors (Slate Palette) ───
   /// Card/business titles, darkest text — #0F172A
   static const Color darkTextColor = Color(0xFF0F172A);

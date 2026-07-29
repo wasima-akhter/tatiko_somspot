@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
 import '../../../../share/controller/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/controller/business-controller.dart';
 import '../controller/create_offer_controller.dart';
-import '../widgets/business_picker_bottom_sheet.dart';
 
 class CreateOfferScreen extends StatefulWidget {
   const CreateOfferScreen({super.key});
@@ -85,10 +85,6 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildImagePicker(),
-
-              Gap(24.h),
-
-              _buildBusinessField(context),
 
               Gap(24.h),
 
@@ -190,7 +186,13 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                   text: AppStrings.createOffer.tr,
 
                   isLoading:
-                      controller.submitLoading.value == ApiStatus.loading,
+                      controller.submitLoading.value == ApiStatus.loading ||
+                      BusinessController
+                              .to
+                              .myBusinessesPaginator
+                              .status
+                              .value ==
+                          ApiStatus.loading,
 
                   onTap: controller.submitLoading.value == ApiStatus.loading
                       ? null
@@ -274,88 +276,6 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
     );
   }
 
-  void _showBusinessPicker(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (_) {
-        return BusinessPickerBottomSheet();
-      },
-    );
-  }
-
-  Widget _buildBusinessField(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildLabel("Business"),
-
-        Gap(8.h),
-
-        Obx(() {
-          final selected = controller.selectedBusiness.value;
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  _showBusinessPicker(context);
-                },
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 16.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(14.r),
-                    border: Border.all(color: AppColors.backgroundsLinesColor),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.storefront_outlined,
-                        color: AppColors.blueAccentColor,
-                        size: 22.sp,
-                      ),
-                      Gap(12.w),
-                      Expanded(
-                        child: Text(
-                          selected?.name ?? "Select business",
-                          style: context.bodyMedium.copyWith(
-                            color: selected != null
-                                ? AppColors.darkTextColor
-                                : AppColors.subtitleTextColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        color: AppColors.subtitleTextColor,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              if (controller.businessError.value != null)
-                Padding(
-                  padding: EdgeInsets.only(top: 6.h),
-                  child: Text(
-                    controller.businessError.value!,
-                    style: TextStyle(color: Colors.red, fontSize: 12.sp),
-                  ),
-                ),
-            ],
-          );
-        }),
-      ],
-    );
-  }
-
   Widget _dateField({
     required String label,
     required TextEditingController controller,
@@ -368,18 +288,17 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
         CustomTextField(
           controller: controller,
           readOnly: true,
-          hintText: "DD/MM/YYYY",
-
+          hintText: "Jul 15, 2025",
           onTap: () async {
             final date = await showDatePicker(
               context: context,
-              initialDate: DateTime.now(),
+              initialDate: DateTime.tryParse(controller.text) ?? DateTime.now(),
               firstDate: DateTime(2000),
               lastDate: DateTime(2100),
             );
 
             if (date != null) {
-              controller.text = "${date.day}/${date.month}/${date.year}";
+              controller.text = DateFormat("MMM d, yyyy").format(date);
             }
           },
         ),

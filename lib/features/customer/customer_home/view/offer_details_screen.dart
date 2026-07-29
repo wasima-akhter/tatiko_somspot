@@ -6,10 +6,10 @@ import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 
 import '../../../../share/controller/screen_export.dart';
 
-class OfferDetailsScreen extends StatelessWidget {
+class CustomerOfferDetailsScreen extends StatelessWidget {
   final DealModel deal;
 
-  const OfferDetailsScreen({super.key, required this.deal});
+  const CustomerOfferDetailsScreen({super.key, required this.deal});
 
   @override
   Widget build(BuildContext context) {

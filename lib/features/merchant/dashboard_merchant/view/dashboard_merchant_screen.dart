@@ -1,4 +1,3 @@
-import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:som_spot/features/merchant/dashboard_merchant/controller/dashboard_merchant_controller.dart';
 import 'package:som_spot/features/merchant/dashboard_merchant/widgets/activity_grid.dart';
 import 'package:som_spot/features/merchant/dashboard_merchant/widgets/dashboard_header.dart';
@@ -54,32 +53,29 @@ class _DashboardMerchantScreenState extends State<DashboardMerchantScreen> {
 
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: AutoShimmerAnimate(
-                  isLoading: _isLoading,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // campaign section
-                      _influencerCampaignSection(context),
-                      Gap(24.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // campaign section
+                    _influencerCampaignSection(context),
+                    Gap(24.h),
 
-                      _overviewSection(context),
+                    _overviewSection(context),
 
-                      Gap(24.h),
+                    Gap(24.h),
 
-                      _activitySummarySection(context),
+                    _activitySummarySection(context),
 
-                      Gap(24.h),
+                    Gap(24.h),
 
-                      _topDealsSection(context),
+                    _topDealsSection(context),
 
-                      Gap(24.h),
+                    Gap(24.h),
 
-                      _recentClaimsSection(context),
+                    _recentClaimsSection(context),
 
-                      Gap(32.h),
-                    ],
-                  ),
+                    Gap(32.h),
+                  ],
                 ),
               ),
             ],

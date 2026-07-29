@@ -7,6 +7,7 @@ class BusinessModel {
   final String logo;
   final String coverImage;
   final String phone;
+  final String whatsapp;
   final String address;
   final String status;
   final double ratingAvg;
@@ -39,6 +40,7 @@ class BusinessModel {
     required this.latitude,
     required this.longitude,
     required this.city,
+    required this.whatsapp,
   });
 
   factory BusinessModel.fromJson(Map<String, dynamic> json) {
@@ -52,6 +54,7 @@ class BusinessModel {
       logo: json["logo"] ?? "",
       coverImage: json["coverImage"] ?? "",
       phone: json["phone"] ?? "",
+      whatsapp: json["whatsapp"] ?? "",
       address: json["address"] ?? "",
       status: json["status"] ?? "",
       ratingAvg: (json["ratingAvg"] ?? 0).toDouble(),

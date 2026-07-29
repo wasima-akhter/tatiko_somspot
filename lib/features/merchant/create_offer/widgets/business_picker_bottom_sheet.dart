@@ -9,6 +9,16 @@ import '../../../../utils/extension/base_extension.dart';
 import '../../../core/business/controller/business-controller.dart';
 import '../controller/create_offer_controller.dart';
 
+void _showBusinessPicker(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: Colors.transparent,
+    builder: (_) {
+      return BusinessPickerBottomSheet();
+    },
+  );
+}
+
 class BusinessPickerBottomSheet extends StatelessWidget {
   const BusinessPickerBottomSheet({super.key});
 
@@ -32,8 +42,8 @@ class BusinessPickerBottomSheet extends StatelessWidget {
           itemBuilder: (_, index) {
             final business = businesses[index];
 
-            final isSelected =
-                controller.selectedBusiness.value?.id == business.id;
+            final isSelected = true;
+            // controller.selectedBusiness.value?.id == business.id;
 
             return Container(
               decoration: BoxDecoration(
@@ -53,7 +63,7 @@ class BusinessPickerBottomSheet extends StatelessWidget {
                     ? Icon(Icons.check_circle, color: AppColors.blueAccentColor)
                     : null,
                 onTap: () {
-                  controller.selectBusiness(business);
+                  // controller.selectBusiness(business);
                   Navigator.pop(context);
                 },
               ),

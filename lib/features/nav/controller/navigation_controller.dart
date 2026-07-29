@@ -9,7 +9,7 @@ import 'package:som_spot/features/influencer_all/influencer_task_screen/view/inf
 import 'package:som_spot/features/merchant/dashboard_merchant/view/dashboard_merchant_screen.dart';
 import 'package:som_spot/features/merchant/listings/view/listing_screen.dart';
 import 'package:som_spot/features/merchant/stats/view/stats_screen.dart';
-import 'package:som_spot/features/offers/view/offers_screen.dart';
+import 'package:som_spot/features/offers/offers_list/view/offers_screen.dart';
 import 'package:som_spot/features/profile/main_profile/view/profile_screen.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';

@@ -10,11 +10,11 @@ class ApiParser {
       return ApiResponse.failure(message: "Empty response");
     }
 
-    ApiLogger.showResponse(
-      url: response.requestOptions.uri.toString(),
-      response: response,
-      enabled: true, // change to your config flag
-    );
+    // ApiLogger.showResponse(
+    //   url: response.requestOptions.uri.toString(),
+    //   response: response,
+    //   enabled: true, // change to your config flag
+    // );
 
     final body = response.data;
 

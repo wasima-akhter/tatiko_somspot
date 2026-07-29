@@ -88,6 +88,18 @@ class ApiUrls {
     return '$base/offer/get-all';
   }
 
+  static String getMerchantOffers() {
+    return '$base/offer/my';
+  }
+
+  static String getOfferDetails() {
+    return '$base/offer/get';
+  }
+
+  static String updateOffer() {
+    return '$base/offer/update';
+  }
+
   // MEERCHANT
 
   static String merchantDashboard() {

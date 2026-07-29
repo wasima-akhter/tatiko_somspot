@@ -14,22 +14,21 @@ import 'package:som_spot/features/auth/reset/reset_password_screen.dart';
 import 'package:som_spot/features/auth/sign_up/sign_up_screen.dart';
 import 'package:som_spot/features/business_info/view/business_info_screen.dart';
 import 'package:som_spot/features/claims/view/claims_screen.dart';
-import 'package:som_spot/features/customer/customer_home/model/deal_model.dart';
 import 'package:som_spot/features/customer/customer_home/view/category_merchants_screen.dart';
 import 'package:som_spot/features/customer/customer_home/view/nearby_you_screen.dart';
-import 'package:som_spot/features/customer/customer_home/view/offer_details_screen.dart';
 import 'package:som_spot/features/customer/customer_home/view/top_deals_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/view/influencer_dashboard_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_discover/view/influencer_discover_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_task_screen/view/influencer_task_screen.dart';
-import 'package:som_spot/features/merchant/create_offer/binding/create_offer_binding.dart';
+import 'package:som_spot/features/merchant/edit_offer/view/edit_offer_screen.dart';
 import 'package:som_spot/features/merchant/merchant_campaign_details/view/merchant_campaign_details_screen.dart';
 import 'package:som_spot/features/merchant/merchant_campaigns/view/merchant_campaigns_screen.dart';
 import 'package:som_spot/features/merchant/merchant_new_campaign/view/merchant_new_campaign_screen.dart';
 import 'package:som_spot/features/merchant/merchant_new_campaign/view/preview_campaign_screen.dart';
 import 'package:som_spot/features/nav/navigation_page.dart';
-import 'package:som_spot/features/offers/view/edit_offer_screen.dart';
-import 'package:som_spot/features/offers/view/offer_details_screen.dart';
+import 'package:som_spot/features/offers/offer_details/view/offer_details_screen.dart';
+import 'package:som_spot/features/offers/shared/binding/create_offer_binding.dart';
+import 'package:som_spot/features/offers/shared/response/offers_response.dart';
 import 'package:som_spot/features/other/view/about_somsport_screen.dart';
 import 'package:som_spot/features/other/view/change_password_screen.dart';
 import 'package:som_spot/features/other/view/help_and_support_screen.dart';
@@ -66,6 +65,8 @@ import '../../features/merchant/merchant_campaign_details/view/merchant_campaign
 import '../../features/merchant/merchant_campaigns/binding/merchant_campaigns_binding.dart';
 import '../../features/merchant/merchant_new_campaign/view/pricing_packages_screen.dart';
 import '../../features/nav/binding/navigation_binding.dart';
+import '../../features/offers/shared/binding/edit_offer_binding.dart';
+import '../../features/offers/shared/binding/offer_details_binding.dart';
 import '../../features/other/controller/other_binding.dart';
 import '../../features/profile/binding/profile_binding.dart';
 import '../../features/subscription/binding/subscription_binding.dart';
@@ -593,33 +594,33 @@ class AppRouter {
         name: RoutePath.offerDetailsScreen,
         path: RoutePath.offerDetailsScreen.addBasePath,
         pageBuilder: (context, state) {
-          final deal = state.extra as DealModel;
+          final offerId = state.extra as String;
 
           return _buildPageWithAnimation(
             state: state,
             child: BindingWrapper(
-              binding: HomeBinding(),
-              child: OfferDetailsScreen(deal: deal),
+              key: ValueKey(offerId),
+              binding: OfferDetailsBinding(offerId),
+              child: OfferDetailsScreen(offerId: offerId),
             ),
           );
         },
       ),
+      // GoRoute(
+      //   name: RoutePath.claimedOfferDetailsScreen,
+      //   path: RoutePath.claimedOfferDetailsScreen.addBasePath,
+      //   pageBuilder: (context, state) {
+      //     final deal = state.extra as DealModel;
 
-      GoRoute(
-        name: RoutePath.claimedOfferDetailsScreen,
-        path: RoutePath.claimedOfferDetailsScreen.addBasePath,
-        pageBuilder: (context, state) {
-          final deal = state.extra as DealModel;
-
-          return _buildPageWithAnimation(
-            state: state,
-            child: BindingWrapper(
-              binding: HomeBinding(),
-              child: ClaimedOfferDetailsScreen(deal: deal),
-            ),
-          );
-        },
-      ),
+      //     return _buildPageWithAnimation(
+      //       state: state,
+      //       child: BindingWrapper(
+      //         binding: HomeBinding(),
+      //         child: ClaimedOfferDetailsScreen(deal: deal),
+      //       ),
+      //     );
+      //   },
+      // ),
 
       // =====================================================
       // BUSINESS ROUTES
@@ -642,10 +643,13 @@ class AppRouter {
         name: RoutePath.editOfferScreen,
         path: RoutePath.editOfferScreen.addBasePath,
         pageBuilder: (context, state) {
-          final deal = state.extra as DealModel;
+          final deal = state.extra as OfferModel;
 
           return _buildPageWithAnimation(
-            child: EditOfferScreen(deal: deal),
+            child: BindingWrapper(
+              binding: EditOfferBinding(),
+              child: EditOfferScreen(offer: deal),
+            ),
             state: state,
           );
         },

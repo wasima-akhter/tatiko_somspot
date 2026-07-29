@@ -76,7 +76,7 @@ class TopDealsScreen extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () => AppRouter.route.pushNamed(
                       RoutePath.offerDetailsScreen,
-                      extra: deal,
+                      extra: "offerId",
                     ),
                     child: Container(
                       width: double.infinity,

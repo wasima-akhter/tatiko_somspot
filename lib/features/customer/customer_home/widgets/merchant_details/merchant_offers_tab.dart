@@ -33,7 +33,7 @@ class MerchantOffersTab extends StatelessWidget {
         return GestureDetector(
           onTap: () => AppRouter.route.pushNamed(
             RoutePath.offerDetailsScreen,
-            extra: deal,
+            extra: deal.id, // offerId
           ),
           child: Padding(
             padding: EdgeInsets.only(bottom: 16.h),

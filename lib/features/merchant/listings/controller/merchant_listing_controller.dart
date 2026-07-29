@@ -93,6 +93,10 @@ class MerchantListingController extends GetxController {
     loadBusiness();
   }
 
+  Future<void> refreshData() async {
+    await businessController.refreshBusinesses();
+  }
+
   void _initHours() {
     const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
@@ -341,6 +345,7 @@ class MerchantListingController extends GetxController {
     businessNameController.text = business.name;
     descriptionController.text = business.description;
     phoneController.text = business.phone;
+    whatsappController.text = business.whatsapp;
 
     selectedCategoryId.value = business.categoryId;
 

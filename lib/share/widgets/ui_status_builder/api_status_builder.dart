@@ -46,16 +46,18 @@ class ApiStatusBuilder extends StatelessWidget {
         return NoDataCard(onTap: onRetry);
 
       case ApiStatus.completed:
-        return Column(
-          children: [
-            builder(context),
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              builder(context),
 
-            if (hasMore && isLoadingMore)
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: Center(child: CircularProgressIndicator()),
-              ),
-          ],
+              if (hasMore && isLoadingMore)
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+            ],
+          ),
         );
     }
   }

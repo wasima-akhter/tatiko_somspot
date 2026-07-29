@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:som_spot/features/core/business/controller/business-controller.dart';
+import 'package:som_spot/features/nav/controller/navigation_controller.dart';
+import 'package:som_spot/features/offers/offers_list/controller/offer_controller.dart';
 import 'package:som_spot/helper/date_converter/date_converter.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 import '../../../../share/base_controller/base_form_controller.dart';
-import '../../../core/business/response/business-response.dart';
-import '../request/create_offer_request.dart';
-import '../service/create_offer_service.dart';
+import '../../../offers/shared/request/offers_request.dart';
+import '../../../offers/shared/service/offers_service.dart';
 
 class CreateOfferController extends BaseFormController {
   final OfferService _service;
@@ -18,13 +19,8 @@ class CreateOfferController extends BaseFormController {
 
   final formKey = GlobalKey<FormState>();
 
-  final Rxn<BusinessModel> selectedBusiness = Rxn<BusinessModel>();
   final RxnString businessError = RxnString();
-
-  void selectBusiness(BusinessModel business) {
-    selectedBusiness.value = business;
-    businessError.value = null;
-  }
+  final businessId = "".obs;
 
   final ImagePicker _picker = ImagePicker();
   RxString imagePath = ''.obs;
@@ -52,10 +48,21 @@ class CreateOfferController extends BaseFormController {
     required String endDate,
   }) async {
     businessError.value = null;
+    await BusinessController.to.myBusinessesPaginator.refresh();
+    final businesses = BusinessController.to.myBusinessesPaginator.items;
 
-    if (selectedBusiness.value == null) {
-      businessError.value = "Please select a business";
-      AppToast.error(message: "Please select a business");
+    if (businesses.isNotEmpty) {
+      businessId.value = businesses.first.id;
+    }
+
+    if (businessId.value.isEmpty) {
+      businessError.value = "Unable to identify the associated business.";
+
+      AppToast.error(
+        message:
+            "Unable to identify the associated business. Please try again.",
+      );
+
       return;
     }
 
@@ -76,7 +83,7 @@ class CreateOfferController extends BaseFormController {
 
     try {
       final request = CreateOfferRequest(
-        business: selectedBusiness.value!.id,
+        business: businessId.value,
 
         title: title.trim(),
 
@@ -86,9 +93,9 @@ class CreateOfferController extends BaseFormController {
 
         terms: "Dine-in only. One claim per customer.",
 
-        startAt: DateConverter().formatDateForApi(startDate),
+        startAt: DateConverter().formatMdY_to_DateTime(startDate),
 
-        endAt: DateConverter().formatDateForApi(endDate),
+        endAt: DateConverter().formatMdY_to_DateTime(endDate),
       );
 
       final result = await _service.createOffer(request);
@@ -108,13 +115,14 @@ class CreateOfferController extends BaseFormController {
       resetForm(
         formKey: formKey,
         controllers: [],
-        extraReset: [
-          clearImage,
-          () {
-            selectedBusiness.value = null;
-          },
-        ],
+        extraReset: [clearImage, () {}],
       );
+
+      // update offer list
+      await OffersController.to.refreshOffers();
+
+      AppRouter.route.goNamed(RoutePath.navigationPages);
+      NavigationControllerMain.to.goToTabOffers();
     } catch (e) {
       submitFailure("Something went wrong");
 

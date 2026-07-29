@@ -73,7 +73,7 @@ class DateConverter {
   /// Returns formatted date + time (e.g. "Jun 12, 2025 10:30 AM")
   static String formatDateTime({
     DateTime? dateTime,
-    String pattern = 'MMM dd, yyyy hh:mm a',
+    String pattern = 'MMM dd, yyyy, hh:mm a',
   }) {
     final dt = dateTime ?? DateTime.now();
     return DateFormat(pattern).format(dt);
@@ -133,6 +133,12 @@ class DateConverter {
     );
 
     return date.toUtc().toIso8601String();
+  }
+
+  String formatMdY_to_DateTime(String value) {
+    final date = DateFormat("MMM d, yyyy").parse(value);
+
+    return DateFormat("MMM d, yyyy").format(date);
   }
 
   static String formatTimeToAmPm(String time) {
