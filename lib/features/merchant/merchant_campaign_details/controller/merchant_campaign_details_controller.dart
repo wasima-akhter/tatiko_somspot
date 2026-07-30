@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../merchant_campaigns/modules/merchant_campaign_tag.dart';
+import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
 import '../helper/merchant_campaign_detail_helper.dart';
 
 class MerchantCampaignDetailsController extends GetxController {
@@ -20,7 +20,7 @@ class MerchantCampaignDetailsController extends GetxController {
     "title": "Buy 1 Get 1 Free Promo",
     "type": "Offer Campaign",
     "price": "\$35",
-    "status": MerchantCampaignStatus.approved,
+    "status": MerchantCampaignStatus.live,
     "budget": "\$500",
     "creators": "3 required",
     "package": "Standard",

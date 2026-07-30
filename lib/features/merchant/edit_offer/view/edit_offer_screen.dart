@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
@@ -9,6 +8,7 @@ import 'package:som_spot/utils/enum/app_enum.dart';
 import '../../../../helper/date_converter/date_converter.dart';
 import '../../../../share/widgets/network_image/custom_network_image.dart';
 import '../../../offers/shared/response/offers_response.dart';
+import '../../merchant_new_campaign/widgets/campaign_date_field.dart';
 import '../controller/edit_offer_controller.dart';
 
 class EditOfferScreen extends StatefulWidget {
@@ -275,7 +275,7 @@ class _EditOfferScreenState extends State<EditOfferScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: _dateField(
+                    child: CampaignDateField(
                       label: AppStrings.startDate.tr,
                       controller: _startDateController,
                     ),
@@ -284,7 +284,7 @@ class _EditOfferScreenState extends State<EditOfferScreen> {
                   Gap(16.w),
 
                   Expanded(
-                    child: _dateField(
+                    child: CampaignDateField(
                       label: AppStrings.endDate.tr,
                       controller: _endDateController,
                     ),
@@ -335,36 +335,6 @@ class _EditOfferScreenState extends State<EditOfferScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _dateField({
-    required String label,
-    required TextEditingController controller,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildLabel(label),
-
-        CustomTextField(
-          controller: controller,
-          readOnly: true,
-          hintText: "Jul 15, 2025",
-          onTap: () async {
-            final date = await showDatePicker(
-              context: context,
-              initialDate: DateTime.tryParse(controller.text) ?? DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2100),
-            );
-
-            if (date != null) {
-              controller.text = DateFormat("MMM d, yyyy").format(date);
-            }
-          },
-        ),
-      ],
     );
   }
 

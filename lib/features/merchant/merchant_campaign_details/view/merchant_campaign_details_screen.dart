@@ -1,7 +1,6 @@
-import 'package:som_spot/core/router/routes.dart';
-
 import '../../../../share/controller/screen_export.dart';
 import '../../merchant_campaigns/modules/merchant_campaign_tag.dart';
+import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
 import '../controller/merchant_campaign_details_controller.dart';
 import '../helper/merchant_campaign_detail_helper.dart';
 import '../widgets/merchant_campaign_content_tab.dart';
@@ -56,7 +55,7 @@ class MerchantCampaignDetailsScreen extends StatelessWidget {
                         ),
 
                         MerchantCampaignStatusTag(
-                          status: MerchantCampaignStatus.pending,
+                          status: MerchantCampaignStatus.pendingReview,
                         ),
                       ],
                     ),

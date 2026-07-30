@@ -1,10 +1,14 @@
 import '../../../../share/controller/screen_export.dart';
+import '../../../../utils/enum/app_enum.dart';
+import '../controller/merchant_new_campaign_controller.dart';
 
 class MerchantPreviewCampaignScreen extends StatelessWidget {
   const MerchantPreviewCampaignScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = MerchantNewCampaignController.to;
+
     return ScaffoldWrapper(
       backgroundColor: const Color(0xffF5FAFF),
 
@@ -24,93 +28,137 @@ class MerchantPreviewCampaignScreen extends StatelessWidget {
         title: const Text("Preview Campaign"),
       ),
 
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
+      body: Obx(() {
+        final creatorCount =
+            int.tryParse(controller.creatorCountController.text) ?? 0;
 
-        child: Column(
-          children: [
-            Gap(10.h),
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
 
-            _card(
-              context,
+          child: Column(
+            children: [
+              Gap(10.h),
 
-              title: "Campaign Overview",
+              _card(
+                context,
 
-              children: [
-                _row("Name", "Sunset Coffee Promotion"),
+                title: "Campaign Overview",
 
-                _row("Objective", "Brand Awareness"),
+                children: [
+                  _row("Name", controller.campaignNameController.text),
 
-                _row("Content Type", "Reel"),
+                  _row("About", controller.requirementsController.text),
 
-                _row("Duration", "15 Jul-22 Jul, 2026"),
-              ],
-            ),
+                  _row("Objective", controller.selectedObjective.value),
 
-            Gap(12.h),
+                  _row("Content Type", controller.selectedContentType.value),
 
-            _card(
-              context,
+                  _row("Offer", controller.selectedOfferName),
 
-              title: "Creators & Requirement",
-
-              children: [
-                _row("Influencer Category", "Lifestyle"),
-
-                _row("Target Creator", "5 Creators"),
-
-                _row("Selected Package", "\$7"),
-
-                Divider(),
-
-                _row("Total Campaign Cost", "\$35", bold: true),
-              ],
-            ),
-
-            const Spacer(),
-
-            Row(
-              children: [
-                Expanded(
-                  child: CustomButton(
-                    isOutlined: true,
-                    onTap: () {
-                      AppRouter.route.pop();
-                    },
-
-                    text: "Back to Edit",
+                  _row(
+                    "Duration",
+                    "${controller.startDateController.text} - ${controller.endDateController.text}",
                   ),
-                ),
 
-                Gap(12.w),
+                  _row("Video Length", "${controller.selectedVideoLength}s"),
+                ],
+              ),
 
-                Expanded(
-                  child: CustomButton(
-                    onTap: () {
-                      AppRouter.route.goNamed(
-                        RoutePath.merchantNewCampaignScreen,
-                      );
-                    },
-                    text: "Submit",
+              Gap(12.h),
+
+              _card(
+                context,
+
+                title: "Influencer Info",
+
+                children: [
+                  _row("Influencer Category", controller.selectedCategoryName),
+
+                  _row("Target Creator", "$creatorCount Creators"),
+
+                  _row("Selected Package", controller.selectedPackageName),
+
+                  _row("Package Price", controller.selectedPackagePrice),
+
+                  Divider(),
+
+                  _row(
+                    "Total Campaign Cost",
+
+                    _calculateTotal(
+                      creatorCount,
+                      controller.selectedPackagePrice,
+                    ),
+
+                    bold: true,
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
 
-            Gap(20.h),
-          ],
-        ),
-      ),
+              Gap(12.h),
+
+              _card(
+                context,
+
+                title: "Content Requirements",
+
+                children: [
+                  Text(
+                    controller.requirementsController.text,
+
+                    style: context.bodySmall,
+                  ),
+                ],
+              ),
+
+              const Spacer(),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomButton(
+                      isOutlined: true,
+
+                      onTap: () {
+                        AppRouter.route.pop();
+                      },
+
+                      text: "Back to Edit",
+                    ),
+                  ),
+
+                  Gap(12.w),
+
+                  Expanded(
+                    child: CustomButton(
+                      isLoading:
+                          controller.submitLoading.value == ApiStatus.loading,
+                      onTap: controller.onSubmit,
+
+                      text: "Submit",
+                    ),
+                  ),
+                ],
+              ),
+
+              Gap(20.h),
+            ],
+          ),
+        );
+      }),
     );
   }
 
   Widget _card(
     BuildContext context, {
+
     required String title,
+
     required List<Widget> children,
   }) {
     return Container(
       padding: EdgeInsets.all(12.w),
+      width: double.infinity,
 
       decoration: BoxDecoration(
         color: Colors.white,
@@ -124,6 +172,7 @@ class MerchantPreviewCampaignScreen extends StatelessWidget {
         children: [
           Text(
             title,
+
             style: context.bodyMedium.copyWith(fontWeight: FontWeight.bold),
           ),
 
@@ -142,18 +191,31 @@ class MerchantPreviewCampaignScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
+        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
-          Text(label),
+          Expanded(child: Text(label)),
 
-          Text(
-            value,
+          Expanded(
+            child: Text(
+              value,
 
-            style: TextStyle(
-              fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+              textAlign: TextAlign.right,
+
+              style: TextStyle(
+                fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  String _calculateTotal(int creators, String price) {
+    final amount =
+        double.tryParse(price.replaceAll(RegExp(r'[^0-9.]'), '')) ?? 0;
+
+    return "\$${(amount * creators).toStringAsFixed(0)}";
   }
 }

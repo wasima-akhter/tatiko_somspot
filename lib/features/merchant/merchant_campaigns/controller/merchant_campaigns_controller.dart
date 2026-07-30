@@ -1,67 +1,94 @@
 import 'package:get/get.dart';
 
-import '../modules/merchant_campaign_tag.dart';
+import '../../../../share/widgets/paginator/paginator.dart';
+import '../../../../utils/enum/app_enum.dart';
+import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
+import '../../merchant_new_campaign/shared/response/merchant_campaign_model.dart';
+import '../../merchant_new_campaign/shared/service/merchant_campaign_service.dart';
 
 class MerchantCampaignsController extends GetxController {
+  final MerchantCampaignService _service;
+
+  MerchantCampaignsController(this._service);
+
   static MerchantCampaignsController get to => Get.find();
 
-  final selectedTab = 0.obs;
+  late final Paginator<MerchantCampaignModel> paginator;
 
-  final campaigns = <Map<String, dynamic>>[
-    {
-      "title": "Sunset Coffee Promotion",
-      "type": "Offer Campaign",
-      "status": MerchantCampaignStatus.pending,
-      "budgetSpent": "\$00 / \$35",
-      "applicants": "0",
-      "daysLeft": "14 days left",
-    },
-    {
-      "title": "Summer Fashion Promo",
-      "type": "Product Campaign",
-      "status": MerchantCampaignStatus.pending,
-      "budgetSpent": "\$10 / \$50",
-      "applicants": "2",
-      "daysLeft": "8 days left",
-    },
-    {
-      "title": "Sunset Coffee Promotion",
-      "type": "Offer Campaign",
-      "status": MerchantCampaignStatus.pending,
-      "budgetSpent": "\$00 / \$35",
-      "applicants": "3",
-      "daysLeft": "3 days left",
-    },
-    {
-      "title": "Sunset Coffee Promotion",
-      "type": "Offer Campaign",
-      "status": MerchantCampaignStatus.approved,
-      "budgetSpent": "\$21 / \$35",
-      "applicants": "3",
-      "daysLeft": "1 day left",
-    },
-  ];
+  final apiStatus = ApiStatus.loading.obs;
+  final RxnString errorMessage = RxnString();
 
-  List<Map<String, dynamic>> get currentCampaigns {
+  final selectedTab = MerchantCampaignTab.all.obs;
+
+  String get selectedStatus {
     switch (selectedTab.value) {
-      // All
-      case 0:
-        return campaigns;
+      case MerchantCampaignTab.pending:
+        return "pending_review";
 
-      // Pending
-      case 1:
-        return campaigns
-            .where((e) => e["status"] == MerchantCampaignStatus.pending)
-            .toList();
+      case MerchantCampaignTab.live:
+        return "live";
 
-      // Approved
-      case 2:
-        return campaigns
-            .where((e) => e["status"] == MerchantCampaignStatus.approved)
-            .toList();
-
-      default:
-        return [];
+      case MerchantCampaignTab.all:
+        return "all";
     }
   }
+
+  final statusCounts = <String, int>{}.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    paginator = Paginator(
+      fetchPage: (page, limit) async {
+        try {
+          apiStatus.value = ApiStatus.loading;
+
+          final response = await _service.getCampaigns(
+            page: page,
+            limit: limit,
+            status: selectedStatus,
+          );
+
+          final data = response.data;
+
+          statusCounts[selectedStatus] = data?.meta?.total ?? 0;
+
+          apiStatus.value = ApiStatus.completed;
+
+          return data!;
+        } catch (e) {
+          apiStatus.value = ApiStatus.error;
+          errorMessage.value = e.toString();
+
+          rethrow;
+        }
+      },
+    );
+    loadCampaigns();
+  }
+
+  Future<void> changeTab(MerchantCampaignTab tab) async {
+    if (selectedTab.value == tab) {
+      return;
+    }
+
+    selectedTab.value = tab;
+
+    await paginator.loadInitial();
+  }
+
+  Future<void> loadCampaigns() {
+    return paginator.loadInitial();
+  }
+
+  Future<void> loadMore() {
+    return paginator.loadMore();
+  }
+
+  Future<void> refreshCampaigns() {
+    return paginator.refresh();
+  }
+
+  List<MerchantCampaignModel> get campaigns => paginator.items;
 }

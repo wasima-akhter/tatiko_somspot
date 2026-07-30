@@ -1,8 +1,8 @@
 import 'package:som_spot/features/merchant/merchant_campaigns/widgets/merchant_campaign_header.dart';
 
 import '../../../../share/controller/screen_export.dart';
+import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../controller/merchant_campaigns_controller.dart';
-import '../modules/merchant_campaign_shimmre_card.dart';
 import '../widgets/campaign_create_button.dart';
 import '../widgets/campaign_tabs.dart';
 import '../widgets/merchant_campaign_card.dart';
@@ -17,19 +17,9 @@ class MerchantCampaignScreen extends StatefulWidget {
 class _MerchantCampaignScreenState extends State<MerchantCampaignScreen> {
   final controller = MerchantCampaignsController.to;
 
-  bool isLoading = true;
-
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(milliseconds: 1500), () {
-      if (mounted) {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    });
   }
 
   @override
@@ -67,35 +57,43 @@ class _MerchantCampaignScreenState extends State<MerchantCampaignScreen> {
                     Obx(
                       () => CampaignTabs(
                         selected: controller.selectedTab.value,
-                        onChange: (value) {
-                          controller.selectedTab.value = value;
-                        },
+                        onChange: controller.changeTab,
                       ),
                     ),
 
                     Gap(16.h),
 
                     Obx(() {
-                      final items = controller.currentCampaigns;
+                      return ApiStatusBuilder(
+                        status: controller.apiStatus.value,
 
-                      if (items.isEmpty) {
-                        return Padding(
-                          padding: EdgeInsets.only(top: 40.h),
-                          child: Text(
-                            "No campaigns found",
-                            style: context.bodyMedium.copyWith(
-                              color: AppColors.subtitleTextColor,
-                            ),
-                          ),
-                        );
-                      }
+                        errorMessage: controller.errorMessage.value,
 
-                      return Column(
-                        children: items.map((e) {
-                          return isLoading
-                              ? const MerchantCampaignShimmerCard()
-                              : MerchantCampaignCard(campaign: e);
-                        }).toList(),
+                        onRetry: controller.refreshCampaigns,
+
+                        builder: (context) {
+                          final items = controller.campaigns;
+
+                          if (items.isEmpty) {
+                            return Padding(
+                              padding: EdgeInsets.only(top: 40.h),
+
+                              child: Text(
+                                "No campaigns found",
+
+                                style: context.bodyMedium.copyWith(
+                                  color: AppColors.subtitleTextColor,
+                                ),
+                              ),
+                            );
+                          }
+
+                          return Column(
+                            children: items.map((campaign) {
+                              return MerchantCampaignCard(campaign: campaign);
+                            }).toList(),
+                          );
+                        },
                       );
                     }),
                   ],

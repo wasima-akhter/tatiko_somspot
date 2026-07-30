@@ -60,9 +60,8 @@ import '../../features/influencer_all/influencer_submit_content/view/influencer_
 import '../../features/influencer_all/influencer_wallet/view/influencer_wallet_screen.dart';
 import '../../features/influencer_all/influencer_your_submission/view/influencer_your_submission_screen.dart';
 import '../../features/merchant/create_offer/view/create_offer_screen.dart';
-import '../../features/merchant/merchant_campaign_details/binding/merchant_campaign_details_binding.dart';
 import '../../features/merchant/merchant_campaign_details/view/merchant_campaign_content_details_screen.dart';
-import '../../features/merchant/merchant_campaigns/binding/merchant_campaigns_binding.dart';
+import '../../features/merchant/merchant_new_campaign/shared/binding/merchant_new_campaign_binding.dart';
 import '../../features/merchant/merchant_new_campaign/view/pricing_packages_screen.dart';
 import '../../features/nav/binding/navigation_binding.dart';
 import '../../features/offers/shared/binding/edit_offer_binding.dart';

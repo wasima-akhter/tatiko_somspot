@@ -1,5 +1,3 @@
-import 'package:som_spot/core/router/routes.dart';
-
 import '../../../../share/controller/screen_export.dart';
 
 class MerchantCampaignHeader extends StatelessWidget {
@@ -28,7 +26,7 @@ class MerchantCampaignHeader extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   //
-                  AppRouter.route.pop();
+                  AppRouter.route.goNamed(RoutePath.navigationPages);
                 },
                 child: Icon(
                   Icons.arrow_back_ios,

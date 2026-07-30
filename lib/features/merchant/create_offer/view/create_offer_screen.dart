@@ -7,6 +7,7 @@ import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import '../../../../share/controller/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/controller/business-controller.dart';
+import '../../merchant_new_campaign/widgets/campaign_date_field.dart';
 import '../controller/create_offer_controller.dart';
 
 class CreateOfferScreen extends StatefulWidget {
@@ -140,7 +141,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: _dateField(
+                    child: CampaignDateField(
                       label: AppStrings.startDate.tr,
                       controller: startDateController,
                     ),
@@ -149,7 +150,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                   Gap(16.w),
 
                   Expanded(
-                    child: _dateField(
+                    child: CampaignDateField(
                       label: AppStrings.endDate.tr,
                       controller: endDateController,
                     ),

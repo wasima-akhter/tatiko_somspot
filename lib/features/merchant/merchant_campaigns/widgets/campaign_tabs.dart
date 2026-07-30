@@ -1,8 +1,10 @@
 import 'package:som_spot/share/controller/screen_export.dart';
 
+import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
+
 class CampaignTabs extends StatelessWidget {
-  final int selected;
-  final ValueChanged<int> onChange;
+  final MerchantCampaignTab selected;
+  final ValueChanged<MerchantCampaignTab> onChange;
 
   const CampaignTabs({
     super.key,
@@ -12,14 +14,20 @@ class CampaignTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = ["All", "Pending", "Approved"];
+    final tabs = {
+      MerchantCampaignTab.all: "All",
+      MerchantCampaignTab.pending: "Pending",
+      MerchantCampaignTab.live: "Live",
+    };
 
     return Row(
-      children: List.generate(tabs.length, (index) {
-        final active = selected == index;
+      children: tabs.entries.map((entry) {
+        final tab = entry.key;
+
+        final active = selected == tab;
 
         return GestureDetector(
-          onTap: () => onChange(index),
+          onTap: () => onChange(tab),
 
           child: Container(
             margin: EdgeInsets.only(right: 10.w),
@@ -33,7 +41,7 @@ class CampaignTabs extends StatelessWidget {
             ),
 
             child: Text(
-              tabs[index],
+              entry.value,
 
               style: context.bodySmall.copyWith(
                 fontSize: 11.sp,
@@ -45,7 +53,7 @@ class CampaignTabs extends StatelessWidget {
             ),
           ),
         );
-      }),
+      }).toList(),
     );
   }
 }

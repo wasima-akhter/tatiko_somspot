@@ -1,19 +1,24 @@
-import 'package:som_spot/core/router/route_path.dart';
-import 'package:som_spot/core/router/routes.dart';
-
 import '../../../../share/controller/screen_export.dart';
+import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
+import '../../merchant_new_campaign/shared/response/merchant_campaign_model.dart';
 import '../modules/merchant_campaign_tag.dart';
 
 class MerchantCampaignCard extends StatelessWidget {
-  final Map<String, dynamic> campaign;
+  final MerchantCampaignModel campaign;
 
   const MerchantCampaignCard({super.key, required this.campaign});
 
   @override
   Widget build(BuildContext context) {
+    final progress = campaign.totalBudget == 0
+        ? 0.0
+        : campaign.spentBudget / campaign.totalBudget;
+
     return GestureDetector(
-      onTap: () =>
-          AppRouter.route.pushNamed(RoutePath.merchantCampaignDetailsScreen),
+      onTap: () {
+        AppRouter.route.pushNamed(RoutePath.merchantCampaignDetailsScreen);
+      },
+
       child: Container(
         margin: EdgeInsets.only(bottom: 12.h),
 
@@ -40,7 +45,7 @@ class MerchantCampaignCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    campaign["title"],
+                    campaign.name,
 
                     style: context.titleSmall.copyWith(
                       fontWeight: FontWeight.bold,
@@ -48,14 +53,18 @@ class MerchantCampaignCard extends StatelessWidget {
                   ),
                 ),
 
-                MerchantCampaignStatusTag(status: campaign["status"]),
+                MerchantCampaignStatusTag(
+                  status: MerchantCampaignStatusExtension.fromApi(
+                    campaign.status,
+                  ),
+                ),
               ],
             ),
 
             Gap(4.h),
 
             Text(
-              campaign["type"],
+              campaign.business?.name ?? "Campaign",
               style: context.bodySmall.copyWith(
                 color: AppColors.subtitleTextColor,
               ),
@@ -70,7 +79,7 @@ class MerchantCampaignCard extends StatelessWidget {
                 Text("Budget spent", style: context.bodySmall),
 
                 Text(
-                  campaign["budgetSpent"],
+                  campaign.budgetText,
                   style: context.bodySmall.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -81,7 +90,7 @@ class MerchantCampaignCard extends StatelessWidget {
             Gap(6.h),
 
             LinearProgressIndicator(
-              value: .5,
+              value: progress.clamp(0, 1),
 
               backgroundColor: AppColors.backgroundsLinesColor,
 
@@ -100,7 +109,10 @@ class MerchantCampaignCard extends StatelessWidget {
 
                 Gap(4.w),
 
-                Text(campaign["applicants"], style: context.bodySmall),
+                Text(
+                  "${campaign.assignedCount}/${campaign.targetCreators}",
+                  style: context.bodySmall,
+                ),
 
                 Gap(12.w),
 
@@ -108,7 +120,7 @@ class MerchantCampaignCard extends StatelessWidget {
 
                 Gap(4.w),
 
-                Text(campaign["daysLeft"], style: context.bodySmall),
+                Text(campaign.daysLeftText, style: context.bodySmall),
               ],
             ),
           ],

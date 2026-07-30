@@ -4,6 +4,7 @@ import 'package:som_spot/core/service/datasource/remote/api_client.dart';
 import 'package:som_spot/core/service/network/network_checker.dart';
 import 'package:som_spot/features/merchant/listings/repository/manage_business_repository.dart';
 import 'package:som_spot/features/merchant/listings/service/manage_listing_service.dart';
+import 'package:som_spot/features/merchant/merchant_new_campaign/shared/repository/merchant_new_campaign_repository.dart';
 
 import '../../features/auth/complete_business_profile/repository/complete_business_profile_repository.dart';
 import '../../features/auth/complete_business_profile/service/complete_business_profile_service.dart';
@@ -17,6 +18,7 @@ import '../../features/core/category/repository/category_repository.dart';
 import '../../features/core/category/service/category_service.dart';
 import '../../features/merchant/dashboard_merchant/repository/dashboard_merchant_repository.dart';
 import '../../features/merchant/dashboard_merchant/service/dashboard_merchant_service.dart';
+import '../../features/merchant/merchant_new_campaign/shared/service/merchant_campaign_service.dart';
 import '../../features/offers/shared/repository/offers_repository.dart';
 import '../../features/offers/shared/service/offers_service.dart';
 import '../../features/other/repository/other_repository.dart';
@@ -159,5 +161,17 @@ Future<void> initDependencies() async {
 
   sl.registerLazySingleton<ManageBusinessService>(
     () => ManageBusinessService(sl<ManageBusinessRepository>()),
+  );
+
+  // =====================
+  // Merchant New Campaign
+  // =====================
+
+  sl.registerLazySingleton<MerchantCampaignRepository>(
+    () => MerchantCampaignRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<MerchantCampaignService>(
+    () => MerchantCampaignService(sl<MerchantCampaignRepository>()),
   );
 }

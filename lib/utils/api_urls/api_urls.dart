@@ -105,4 +105,13 @@ class ApiUrls {
   static String merchantDashboard() {
     return "$base/merchant/dashboard";
   }
+
+  // Campaign Merchant
+  static String createMerchantCampaign() {
+    return '$base/campaign/create';
+  }
+
+  static String merchantCampaigns() {
+    return '$base/campaign/my';
+  }
 }

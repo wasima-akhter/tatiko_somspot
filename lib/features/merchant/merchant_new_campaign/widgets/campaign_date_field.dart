@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 
@@ -13,18 +14,21 @@ class CampaignDateField extends StatelessWidget {
   });
 
   Future<void> _pickDate(BuildContext context) async {
+    DateTime initialDate = DateTime.now();
+
+    if (controller.text.isNotEmpty) {
+      initialDate = DateFormat("MMM d, yyyy").parse(controller.text);
+    }
+
     final date = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: initialDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
 
     if (date != null) {
-      controller.text =
-          "${date.day.toString().padLeft(2, '0')}/"
-          "${date.month.toString().padLeft(2, '0')}/"
-          "${date.year}";
+      controller.text = DateFormat("MMM d, yyyy").format(date);
     }
   }
 
@@ -32,18 +36,11 @@ class CampaignDateField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
       title: label,
-
       controller: controller,
-
       readOnly: true,
-
-      hintText: "DD/MM/YYYY",
-
+      hintText: "Jul 15, 2025",
       suffixIcon: const Icon(Icons.calendar_today_outlined, size: 18),
-
-      onTap: () {
-        _pickDate(context);
-      },
+      onTap: () => _pickDate(context),
     );
   }
 }

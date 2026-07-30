@@ -1,12 +1,13 @@
 import '../../../../share/controller/screen_export.dart';
-import '../controller/merchant_pricing_controller.dart';
+import '../controller/merchant_new_campaign_controller.dart';
 
 class MerchantPricingPackagesScreen extends StatelessWidget {
   const MerchantPricingPackagesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = MerchantPricingController.to;
+    final controller = MerchantNewCampaignController.to;
+
     return ScaffoldWrapper(
       title: "Pricing Packages",
 
@@ -23,59 +24,85 @@ class MerchantPricingPackagesScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = controller.packages[index];
 
-                return Container(
-                  padding: EdgeInsets.all(12.w),
+                return Obx(() {
+                  final selected = controller.selectedPackage.value == item;
 
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-
+                  return InkWell(
                     borderRadius: BorderRadius.circular(10.r),
 
-                    border: Border.all(color: const Color(0xffDCE8F5)),
-                  ),
+                    onTap: () {
+                      controller.selectPackage(item);
+                    },
 
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Container(
+                      padding: EdgeInsets.all(12.w),
 
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
 
-                          children: [
-                            Text(
-                              item.title,
-                              style: context.bodyMedium.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                        borderRadius: BorderRadius.circular(10.r),
 
-                            Gap(4.h),
+                        border: Border.all(
+                          color: selected
+                              ? const Color(0xff2699FF)
+                              : const Color(0xffDCE8F5),
 
-                            Text(
-                              item.subtitle,
-                              style: context.bodySmall.copyWith(
-                                color: Colors.grey,
-                              ),
-                            ),
-
-                            Gap(4.h),
-
-                            Text(item.description, style: context.bodySmall),
-                          ],
+                          width: selected ? 2 : 1,
                         ),
                       ),
 
-                      Text(
-                        item.price,
-                        style: context.titleMedium.copyWith(
-                          color: const Color(0xff2699FF),
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+
+                              children: [
+                                Text(
+                                  item.title,
+
+                                  style: context.bodyMedium.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+
+                                Gap(4.h),
+
+                                Text(
+                                  item.subtitle,
+
+                                  style: context.bodySmall.copyWith(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+
+                                Gap(4.h),
+
+                                Text(
+                                  item.description,
+
+                                  style: context.bodySmall,
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          Text(
+                            item.price,
+
+                            style: context.titleMedium.copyWith(
+                              color: const Color(0xff2699FF),
+
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
+                    ),
+                  );
+                });
               },
             ),
           ),
@@ -84,15 +111,13 @@ class MerchantPricingPackagesScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
 
             child: CustomButton(
-              onTap: () {
-                AppRouter.route.pushNamed(
-                  RoutePath.mrchantPreviewCampaignScreen,
-                );
-              },
+              onTap: controller.onPricingNext,
 
               text: "Preview",
             ),
           ),
+
+          Gap(20.h),
         ],
       ),
     );
