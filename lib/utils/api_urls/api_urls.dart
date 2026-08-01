@@ -114,4 +114,8 @@ class ApiUrls {
   static String merchantCampaigns() {
     return '$base/campaign/my';
   }
+
+  static String merchantCampaignDetails() {
+    return "$base/campaign/get";
+  }
 }

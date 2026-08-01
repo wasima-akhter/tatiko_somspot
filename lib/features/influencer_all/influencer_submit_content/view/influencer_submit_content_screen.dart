@@ -43,7 +43,9 @@ class _InfluencerSubmitContentScreenState
   @override
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
-      backgroundColor: AppColors.softBackgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
+      title: "Submit Content",
+      onPressed: () => AppRouter.route.pop(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -51,24 +53,6 @@ class _InfluencerSubmitContentScreenState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Gap(12),
-
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: const Icon(Icons.arrow_back_ios_new, size: 20),
-                  ),
-                  const Gap(12),
-                  Text(
-                    "Submit Content",
-                    style: context.titleMedium.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-
-              const Gap(24),
 
               /// Task Card
               Container(

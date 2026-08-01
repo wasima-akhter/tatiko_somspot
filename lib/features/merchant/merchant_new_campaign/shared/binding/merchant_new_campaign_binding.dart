@@ -18,10 +18,17 @@ class MerchantCampaignsBinding extends Bindings {
 }
 
 class MerchantCampaignDetailsBinding extends Bindings {
+  final String campaignId;
+
+  MerchantCampaignDetailsBinding({required this.campaignId});
+
   @override
   void dependencies() {
     Get.lazyPut<MerchantCampaignDetailsController>(
-      () => MerchantCampaignDetailsController(),
+      () => MerchantCampaignDetailsController(
+        sl<MerchantCampaignService>(),
+        campaignId,
+      ),
       fenix: true,
     );
   }

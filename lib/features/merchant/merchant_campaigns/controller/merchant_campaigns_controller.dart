@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../share/widgets/paginator/paginator.dart';
-import '../../../../utils/enum/app_enum.dart';
 import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
 import '../../merchant_new_campaign/shared/response/merchant_campaign_model.dart';
 import '../../merchant_new_campaign/shared/service/merchant_campaign_service.dart';
@@ -13,10 +13,9 @@ class MerchantCampaignsController extends GetxController {
 
   static MerchantCampaignsController get to => Get.find();
 
-  late final Paginator<MerchantCampaignModel> paginator;
+  final listScrollController = ScrollController();
 
-  final apiStatus = ApiStatus.loading.obs;
-  final RxnString errorMessage = RxnString();
+  late final Paginator<MerchantCampaignModel> paginator;
 
   final selectedTab = MerchantCampaignTab.all.obs;
 
@@ -35,6 +34,11 @@ class MerchantCampaignsController extends GetxController {
 
   final statusCounts = <String, int>{}.obs;
 
+  final summaryCampaigns = Rxn<SummaryModel?>();
+
+  final summaryLoading = true.obs;
+  final summaryError = RxnString();
+
   @override
   void onInit() {
     super.onInit();
@@ -42,7 +46,7 @@ class MerchantCampaignsController extends GetxController {
     paginator = Paginator(
       fetchPage: (page, limit) async {
         try {
-          apiStatus.value = ApiStatus.loading;
+          summaryLoading.value = true;
 
           final response = await _service.getCampaigns(
             page: page,
@@ -52,20 +56,36 @@ class MerchantCampaignsController extends GetxController {
 
           final data = response.data;
 
+          summaryCampaigns.value = data?.summary;
+
           statusCounts[selectedStatus] = data?.meta?.total ?? 0;
 
-          apiStatus.value = ApiStatus.completed;
+          summaryLoading.value = false;
 
           return data!;
         } catch (e) {
-          apiStatus.value = ApiStatus.error;
-          errorMessage.value = e.toString();
+          summaryLoading.value = false;
+          summaryError.value = e.toString();
 
           rethrow;
         }
       },
     );
+    listScrollController.addListener(() {
+      if (listScrollController.position.pixels >=
+          listScrollController.position.maxScrollExtent - 200) {
+        loadMore();
+      }
+    });
+
     loadCampaigns();
+  }
+
+  @override
+  void onClose() {
+    listScrollController.dispose();
+    paginator.dispose();
+    super.onClose();
   }
 
   Future<void> changeTab(MerchantCampaignTab tab) async {

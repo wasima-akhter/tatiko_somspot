@@ -3,8 +3,9 @@ import 'package:dio/dio.dart';
 import '../../../../../share/export/service_export.dart';
 import '../../../../../share/model/pagination_meta_model.dart';
 import '../../../../../share/widgets/paginator/paginator.dart';
-import '../repository/merchant_new_campaign_repository.dart';
+import '../repository/merchant_campaign_repository.dart';
 import '../request/new_campaign_request.dart';
+import '../response/merchant_campaign_detail_model.dart';
 import '../response/merchant_campaign_model.dart';
 
 class MerchantCampaignService {
@@ -50,12 +51,37 @@ class MerchantCampaignService {
           ),
 
           meta: PaginationMeta.fromJson(data['meta']),
+          summary: data['summary'] != null
+              ? SummaryModel.fromJson(data['summary'])
+              : null,
         ),
       );
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
       debugPrint("Get Campaigns Error $e");
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
+
+  Future<ApiResponse<MerchantCampaignDetailsModel>> getCampaignDetails(
+    String campaignId,
+  ) async {
+    try {
+      final response = await _repository.getCampaignDetails(campaignId);
+
+      return ApiParser.parse<MerchantCampaignDetailsModel>(
+        response,
+
+        mapper: (json) => MerchantCampaignDetailsModel.fromJson(json),
+      );
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Get Campaign Details Error $e");
+
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: "Something went wrong");

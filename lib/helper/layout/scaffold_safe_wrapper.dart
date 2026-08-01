@@ -9,6 +9,7 @@ class ScaffoldWrapper extends StatelessWidget {
     this.backgroundColor,
     this.resizeToAvoidBottomInset = true,
     this.title,
+    this.onPressed,
   });
 
   final PreferredSizeWidget? appBar;
@@ -17,6 +18,8 @@ class ScaffoldWrapper extends StatelessWidget {
   final Color? backgroundColor;
   final bool resizeToAvoidBottomInset;
   final String? title;
+
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +38,18 @@ class ScaffoldWrapper extends StatelessWidget {
 
             leading: IconButton(
               icon: Icon(Iconsax.arrow_left_2, size: 18.sp),
-              onPressed: () {
-                AppRouter.route.goNamed(RoutePath.navigationPages);
-              },
+              onPressed:
+                  onPressed ??
+                  () {
+                    AppRouter.route.goNamed(RoutePath.navigationPages);
+                  },
             ),
             title: Text(
               title ?? '',
               style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
             ),
             centerTitle: false,
+            titleSpacing: 0,
           ),
       body: Padding(
         padding: EdgeInsets.only(bottom: safeBottom),

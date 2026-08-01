@@ -1,5 +1,3 @@
-
-
 import '../../share/controller/screen_export.dart';
 
 class SuccessScreenArgs {
@@ -66,7 +64,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWrapper(
+    return Scaffold(
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         maintainBottomViewPadding: true,

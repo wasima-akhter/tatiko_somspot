@@ -1,4 +1,7 @@
+import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
+
 import '../../../../share/controller/screen_export.dart';
+import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../controller/merchant_campaign_details_controller.dart';
 
 class MerchantCampaignOverviewCard
@@ -7,31 +10,75 @@ class MerchantCampaignOverviewCard
 
   @override
   Widget build(BuildContext context) {
-    final campaign = controller.campaign;
+    return Obx(
+      () => ApiStatusBuilder(
+        status: controller.status.value,
 
+        errorMessage: controller.errorMessage.value,
+
+        onRetry: () {
+          controller.loadDetails(controller.campaignId);
+        },
+
+        loadingWidget: _loadingCard(),
+
+        builder: (context) {
+          final campaign = controller.campaign.value;
+
+          if (campaign == null) {
+            return const SizedBox();
+          }
+
+          return _card(
+            context,
+
+            budget: "\$${campaign.totalBudget}",
+
+            creators: "${campaign.assignedCount}/${campaign.targetCreators}",
+
+            package: campaign.contentType,
+
+            duration: "${campaign.daysLeft} days left",
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _card(
+    BuildContext context, {
+
+    required String budget,
+    required String creators,
+    required String package,
+    required String duration,
+  }) {
     return Container(
       padding: EdgeInsets.all(12.w),
+
       decoration: BoxDecoration(
         color: Colors.white,
+
         borderRadius: BorderRadius.circular(14.r),
       ),
+
       child: Column(
         children: [
           Row(
             children: [
-              Expanded(child: _item("Budget", campaign["budget"] as String)),
-              Expanded(
-                child: _item("Creators", campaign["creators"] as String),
-              ),
+              Expanded(child: _item("Budget", budget)),
+
+              Expanded(child: _item("Creators", creators)),
             ],
           ),
+
           Gap(16.h),
+
           Row(
             children: [
-              Expanded(child: _item("Package", campaign["package"] as String)),
-              Expanded(
-                child: _item("Duration", campaign["duration"] as String),
-              ),
+              Expanded(child: _item("Package", package)),
+
+              Expanded(child: _item("Duration", duration)),
             ],
           ),
         ],
@@ -39,12 +86,80 @@ class MerchantCampaignOverviewCard
     );
   }
 
+  Widget _loadingCard() {
+    return Container(
+      padding: EdgeInsets.all(12.w),
+
+      decoration: BoxDecoration(
+        color: Colors.white,
+
+        borderRadius: BorderRadius.circular(14.r),
+      ),
+
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(child: _loadingItem()),
+
+              Expanded(child: _loadingItem()),
+            ],
+          ),
+
+          Gap(16.h),
+
+          Row(
+            children: [
+              Expanded(child: _loadingItem()),
+
+              Expanded(child: _loadingItem()),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _loadingItem() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+
+      children: [
+        Text(
+          "--",
+          style: TextStyle(fontSize: 11.sp, color: Colors.transparent),
+        ),
+
+        Gap(3.h),
+
+        AutoShimmerAnimate(
+          isLoading: true,
+
+          baseColor: AppColors.shimmerBaseColor,
+
+          child: Container(
+            width: 70.w,
+            height: 15.h,
+
+            decoration: BoxDecoration(
+              color: Colors.white,
+
+              borderRadius: BorderRadius.circular(4.r),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _item(String title, String value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+
       children: [
         Text(
           title,
+
           style: TextStyle(fontSize: 11.sp, color: AppColors.subtitleTextColor),
         ),
 
@@ -52,6 +167,7 @@ class MerchantCampaignOverviewCard
 
         Text(
           value,
+
           style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
         ),
       ],

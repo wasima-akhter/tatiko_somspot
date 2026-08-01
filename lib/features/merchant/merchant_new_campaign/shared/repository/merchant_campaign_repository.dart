@@ -24,4 +24,11 @@ class MerchantCampaignRepository {
       queryParams: {'page': page, 'limit': limit, 'status': status},
     );
   }
+
+  Future<Response> getCampaignDetails(String campaignId) {
+    return _apiClient.get(
+      url: ApiUrls.merchantCampaignDetails(),
+      queryParams: {"campaignId": campaignId},
+    );
+  }
 }

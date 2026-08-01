@@ -76,7 +76,7 @@ class AppRouter {
       GlobalKey<NavigatorState>();
 
   static final GoRouter initRoute = GoRouter(
-    initialLocation: RoutePath.splashScreen.addBasePath,
+    initialLocation: RoutePath.navigationPages.addBasePath,
 
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
@@ -517,13 +517,13 @@ class AppRouter {
         name: RoutePath.merchantCampaignDetailsScreen,
         path: RoutePath.merchantCampaignDetailsScreen.addBasePath,
         pageBuilder: (context, state) {
-          // final merchant = state.extra as MerchantModel;
+          final campaignId = state.extra as String;
 
           return _buildPageWithAnimation(
             state: state,
             child: BindingWrapper(
-              binding: MerchantCampaignDetailsBinding(),
-              child: MerchantCampaignDetailsScreen(),
+              binding: MerchantCampaignDetailsBinding(campaignId: campaignId),
+              child: const MerchantCampaignDetailsScreen(),
             ),
           );
         },

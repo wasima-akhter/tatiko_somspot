@@ -107,9 +107,28 @@ class Paginator<T> {
   }
 }
 
+class SummaryModel {
+  final int active;
+  final int inReview;
+
+  SummaryModel({this.active = 0, this.inReview = 0});
+
+  factory SummaryModel.fromJson(Map<String, dynamic>? json) {
+    return SummaryModel(
+      active: json?['active'] ?? 0,
+      inReview: json?['inReview'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'active': active, 'inReview': inReview};
+  }
+}
+
 class PaginatedResult<T> {
   final List<T> data;
   final PaginationMeta? meta;
+  final SummaryModel? summary;
 
-  PaginatedResult({required this.data, this.meta});
+  PaginatedResult({required this.data, this.meta, this.summary});
 }

@@ -14,21 +14,8 @@ class MerchantCampaignDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
-      backgroundColor: AppColors.backgroundColorNew,
-
-      appBar: AppBar(
-        backgroundColor: AppColors.backgroundColorNew,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Iconsax.arrow_left_2, size: 18.sp),
-          onPressed: () => AppRouter.route.pop(),
-        ),
-        title: Text(
-          "Campaign",
-          style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
-        ),
-        centerTitle: false,
-      ),
+      title: "Campaign Details",
+      onPressed: () => AppRouter.route.pop(),
 
       body: SafeArea(
         child: CustomScrollView(

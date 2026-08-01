@@ -14,8 +14,8 @@ class InfluencerWalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = InfluencerWalletController.to;
-    return ScaffoldWrapper(
-      backgroundColor: AppColors.softBackgroundColor,
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 16.w),

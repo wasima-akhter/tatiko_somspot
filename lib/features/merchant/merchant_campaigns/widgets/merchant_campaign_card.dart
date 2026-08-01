@@ -1,3 +1,5 @@
+import 'package:som_spot/helper/text_utils/string_extension.dart';
+
 import '../../../../share/controller/screen_export.dart';
 import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
 import '../../merchant_new_campaign/shared/response/merchant_campaign_model.dart';
@@ -16,7 +18,10 @@ class MerchantCampaignCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        AppRouter.route.pushNamed(RoutePath.merchantCampaignDetailsScreen);
+        AppRouter.route.pushNamed(
+          RoutePath.merchantCampaignDetailsScreen,
+          extra: campaign.id,
+        );
       },
 
       child: Container(
@@ -64,7 +69,7 @@ class MerchantCampaignCard extends StatelessWidget {
             Gap(4.h),
 
             Text(
-              campaign.business?.name ?? "Campaign",
+              (campaign.business?.name ?? "Campaign").capitalizeWords(),
               style: context.bodySmall.copyWith(
                 color: AppColors.subtitleTextColor,
               ),

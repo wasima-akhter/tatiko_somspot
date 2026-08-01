@@ -4,7 +4,7 @@ import 'package:som_spot/core/service/datasource/remote/api_client.dart';
 import 'package:som_spot/core/service/network/network_checker.dart';
 import 'package:som_spot/features/merchant/listings/repository/manage_business_repository.dart';
 import 'package:som_spot/features/merchant/listings/service/manage_listing_service.dart';
-import 'package:som_spot/features/merchant/merchant_new_campaign/shared/repository/merchant_new_campaign_repository.dart';
+import 'package:som_spot/features/merchant/merchant_new_campaign/shared/repository/merchant_campaign_repository.dart';
 
 import '../../features/auth/complete_business_profile/repository/complete_business_profile_repository.dart';
 import '../../features/auth/complete_business_profile/service/complete_business_profile_service.dart';

@@ -1,63 +1,61 @@
 import 'package:get/get.dart';
 
-import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
+import '../../../../utils/enum/app_enum.dart';
+import '../../merchant_new_campaign/shared/response/merchant_campaign_detail_model.dart';
+import '../../merchant_new_campaign/shared/service/merchant_campaign_service.dart';
 import '../helper/merchant_campaign_detail_helper.dart';
 
 class MerchantCampaignDetailsController extends GetxController {
+  final MerchantCampaignService _service;
+
+  final String campaignId;
+
+  MerchantCampaignDetailsController(this._service, this.campaignId);
+
   static MerchantCampaignDetailsController get to => Get.find();
 
   final selectedTab = MerchantCampaignDetailsTab.overview.obs;
+
+  final status = ApiStatus.loading.obs;
+
+  final errorMessage = RxnString();
+
+  final campaign = Rxn<MerchantCampaignDetailsModel>();
 
   void changeTab(MerchantCampaignDetailsTab tab) {
     selectedTab.value = tab;
   }
 
-  //-----------------------------------------
-  // Mock Campaign
-  //-----------------------------------------
+  @override
+  void onInit() {
+    super.onInit();
 
-  final campaign = {
-    "title": "Buy 1 Get 1 Free Promo",
-    "type": "Offer Campaign",
-    "price": "\$35",
-    "status": MerchantCampaignStatus.live,
-    "budget": "\$500",
-    "creators": "3 required",
-    "package": "Standard",
-    "duration": "14 days left",
-    "currentStep": 3,
-  };
-
-  //-----------------------------------------
-  // Timeline
-  //-----------------------------------------
-
-  final List<String> _steps = const [
-    "Campaign submitted",
-    "Admin approval",
-    "Influencers assigned",
-    "Content review",
-    "Published",
-  ];
-
-  List<MerchantCampaignTimelineStep> get timeline {
-    final current = campaign["currentStep"] as int;
-
-    return List.generate(_steps.length, (index) {
-      late TimelineStepStatus status;
-
-      if (index < current) {
-        status = TimelineStepStatus.completed;
-      } else if (index == current) {
-        status = TimelineStepStatus.current;
-      } else {
-        status = TimelineStepStatus.pending;
-      }
-
-      return MerchantCampaignTimelineStep(title: _steps[index], status: status);
-    });
+    loadDetails(campaignId);
   }
 
+  Future<void> loadDetails(String id) async {
+    try {
+      status.value = ApiStatus.loading;
+
+      final response = await _service.getCampaignDetails(id);
+
+      if (response.success) {
+        campaign.value = response.data;
+
+        status.value = ApiStatus.completed;
+      } else {
+        status.value = ApiStatus.error;
+
+        errorMessage.value = response.message;
+      }
+    } catch (e) {
+      status.value = ApiStatus.error;
+
+      errorMessage.value = e.toString();
+    }
+  }
+
+  // mock data
   final influencers = [
     {
       "name": "Ahmed Hassan",
@@ -78,7 +76,6 @@ class MerchantCampaignDetailsController extends GetxController {
       "assigned": true,
     },
   ];
-
   final contents = [
     {
       "creator": "Ahmed Hassan",

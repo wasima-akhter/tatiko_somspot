@@ -86,8 +86,8 @@ class _InfluencerTaskScreenState extends State<InfluencerTaskScreen>
     ];
     return SafeArea(
       top: false,
-      child: ScaffoldWrapper(
-        backgroundColor: AppColors.softBackgroundColor,
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColorNew,
         body: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
