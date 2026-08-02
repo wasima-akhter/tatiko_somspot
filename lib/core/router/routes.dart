@@ -3,6 +3,7 @@ import 'package:som_spot/features/auth/active/active_otp_screen.dart';
 import 'package:som_spot/features/auth/complete_business_profile/view/application_submitted_screen.dart';
 import 'package:som_spot/features/auth/complete_business_profile/view/application_under_review_screen.dart';
 import 'package:som_spot/features/auth/complete_business_profile/view/complete_business_profile_screen.dart';
+import 'package:som_spot/features/auth/completed_profile_influencer/view/influencer_info_complete_screen.dart';
 import 'package:som_spot/features/auth/forget/forget_password_screen.dart';
 import 'package:som_spot/features/auth/forget_otp/forgetotp_screen.dart';
 import 'package:som_spot/features/auth/intro/choose_language/view/choose_language_screen.dart';
@@ -45,6 +46,7 @@ import '../../features/auth/complete_business_profile/binding/complete_business_
 import '../../features/auth/completed_profile_customer_merchandiser/binding/complete_profile_binding.dart';
 import '../../features/auth/completed_profile_customer_merchandiser/view/completed_profile_customer_args.dart';
 import '../../features/auth/completed_profile_customer_merchandiser/view/completed_profile_customer_screen.dart';
+import '../../features/auth/completed_profile_influencer/binding/influencer_complete_profile_binding.dart';
 import '../../features/auth/completed_profile_influencer/view/completed_profile_influencer_screen.dart';
 import '../../features/auth/core/binding/auth_binding.dart';
 import '../../features/auth/intro/choose_role/view/choose_role_screen.dart';
@@ -76,7 +78,7 @@ class AppRouter {
       GlobalKey<NavigatorState>();
 
   static final GoRouter initRoute = GoRouter(
-    initialLocation: RoutePath.navigationPages.addBasePath,
+    initialLocation: RoutePath.splashScreen.addBasePath,
 
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
@@ -319,7 +321,23 @@ class AppRouter {
         path: RoutePath.completedProfileInfluencerScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const CompletedProfileInfluencerScreen(),
+            child: BindingWrapper(
+              binding: InfluencerCompleteProfileBinding(),
+              child: const CompletedProfileInfluencerScreen(),
+            ),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutePath.influencerInfoComplete,
+        path: RoutePath.influencerInfoComplete.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: BindingWrapper(
+              binding: InfluencerCompleteProfileBinding(),
+              child: const InfluencerInfoCompleteScreen(),
+            ),
             state: state,
           );
         },

@@ -51,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = AuthController.to;
-    return ScaffoldWrapper(
+    return Scaffold(
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: Padding(

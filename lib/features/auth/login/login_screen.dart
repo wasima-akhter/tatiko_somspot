@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = AuthController.to;
-    return ScaffoldWrapper(
+    return Scaffold(
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: Padding(

@@ -18,7 +18,7 @@ class CompletedProfileCustomerScreen extends StatelessWidget {
 
     controller.initialize(email: args.email);
     final formKey = GlobalKey<FormState>();
-    return ScaffoldWrapper(
+    return Scaffold(
       backgroundColor: AppColors.backgroundColorNew,
 
       body: SafeArea(

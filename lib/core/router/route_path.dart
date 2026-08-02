@@ -21,6 +21,7 @@ class RoutePath {
       'completedProfileCustomerScreen';
   static const String completedProfileInfluencerScreen =
       'completedProfileInfluencerScreen';
+  static const String influencerInfoComplete = 'influencerInfoComplete';
   static const String applicationSubmittedScreen = 'applicationSubmittedScreen';
   static const String applicationUnderReviewScreen =
       'applicationUnderReviewScreen';

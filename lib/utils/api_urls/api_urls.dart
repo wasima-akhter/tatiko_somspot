@@ -45,6 +45,8 @@ class ApiUrls {
 
   static String userProfile() => '$base/user/profile';
 
+  static String influencerProfile() => "$base/creator/profile";
+
   // business profile
   static String createBusiness() => '$base/business/create';
   static String updateBusiness() => '$base/business/update';

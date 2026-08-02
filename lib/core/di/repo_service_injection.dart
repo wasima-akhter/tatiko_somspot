@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:som_spot/core/service/datasource/remote/api_client.dart';
 import 'package:som_spot/core/service/network/network_checker.dart';
+import 'package:som_spot/features/auth/completed_profile_influencer/service/influencer_complete_profile_service.dart';
 import 'package:som_spot/features/merchant/listings/repository/manage_business_repository.dart';
 import 'package:som_spot/features/merchant/listings/service/manage_listing_service.dart';
 import 'package:som_spot/features/merchant/merchant_new_campaign/shared/repository/merchant_campaign_repository.dart';
@@ -10,6 +11,7 @@ import '../../features/auth/complete_business_profile/repository/complete_busine
 import '../../features/auth/complete_business_profile/service/complete_business_profile_service.dart';
 import '../../features/auth/completed_profile_customer_merchandiser/repository/complete_profile_repository.dart';
 import '../../features/auth/completed_profile_customer_merchandiser/service/complete_profile_service.dart';
+import '../../features/auth/completed_profile_influencer/repository/influencer_complete_profile_repository.dart';
 import '../../features/auth/core/repository/auth_repository.dart';
 import '../../features/auth/core/service/auth_service.dart';
 import '../../features/core/business/repository/business-repository.dart';
@@ -79,7 +81,7 @@ Future<void> initDependencies() async {
   );
 
   // =====================
-  // Complete Business Profile
+  // Complete Business Profile --> merchant
   // =====================
 
   sl.registerLazySingleton<CompleteBusinessProfileRepository>(
@@ -89,6 +91,20 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<CompleteBusinessProfileService>(
     () =>
         CompleteBusinessProfileService(sl<CompleteBusinessProfileRepository>()),
+  );
+
+  // =====================
+  // Complete info Profile --> INFLUENCER
+  // =====================
+
+  sl.registerLazySingleton<InfluencerCompleteProfileRepository>(
+    () => InfluencerCompleteProfileRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<InfluencerCompleteProfileService>(
+    () => InfluencerCompleteProfileService(
+      sl<InfluencerCompleteProfileRepository>(),
+    ),
   );
 
   // =====================

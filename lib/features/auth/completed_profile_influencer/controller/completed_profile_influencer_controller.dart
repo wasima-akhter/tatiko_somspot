@@ -1,175 +1,80 @@
 import 'dart:async';
-import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../../core/router/route_path.dart';
 import '../../../../core/router/routes.dart';
 import '../../../../helper/toast/toast_helper.dart';
+import '../../../core/category/controller/category_controller.dart';
+import '../../../core/category/model/category_model.dart';
+import '../../../core/location/controller/business_location_controller.dart';
+import '../model/influencer_complete_profile_request.dart';
+import '../model/influencer_info_profile_request.dart';
+import '../service/influencer_complete_profile_service.dart';
 
 class CompletedProfileInfluencerController extends GetxController {
-  final RxnString selectedInfluencerType = RxnString();
+  final InfluencerCompleteProfileService _service;
 
-  final influencerTypes = <String>[
-    "Fashion",
-    "Beauty",
-    "Lifestyle",
-    "Travel",
-    "Food",
-    "Fitness",
-    "Technology",
-    "Gaming",
-    "Education",
-    "Entertainment",
-  ];
+  CompletedProfileInfluencerController(this._service);
 
-  // ----------------------------------
-  // Location
-  // ----------------------------------
+  static CompletedProfileInfluencerController get to => Get.find();
 
-  final mapController = MapController();
+  // ---------------------------------------------------------------------------
+  // Basic Profile
+  // ---------------------------------------------------------------------------
 
-  final selectedLatLng = const LatLng(23.8103, 90.4125).obs;
+  final nameController = TextEditingController();
 
-  final isMapSearching = false.obs;
-  final isSearchingSuggestions = false.obs;
+  final phoneController = TextEditingController();
 
-  final addressController = TextEditingController();
-  final cityController = TextEditingController();
+  // ---------------------------------------------------------------------------
+  // Creator Profile
+  // ---------------------------------------------------------------------------
 
-  final suggestions = <Map<String, dynamic>>[].obs;
+  final bioController = TextEditingController();
 
-  Timer? _debounce;
+  final followerCountController = TextEditingController();
 
-  void onAddressChanged(String value) {
-    _debounce?.cancel();
+  final tiktokController = TextEditingController();
 
-    if (value.trim().isEmpty) {
-      suggestions.clear();
-      return;
-    }
+  final instagramController = TextEditingController();
 
-    _debounce = Timer(
-      const Duration(milliseconds: 500),
-      () => searchSuggestions(value),
-    );
-  }
+  final facebookController = TextEditingController();
 
-  Future<void> searchSuggestions(String query) async {
-    if (query.trim().isEmpty) return;
+  // Selected Influencer Category ID
+  final selectedInfluencerCategoryId = "".obs;
 
-    isSearchingSuggestions.value = true;
+  // API Categories
+  RxList<CategoryModel> get influencerCategories =>
+      CategoryController.to.categories;
 
-    try {
-      final response = await http.get(
-        Uri.parse(
-          'https://nominatim.openstreetmap.org/search'
-          '?q=$query&format=jsonv2&addressdetails=1&limit=5',
-        ),
-        headers: {'User-Agent': 'SomSpot'},
-      );
-
-      if (response.statusCode == 200) {
-        suggestions.assignAll(
-          List<Map<String, dynamic>>.from(jsonDecode(response.body)),
-        );
-      } else {
-        AppToast.error(message: "Failed to search location");
-      }
-    } catch (_) {
-      AppToast.error(message: "Failed to search location");
-    } finally {
-      isSearchingSuggestions.value = false;
-    }
-  }
-
-  Future<void> selectSuggestion(Map<String, dynamic> item) async {
-    suggestions.clear();
-
-    final lat = double.parse(item["lat"]);
-    final lon = double.parse(item["lon"]);
-
-    final point = LatLng(lat, lon);
-
-    addressController.text = item["display_name"] ?? "";
-
-    cityController.text =
-        item["address"]?["city"] ??
-        item["address"]?["town"] ??
-        item["address"]?["village"] ??
+  // Selected category name (for display)
+  String get selectedInfluencerCategoryName {
+    return influencerCategories
+            .firstWhereOrNull((e) => e.id == selectedInfluencerCategoryId.value)
+            ?.name ??
         "";
-
-    updateMapPosition(point);
   }
 
-  Future<void> updateMapPosition(LatLng point) async {
-    isMapSearching.value = true;
-
-    try {
-      selectedLatLng.value = point;
-      mapController.move(point, 16);
-
-      final response = await http.get(
-        Uri.parse(
-          "https://nominatim.openstreetmap.org/reverse"
-          "?lat=${point.latitude}"
-          "&lon=${point.longitude}"
-          "&format=jsonv2",
-        ),
-        headers: {"User-Agent": "SomSpot"},
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-
-        addressController.text = data["display_name"] ?? "";
-
-        final address = data["address"] ?? {};
-
-        cityController.text =
-            address["city"] ??
-            address["town"] ??
-            address["village"] ??
-            address["suburb"] ??
-            "";
-      } else {
-        AppToast.error(message: "Failed to get location details");
-      }
-    } catch (_) {
-      AppToast.error(message: "Failed to get location details");
-    } finally {
-      isMapSearching.value = false;
-    }
+  void selectInfluencerCategory(String? id) {
+    selectedInfluencerCategoryId.value = id ?? "";
   }
 
-  Future<void> searchLocationFromAddress() async {
-    final address = addressController.text.trim();
+  // ---------------------------------------------------------------------------
+  // Location
+  // ---------------------------------------------------------------------------
 
-    // if (address.isEmpty) {
-    //   AppToast.warning(message: "Please enter an address to search");
-    //   return;
-    // }
+  BusinessLocationController get location => BusinessLocationController.to;
 
-    await searchSuggestions(address);
-  }
-
-  @override
-  void onClose() {
-    _debounce?.cancel();
-    addressController.dispose();
-    cityController.dispose();
-    super.onClose();
-  }
-
-  // Existing methods...
+  // ---------------------------------------------------------------------------
+  // Profile Image
+  // ---------------------------------------------------------------------------
 
   final profileImagePath = Rx<String?>(null);
-  final isLoading = false.obs;
 
   final ImagePicker _picker = ImagePicker();
 
@@ -186,20 +91,48 @@ class CompletedProfileInfluencerController extends GetxController {
     }
   }
 
-  // validations:
-  bool validateProfile() {
+  // ---------------------------------------------------------------------------
+  // Loading
+  // ---------------------------------------------------------------------------
+
+  final isLoading = false.obs;
+
+  // ---------------------------------------------------------------------------
+  // Lifecycle
+  // ---------------------------------------------------------------------------
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    location.reset(initialLatLng: const LatLng(23.8103, 90.4125));
+
+    if (CategoryController.to.categories.isEmpty) {
+      CategoryController.to.fetchCategories();
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Validation
+  // ---------------------------------------------------------------------------
+
+  bool validateBasicProfile() {
+    if (nameController.text.trim().isEmpty) {
+      AppToast.error(message: "Please enter your name");
+      return false;
+    }
+
+    if (phoneController.text.trim().isEmpty) {
+      AppToast.error(message: "Please enter your phone number");
+      return false;
+    }
+
     if (profileImagePath.value == null) {
       AppToast.error(message: "Please upload your profile photo");
       return false;
     }
 
-    if (selectedInfluencerType.value == null ||
-        selectedInfluencerType.value!.isEmpty) {
-      AppToast.error(message: "Please select an influencer type");
-      return false;
-    }
-
-    if (addressController.text.trim().isEmpty) {
+    if (location.addressController.text.trim().isEmpty) {
       AppToast.error(message: "Please select your location");
       return false;
     }
@@ -207,21 +140,134 @@ class CompletedProfileInfluencerController extends GetxController {
     return true;
   }
 
-  Future<void> finishSetup() async {
-    if (!validateProfile()) {
-      return;
+  bool validateCreatorProfile() {
+    if (selectedInfluencerCategoryId.value.isEmpty) {
+      AppToast.error(message: "Please select influencer type");
+      return false;
     }
+
+    if (bioController.text.trim().isEmpty) {
+      AppToast.error(message: "Please enter your bio");
+      return false;
+    }
+
+    if (followerCountController.text.trim().isEmpty) {
+      AppToast.error(message: "Please enter follower count");
+      return false;
+    }
+
+    return true;
+  }
+  // ---------------------------------------------------------------------------
+  // API - Step 1 Basic Profile
+  // ---------------------------------------------------------------------------
+
+  Future<void> completeBasicProfile() async {
+    if (!validateBasicProfile()) return;
 
     try {
       isLoading.value = true;
 
-      // upload API here
+      final result = await _service.completeProfile(
+        InfluencerCompleteProfileRequest(
+          name: nameController.text.trim(),
 
-      await Future.delayed(const Duration(seconds: 1));
+          address: location.addressController.text.trim(),
+
+          phoneNumber: phoneController.text.trim(),
+
+          profileImage: File(profileImagePath.value!),
+        ),
+      );
+
+      if (!result.success) {
+        AppToast.error(message: result.message);
+        return;
+      }
+
+      AppToast.success(message: result.message);
+
+      AppRouter.route.pushNamed(RoutePath.influencerInfoComplete);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // API - Step 2 Creator Profile
+  // ---------------------------------------------------------------------------
+
+  Future<void> completeCreatorProfile() async {
+    if (!validateCreatorProfile()) return;
+
+    try {
+      isLoading.value = true;
+
+      final result = await _service.completeCreatorProfile(
+        InfluencerInfoProfileRequest(
+          category: selectedInfluencerCategoryId.value,
+
+          bio: bioController.text.trim(),
+
+          followerCount: int.parse(followerCountController.text.trim()),
+
+          socials: [
+            if (tiktokController.text.trim().isNotEmpty)
+              CreatorSocialRequest(
+                platform: "tiktok",
+                handle: tiktokController.text.trim(),
+                url:
+                    "https://tiktok.com/${tiktokController.text.trim().replaceFirst('@', '')}",
+              ),
+
+            if (instagramController.text.trim().isNotEmpty)
+              CreatorSocialRequest(
+                platform: "instagram",
+                handle: instagramController.text.trim(),
+              ),
+
+            if (facebookController.text.trim().isNotEmpty)
+              CreatorSocialRequest(
+                platform: "facebook",
+                handle: facebookController.text.trim(),
+              ),
+          ],
+        ),
+      );
+
+      if (!result.success) {
+        AppToast.error(message: result.message);
+        return;
+      }
+
+      AppToast.success(message: result.message);
 
       AppRouter.route.goNamed(RoutePath.navigationPages);
     } finally {
       isLoading.value = false;
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Dispose
+  // ---------------------------------------------------------------------------
+
+  @override
+  void onClose() {
+    nameController.dispose();
+
+    phoneController.dispose();
+
+    bioController.dispose();
+
+    followerCountController.dispose();
+
+    tiktokController.dispose();
+
+    instagramController.dispose();
+
+    facebookController.dispose();
+
+    super.onClose();
   }
 }

@@ -58,7 +58,7 @@ class _ForgetOtpScreenState extends State<ForgetOtpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWrapper(
+    return Scaffold(
       backgroundColor: AppColors.backgroundColorNew,
       body: SafeArea(
         child: Padding(
