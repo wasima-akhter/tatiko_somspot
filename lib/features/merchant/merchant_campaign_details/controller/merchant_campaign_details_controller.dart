@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../share/widgets/paginator/paginator.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../merchant_new_campaign/shared/response/merchant_campaign_detail_model.dart';
 import '../../merchant_new_campaign/shared/service/merchant_campaign_service.dart';
@@ -24,13 +26,24 @@ class MerchantCampaignDetailsController extends GetxController {
 
   void changeTab(MerchantCampaignDetailsTab tab) {
     selectedTab.value = tab;
+
+    switch (tab) {
+      case MerchantCampaignDetailsTab.overview:
+        refreshOverview();
+        break;
+
+      case MerchantCampaignDetailsTab.influencers:
+        refreshApplications();
+        break;
+
+      case MerchantCampaignDetailsTab.content:
+        // refreshContents();
+        break;
+    }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-
-    loadDetails(campaignId);
+  void refreshOverview() async {
+    await loadDetails(campaignId);
   }
 
   Future<void> loadDetails(String id) async {
@@ -52,6 +65,101 @@ class MerchantCampaignDetailsController extends GetxController {
       status.value = ApiStatus.error;
 
       errorMessage.value = e.toString();
+    }
+  }
+
+  // ===============================
+  // Campaign Applications Pagination
+  // ===============================
+
+  late final Paginator<CampaignApplicationModel> applicationsPaginator;
+
+  final ScrollController applicationScrollController = ScrollController();
+
+  List<CampaignApplicationModel> get applications =>
+      applicationsPaginator.items;
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    applicationsPaginator = Paginator<CampaignApplicationModel>(
+      fetchPage: (page, limit) async {
+        try {
+          final response = await _service.getCampaignApplications(
+            campaignId: campaignId,
+            page: page,
+            limit: limit,
+          );
+
+          final data = response.data;
+
+          if (response.success && data != null) {
+            return data;
+          }
+
+          throw Exception(response.message ?? "Failed to load applications");
+        } catch (e) {
+          rethrow;
+        }
+      },
+    );
+
+    applicationScrollController.addListener(() {
+      if (applicationScrollController.position.pixels >=
+          applicationScrollController.position.maxScrollExtent - 200) {
+        loadMoreApplications();
+      }
+    });
+
+    loadDetails(campaignId);
+
+    loadApplications();
+  }
+
+  // Initial load
+  Future<void> loadApplications() async {
+    await applicationsPaginator.loadInitial();
+  }
+
+  // Pagination
+  Future<void> loadMoreApplications() async {
+    await applicationsPaginator.loadMore();
+  }
+
+  // Refresh
+  Future<void> refreshApplications() async {
+    await applicationsPaginator.refresh();
+  }
+
+  @override
+  void onClose() {
+    applicationScrollController.dispose();
+    applicationsPaginator.dispose();
+
+    super.onClose();
+  }
+
+  //
+  final creatorStatus = ApiStatus.loading.obs;
+
+  final creator = Rxn<MerchantCreatorModel>();
+
+  Future<void> loadCreator(String userId) async {
+    try {
+      creatorStatus.value = ApiStatus.loading;
+
+      final response = await _service.assignedInfluencerDetail(userId);
+
+      if (response.success) {
+        creator.value = response.data;
+
+        creatorStatus.value = ApiStatus.completed;
+      } else {
+        creatorStatus.value = ApiStatus.error;
+      }
+    } catch (e) {
+      creatorStatus.value = ApiStatus.error;
     }
   }
 

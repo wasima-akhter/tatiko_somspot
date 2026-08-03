@@ -120,4 +120,12 @@ class ApiUrls {
   static String merchantCampaignDetails() {
     return "$base/campaign/get";
   }
+
+  static String campaignApplications() {
+    return "$base/campaign/applications";
+  }
+
+  static String merchantCampaignAssignedInfluencerDetail() {
+    return "$base/creator/merchant/get";
+  }
 }

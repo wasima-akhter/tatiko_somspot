@@ -87,4 +87,61 @@ class MerchantCampaignService {
       return ApiResponse.failure(message: "Something went wrong");
     }
   }
+
+  //
+  Future<ApiResponse<PaginatedResult<CampaignApplicationModel>>>
+  getCampaignApplications({
+    required String campaignId,
+    int page = 1,
+    int limit = 10,
+  }) async {
+    try {
+      final response = await _repository.getCampaignApplications(
+        campaignId: campaignId,
+        page: page,
+        limit: limit,
+      );
+
+      final data = response.data["data"];
+
+      return ApiResponse.success(
+        data: PaginatedResult<CampaignApplicationModel>(
+          data: List<CampaignApplicationModel>.from(
+            (data["result"] ?? []).map(
+              (e) => CampaignApplicationModel.fromJson(e),
+            ),
+          ),
+
+          meta: PaginationMeta.fromJson(data["meta"]),
+        ),
+      );
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Get Campaign Applications Error $e");
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
+
+  Future<ApiResponse<MerchantCreatorModel>> assignedInfluencerDetail(
+    String userId,
+  ) async {
+    try {
+      final response = await _repository.assignedInfluencerDetail(userId);
+
+      return ApiParser.parse<MerchantCreatorModel>(
+        response,
+        mapper: (json) => MerchantCreatorModel.fromJson(json),
+      );
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Get Creator Error $e");
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
 }

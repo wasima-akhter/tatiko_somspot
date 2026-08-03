@@ -13,7 +13,7 @@ class BusinessModel {
   final double ratingAvg;
   final int ratingCount;
   final bool isOpen;
-  final String categoryId;
+  final BusinessCategory? category;
   final List<String> gallery;
   final List<BusinessHourModel> openingHours;
 
@@ -34,7 +34,7 @@ class BusinessModel {
     required this.ratingAvg,
     required this.ratingCount,
     required this.isOpen,
-    required this.categoryId,
+    this.category,
     required this.gallery,
     required this.openingHours,
     required this.latitude,
@@ -61,9 +61,9 @@ class BusinessModel {
       ratingCount: json["ratingCount"] ?? 0,
       isOpen: json["isOpen"] ?? false,
 
-      categoryId: json["category"] ?? "",
-
-      gallery: List<String>.from(json["gallery"] ?? []),
+      category: json["category"] == null
+          ? null
+          : BusinessCategory.fromJson(json["category"]),
 
       openingHours: (json["openingHours"] as List<dynamic>? ?? [])
           .map((e) => BusinessHourModel.fromJson(e))
@@ -76,6 +76,36 @@ class BusinessModel {
       latitude: coordinates.length > 1 ? (coordinates[1] as num).toDouble() : 0,
 
       city: json["timezone"] ?? "",
+      gallery: List<String>.from(json["gallery"] ?? []),
+    );
+  }
+}
+
+class BusinessCategory {
+  final String id;
+  final String name;
+  final String slug;
+  final String icon;
+
+  BusinessCategory({
+    required this.id,
+    required this.name,
+    required this.slug,
+    required this.icon,
+  });
+
+  factory BusinessCategory.fromJson(dynamic json) {
+    if (json is String) {
+      return BusinessCategory(id: json, name: "", slug: "", icon: "");
+    }
+
+    final map = Map<String, dynamic>.from(json);
+
+    return BusinessCategory(
+      id: map["_id"] ?? "",
+      name: map["name"] ?? "",
+      slug: map["slug"] ?? "",
+      icon: map["icon"] ?? "",
     );
   }
 }

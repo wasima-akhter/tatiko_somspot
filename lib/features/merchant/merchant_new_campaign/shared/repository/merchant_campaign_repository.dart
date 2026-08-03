@@ -19,6 +19,7 @@ class MerchantCampaignRepository {
     String status = "all",
   }) {
     return _apiClient.get(
+      showResponse: true,
       url: ApiUrls.merchantCampaigns(),
 
       queryParams: {'page': page, 'limit': limit, 'status': status},
@@ -29,6 +30,27 @@ class MerchantCampaignRepository {
     return _apiClient.get(
       url: ApiUrls.merchantCampaignDetails(),
       queryParams: {"campaignId": campaignId},
+    );
+  }
+
+  //
+  Future<Response> getCampaignApplications({
+    required String campaignId,
+    int page = 1,
+    int limit = 10,
+  }) {
+    return _apiClient.get(
+      showResponse: true,
+      url: ApiUrls.campaignApplications(),
+      queryParams: {"campaignId": campaignId, "page": page, "limit": limit},
+    );
+  }
+
+  Future<Response> assignedInfluencerDetail(String userId) {
+    return _apiClient.get(
+      showResponse: true,
+      url: ApiUrls.merchantCampaignAssignedInfluencerDetail(),
+      queryParams: {"userId": userId},
     );
   }
 }

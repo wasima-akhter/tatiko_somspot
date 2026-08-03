@@ -7,6 +7,7 @@ class ApiLogger {
     dynamic response,
     dynamic parsedData,
     Map<String, dynamic>? queryParams,
+    String? token,
     bool enabled = false,
   }) {
     if (!enabled) return;
@@ -19,6 +20,10 @@ $url
 
 QUERY PARAMS:
 ${_pretty(queryParams)}
+
+
+TOKEN:
+${token ?? "N/A"}
 
 
 REQUEST:

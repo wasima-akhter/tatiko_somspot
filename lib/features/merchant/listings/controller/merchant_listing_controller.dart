@@ -347,7 +347,7 @@ class MerchantListingController extends GetxController {
     phoneController.text = business.phone;
     whatsappController.text = business.whatsapp;
 
-    selectedCategoryId.value = business.categoryId;
+    selectedCategoryId.value = business.category?.id ?? '';
 
     locationController.reset(
       address: business.address,

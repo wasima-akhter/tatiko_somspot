@@ -9,7 +9,6 @@ import 'package:som_spot/helper/launcher/launcher_helper.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 
-import '../../../features/merchant/merchant_campaign_details/widgets/merchant_campaign_influencer_card.dart';
 import 'widgets/app_rating_bottom_sheet.dart';
 import 'widgets/influencer_request_bottom_sheet.dart';
 
@@ -54,13 +53,13 @@ void showRatingBottomSheet(BuildContext context) {
 
 void showInfluencerRequestBottomSheet(
   BuildContext context, {
-  required InfluencerModel influencer,
+  required String creatorId,
 }) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (_) => InfluencerRequestBottomSheet(influencer: influencer),
+    builder: (_) => InfluencerRequestBottomSheet(creatorId: creatorId),
   );
 }
 

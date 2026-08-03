@@ -1,23 +1,29 @@
 import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/custom_buttom_sheet/custom_buttom_sheet.dart';
+import '../../../../share/widgets/network_image/custom_network_image.dart';
+import '../../merchant_new_campaign/shared/response/merchant_campaign_detail_model.dart';
 
 class MerchantCampaignInfluencerCard extends StatelessWidget {
-  final Map<String, dynamic> data;
+  final CampaignApplicationModel application;
 
-  const MerchantCampaignInfluencerCard({super.key, required this.data});
+  const MerchantCampaignInfluencerCard({super.key, required this.application});
 
   @override
   Widget build(BuildContext context) {
-    const mockInfluencer = InfluencerModel(
-      name: "Ahmed Hassan",
-      category: "Food Creator",
-      image: "https://i.pravatar.cc/300?img=12",
-      followers: "50K",
-      engagement: "4.2%",
-      completedCampaigns: "12",
-      pitch:
-          "I run the biggest food review page in Mogadishu. My audience loves discovering new restaurants and BOGO deals always perform great with them.",
+    final creator = application.creator;
+
+    final influencer = InfluencerModel(
+      name: creator.name ?? "",
+      category: creator.category?.name ?? "",
+      image: creator.profileImage ?? "",
+      followers: "0",
+      engagement: "0%",
+      completedCampaigns: "0",
+      pitch: "",
     );
+
+    debugPrint('creator.profileImage: ${creator.profileImage}');
+
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
@@ -30,7 +36,12 @@ class MerchantCampaignInfluencerCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 24.r,
-                backgroundImage: NetworkImage(data["avatar"]),
+                child: (creator.profileImage.isNotEmpty)
+                    ? CustomNetworkImage(
+                        imageUrl: creator.profileImage,
+                        boxShape: BoxShape.circle,
+                      )
+                    : SizedBox.shrink(),
               ),
 
               Gap(12.w),
@@ -40,7 +51,7 @@ class MerchantCampaignInfluencerCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      data["name"],
+                      creator.name ?? "",
                       style: context.titleSmall.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
@@ -49,7 +60,7 @@ class MerchantCampaignInfluencerCard extends StatelessWidget {
                     Gap(2.h),
 
                     Text(
-                      "• ${data["category"]}",
+                      "• ${creator.category?.name ?? ""}",
                       style: context.bodySmall.copyWith(
                         color: AppColors.subtitleTextColor,
                       ),
@@ -82,9 +93,10 @@ class MerchantCampaignInfluencerCard extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(20.r),
               onTap: () {
+                if (creator.id.isEmpty) return;
                 showInfluencerRequestBottomSheet(
                   context,
-                  influencer: mockInfluencer,
+                  creatorId: creator.id,
                 );
               },
               child: Container(

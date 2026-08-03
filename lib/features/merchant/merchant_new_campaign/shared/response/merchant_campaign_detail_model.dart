@@ -107,3 +107,104 @@ class MerchantCampaignTimelineStepModel {
     );
   }
 }
+
+/// INFLUENCER List
+class CampaignApplicationModel {
+  final String id;
+  final String status;
+  final String? caption;
+  final String? platform;
+
+  final CampaignCreatorModel creator;
+
+  CampaignApplicationModel({
+    required this.id,
+    required this.status,
+    this.caption,
+    this.platform,
+    required this.creator,
+  });
+
+  factory CampaignApplicationModel.fromJson(Map<String, dynamic> json) {
+    return CampaignApplicationModel(
+      id: json["_id"] ?? "",
+      status: json["status"] ?? "",
+      caption: json["caption"],
+      platform: json["platform"],
+
+      creator: CampaignCreatorModel.fromJson(json["creator"] ?? {}),
+    );
+  }
+}
+
+class CampaignCreatorModel {
+  final String id;
+  final String name;
+  final String profileImage;
+  final BusinessCategory? category;
+
+  CampaignCreatorModel({
+    required this.id,
+    required this.name,
+    required this.profileImage,
+    this.category,
+  });
+
+  factory CampaignCreatorModel.fromJson(Map<String, dynamic> json) {
+    return CampaignCreatorModel(
+      id: json["_id"] ?? "",
+      name: json["name"] ?? "",
+      profileImage: json["profile_image"] ?? "",
+      category: json["category"] == null
+          ? null
+          : BusinessCategory.fromJson(json["category"]),
+    );
+  }
+}
+
+// influencer info detail in bottom sheet
+class MerchantCreatorModel {
+  final String id;
+  final String name;
+  final String email;
+  final String image;
+  final int followerCount;
+  final double engagementRate;
+  final String category;
+  final String bio;
+  final int activeCount;
+  final int pendingCount;
+  final int doneCount;
+
+  MerchantCreatorModel({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.image,
+    required this.followerCount,
+    required this.engagementRate,
+    required this.category,
+    required this.bio,
+    required this.activeCount,
+    required this.pendingCount,
+    required this.doneCount,
+  });
+
+  factory MerchantCreatorModel.fromJson(Map<String, dynamic> json) {
+    final user = json['user'];
+
+    return MerchantCreatorModel(
+      id: json['_id'],
+      name: user['name'] ?? "",
+      email: user['email'] ?? "",
+      image: user['profile_image'] ?? "",
+      followerCount: json['followerCount'] ?? 0,
+      engagementRate: (json['engagementRate'] ?? 0).toDouble(),
+      category: json['category']?['name'] ?? "",
+      bio: json['bio'] ?? "",
+      activeCount: json['activeCount'] ?? 0,
+      pendingCount: json['pendingCount'] ?? 0,
+      doneCount: json['doneCount'] ?? 0,
+    );
+  }
+}

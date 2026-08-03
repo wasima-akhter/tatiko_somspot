@@ -1,7 +1,9 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
+import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 
 import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
+import '../../../../utils/enum/app_enum.dart';
 import '../controller/merchant_campaign_details_controller.dart';
 import 'merchant_campaign_influencer_card.dart';
 
@@ -13,18 +15,24 @@ class MerchantCampaignInfluencersTab
   Widget build(BuildContext context) {
     return Obx(
       () => ApiStatusBuilder(
-        status: controller.status.value,
+        status: controller.applicationsPaginator.status.value,
 
-        errorMessage: controller.errorMessage.value,
+        errorMessage: controller.applicationsPaginator.errorMessage.value,
 
         onRetry: () {
-          controller.loadDetails(controller.campaignId);
+          controller.refreshApplications();
         },
+
+        isLoadingMore:
+            controller.applicationsPaginator.loadMoreStatus.value ==
+            ApiStatus.loading,
+
+        hasMore: controller.applicationsPaginator.hasMore.value,
 
         loadingWidget: _loading(),
 
         builder: (context) {
-          final influencers = controller.influencers ?? [];
+          final applications = controller.applications;
 
           return Column(
             children: [
@@ -32,10 +40,9 @@ class MerchantCampaignInfluencersTab
 
               Gap(14.h),
 
-              if (influencers.isEmpty)
+              if (applications.isEmpty)
                 Padding(
                   padding: EdgeInsets.only(top: 30.h),
-
                   child: Text(
                     "No creators assigned yet",
                     style: context.bodyMedium.copyWith(
@@ -44,12 +51,40 @@ class MerchantCampaignInfluencersTab
                   ),
                 )
               else
-                ...influencers.map(
-                  (e) => Padding(
-                    padding: EdgeInsets.only(bottom: 14.h),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
 
-                    child: MerchantCampaignInfluencerCard(data: e),
-                  ),
+                  controller: controller.applicationScrollController,
+
+                  itemCount: applications.length + 1,
+
+                  itemBuilder: (_, index) {
+                    if (index == applications.length) {
+                      if (controller
+                              .applicationsPaginator
+                              .loadMoreStatus
+                              .value ==
+                          ApiStatus.loading) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20.h),
+                          child: const Center(child: LoadingWidget()),
+                        );
+                      }
+
+                      return const SizedBox();
+                    }
+
+                    final application = applications[index];
+
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 14.h),
+
+                      child: MerchantCampaignInfluencerCard(
+                        application: application,
+                      ),
+                    );
+                  },
                 ),
             ],
           );
@@ -116,7 +151,6 @@ class MerchantCampaignInfluencersTab
           Expanded(
             child: Text(
               "These creators were assigned by SomSpot Admin. Assignment cannot be changed from the merchant app.",
-
               style: context.bodySmall,
             ),
           ),

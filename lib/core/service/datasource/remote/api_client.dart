@@ -106,7 +106,13 @@ class ApiClient {
         ),
       );
 
-      log(url, response, queryParams: queryParams, showResponse: showResponse);
+      log(
+        url,
+        response,
+        token: token ?? AppStorage.to.accessToken,
+        queryParams: queryParams,
+        showResponse: showResponse,
+      );
 
       return response;
     } catch (e) {
@@ -370,7 +376,9 @@ class ApiClient {
 
   void log(
     String url,
+
     Response response, {
+    String? token,
     Map<String, dynamic>? queryParams,
     dynamic request,
     dynamic parsedData,
@@ -378,6 +386,7 @@ class ApiClient {
   }) {
     ApiLogger.showResponse(
       url: url,
+      token: token,
       response: response,
       request: request,
       parsedData: parsedData,
