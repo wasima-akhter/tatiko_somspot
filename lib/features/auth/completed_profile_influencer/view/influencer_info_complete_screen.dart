@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
@@ -94,6 +96,7 @@ class InfluencerInfoCompleteScreen extends StatelessWidget {
                   title: "Follower Count",
                   hintText: "Enter total followers",
                   keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   prefixIcon: Icon(
                     Iconsax.profile_2user,
                     size: 20.sp,

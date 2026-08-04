@@ -1,3 +1,5 @@
+import 'package:som_spot/helper/text_utils/string_extension.dart';
+
 import '../../../../share/controller/screen_export.dart';
 import '../../merchant_campaigns/modules/merchant_campaign_tag.dart';
 import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
@@ -33,16 +35,33 @@ class MerchantCampaignDetailsScreen extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Text(
-                            "Buy 1 Get 1 Free Promo",
-                            style: context.headlineSmall.copyWith(
-                              fontWeight: FontWeight.bold,
+                          child: Obx(
+                            () => Text(
+                              (MerchantCampaignDetailsController
+                                          .to
+                                          .campaign
+                                          .value
+                                          ?.name ??
+                                      '')
+                                  .capitalizeWords(),
+                              style: context.headlineSmall.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
 
-                        MerchantCampaignStatusTag(
-                          status: MerchantCampaignStatus.pendingReview,
+                        Obx(
+                          () => MerchantCampaignStatusTag(
+                            status: MerchantCampaignStatusExtension.fromApi(
+                              MerchantCampaignDetailsController
+                                      .to
+                                      .campaign
+                                      .value
+                                      ?.status ??
+                                  '',
+                            ),
+                          ),
                         ),
                       ],
                     ),

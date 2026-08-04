@@ -128,4 +128,25 @@ class ApiUrls {
   static String merchantCampaignAssignedInfluencerDetail() {
     return "$base/creator/merchant/get";
   }
+
+  // Campaign content merchant----> content tab
+  static String campaignContents() => "$base/campaign/applications";
+
+  static String campaignContentDetails() => "$base/campaign/application";
+
+  static String actionOnCampaignContent() => "$base/campaign/review-draft";
+
+  // INFLUENCER
+  // tasks
+  static String creatorTasks() {
+    return '$base/creator/tasks';
+  }
+
+  static String submitDraftCreatorVideo() {
+    return "$base/creator/submit-draft";
+  }
+
+  static String creatorTaskDetailsByCampId() {
+    return "$base/creator/task";
+  }
 }

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../../../../share/export/repo_export.dart';
 import '../request/new_campaign_request.dart';
 
@@ -52,5 +54,59 @@ class MerchantCampaignRepository {
       url: ApiUrls.merchantCampaignAssignedInfluencerDetail(),
       queryParams: {"userId": userId},
     );
+  }
+
+  /// Content tab in campaign-details screen
+  Future<Response> getCampaignContents({
+    required String campaignId,
+    int page = 1,
+    int limit = 10,
+  }) {
+    return _apiClient.get(
+      showResponse: true,
+      url: ApiUrls.campaignContents(),
+      queryParams: {
+        "campaignId": campaignId,
+        "hasContent": true,
+        "page": page,
+        "limit": limit,
+      },
+    );
+  }
+
+  Future<Response> updateContentStatus({
+    required String contentId,
+    required String action,
+    String? rejectionReason,
+  }) {
+    return _apiClient.patch(
+      url: ApiUrls.actionOnCampaignContent(),
+      showResponse: true,
+      body: {
+        "applicationId": contentId,
+        "action": action,
+        "merchantNote": ?rejectionReason,
+      },
+    );
+  }
+
+  // content details
+  Future<Response> getCampaignContentDetails({
+    required String applicationId,
+  }) async {
+    debugPrint('loadContentDetails--> repo request start: $applicationId');
+
+    final response = await _apiClient.get(
+      showResponse: true,
+      url: ApiUrls.campaignContentDetails(),
+      skipAuth: false,
+      queryParams: {"applicationId": applicationId, "hasContent": true},
+    );
+
+    debugPrint('loadContentDetails--> repo response: ${response.statusCode}');
+
+    debugPrint('loadContentDetails--> repo body: ${response.data}');
+
+    return response;
   }
 }

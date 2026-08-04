@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:som_spot/core/service/datasource/remote/api_client.dart';
 import 'package:som_spot/core/service/network/network_checker.dart';
 import 'package:som_spot/features/auth/completed_profile_influencer/service/influencer_complete_profile_service.dart';
+import 'package:som_spot/features/influencer_all/core/influencer_tasks/repository/influencer_tasks_repository.dart';
 import 'package:som_spot/features/merchant/listings/repository/manage_business_repository.dart';
 import 'package:som_spot/features/merchant/listings/service/manage_listing_service.dart';
 import 'package:som_spot/features/merchant/merchant_new_campaign/shared/repository/merchant_campaign_repository.dart';
@@ -18,6 +19,7 @@ import '../../features/core/business/repository/business-repository.dart';
 import '../../features/core/business/service/business-service.dart';
 import '../../features/core/category/repository/category_repository.dart';
 import '../../features/core/category/service/category_service.dart';
+import '../../features/influencer_all/core/influencer_tasks/service/influencer_tasks_service.dart';
 import '../../features/merchant/dashboard_merchant/repository/dashboard_merchant_repository.dart';
 import '../../features/merchant/dashboard_merchant/service/dashboard_merchant_service.dart';
 import '../../features/merchant/merchant_new_campaign/shared/service/merchant_campaign_service.dart';
@@ -189,5 +191,16 @@ Future<void> initDependencies() async {
 
   sl.registerLazySingleton<MerchantCampaignService>(
     () => MerchantCampaignService(sl<MerchantCampaignRepository>()),
+  );
+  // =====================
+  // INFLUENCER Task service
+  // =====================
+
+  sl.registerLazySingleton<InfluencerTasksRepository>(
+    () => InfluencerTasksRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<InfluencerTasksService>(
+    () => InfluencerTasksService(sl<InfluencerTasksRepository>()),
   );
 }

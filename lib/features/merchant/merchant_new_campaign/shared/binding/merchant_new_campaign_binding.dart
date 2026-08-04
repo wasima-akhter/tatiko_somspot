@@ -29,7 +29,6 @@ class MerchantCampaignDetailsBinding extends Bindings {
         sl<MerchantCampaignService>(),
         campaignId,
       ),
-      fenix: true,
     );
   }
 }

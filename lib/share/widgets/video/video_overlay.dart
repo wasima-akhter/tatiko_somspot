@@ -2,6 +2,8 @@ import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 
+import '../../../utils/api_urls/api_urls.dart';
+
 class AppVideoOverlay {
   static void show(
     BuildContext context, {
@@ -16,7 +18,13 @@ class AppVideoOverlay {
       transitionDuration: const Duration(milliseconds: 250),
       pageBuilder: (_, _, _) {
         return Center(
-          child: AppVideoPlayer(url: videoUrl, title: title),
+          child: AppVideoPlayer(
+            url: getVideoUrl(
+              videoUrl,
+              ApiUrls.base, // your actual base url
+            ),
+            title: title,
+          ),
         );
       },
       transitionBuilder: (context, animation, secondaryAnimation, child) {
@@ -29,6 +37,22 @@ class AppVideoOverlay {
         );
       },
     );
+  }
+
+  static String getVideoUrl(String? videoUrl, String baseUrl) {
+    if (videoUrl == null || videoUrl.trim().isEmpty) {
+      return '';
+    }
+
+    var url = videoUrl.trim();
+
+    url = url.replaceAll("\\", "/");
+
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+
+    return '${baseUrl.replaceAll(RegExp(r'/$'), '')}/${url.replaceFirst(RegExp(r'^/'), '')}';
   }
 }
 
@@ -52,7 +76,12 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
     super.initState();
 
     player = Player();
-    videoController = VideoController(player);
+    videoController = VideoController(
+      player,
+      configuration: const VideoControllerConfiguration(
+        enableHardwareAcceleration: true,
+      ),
+    );
 
     debugPrint("🎬 VIDEO URL: ${widget.url}");
 
@@ -80,6 +109,13 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
       debugPrint("📏 Video Height: $height");
     });
 
+    player.stream.completed.listen((value) {
+      debugPrint("COMPLETED: $value");
+    });
+    videoController.player.stream.videoParams.listen((params) {
+      debugPrint("VIDEO PARAMS: $params");
+    });
+
     player.stream.error.listen((error) {
       debugPrint("""
   ❌ MEDIA KIT ERROR
@@ -100,7 +136,9 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
       });
     });
 
-    _openVideo();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _openVideo();
+    });
   }
 
   Future<void> _openVideo() async {
@@ -179,6 +217,39 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
               ),
               Gap(30),
 
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: ColoredBox(
+                      color: Colors.black,
+                      child: videoError != null
+                          ? _VideoErrorView(
+                              onRetry: () {
+                                setState(() {
+                                  videoError = null;
+                                });
+
+                                _openVideo();
+                              },
+                            )
+                          : Video(
+                              controller: videoController,
+                              fit: BoxFit.contain,
+
+                              fill: Colors.black,
+                              controls: MaterialVideoControls,
+                              wakelock: true,
+                              pauseUponEnteringBackgroundMode: true,
+                              resumeUponEnteringForegroundMode: true,
+                            ),
+                    ),
+                  ),
+                ),
+              ),
+
+              /*
               AspectRatio(
                 aspectRatio: 16 / 9,
                 child: Container(
@@ -194,24 +265,35 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                             _openVideo();
                           },
                         )
-                      : Video(
+                      :
+                        // Video(
+                        //     controller: videoController,
+                        //     fit: BoxFit.contain,
+                        //     fill: Colors.black,
+                        //     controls: AdaptiveVideoControls,
+                        //     filterQuality: FilterQuality.high,
+                        //     wakelock: true,
+                        //     pauseUponEnteringBackgroundMode: true,
+                        //     resumeUponEnteringForegroundMode: true,
+                        //     onEnterFullscreen: () async {
+                        //       await defaultEnterNativeFullscreen();
+                        //     },
+                        //     onExitFullscreen: () async {
+                        //       await defaultExitNativeFullscreen();
+                        //     },
+                        //   ),
+                        Video(
                           controller: videoController,
                           fit: BoxFit.contain,
                           fill: Colors.black,
-                          controls: AdaptiveVideoControls,
-                          filterQuality: FilterQuality.high,
+                          controls: MaterialVideoControls,
                           wakelock: true,
                           pauseUponEnteringBackgroundMode: true,
                           resumeUponEnteringForegroundMode: true,
-                          onEnterFullscreen: () async {
-                            await defaultEnterNativeFullscreen();
-                          },
-                          onExitFullscreen: () async {
-                            await defaultExitNativeFullscreen();
-                          },
                         ),
                 ),
               ),
+*/
             ],
           ),
         ),

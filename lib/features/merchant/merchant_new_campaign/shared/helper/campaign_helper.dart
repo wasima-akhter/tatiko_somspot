@@ -31,7 +31,9 @@ extension MerchantCampaignStatusExtension on MerchantCampaignStatus {
 
   static MerchantCampaignStatus fromApi(String value) {
     switch (value) {
+      case "pending-review":
       case "pending_review":
+      case "pending review":
         return MerchantCampaignStatus.pendingReview;
 
       case "live":

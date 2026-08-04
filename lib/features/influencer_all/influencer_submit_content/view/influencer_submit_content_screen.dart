@@ -2,14 +2,21 @@ import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
+import 'package:som_spot/helper/snackbar/api_snackbar.dart';
+import 'package:som_spot/utils/enum/app_enum.dart';
 
 import '../../../../share/controller/screen_export.dart';
+import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 import '../../../success/success_screen.dart';
 import '../../influencer_task_screen/controller/influencer_task_controller.dart';
+import '../../influencer_task_screen/helper/influencer_task_helper.dart';
+import '../args/submit_content_args.dart';
 
 class InfluencerSubmitContentScreen extends StatefulWidget {
-  const InfluencerSubmitContentScreen({super.key});
+  final SubmitContentArgs args;
+
+  const InfluencerSubmitContentScreen({super.key, required this.args});
 
   @override
   State<InfluencerSubmitContentScreen> createState() =>
@@ -18,24 +25,51 @@ class InfluencerSubmitContentScreen extends StatefulWidget {
 
 class _InfluencerSubmitContentScreenState
     extends State<InfluencerSubmitContentScreen> {
+  final TextEditingController _videoUrlController = TextEditingController();
+
   final TextEditingController _captionController = TextEditingController();
 
-  File? _videoFile;
+  final ImagePicker _picker = ImagePicker();
+
+  File? _thumbnail;
+  File? _draftVideo;
+
+  String? _selectedPlatform;
+
+  final List<String> _platforms = [
+    "tiktok",
+    "instagram",
+    "facebook",
+    "youtube",
+  ];
+
+  Future<void> _pickThumbnail() async {
+    final file = await _picker.pickImage(
+      source: ImageSource.gallery,
+
+      imageQuality: 85,
+    );
+
+    if (file == null) return;
+
+    setState(() {
+      _thumbnail = File(file.path);
+    });
+  }
 
   Future<void> _pickVideo() async {
-    final picker = ImagePicker();
+    final file = await _picker.pickVideo(source: ImageSource.gallery);
 
-    final XFile? file = await picker.pickVideo(source: ImageSource.gallery);
+    if (file == null) return;
 
-    if (file != null) {
-      setState(() {
-        _videoFile = File(file.path);
-      });
-    }
+    setState(() {
+      _draftVideo = File(file.path);
+    });
   }
 
   @override
   void dispose() {
+    _videoUrlController.dispose();
     _captionController.dispose();
     super.dispose();
   }
@@ -46,177 +80,335 @@ class _InfluencerSubmitContentScreenState
       backgroundColor: AppColors.backgroundColorNew,
       title: "Submit Content",
       onPressed: () => AppRouter.route.pop(),
+
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Gap(12),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
 
-              /// Task Card
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: const Color(0xffF5EDFF),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(
-                    width: 2,
-                    color: AppColors.grayTertiaryTextColor.withValues(
-                      alpha: 0.2,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// Task Information
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(16.w),
+
+                  decoration: BoxDecoration(
+                    color: const Color(0xffF5EDFF),
+                    borderRadius: BorderRadius.circular(14.r),
+                    border: Border.all(
+                      color: AppColors.grayTertiaryTextColor.withValues(
+                        alpha: .2,
+                      ),
+                    ),
+                  ),
+
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: [
+                      Text(
+                        "Task: ${widget.args.taskName}",
+                        style: context.titleMedium.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xff581C87),
+                        ),
+                      ),
+
+                      Gap(6.h),
+
+                      Text(
+                        "Submit your published video link for merchant approval.",
+                        style: context.bodySmall.copyWith(
+                          color: Colors.deepPurple,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Gap(14.h),
+
+                Text(
+                  "Platform",
+                  style: context.titleMedium.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+
+                Gap(10.h),
+
+                CustomDropdownField<String>(
+                  value: _selectedPlatform,
+                  hintText: "Select platform",
+                  items: _platforms,
+                  labelBuilder: (platform) =>
+                      platform[0].toUpperCase() + platform.substring(1),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedPlatform = value;
+                    });
+                  },
+                ),
+                Gap(10.h),
+
+                Text(
+                  "Caption",
+                  style: context.titleMedium.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+
+                Gap(10.h),
+
+                CustomTextField(
+                  controller: _captionController,
+                  hintText: "Write the caption used in your post",
+                  fillColor: Colors.white,
+                  maxLines: 4,
+                  minLines: 2,
+                ),
+                Gap(20.h),
+
+                Text(
+                  "Thumbnail",
+                  style: context.titleMedium.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+
+                Gap(10.h),
+
+                GestureDetector(
+                  onTap: _pickThumbnail,
+                  child: Container(
+                    height: 120.h,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14.r),
+                      border: Border.all(
+                        color: AppColors.backgroundsLinesColor,
+                      ),
+                    ),
+                    child: _thumbnail == null
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.image_outlined),
+                              Gap(8.h),
+                              const Text("Select Thumbnail"),
+                            ],
+                          )
+                        : Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(14.r),
+                                child: Image.file(
+                                  _thumbnail!,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: GestureDetector(
+                                  onTap: _pickThumbnail,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black54,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
+                ),
+                Gap(14.h),
+
+                Text(
+                  "Upload Video (Optional)",
+                  style: context.titleMedium.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+
+                Gap(10.h),
+
+                GestureDetector(
+                  onTap: _pickVideo,
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 18.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14.r),
+                      border: Border.all(
+                        color: AppColors.backgroundsLinesColor,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.video_library_outlined),
+
+                        Gap(12.w),
+
+                        Expanded(
+                          child: Text(
+                            _draftVideo == null
+                                ? "Choose video"
+                                : _draftVideo!.path.split('/').last,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+
+                        if (_draftVideo != null)
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _draftVideo = null;
+                              });
+                            },
+                            icon: const Icon(Icons.close),
+                          ),
+                      ],
                     ),
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Task: 1 TikTok Video",
-                      style: context.titleMedium.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF581C87),
-                      ),
-                    ),
-                    const Gap(4),
-                    Text(
-                      "Upload your draft video for merchant approval.",
-                      style: context.titleSmall.copyWith(
-                        color: Colors.deepPurple,
-                        fontSize: 11.sp,
-                      ),
-                    ),
-                  ],
+                Gap(14.h),
+
+                /// Video URL
+                Text(
+                  "Video Link",
+                  style: context.titleMedium.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
 
-              const Gap(20),
+                Gap(10.h),
 
-              /// Upload Box
-              GestureDetector(
-                onTap: _pickVideo,
-                child: Container(
-                  height: 170.h,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      width: 3,
+                CustomTextField(
+                  controller: _videoUrlController,
+                  hintText: "Paste your TikTok / Instagram video URL",
+                  fillColor: Colors.white,
+
+                  prefixIcon: const Icon(Icons.link, color: Colors.grey),
+
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14.r),
+                    borderSide: BorderSide(
                       color: AppColors.backgroundsLinesColor,
                     ),
                   ),
-                  child: _videoFile == null
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 26,
-                              backgroundColor: Colors.purple.withValues(
-                                alpha: .07,
-                              ),
-                              child: const Icon(
-                                Icons.cloud_upload_outlined,
-                                color: Colors.deepPurple,
-                              ),
-                            ),
-                            const Gap(14),
-                            Text(
-                              "Tap to upload video",
-                              style: context.bodyMedium.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const Gap(4),
-                            Text(
-                              "MP4 or MOV, max 50MB",
-                              style: context.bodySmall.copyWith(
-                                color: AppColors.subtitleTextColor,
-                              ),
-                            ),
-                          ],
-                        )
-                      : Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Text(
-                              _videoFile!.path.split('/').last,
-                              textAlign: TextAlign.center,
-                              style: context.bodyMedium,
-                            ),
-                          ),
-                        ),
-                ),
-              ),
 
-              const Gap(24),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14.r),
+                    borderSide: BorderSide(
+                      color: AppColors.backgroundsLinesColor,
+                    ),
+                  ),
 
-              Text(
-                "Active Tasks",
-                style: context.titleMedium.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.darkTextColor,
-                ),
-              ),
-
-              const Gap(12),
-
-              CustomTextField(
-                controller: _captionController,
-                hintText: "Write your caption including required\nhashtags...",
-                maxLines: null,
-                minLines: 4,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(
-                    color: AppColors.backgroundsLinesColor,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14.r),
+                    borderSide: const BorderSide(color: AppColors.primaryColor),
                   ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(
-                    color: AppColors.backgroundsLinesColor,
+                Gap(24.h),
+
+                Obx(
+                  () => SizedBox(
+                    width: double.infinity,
+
+                    child: CustomButton(
+                      isLoading:
+                          InfluencerTaskController.to.submitDraftStatus.value ==
+                          ApiStatus.loading,
+                      text: "Submit for Review",
+                      onTap: _submitContent,
+                    ),
                   ),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: const BorderSide(color: AppColors.primaryColor),
-                ),
-              ),
-
-              const Gap(34),
-              SizedBox(
-                width: double.infinity,
-                child: CustomButton(
-                  onTap: () {
-                    AppRouter.route.goNamed(
-                      RoutePath.successScreen,
-                      extra: SuccessScreenArgs(
-                        title: "Content Submitted!",
-                        subtitle:
-                            "The merchant will review your content before you publish.",
-                        autoNavigateAfter: const Duration(seconds: 3),
-                        onAutoNavigate: () {
-                          AppRouter.route.goNamed(RoutePath.navigationPages);
-                          if (Get.isRegistered<NavigationControllerMain>()) {
-                            NavigationControllerMain.to.goToTabTasks();
-                            if (Get.isRegistered<InfluencerTaskController>()) {
-                              InfluencerTaskController.to.selectedTab.value = 1;
-                            }
-                          }
-                        },
-                      ),
-                    );
-                  },
-                  text: "Submit for Review",
-                ),
-              ),
-
-              const Gap(24),
-            ],
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Future<void> _submitContent() async {
+    if (_videoUrlController.text.isEmpty) {
+      ApiSnackbar.show("Please paste the video link first");
+      return;
+    }
+
+    if (_captionController.text.trim().isEmpty) {
+      ApiSnackbar.show("Please enter a caption.");
+      return;
+    }
+
+    if (_thumbnail == null) {
+      ApiSnackbar.show("Please select a thumbnail.");
+      return;
+    }
+
+    if (_draftVideo == null && _videoUrlController.text.trim().isEmpty) {
+      ApiSnackbar.show("Please upload a video or provide a video URL.");
+      return;
+    }
+
+    if (_selectedPlatform == null) {
+      ApiSnackbar.show("Please select a platform.");
+      return;
+    }
+
+    final success = await InfluencerTaskController.to.submitDraft(
+      applicationId: widget.args.applicationId,
+      draftVideoUrl: _draftVideo == null
+          ? _videoUrlController.text.trim()
+          : null,
+      draftVideo: _draftVideo,
+      draftMediaType: _draftVideo != null ? "video" : null,
+      caption: _captionController.text.trim(),
+      thumbnail: _thumbnail!,
+      platform: _selectedPlatform ?? '',
+    );
+    if (!success) return;
+
+    AppRouter.route.goNamed(
+      RoutePath.successScreen,
+      extra: SuccessScreenArgs(
+        title: "Content Submitted!",
+        subtitle: "The merchant will review your content before approval.",
+        autoNavigateAfter: const Duration(seconds: 3),
+        onAutoNavigate: () {
+          AppRouter.route.goNamed(RoutePath.navigationPages);
+
+          if (Get.isRegistered<NavigationControllerMain>()) {
+            NavigationControllerMain.to.goToTabTasks();
+
+            if (Get.isRegistered<InfluencerTaskController>()) {
+              InfluencerTaskController.to.selectedTab.value =
+                  InfluencerTaskTab.pending;
+
+              InfluencerTaskController.to.refreshTasks();
+            }
+          }
+        },
       ),
     );
   }

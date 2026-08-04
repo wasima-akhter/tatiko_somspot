@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../utils/color/app_colors.dart';
+import '../controller/influencer_task_controller.dart';
+import '../helper/influencer_task_helper.dart';
 
 double get taskTabheight => 40.h;
 
@@ -17,17 +19,34 @@ class TaskTabs extends StatelessWidget {
       color: Colors.white,
       child: TabBar(
         controller: controller,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        onTap: InfluencerTaskController.to.changeTab,
+
+        // allow tabs to take their required width
+        isScrollable: true,
+
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        tabAlignment: TabAlignment.center,
+
         dividerColor: AppColors.grayTertiaryTextColor,
         indicatorColor: AppColors.primaryColor,
         indicatorWeight: 2,
+
         labelColor: AppColors.primaryColor,
         unselectedLabelColor: Colors.grey,
-        tabs: const [
-          Tab(text: "Active"),
-          Tab(text: "Review"),
-          Tab(text: "Done"),
-        ],
+
+        labelPadding: const EdgeInsets.symmetric(horizontal: 14),
+
+        tabs: InfluencerTaskTab.values
+            .map(
+              (e) => Tab(
+                child: Text(
+                  e.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.visible,
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
   }

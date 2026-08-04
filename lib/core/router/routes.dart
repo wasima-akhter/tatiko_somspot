@@ -58,8 +58,10 @@ import '../../features/influencer_all/influencer_campaign_details/view/influence
 import '../../features/influencer_all/influencer_my_campaigns/view/influencer_my_campaigns_screen.dart';
 import '../../features/influencer_all/influencer_publish_proof/view/influencer_publish_proof_screen.dart';
 import '../../features/influencer_all/influencer_search/view/influencer_search_screen.dart';
+import '../../features/influencer_all/influencer_submit_content/args/submit_content_args.dart';
 import '../../features/influencer_all/influencer_submit_content/view/influencer_submit_content_screen.dart';
 import '../../features/influencer_all/influencer_wallet/view/influencer_wallet_screen.dart';
+import '../../features/influencer_all/influencer_your_submission/args/influencer_submission_args.dart';
 import '../../features/influencer_all/influencer_your_submission/view/influencer_your_submission_screen.dart';
 import '../../features/merchant/create_offer/view/create_offer_screen.dart';
 import '../../features/merchant/merchant_campaign_details/view/merchant_campaign_content_details_screen.dart';
@@ -556,7 +558,9 @@ class AppRouter {
             state: state,
             child: BindingWrapper(
               binding: MerchantCampaignContentDetailsBinding(),
-              child: MerchantCampaignContentDetailsScreen(),
+              child: MerchantCampaignContentDetailsScreen(
+                contentId: state.extra as String,
+              ),
             ),
           );
         },
@@ -825,7 +829,9 @@ class AppRouter {
             state: state,
             child: BindingWrapper(
               binding: InfluencerBinding(),
-              child: const InfluencerSubmitContentScreen(),
+              child: InfluencerSubmitContentScreen(
+                args: state.extra as SubmitContentArgs,
+              ),
             ),
           );
         },
@@ -839,7 +845,10 @@ class AppRouter {
             state: state,
             child: BindingWrapper(
               binding: InfluencerBinding(),
-              child: const InfluencerYourSubmissionScreen(),
+              child: InfluencerYourSubmissionScreen(
+                influencerSubmissionArgs:
+                    state.extra as InfluencerSubmissionArgs,
+              ),
             ),
           );
         },

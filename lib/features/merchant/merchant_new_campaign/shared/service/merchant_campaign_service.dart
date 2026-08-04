@@ -144,4 +144,84 @@ class MerchantCampaignService {
       return ApiResponse.failure(message: "Something went wrong");
     }
   }
+
+  //campaign detail> content list
+  Future<ApiResponse<PaginatedResult<CampaignContentModel>>>
+  getCampaignContents({
+    required String campaignId,
+    int page = 1,
+    int limit = 10,
+  }) async {
+    try {
+      final response = await _repository.getCampaignContents(
+        campaignId: campaignId,
+        page: page,
+        limit: limit,
+      );
+
+      final data = response.data["data"];
+
+      return ApiResponse.success(
+        data: PaginatedResult<CampaignContentModel>(
+          data: List<CampaignContentModel>.from(
+            (data["result"] ?? []).map((e) => CampaignContentModel.fromJson(e)),
+          ),
+
+          meta: PaginationMeta.fromJson(data["meta"]),
+        ),
+      );
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Get Campaign Contents Error $e");
+
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
+
+  Future<ApiResponse<Response>> updateContentStatus({
+    required String contentId,
+    required String action,
+    String? rejectionReason,
+  }) async {
+    try {
+      final response = await _repository.updateContentStatus(
+        contentId: contentId,
+        action: action,
+        rejectionReason: rejectionReason,
+      );
+
+      return ApiResponse.success(data: response);
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e) {
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
+
+  //
+  Future<ApiResponse<CampaignContentModel>> getCampaignContentDetails({
+    required String applicationId,
+  }) async {
+    debugPrint('loadContentDetails--> service: getCampaignContentDetails');
+    try {
+      final response = await _repository.getCampaignContentDetails(
+        applicationId: applicationId,
+      );
+
+      final data = response.data["data"];
+
+      return ApiResponse.success(data: CampaignContentModel.fromJson(data));
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Get Campaign Content Details Error $e");
+
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
 }

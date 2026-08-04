@@ -7,17 +7,16 @@ import '../../../../utils/extension/base_extension.dart';
 class ProofInputCard extends StatelessWidget {
   final String title;
   final String description;
-
-  final TextEditingController? controller;
-  final String? hintText;
+  final TextEditingController controller;
+  final String hintText;
   final ValueChanged<String>? onChanged;
 
   const ProofInputCard({
     super.key,
     required this.title,
     required this.description,
-    this.controller,
-    this.hintText,
+    required this.controller,
+    required this.hintText,
     this.onChanged,
   });
 
@@ -27,7 +26,7 @@ class ProofInputCard extends StatelessWidget {
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14.r),
+        borderRadius: BorderRadius.circular(16.r),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,42 +35,46 @@ class ProofInputCard extends StatelessWidget {
             title,
             style: context.titleSmall.copyWith(fontWeight: FontWeight.w700),
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: 4.h),
           Text(
             description,
-            style: context.bodyMedium.copyWith(
+            style: context.bodySmall.copyWith(
               color: AppColors.grayTextSecondaryColor,
             ),
           ),
-          if (controller != null) ...[
-            SizedBox(height: 16.h),
-            TextField(
-              controller: controller,
-              onChanged: onChanged,
-              decoration: InputDecoration(
-                hintText: hintText ?? "https://tiktok.com/@you/video/...",
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 15.h,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  borderSide: BorderSide(
-                    color: AppColors.backgroundsLinesColor,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  borderSide: const BorderSide(
-                    color: AppColors.primaryColor,
-                    width: 1.5,
-                  ),
+          SizedBox(height: 16.h),
+          TextField(
+            controller: controller,
+            onChanged: onChanged,
+            keyboardType: TextInputType.url,
+            textInputAction: TextInputAction.done,
+            decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle: context.bodyMedium.copyWith(
+                color: AppColors.grayTextSecondaryColor.withValues(alpha: .7),
+              ),
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 15.h,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.r),
+                borderSide: BorderSide(color: AppColors.backgroundsLinesColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.r),
+                borderSide: const BorderSide(
+                  color: AppColors.primaryColor,
+                  width: 1.5,
                 ),
               ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
             ),
-          ],
+          ),
         ],
       ),
     );

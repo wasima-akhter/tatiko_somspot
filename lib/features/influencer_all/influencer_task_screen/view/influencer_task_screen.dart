@@ -1,9 +1,12 @@
-import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
-
 import '../../../../share/controller/screen_export.dart';
-import '../widgets/completed_task_card.dart';
-import '../widgets/influencer_task_card.dart';
-import '../widgets/review_tab.dart';
+import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
+import '../../../../utils/enum/app_enum.dart';
+import '../controller/influencer_task_controller.dart';
+import '../helper/influencer_task_helper.dart';
+import '../widgets/influencer_active_task_card.dart';
+import '../widgets/influencer_completed_task_card.dart';
+import '../widgets/influencer_pending_task_card.dart';
+import '../widgets/influencer_published_task_card.dart';
 import '../widgets/task_header.dart';
 import '../widgets/task_tabs.dart';
 
@@ -16,26 +19,26 @@ class InfluencerTaskScreen extends StatefulWidget {
 
 class _InfluencerTaskScreenState extends State<InfluencerTaskScreen>
     with SingleTickerProviderStateMixin {
-  bool isLoading = true;
-
-  late TabController _tabController;
+  late final TabController _tabController;
+  final controller = InfluencerTaskController.to;
 
   @override
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 3, vsync: this);
-
-    Future.delayed(const Duration(milliseconds: 1500), () {
-      if (mounted) {
-        setState(() => isLoading = false);
-      }
-    });
+    _tabController = TabController(
+      length: InfluencerTaskTab.values.length,
+      vsync: this,
+    );
 
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
-        setState(() {});
+        controller.changeTab(_tabController.index);
       }
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.loadTasks();
     });
   }
 
@@ -47,43 +50,6 @@ class _InfluencerTaskScreenState extends State<InfluencerTaskScreen>
 
   @override
   Widget build(BuildContext context) {
-    final tasks = [
-      {
-        "merchant": "Lilido Beach Cafe",
-        "title": "Sunset Coffee Promotion",
-        "deliverable": "2 Instagram Stories",
-        "approved": false,
-      },
-      {
-        "merchant": "Lilido Beach Cafe",
-        "title": "Sunset Coffee Promotion",
-        "deliverable": "2 Instagram Stories",
-        "approved": false,
-      },
-      {
-        "merchant": "Lilido Beach Cafe",
-        "title": "Sunset Coffee Promotion",
-        "deliverable": "2 Instagram Stories",
-        "approved": true,
-        "note":
-            "Looks fantastic — the BOGO call-out is crystal clear. Approved! Download the final cut and post it on TikTok.",
-      },
-    ];
-
-    final completedTasks = [
-      {
-        "merchant": "Somali Tech Store",
-        "title": "New iPhone Launch",
-        "deliverable": "1 YouTube Short",
-        "earned": "125.00",
-      },
-      {
-        "merchant": "Somali Tech Store",
-        "title": "New iPhone Launch",
-        "deliverable": "1 YouTube Short",
-        "earned": "125.00",
-      },
-    ];
     return SafeArea(
       top: false,
       child: Scaffold(
@@ -103,22 +69,42 @@ class _InfluencerTaskScreenState extends State<InfluencerTaskScreen>
             SliverPadding(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
               sliver: SliverToBoxAdapter(
-                child: Builder(
-                  builder: (_) {
-                    switch (_tabController.index) {
-                      case 0:
-                        return _buildActive(tasks);
+                child: Obx(
+                  () => ApiStatusBuilder(
+                    status: controller.paginator.status.value,
+                    errorMessage: controller.paginator.errorMessage.value,
+                    onRetry: controller.loadTasks,
+                    isLoadingMore:
+                        controller.paginator.loadMoreStatus.value ==
+                        ApiStatus.loading,
+                    hasMore: controller.paginator.hasMore.value,
+                    builder: (_) {
+                      return ListView.builder(
+                        controller: controller.listScrollController,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        itemCount: controller.paginator.items.length,
+                        itemBuilder: (_, index) {
+                          final task = controller.paginator.items[index];
 
-                      case 1:
-                        return _buildReview();
+                          switch (controller.selectedTab.value) {
+                            case InfluencerTaskTab.active:
+                              return InfluencerTaskActiveCard(task: task);
 
-                      case 2:
-                        return _buildDone(completedTasks);
+                            case InfluencerTaskTab.pending:
+                              return InfluencerTaskPendingCard(task: task);
 
-                      default:
-                        return const SizedBox();
-                    }
-                  },
+                            case InfluencerTaskTab.completed:
+                              return InfluencerTaskCompletedCard(task: task);
+
+                            case InfluencerTaskTab.published:
+                              return InfluencerTaskPublishedCard(task: task);
+                          }
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -126,31 +112,5 @@ class _InfluencerTaskScreenState extends State<InfluencerTaskScreen>
         ),
       ),
     );
-  }
-
-  Widget _buildActive(List<Map<String, dynamic>> tasks) {
-    final active = tasks.where((e) => e["approved"] == false).toList();
-
-    return Column(
-      children: List.generate(
-        tasks.length,
-
-        (index) => AutoShimmerAnimate(
-          isLoading: isLoading,
-
-          child: InfluencerTaskCard(task: tasks[index]),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDone(List<Map<String, dynamic>> completedTasks) {
-    return Column(
-      children: completedTasks.map((e) => CompletedTaskCard(task: e)).toList(),
-    );
-  }
-
-  Widget _buildReview() {
-    return const SizedBox(height: 700, child: ReviewTab());
   }
 }

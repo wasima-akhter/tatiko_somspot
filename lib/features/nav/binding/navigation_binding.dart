@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:som_spot/features/influencer_all/core/influencer_tasks/service/influencer_tasks_service.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
 
@@ -44,7 +45,7 @@ class NavigationBinding extends Bindings {
       fenix: true,
     );
     Get.lazyPut<InfluencerTaskController>(
-      () => InfluencerTaskController(),
+      () => InfluencerTaskController(sl<InfluencerTasksService>()),
       fenix: true,
     );
     Get.lazyPut<InfluencerWalletController>(

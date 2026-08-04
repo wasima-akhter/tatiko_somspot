@@ -1,48 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../utils/color/app_colors.dart';
+import '../../../../utils/extension/base_extension.dart';
 
 class StatusMessageCard extends StatelessWidget {
+  final String status;
   final String title;
   final String message;
   final Color backgroundColor;
   final Color borderColor;
-  final IconData? icon;
+  final IconData icon;
 
   const StatusMessageCard({
     super.key,
+    required this.status,
     required this.title,
     required this.message,
-    required this.backgroundColor,
-    required this.borderColor,
-    this.icon,
+    this.backgroundColor = const Color(0xFFF2FFF5),
+    this.borderColor = const Color(0xFFD8F1DD),
+    this.icon = Icons.check,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: borderColor),
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (title.isNotEmpty)
-            Row(
+          Container(
+            width: 22.w,
+            height: 22.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: AppColors.emeraldGreenColor),
+            ),
+            child: Icon(icon, size: 14.sp, color: AppColors.emeraldGreenColor),
+          ),
+
+          SizedBox(width: 12.w),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (icon != null) ...[
-                  Icon(icon, size: 18),
-                  const SizedBox(width: 6),
-                ],
+                Text(
+                  status,
+                  style: context.bodySmall.copyWith(
+                    color: AppColors.emeraldGreenColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+
+                SizedBox(height: 2.h),
+
                 Text(
                   title,
-                  style: const TextStyle(fontWeight: FontWeight.w700),
+                  style: context.titleMedium.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+
+                SizedBox(height: 8.h),
+
+                Text(
+                  message,
+                  style: context.bodyMedium.copyWith(
+                    color: AppColors.grayTextSecondaryColor,
+                    fontSize: 12.sp,
+                  ),
                 ),
               ],
             ),
-          if (title.isNotEmpty) const SizedBox(height: 8),
-          Text(message),
+          ),
         ],
       ),
     );

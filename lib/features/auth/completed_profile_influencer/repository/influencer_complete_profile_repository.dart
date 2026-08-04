@@ -26,7 +26,7 @@ class InfluencerCompleteProfileRepository {
   Future<Response> completeCreatorProfile(
     InfluencerInfoProfileRequest request,
   ) {
-    return _apiClient.post(
+    return _apiClient.patch(
       url: ApiUrls.influencerProfile(),
       body: {
         "category": request.category,

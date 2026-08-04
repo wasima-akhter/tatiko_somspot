@@ -1,4 +1,5 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
+import 'package:som_spot/helper/text_utils/string_extension.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 
 import '../../../../features/merchant/merchant_campaign_details/controller/merchant_campaign_details_controller.dart';
@@ -89,7 +90,7 @@ class InfluencerRequestBottomSheet extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    creator.name,
+                    creator.name.capitalizeWords(),
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w700,
@@ -99,7 +100,7 @@ class InfluencerRequestBottomSheet extends StatelessWidget {
                   SizedBox(height: 4.h),
 
                   Text(
-                    creator.category,
+                    creator.category.capitalizeWords(),
                     style: TextStyle(fontSize: 13.sp, color: Colors.grey),
                   ),
                 ],
@@ -120,7 +121,7 @@ class InfluencerRequestBottomSheet extends StatelessWidget {
           children: [
             Expanded(
               child: _StatCard(
-                title: creator.followerCount.toString(),
+                title: formatCount(creator.followerCount),
                 subtitle: "Followers",
               ),
             ),
@@ -170,63 +171,26 @@ class InfluencerRequestBottomSheet extends StatelessWidget {
           ),
 
           child: Text(
-            creator.bio,
+            creator.bio.capitalizeWords(),
             style: TextStyle(fontSize: 14.sp, height: 1.5),
           ),
         ),
 
         SizedBox(height: 28.h),
-
-        /// Buttons
-        Row(
-          children: [
-            Expanded(
-              child: OutlinedButton(
-                onPressed: () {},
-
-                style: OutlinedButton.styleFrom(
-                  minimumSize: Size.fromHeight(52.h),
-
-                  side: const BorderSide(color: Colors.red),
-
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14.r),
-                  ),
-                ),
-
-                child: Text(
-                  "Reject",
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-
-            SizedBox(width: 14.w),
-
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {},
-
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size.fromHeight(52.h),
-
-                  backgroundColor: Colors.blue,
-
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14.r),
-                  ),
-                ),
-
-                child: const Text("Approve"),
-              ),
-            ),
-          ],
-        ),
       ],
     );
+  }
+
+  String formatCount(int count) {
+    if (count >= 1000000) {
+      return "${(count / 1000000).toStringAsFixed(1)}M";
+    }
+
+    if (count >= 1000) {
+      return "${(count / 1000).toStringAsFixed(1)}K";
+    }
+
+    return count.toString();
   }
 
   Widget _buildSkeleton(BuildContext context) {

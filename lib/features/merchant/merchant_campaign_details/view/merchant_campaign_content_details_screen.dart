@@ -1,50 +1,99 @@
-import '../../../../core/router/routes.dart';
+import 'package:som_spot/features/merchant/merchant_campaign_details/controller/merchant_campaign_details_controller.dart';
+import 'package:som_spot/helper/date_converter/date_converter.dart';
+import 'package:som_spot/helper/text_utils/string_extension.dart';
+
 import '../../../../share/controller/screen_export.dart';
+import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../../share/widgets/video/video_overlay.dart';
-import '../controller/merchat_campaign_content_details_controller.dart';
 import '../widgets/merchant_campaign_content_preview_card.dart';
 
-class MerchantCampaignContentDetailsScreen
-    extends GetView<MerchantCampaignContentDetailsController> {
-  const MerchantCampaignContentDetailsScreen({super.key});
+class MerchantCampaignContentDetailsScreen extends StatefulWidget {
+  final String contentId;
+  const MerchantCampaignContentDetailsScreen({
+    super.key,
+    required this.contentId,
+  });
+
+  @override
+  State<MerchantCampaignContentDetailsScreen> createState() =>
+      _MerchantCampaignContentDetailsScreenState();
+}
+
+class _MerchantCampaignContentDetailsScreenState
+    extends State<MerchantCampaignContentDetailsScreen> {
+  late final MerchantCampaignDetailsController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = MerchantCampaignDetailsController.to;
+
+    controller.loadContentDetails(widget.contentId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final data = controller.content;
-
     return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
 
       appBar: AppBar(
         backgroundColor: AppColors.backgroundColorNew,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () => AppRouter.route.pop(),
-          icon: Icon(Iconsax.arrow_left_2, size: 18.sp),
-        ),
+
         title: Text(
-          "Buy 1 Get 1 Free Promo",
+          "Content Details",
           style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
         ),
       ),
 
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.w),
-          child: MerchantCampaignContentPreviewCard(
-            image: data["image"] as String,
-            storeName: data["storeName"] as String,
-            title: data["title"] as String,
-            description: data["description"] as String,
-            platform: data["platform"] as String,
-            onPlay: () {
-              AppVideoOverlay.show(
-                context,
-                videoUrl: "http://files.inqscribe.com/samples/IS_Intro.mp4",
-                title: "Buy 1 Get 1 Free Promo",
-              );
-            },
-          ),
+      body: Obx(
+        () => ApiStatusBuilder(
+          status: controller.contentDetailStatus.value,
+
+          errorMessage: controller.errorMessage.value,
+
+          onRetry: () => controller.loadContentDetails(widget.contentId),
+
+          builder: (_) {
+            final data = controller.contentDetail.value!;
+
+            return SingleChildScrollView(
+              padding: EdgeInsets.all(16.w),
+
+              child: MerchantCampaignContentPreviewCard(
+                storeName: data.creator.name,
+                storeImage: data.creator.profileImage,
+
+                title: "Submitted Content",
+
+                description: data.caption?.capitalizeFirst ?? '',
+
+                platform: data.platform ?? '',
+
+                videoUrl: data.draftVideoUrl,
+
+                thumbnail: data.thumbnail, // if available
+
+                status: data.status.capitalizeWords(), // if available
+
+                category: data.draftMediaType, // if available
+
+                submittedDate:
+                    "${DateConverter.formatDate(dateTime: data.createdAt)}, ${DateConverter.formatTime(dateTime: data.createdAt)}",
+
+                onPlay: () {
+                  if (data.draftVideoUrl != null &&
+                      data.draftVideoUrl!.isNotEmpty) {
+                    AppVideoOverlay.show(
+                      context,
+                      videoUrl: data.draftVideoUrl!,
+                      title: "Submitted Content",
+                    );
+                  }
+                },
+              ),
+            );
+          },
         ),
       ),
     );

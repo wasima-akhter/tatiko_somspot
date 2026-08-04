@@ -97,6 +97,9 @@ class ApiClient {
     await checkConnection();
 
     try {
+      debugPrint("DIO GET START --> $url");
+      debugPrint("QUERY --> $queryParams");
+
       final response = await dio.get(
         url,
         queryParameters: queryParams,
@@ -105,6 +108,10 @@ class ApiClient {
           extra: {"skipAuth": skipAuth},
         ),
       );
+
+      debugPrint("DIO GET SUCCESS --> ${response.statusCode}");
+
+      debugPrint("DIO DATA --> ${response.data}");
 
       log(
         url,
@@ -115,7 +122,10 @@ class ApiClient {
       );
 
       return response;
-    } catch (e) {
+    } catch (e, s) {
+      debugPrint("DIO GET ERROR --> $e");
+      debugPrintStack(stackTrace: s);
+
       throw handleError(e);
     }
   }
@@ -194,7 +204,29 @@ class ApiClient {
       log(url, response, showResponse: showResponse);
 
       return response;
-    } catch (e) {
+    } on DioException catch (e, stackTrace) {
+      debugPrint("❌ DIO PATCH ERROR");
+      debugPrint("URL: $url");
+      debugPrint("METHOD: PATCH");
+      debugPrint("BODY: $body");
+
+      debugPrint("STATUS CODE: ${e.response?.statusCode}");
+      debugPrint("RESPONSE DATA: ${e.response?.data}");
+      debugPrint("RESPONSE HEADERS: ${e.response?.headers}");
+
+      debugPrint("DIO MESSAGE: ${e.message}");
+      debugPrint("TYPE: ${e.type}");
+
+      debugPrint("STACK TRACE:");
+      debugPrint(stackTrace.toString());
+
+      throw handleError(e);
+    } catch (e, stackTrace) {
+      debugPrint("❌ UNKNOWN PATCH ERROR");
+      debugPrint("ERROR: $e");
+      debugPrint("STACK TRACE:");
+      debugPrint(stackTrace.toString());
+
       throw handleError(e);
     }
   }

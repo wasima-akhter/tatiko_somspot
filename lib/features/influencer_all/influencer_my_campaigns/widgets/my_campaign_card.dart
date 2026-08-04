@@ -10,6 +10,7 @@ import 'package:som_spot/share/widgets/button/custom_button.dart';
 
 import '../../../../utils/color/app_colors.dart';
 import '../../../../utils/extension/base_extension.dart';
+import '../../influencer_task_screen/helper/influencer_task_helper.dart';
 import '../helper/my_campaigns_helper.dart';
 
 class MyCampaignCard extends StatelessWidget {
@@ -26,7 +27,7 @@ class MyCampaignCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.grey.withOpacity(.12)),
+        border: Border.all(color: Colors.grey.withValues(alpha: .12)),
       ),
       child: Row(
         children: [
@@ -85,8 +86,8 @@ class MyCampaignCard extends StatelessWidget {
                 NavigationControllerMain.to.goToTabTasks();
                 if (Get.isRegistered<InfluencerTaskController>()) {
                   InfluencerTaskController.to.selectedTab.value = isCompleted
-                      ? 2
-                      : 1;
+                      ? InfluencerTaskTab.completed
+                      : InfluencerTaskTab.active;
                 }
               },
             ),

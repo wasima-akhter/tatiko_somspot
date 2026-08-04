@@ -27,7 +27,15 @@ class _NavigationPageState extends State<NavigationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
-        return _controller.getPages()[_controller.selectedNavIndex.value];
+        final pages = _controller.getPages();
+
+        final index = _controller.selectedNavIndex.value;
+
+        if (index < 0 || index >= pages.length) {
+          return pages.first;
+        }
+
+        return pages[index];
       }),
       bottomNavigationBar: _buildBottomNavBar(),
     );

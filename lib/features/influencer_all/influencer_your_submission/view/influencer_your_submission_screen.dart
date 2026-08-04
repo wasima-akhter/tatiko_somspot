@@ -1,69 +1,140 @@
+import 'package:som_spot/features/merchant/merchant_campaign_details/widgets/merchant_campaign_content_preview_card.dart';
+import 'package:som_spot/helper/date_converter/date_converter.dart';
+import 'package:som_spot/helper/text_utils/string_extension.dart';
+
 import '../../../../share/controller/screen_export.dart';
+import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
+import '../../../../share/widgets/video/video_overlay.dart';
+import '../../influencer_task_screen/controller/influencer_task_controller.dart';
+import '../args/influencer_submission_args.dart';
 import '../widgets/back_to_tasks_button.dart';
-import '../widgets/caption_section.dart';
-import '../widgets/submission_info_card.dart';
-import '../widgets/submitted_video_section.dart';
 import '../widgets/verification_banner.dart';
 
-class InfluencerYourSubmissionScreen extends StatelessWidget {
-  const InfluencerYourSubmissionScreen({super.key});
+class InfluencerYourSubmissionScreen extends StatefulWidget {
+  final InfluencerSubmissionArgs influencerSubmissionArgs;
+
+  const InfluencerYourSubmissionScreen({
+    super.key,
+    required this.influencerSubmissionArgs,
+  });
+  @override
+  State<InfluencerYourSubmissionScreen> createState() =>
+      _InfluencerYourSubmissionScreenState();
+}
+
+class _InfluencerYourSubmissionScreenState
+    extends State<InfluencerYourSubmissionScreen> {
+  final controller = InfluencerTaskController.to;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.loadTaskDetail(widget.influencerSubmissionArgs.applicationId);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
-      backgroundColor: AppColors.softBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: AppColors.softBackgroundColor,
-        elevation: 0,
+      backgroundColor: AppColors.backgroundColorNew,
+      title: "Your Submission",
 
-        leading: Icon(Iconsax.arrow_left_2, size: 22.sp),
+      body: Column(
+        children: [
+          Expanded(
+            child: Obx(
+              () => ApiStatusBuilder(
+                status: controller.taskDetailStatus.value,
+                errorMessage: controller.taskDetailError,
+                onRetry: () {
+                  controller.loadTaskDetail(
+                    widget.influencerSubmissionArgs.applicationId,
+                  );
+                },
+                builder: (_) {
+                  final task = controller.taskDetail.value;
 
-        title: Text(
-          "Your Submission",
-          style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
-        ),
-      ),
+                  if (task == null) {
+                    return const SizedBox();
+                  }
 
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: CustomScrollView(
-                physics: const BouncingScrollPhysics(),
+                  debugPrint('draftVideoUrl: ${task.draftVideoUrl}');
 
-                slivers: [
-                  SliverPadding(
+                  return Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        VerificationBanner(
+                          status: widget.influencerSubmissionArgs.status,
+                        ),
 
-                    sliver: SliverToBoxAdapter(
-                      child: Column(
-                        children: [
-                          const VerificationBanner(
-                            status: SubmissionStatus.verified,
+                        SizedBox(height: 14.h),
+
+                        MerchantCampaignContentPreviewCard(
+                          storeImage: task.campaign?.business?.logo ?? "",
+
+                          thumbnail: task.thumbnail,
+
+                          videoUrl: task.draftVideoUrl ?? "",
+
+                          storeName:
+                              task.campaign?.business?.name ?? "Unknown Store",
+
+                          title: task.campaign?.name ?? "Campaign Content",
+
+                          description: task.caption?.isNotEmpty == true
+                              ? task.caption!
+                              : task.campaign?.about ?? "",
+
+                          platform:
+                              task.platform ??
+                              task.campaign?.contentType ??
+                              "Unknown",
+
+                          duration: task.campaign?.videoLengthSec != null
+                              ? "${task.campaign!.videoLengthSec}s"
+                              : null,
+
+                          status: task.status.isNotEmpty
+                              ? task.status
+                                    .replaceAll("_", " ")
+                                    .capitalizeWords()
+                              : null,
+
+                          category: task.campaign?.contentType,
+
+                          submittedDate: DateConverter.formatDate(
+                            dateTime: task.submittedAt,
                           ),
 
-                          SizedBox(height: 14.h),
+                          views: null,
 
-                          const SubmissionInfoCard(),
+                          onPlay: () {
+                            final video = task.draftVideoUrl;
 
-                          SizedBox(height: 14.h),
-
-                          const SubmittedVideoSection(),
-
-                          SizedBox(height: 14.h),
-
-                          const CaptionSection(),
-                        ],
-                      ),
+                            if (video != null && video.isNotEmpty) {
+                              AppVideoOverlay.show(
+                                context,
+                                videoUrl: video,
+                                title:
+                                    task.campaign?.name ?? "Submitted Content",
+                              );
+                            }
+                          },
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
+          ),
 
-            const BackToTasksButton(),
-          ],
-        ),
+          const BackToTasksButton(),
+        ],
       ),
     );
   }
