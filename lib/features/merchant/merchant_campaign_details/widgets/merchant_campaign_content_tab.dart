@@ -25,7 +25,13 @@ class MerchantCampaignContentTab
         hasMore: controller.contentsPaginator.hasMore.value,
 
         builder: (_) {
-          final contents = controller.contents;
+          debugPrint(
+            "CONTENT STATUS => ${controller.contentsPaginator.status.value}",
+          );
+
+          debugPrint("CONTENT LENGTH => ${controller.contents.length}");
+
+          final contents = controller.contentTabList;
 
           return ListView.builder(
             shrinkWrap: true,

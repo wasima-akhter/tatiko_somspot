@@ -1,27 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:som_spot/helper/text_utils/string_extension.dart';
 
 import '../../../../utils/color/app_colors.dart';
 import '../../../../utils/extension/base_extension.dart';
+import '../../core/influencer_tasks/response/influencer_tasks_response.dart';
 
 class SubmissionInfoCard extends StatelessWidget {
-  const SubmissionInfoCard({super.key});
+  final InfluencerTaskModel task;
+
+  const SubmissionInfoCard({super.key, required this.task});
 
   @override
   Widget build(BuildContext context) {
+    final campaign = task.campaign;
+
+    final businessName = campaign?.business?.name ?? "Business";
+    final campaignTitle = campaign?.name ?? "Campaign";
+
+    final platform = (task.platform ?? "").toLowerCase();
+
+    final platformLabel = switch (platform) {
+      "youtube" => "YouTube Short",
+      "instagram" => "Instagram Reel",
+      "facebook" => "Facebook Reel",
+      "tiktok" => "TikTok Video",
+      "twitter" || "x" => "X Post",
+      _ => "Social Media Post",
+    };
+
+    final platformIcon = switch (platform) {
+      "youtube" => Icons.play_circle_outline,
+      "instagram" => Icons.camera_alt_outlined,
+      "facebook" => Icons.facebook,
+      "tiktok" => Icons.music_note,
+      "twitter" || "x" => Icons.alternate_email,
+      _ => Icons.public,
+    };
+
     return Container(
       padding: const EdgeInsets.all(12),
-
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
       ),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Somali Tech Store",
+            businessName.capitalizeWords(),
             style: context.bodySmall.copyWith(
               color: AppColors.grayTextSecondaryColor,
             ),
@@ -30,33 +57,33 @@ class SubmissionInfoCard extends StatelessWidget {
           const SizedBox(height: 5),
 
           Text(
-            "New iPhone Launch",
+            campaignTitle.capitalizeWords(),
             style: context.titleMedium.copyWith(fontWeight: FontWeight.w700),
           ),
 
           const SizedBox(height: 10),
+
           Container(
             padding: EdgeInsets.all(12.w),
             decoration: BoxDecoration(
               color: AppColors.softBackgroundColor,
               borderRadius: BorderRadius.circular(10),
             ),
-
             child: Row(
               children: [
                 Icon(
-                  Icons.videocam_outlined,
+                  platformIcon,
                   size: 15.sp,
                   color: AppColors.purpleAccentColor,
                 ),
-
                 const SizedBox(width: 8),
-
-                Text(
-                  "1 YouTube Short",
-                  style: context.bodyMedium.copyWith(
-                    color: AppColors.purpleAccentColor,
-                    fontWeight: FontWeight.w500,
+                Expanded(
+                  child: Text(
+                    "1 $platformLabel",
+                    style: context.bodyMedium.copyWith(
+                      color: AppColors.purpleAccentColor,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ],

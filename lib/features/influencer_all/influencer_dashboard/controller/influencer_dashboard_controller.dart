@@ -2,11 +2,13 @@ import 'package:get/get.dart';
 
 import '../../../../utils/enum/app_enum.dart';
 import '../../../profile/main_profile/controller/profile_controller.dart';
+import '../response/influencer_dashboard_response.dart';
+import '../service/influencer_dashboard_service.dart';
 
 class InfluencerDashboardController extends GetxController {
-  // final DashboardMerchantService _service;
+  final InfluencerDashboardService _service;
 
-  // InfluencerDashboardController(this._service);
+  InfluencerDashboardController(this._service);
 
   static InfluencerDashboardController get to => Get.find();
 
@@ -16,13 +18,9 @@ class InfluencerDashboardController extends GetxController {
   RxString get userProfileImage => profileController.userAvatar;
   RxString get userAddress => profileController.userLocationString;
 
-  String get displayName {
-    return userName.value.isEmpty ? "User" : userName.value;
-  }
+  String get displayName => userName.value.isEmpty ? "User" : userName.value;
 
-  String get displayAvatar {
-    return userProfileImage.value;
-  }
+  String get displayAvatar => userProfileImage.value;
 
   final RxBool isRefreshing = false.obs;
 
@@ -32,32 +30,20 @@ class InfluencerDashboardController extends GetxController {
     try {
       await getDashboardOverview();
       await profileController.getProfile();
-      // final categoryController = HomeCategoryController.to;
-      // final dealsController = Get.find<HomeDealsController>();
-      // final nearbyController = Get.find<HomeNearbyController>();
-
-      // await Future.wait([
-      //   Future(() => profileController.getProfile()),
-      //   Future(() => categoryController.fetchCategories()),
-      //   Future(() => dealsController.fetchDeals(isRefresh: true)),
-      //   Future(() => nearbyController.fetchNearbyMerchants(isRefresh: true)),
-      // ]);
-    } catch (e) {
-      // handle error if required
     } finally {
       isRefreshing.value = false;
     }
   }
 
-  ////
-
-  // Dashboard API Status
+  // ============================
+  // Dashboard
+  // ============================
 
   final Rx<ApiStatus> dashboardStatus = ApiStatus.completed.obs;
 
   final Rx<String?> errorMessage = Rx<String?>(null);
 
-  // MerchantDashboardModel? dashboardData;
+  InfluencerDashboardModel? dashboardData;
 
   @override
   void onInit() {
@@ -73,26 +59,27 @@ class InfluencerDashboardController extends GetxController {
 
   Future<void> getDashboardOverview() async {
     dashboardStatusMethod(ApiStatus.loading);
+
     errorMessage.value = null;
 
     try {
-      // final result = await _service.getMerchantDashboard();
+      final result = await _service.getInfluencerDashboard();
 
-      // if (!result.success) {
-      //   errorMessage.value = result.message;
+      if (!result.success) {
+        errorMessage.value = result.message;
 
-      //   dashboardStatusMethod(ApiStatus.error);
+        dashboardStatusMethod(ApiStatus.error);
 
-      //   return;
-      // }
+        return;
+      }
 
-      // if (result.data == null) {
-      //   dashboardStatusMethod(ApiStatus.noDataFound);
+      if (result.data == null) {
+        dashboardStatusMethod(ApiStatus.noDataFound);
 
-      //   return;
-      // }
+        return;
+      }
 
-      // dashboardData = result.data;
+      dashboardData = result.data;
 
       dashboardStatusMethod(ApiStatus.completed);
     } catch (e) {
@@ -102,5 +89,18 @@ class InfluencerDashboardController extends GetxController {
     }
   }
 
-  //
+  // ============================
+  // Convenience Getters
+  // ============================
+
+  List<InfluencerActiveTaskModel> get activeTasks =>
+      dashboardData?.activeTasks ?? [];
+
+  int get unreadNotifications => dashboardData?.unreadNotifications ?? 0;
+
+  double get totalEarnings => dashboardData?.totalEarnings ?? 0;
+
+  double get pendingPayout => dashboardData?.pendingPayout ?? 0;
+
+  int get claims => dashboardData?.claims ?? 0;
 }

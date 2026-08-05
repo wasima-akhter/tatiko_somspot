@@ -6,6 +6,7 @@ import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/core/business/response/business-response.dart';
 import 'package:som_spot/features/core/category/model/category_model.dart';
+import 'package:som_spot/features/merchant/merchant_campaigns/controller/merchant_campaigns_controller.dart';
 import 'package:som_spot/features/offers/shared/binding/offers_binding.dart';
 import 'package:som_spot/features/offers/shared/response/offers_response.dart';
 import 'package:som_spot/helper/snackbar/api_snackbar.dart';
@@ -280,6 +281,8 @@ class MerchantNewCampaignController extends BaseFormController {
       submitSuccess();
 
       showSuccess("Campaign created successfully");
+
+      await MerchantCampaignsController.to.refreshCampaigns();
 
       AppRouter.route.goNamed(RoutePath.merchantCampaignsScreen);
     } catch (e, stack) {

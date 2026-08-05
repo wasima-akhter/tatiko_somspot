@@ -178,7 +178,14 @@ class CampaignContentModel {
 
       draftMediaType: json["draftMediaType"]?.toString() ?? "video",
 
-      draftVideoUrl: json["draftVideoUrl"]?.toString(),
+      draftVideoUrl:
+          (json["draftVideo"] != null &&
+              json["draftVideo"].toString().isNotEmpty)
+          ? json["draftVideo"].toString()
+          : (json["draftVideoUrl"] != null &&
+                json["draftVideoUrl"].toString().isNotEmpty)
+          ? json["draftVideoUrl"].toString()
+          : null,
 
       caption: json["caption"]?.toString(),
 

@@ -30,6 +30,7 @@ class RoutePath {
 
   // Profile and Settings Screens
   static const String editProfileScreen = 'editProfileScreen';
+  static const String editInfluencerScreen = 'editInfluencerScreen';
   static const String profileScreen = 'profileScreen';
   static const String claimsScreen = 'claimsScreen';
   static const String helpAndSupportScreen = 'helpAndSupportScreen';

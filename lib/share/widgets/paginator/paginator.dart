@@ -38,7 +38,7 @@ class Paginator<T> {
         status.value = ApiStatus.noDataFound;
         return;
       }
-
+      items.clear();
       items.assignAll(result.data);
 
       hasMore.value = result.meta?.hasNextPage ?? false;

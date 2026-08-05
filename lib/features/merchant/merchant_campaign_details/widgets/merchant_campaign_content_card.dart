@@ -175,8 +175,8 @@ class MerchantCampaignContentCard extends StatelessWidget {
                   ),
 
                   Gap(14.h),
-                  if (!(data.status == "approved" &&
-                      data.draftApproved == true))
+                  if ((data.status == "draft_submitted" &&
+                      data.draftApproved == false))
                     Row(
                       children: [
                         Expanded(

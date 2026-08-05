@@ -136,6 +136,12 @@ class ApiUrls {
 
   static String actionOnCampaignContent() => "$base/campaign/review-draft";
 
+  static String verifyPublication() => "$base/campaign/verify-publication";
+
+  // Merchant ana;ytics
+
+  static String merchantAnalytics() => "$base/merchant/analytics";
+
   // INFLUENCER
   // tasks
   static String creatorTasks() {
@@ -149,4 +155,11 @@ class ApiUrls {
   static String creatorTaskDetailsByCampId() {
     return "$base/creator/task";
   }
+
+  static String submitCreatorPost() => "$base/creator/submit-post";
+
+  // influencer dashboard
+
+  static String influencerDashboard() => "$base/creator/dashboard";
+  static String creatorWalletAnalytics() => "$base/creator/wallet/analytics";
 }

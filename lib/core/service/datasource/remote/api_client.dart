@@ -125,8 +125,13 @@ class ApiClient {
     } catch (e, s) {
       debugPrint("DIO GET ERROR --> $e");
       debugPrintStack(stackTrace: s);
-
-      throw handleError(e);
+      throw handleError(
+        e,
+        method: "GET",
+        url: url,
+        queryParams: queryParams,
+        stackTrace: s,
+      );
     }
   }
 
@@ -159,7 +164,13 @@ class ApiClient {
       debugPrint("POST ERROR: $e");
       debugPrintStack(stackTrace: stack);
 
-      throw handleError(e);
+      throw handleError(
+        e,
+        method: "POST",
+        url: url,
+        body: body,
+        stackTrace: stack,
+      );
     }
   }
 
@@ -181,8 +192,8 @@ class ApiClient {
       log(url, response, showResponse: showResponse);
 
       return response;
-    } catch (e) {
-      throw handleError(e);
+    } catch (e, s) {
+      throw handleError(e, method: "PUT", url: url, body: body, stackTrace: s);
     }
   }
 
@@ -220,14 +231,26 @@ class ApiClient {
       debugPrint("STACK TRACE:");
       debugPrint(stackTrace.toString());
 
-      throw handleError(e);
+      throw handleError(
+        e,
+        method: "PATCH",
+        url: url,
+        body: body,
+        stackTrace: stackTrace,
+      );
     } catch (e, stackTrace) {
       debugPrint("❌ UNKNOWN PATCH ERROR");
       debugPrint("ERROR: $e");
       debugPrint("STACK TRACE:");
       debugPrint(stackTrace.toString());
 
-      throw handleError(e);
+      throw handleError(
+        e,
+        method: "PATCH",
+        url: url,
+        body: body,
+        stackTrace: stackTrace,
+      );
     }
   }
 
@@ -249,8 +272,14 @@ class ApiClient {
       log(url, response, showResponse: showResponse);
 
       return response;
-    } catch (e) {
-      throw handleError(e);
+    } catch (e, s) {
+      throw handleError(
+        e,
+        method: "DELETE",
+        url: url,
+        body: body,
+        stackTrace: s,
+      );
     }
   }
 
@@ -346,7 +375,7 @@ class ApiClient {
       log(url, response, showResponse: showResponse);
 
       return response;
-    } on DioException catch (e) {
+    } on DioException catch (e, s) {
       debugPrint("");
       debugPrint("━━━━━━━━━━ MULTIPART ERROR ━━━━━━━━━━");
       debugPrint("URL : $url");
@@ -359,35 +388,80 @@ class ApiClient {
 
       debugPrint("MESSAGE : ${e.message}");
       debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-
-      throw handleError(e);
-    } catch (e) {
+      throw handleError(
+        e,
+        method: method,
+        url: url,
+        body: fields,
+        stackTrace: s,
+      );
+    } catch (e, s) {
       debugPrint("");
       debugPrint("━━━━━━━━━━ MULTIPART ERROR ━━━━━━━━━━");
       debugPrint("URL : $url");
       debugPrint("ERROR : $e");
       debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
-      throw handleError(e);
+      throw handleError(
+        e,
+        method: method,
+        url: url,
+        body: fields,
+        stackTrace: s,
+      );
     }
   }
 
-  Exception handleError(dynamic error) {
+  Exception handleError(
+    dynamic error, {
+    required String method,
+    required String url,
+    dynamic body,
+    Map<String, dynamic>? queryParams,
+    StackTrace? stackTrace,
+  }) {
     if (error is ApiException) {
       return error;
     }
 
     if (error is DioException) {
+      debugPrint("");
+      debugPrint("━━━━━━━━━━━━ API ERROR ━━━━━━━━━━━━");
+      debugPrint("❌ DIO $method ERROR");
+      debugPrint("URL: $url");
+
+      if (queryParams != null && queryParams.isNotEmpty) {
+        debugPrint("QUERY: $queryParams");
+      }
+
+      if (body != null) {
+        debugPrint("BODY: $body");
+      }
+
+      debugPrint("STATUS CODE: ${error.response?.statusCode}");
+      debugPrint("RESPONSE DATA: ${error.response?.data}");
+      debugPrint("RESPONSE HEADERS: ${error.response?.headers}");
+
+      debugPrint("DIO MESSAGE: ${error.message}");
+      debugPrint("TYPE: ${error.type}");
+
+      if (stackTrace != null) {
+        debugPrint("STACK TRACE:");
+        debugPrint(stackTrace.toString());
+      }
+
+      debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
       final response = error.response;
 
       final statusCode = response?.statusCode ?? 500;
 
-      final body = response?.data;
+      final responseBody = response?.data;
 
       String message = "Something went wrong";
 
-      if (body is Map) {
-        message = body["message"]?.toString() ?? message;
+      if (responseBody is Map) {
+        message = responseBody["message"]?.toString() ?? message;
       }
 
       if (error.type == DioExceptionType.connectionTimeout ||
@@ -400,8 +474,34 @@ class ApiClient {
         message = "No internet connection";
       }
 
-      return ApiException(message: message, statusCode: statusCode, data: body);
+      return ApiException(
+        message: message,
+        statusCode: statusCode,
+        data: responseBody,
+      );
     }
+
+    debugPrint("");
+    debugPrint("━━━━━━━━━━━━ API ERROR ━━━━━━━━━━━━");
+    debugPrint("❌ UNKNOWN $method ERROR");
+    debugPrint("URL: $url");
+
+    if (queryParams != null && queryParams.isNotEmpty) {
+      debugPrint("QUERY: $queryParams");
+    }
+
+    if (body != null) {
+      debugPrint("BODY: $body");
+    }
+
+    debugPrint("ERROR: $error");
+
+    if (stackTrace != null) {
+      debugPrint("STACK TRACE:");
+      debugPrint(stackTrace.toString());
+    }
+
+    debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
     return ApiException(message: error.toString(), statusCode: 500);
   }

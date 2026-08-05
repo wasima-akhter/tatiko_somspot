@@ -1,15 +1,12 @@
+import 'package:som_spot/features/influencer_all/influencer_dashboard/response/influencer_dashboard_response.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 
 class InfluencerEarningsCard extends StatelessWidget {
-  final String totalEarnings;
-  final String pendingAmount;
+  final InfluencerDashboardModel? data;
+  final bool isLoading;
 
-  const InfluencerEarningsCard({
-    super.key,
-    this.totalEarnings = '\$2,540.00',
-    this.pendingAmount = '\$120.00',
-  });
+  const InfluencerEarningsCard({super.key, this.data, this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +27,12 @@ class InfluencerEarningsCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(255, 87, 81, 93).withValues(alpha: 0.5),
+            color: const Color.fromARGB(255, 87, 81, 93).withValues(alpha: 0.5),
             blurRadius: 7,
             offset: const Offset(0, 3),
           ),
         ],
       ),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -51,7 +47,9 @@ class InfluencerEarningsCard extends StatelessWidget {
           SizedBox(height: 4.h),
 
           Text(
-            totalEarnings,
+            isLoading
+                ? "\$0"
+                : "\$${data?.totalEarnings.toStringAsFixed(2) ?? "0.00"}",
             style: context.headlineMedium.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.w800,
@@ -82,7 +80,9 @@ class InfluencerEarningsCard extends StatelessWidget {
                   SizedBox(height: 2.h),
 
                   Text(
-                    pendingAmount,
+                    isLoading
+                        ? "\$0.00"
+                        : "\$${data?.pendingPayout.toStringAsFixed(2) ?? "0.00"}",
                     style: context.bodyMedium.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,

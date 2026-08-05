@@ -91,4 +91,26 @@ class InfluencerTasksService {
       return ApiResponse.failure(message: "Something went wrong");
     }
   }
+
+  //
+  Future<ApiResponse<void>> submitPostPublishUrl({
+    required String applicationId,
+    required String postUrl,
+  }) async {
+    try {
+      await _repository.submitPost(
+        applicationId: applicationId,
+        postUrl: postUrl,
+      );
+
+      return ApiResponse.success(data: null);
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Submit Post Error $e");
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
 }

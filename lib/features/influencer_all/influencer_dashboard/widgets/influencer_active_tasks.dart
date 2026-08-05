@@ -1,40 +1,92 @@
+import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
+import 'package:som_spot/helper/text_utils/string_extension.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 
+import '../response/influencer_dashboard_response.dart';
+
 class InfluencerActiveTasks extends StatelessWidget {
-  const InfluencerActiveTasks({super.key});
+  final InfluencerDashboardModel? data;
+  final bool isLoading;
+
+  const InfluencerActiveTasks({super.key, this.data, this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Column(
+        children: List.generate(
+          3,
+          (_) => Padding(
+            padding: EdgeInsets.only(bottom: 12.h),
+            child: AutoShimmerAnimate(
+              isLoading: true,
+              baseColor: AppColors.shimmerBaseColor,
+              highlightColor: Colors.white,
+              child: _taskCard(
+                context,
+                restaurant: "Loading Business",
+                title: "Loading Campaign Name",
+                subtitle: "Video Content",
+                status: "ACTIVE",
+                statusColor: Colors.grey,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    final tasks = data?.activeTasks ?? [];
+
+    if (tasks.isEmpty) {
+      return _getEmptyActiveTaskPlaceholder(context);
+    }
+
     return Column(
-      children: [
-        _taskCard(
-          context,
-          restaurant: "Mogadishu Pizza",
-          title: "Buy 1 Get 1 Free Promo",
-          subtitle: "1 TikTok Video",
-          status: "REVIEWING",
-          statusColor: Colors.orange,
-        ),
-        Gap(12.h),
-        _taskCard(
-          context,
-          restaurant: "Lido Beach Cafe",
-          title: "Sunset Coffee Promotion",
-          subtitle: "2 Instagram Stories",
-          status: "IN PROGRESS",
-          statusColor: AppColors.blueAccentColor,
-        ),
-        Gap(12.h),
-        _taskCard(
-          context,
-          restaurant: "Lido Beach Cafe",
-          title: "Sunset Coffee Promotion",
-          subtitle: "2 Instagram Stories",
-          status: "IN PROGRESS",
-          statusColor: AppColors.blueAccentColor,
-        ),
-      ],
+      children: tasks.map((task) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: 12.h),
+          child: _taskCard(
+            context,
+            restaurant: task.businessName ?? "Unknown Business",
+            title: task.campaignName ?? "Campaign",
+            subtitle: _getSubtitle(task),
+            status: task.statusLabel ?? task.stage ?? "",
+            statusColor: _getStatusColor(task.stage),
+          ),
+        );
+      }).toList(),
     );
+  }
+
+  String _getSubtitle(InfluencerActiveTaskModel task) {
+    final parts = <String>[];
+
+    if (task.platform != null) {
+      parts.add(task.platform!.capitalizeFirst!);
+    }
+
+    if (task.contentType != null) {
+      parts.add(task.contentType!.replaceAll("_", " ").capitalizeFirst!);
+    }
+
+    return parts.isEmpty ? "Content task" : parts.join(" • ");
+  }
+
+  Color _getStatusColor(String? stage) {
+    switch (stage?.toLowerCase()) {
+      case "active":
+        return AppColors.blueAccentColor;
+
+      case "pending":
+        return Colors.orange;
+
+      case "completed":
+        return AppColors.emeraldGreenColor;
+
+      default:
+        return AppColors.subtitleTextColor;
+    }
   }
 
   Widget _taskCard(
@@ -57,12 +109,16 @@ class InfluencerActiveTasks extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                restaurant,
-                style: context.bodySmall.copyWith(
-                  color: AppColors.primaryColor,
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.w600,
+              Expanded(
+                child: Text(
+                  restaurant.capitalizeWords(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.bodySmall.copyWith(
+                    color: AppColors.primaryColor,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
 
@@ -73,7 +129,7 @@ class InfluencerActiveTasks extends StatelessWidget {
                   borderRadius: BorderRadius.circular(2.r),
                 ),
                 child: Text(
-                  status,
+                  status.toUpperCase(),
                   style: context.bodySmall.copyWith(
                     color: statusColor,
                     fontSize: 8.sp,
@@ -84,8 +140,12 @@ class InfluencerActiveTasks extends StatelessWidget {
             ],
           ),
 
+          Gap(4.h),
+
           Text(
-            title,
+            title.capitalizeWords(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: context.titleMedium.copyWith(
               color: AppColors.darkTextColor,
               fontWeight: FontWeight.w600,
@@ -93,18 +153,68 @@ class InfluencerActiveTasks extends StatelessWidget {
             ),
           ),
 
+          Gap(4.h),
+
           Row(
             children: [
               Icon(Iconsax.video, size: 12.w),
-              Gap(5),
+              Gap(5.w),
               Text(
-                subtitle,
+                subtitle.capitalizeWords(),
                 style: context.bodySmall.copyWith(
                   color: AppColors.subtitleTextColor,
                   fontSize: 11.sp,
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getEmptyActiveTaskPlaceholder(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: Column(
+        children: [
+          Container(
+            height: 44.h,
+            width: 44.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.blueAccentColor.withValues(alpha: .1),
+            ),
+            child: Icon(
+              Iconsax.task_square,
+              size: 22.sp,
+              color: AppColors.blueAccentColor,
+            ),
+          ),
+
+          Gap(12.h),
+
+          Text(
+            "No active tasks",
+            style: context.bodyMedium.copyWith(
+              fontWeight: FontWeight.w700,
+              color: AppColors.darkTextColor,
+            ),
+          ),
+
+          Gap(4.h),
+
+          Text(
+            "Your assigned tasks for campaigns will appear here",
+            textAlign: TextAlign.center,
+            style: context.bodySmall.copyWith(
+              color: AppColors.subtitleTextColor,
+            ),
           ),
         ],
       ),

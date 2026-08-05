@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../helper/snackbar/api_snackbar.dart';
 import '../../../../share/widgets/paginator/paginator.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../merchant_new_campaign/shared/response/merchant_campaign_detail_model.dart';
@@ -40,10 +41,24 @@ class MerchantCampaignDetailsController extends GetxController {
         break;
 
       case MerchantCampaignDetailsTab.content:
-        refreshContents();
+        // Load only if it hasn't been loaded yet.
+
+        loadContents();
+
+        break;
+
+      case MerchantCampaignDetailsTab.published:
+        loadContents();
         break;
     }
   }
+
+  List<CampaignContentModel> get contentTabList => contents;
+  // .where((e) => e.status.toLowerCase() == "draft_submitted")
+  // .toList();
+
+  List<CampaignContentModel> get publishedContents => contents;
+  // .where((e) => e.status.toLowerCase() == "approved").toList();
 
   void refreshOverview() async {
     await loadDetails(campaignId);
@@ -118,27 +133,14 @@ class MerchantCampaignDetailsController extends GetxController {
     });
 
     //
-    contentsPaginator = Paginator<CampaignContentModel>(
-      fetchPage: (page, limit) async {
-        final response = await _service.getCampaignContents(
-          campaignId: campaignId,
-          page: page,
-          limit: limit,
-        );
 
-        if (response.success && response.data != null) {
-          return response.data!;
-        }
-
-        throw Exception(response.message ?? "Failed loading contents");
-      },
-    );
+    initContentsPaginator(status: null);
 
     loadDetails(campaignId);
 
     loadApplications();
 
-    loadContents();
+    // loadContents();
   }
 
   // Initial load
@@ -190,23 +192,93 @@ class MerchantCampaignDetailsController extends GetxController {
   }
 
   // campaign -detail>content tab
+  // late final Paginator<CampaignContentModel> contentsPaginator;
+
+  // List<CampaignContentModel> get contents => contentsPaginator.items;
+
+  // Future<void> loadContents() {
+  //   return contentsPaginator.loadInitial();
+  // }
+
+  // Future<void> refreshContents() {
+  //   return contentsPaginator.refresh();
+  // }
+
+  // campaign -detail>content tab
+
+  // enum: approved | draft_submitted | verifying | published | rejected.
+
+  static const List<String> contentStatuses = [
+    "draft_submitted",
+    "approved",
+    "verifying",
+    "published",
+  ];
+
+  String? selectedContentStatus;
+
+  bool isValidContentStatus(String? status) {
+    if (status == null) return true;
+
+    return contentStatuses.contains(status.toLowerCase());
+  }
+
+  bool hasContentStatus(String status) {
+    return contents.any((e) => e.status.toLowerCase() == status.toLowerCase());
+  }
+
   late final Paginator<CampaignContentModel> contentsPaginator;
 
   List<CampaignContentModel> get contents => contentsPaginator.items;
 
+  void initContentsPaginator({String? status}) {
+    selectedContentStatus = status;
+
+    contentsPaginator = Paginator<CampaignContentModel>(
+      fetchPage: (page, limit) async {
+        final response = await _service.getCampaignContents(
+          campaignId: campaignId,
+          status: selectedContentStatus ?? "",
+          page: page,
+          limit: limit,
+        );
+
+        if (response.success && response.data != null) {
+          return response.data!;
+        }
+
+        throw Exception(response.message ?? "Failed loading contents");
+      },
+    );
+  }
+
+  Future<void> loadContents({String? status}) async {
+    if (!isValidContentStatus(status)) {
+      return;
+    }
+
+    if (selectedContentStatus != status) {
+      contentsPaginator.dispose();
+
+      initContentsPaginator(status: status);
+
+      await contentsPaginator.loadInitial();
+      return;
+    }
+
+    await contentsPaginator.loadInitial();
+  }
+
+  Future<void> refreshContents({String? status}) async {
+    await contentsPaginator.refresh();
+  }
+
+  ////
+
+  //
   final contentActionStatus = ApiStatus.completed.obs;
 
   final contentActionLoading = RxnString();
-
-  Future<void> loadContents() {
-    return contentsPaginator.loadInitial();
-  }
-
-  Future<void> refreshContents() {
-    return contentsPaginator.refresh();
-  }
-
-  //
   final reasonController = TextEditingController();
   Future<bool> changeContentStatus({
     required String action,
@@ -264,5 +336,35 @@ class MerchantCampaignDetailsController extends GetxController {
 
       contentDetailStatus.value = ApiStatus.error;
     }
+  }
+
+  //
+
+  final publicationActionLoading = RxnString();
+
+  Future<bool> verifyPublication({
+    required String applicationId,
+    required String action, // approve | reject
+  }) async {
+    publicationActionLoading.value = action;
+
+    final response = await _service.verifyPublication(
+      applicationId: applicationId,
+      action: action,
+    );
+
+    publicationActionLoading.value = null;
+
+    if (!response.success) {
+      ApiSnackbar.show(
+        response.message ??
+            "Failed to ${action == "approve" ? "approve" : "reject"} publication.",
+      );
+      return false;
+    }
+
+    await refreshContents();
+
+    return true;
   }
 }

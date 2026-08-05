@@ -1,6 +1,10 @@
+import 'package:som_spot/features/influencer_all/influencer_publish_proof/controller/influencer_publish_proof_controller.dart';
+
 import '../../../../share/controller/screen_export.dart';
+import '../../../../utils/enum/app_enum.dart';
 import '../../../nav/controller/navigation_controller.dart';
 import '../../../success/success_screen.dart';
+import '../../core/influencer_tasks/response/influencer_tasks_response.dart';
 import '../../influencer_task_screen/controller/influencer_task_controller.dart';
 import '../../influencer_task_screen/helper/influencer_task_helper.dart';
 import '../../influencer_your_submission/widgets/submission_info_card.dart';
@@ -12,7 +16,8 @@ import '../widgets/section_tile.dart';
 enum PublishProofStage { download, publish, proof }
 
 class InfluencerPublishProofScreen extends StatefulWidget {
-  const InfluencerPublishProofScreen({super.key});
+  final InfluencerTaskModel task;
+  const InfluencerPublishProofScreen({super.key, required this.task});
 
   @override
   State<InfluencerPublishProofScreen> createState() =>
@@ -24,6 +29,32 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
 
   PlatformType selectedPlatform = PlatformType.tiktok;
 
+  @override
+  void initState() {
+    super.initState();
+
+    proofController.text = "";
+
+    switch (widget.task.platform?.toLowerCase()) {
+      case "instagram":
+        selectedPlatform = PlatformType.instagram;
+        break;
+      case "facebook":
+        selectedPlatform = PlatformType.facebook;
+        break;
+      case "youtube":
+        selectedPlatform = PlatformType.youtube;
+        break;
+      case "twitter":
+      case "x":
+        selectedPlatform = PlatformType.twitter;
+        break;
+      case "tiktok":
+      default:
+        selectedPlatform = PlatformType.tiktok;
+    }
+  }
+
   final TextEditingController proofController = TextEditingController();
 
   @override
@@ -34,6 +65,7 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = InfluencerPublishProofController.to;
     return ScaffoldWrapper(
       backgroundColor: Colors.blue.shade50,
       title: "Publish & Proof",
@@ -43,15 +75,15 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SubmissionInfoCard(),
+              SubmissionInfoCard(task: widget.task),
 
               SizedBox(height: 16.h),
 
               StatusMessageCard(
-                status: "Merchant approved",
-                title: "Family Feast Promo",
+                status: widget.task.status,
+                title: widget.task.campaign?.name ?? "Campaign",
                 message:
-                    "Choose where you published this content, then confirm to move the campaign to Published.",
+                    "Your draft has been approved. Publish it on your selected platform, then submit the live post URL for verification.",
               ),
 
               SizedBox(height: 24.h),
@@ -81,9 +113,18 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
 
               SizedBox(height: 28.h),
 
-              CustomButton(
-                text: "Confirm Publishing",
-                onTap: _submitPublishing,
+              Obx(
+                () => CustomButton(
+                  text: "Confirm Publishing",
+                  isLoading:
+                      controller.submitPostStatus.value == ApiStatus.loading,
+                  onTap: () {
+                    controller.submitPost(
+                      applicationId: widget.task.id,
+                      postUrl: proofController.text.trim(),
+                    );
+                  },
+                ),
               ),
             ],
           ),

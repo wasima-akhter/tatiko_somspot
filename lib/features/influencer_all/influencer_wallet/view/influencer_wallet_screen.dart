@@ -1,6 +1,8 @@
+import 'package:som_spot/features/influencer_all/influencer_wallet/helper/influencer_wallet_helper.dart';
 import 'package:som_spot/features/influencer_all/influencer_wallet/widgets/earnings_trend_chart.dart';
 
 import '../../../../share/controller/screen_export.dart';
+import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../controller/influencer_wallet_controller.dart';
 import '../widgets/active_tasks.dart';
 import '../widgets/performance_grid.dart';
@@ -39,7 +41,8 @@ class InfluencerWalletScreen extends StatelessWidget {
               Gap(14.h),
 
               Obx(
-                () => controller.selectedTab.value == 0
+                () =>
+                    controller.selectedTab.value == InfluencerWalletTab.withdraw
                     ? ActiveTasks()
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,8 +64,26 @@ class InfluencerWalletScreen extends StatelessWidget {
                           const PerformanceGrid(),
 
                           Gap(20.h),
+                          Obx(
+                            () => ApiStatusBuilder(
+                              status: controller.walletStatus.value,
+                              errorMessage: controller.errorMessage.value,
+                              onRetry: controller.getWalletAnalytics,
 
-                          EarningsTrendChart(),
+                              loadingWidget: EarningsTrendChart(
+                                earningsTrend: [],
+                                isLoading: true,
+                              ),
+
+                              builder: (_) {
+                                return EarningsTrendChart(
+                                  earningsTrend:
+                                      controller.walletData?.earningsTrend ??
+                                      [],
+                                );
+                              },
+                            ),
+                          ),
 
                           Gap(20.h),
 

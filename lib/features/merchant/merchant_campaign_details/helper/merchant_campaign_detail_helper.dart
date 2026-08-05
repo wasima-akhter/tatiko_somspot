@@ -1,6 +1,6 @@
-enum MerchantCampaignDetailsTab { overview, influencers, content }
+enum MerchantCampaignDetailsTab { overview, influencers, content, published }
 
-extension MerchantCampaignDetailsTabExt on MerchantCampaignDetailsTab {
+extension MerchantCampaignDetailsTabExtension on MerchantCampaignDetailsTab {
   String get title {
     switch (this) {
       case MerchantCampaignDetailsTab.overview:
@@ -9,6 +9,8 @@ extension MerchantCampaignDetailsTabExt on MerchantCampaignDetailsTab {
         return "Influencers";
       case MerchantCampaignDetailsTab.content:
         return "Content";
+      case MerchantCampaignDetailsTab.published:
+        return "Published";
     }
   }
 }

@@ -1,67 +1,71 @@
+import 'package:som_spot/features/merchant/stats/controller/stats_controller.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 
-import '../../../../share/widgets/network_image/custom_network_image.dart';
-
-class TopPerformingOffersList extends StatelessWidget {
+class TopPerformingOffersList extends GetView<StatsController> {
   const TopPerformingOffersList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          AppStrings.topPerformingOffers.tr,
-          style: context.titleMedium.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.darkTextColor,
+    return Obx(() {
+      final offers = controller.topOffers;
+
+      if (offers.isEmpty) {
+        return Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 40.h),
+            child: Text(
+              "No top performing offers yet.",
+              style: context.bodyMedium.copyWith(
+                color: AppColors.subtitleTextColor,
+              ),
+            ),
           ),
-        ),
-        Gap(16.h),
-        _buildItem(
-          context: context,
-          imagePath:
-              'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600&auto=format&fit=crop',
-          title: '20% Off Family Platter',
-          claims: 64,
-          percentage: '+18%',
-        ),
-        _buildItem(
-          context: context,
-          imagePath:
-              'https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=600&auto=format&fit=crop',
-          title: 'Buy 1 Get 1 Free - Fresh...',
-          claims: 64,
-          percentage: '+12%',
-        ),
-        _buildItem(
-          context: context,
-          imagePath:
-              'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600&auto=format&fit=crop',
-          title: '\$5 Iced Latte & Pastry',
-          claims: 64,
-          percentage: '+09%',
-        ),
-      ],
-    );
+        );
+      }
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            AppStrings.topPerformingOffers.tr,
+            style: context.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+              color: AppColors.darkTextColor,
+            ),
+          ),
+
+          Gap(16.h),
+
+          ...offers.map(
+            (offer) => _buildItem(
+              context: context,
+              title: offer.title,
+              business: offer.business?.name ?? "",
+              discount: offer.discountLabel,
+              claims: offer.totalClaims,
+            ),
+          ),
+        ],
+      );
+    });
   }
 
   Widget _buildItem({
     required BuildContext context,
-    required String imagePath,
     required String title,
+    required String business,
+    required String discount,
     required int claims,
-    required String percentage,
   }) {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
-      padding: EdgeInsets.all(12.w),
+      padding: EdgeInsets.all(14.w),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: Colors.black.withValues(alpha: .03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -69,32 +73,42 @@ class TopPerformingOffersList extends StatelessWidget {
       ),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.r),
-            child: CustomNetworkImage(
-              imageUrl: imagePath,
-              width: 48.w,
-              height: 48.w,
-              fit: BoxFit.cover,
+          Container(
+            width: 48.w,
+            height: 48.w,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor.withValues(alpha: .08),
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+            child: Icon(
+              Icons.local_offer_outlined,
+              color: AppColors.primaryColor,
+              size: 24.sp,
             ),
           ),
+
           Gap(12.w),
+
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: context.bodyMedium.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.darkTextColor,
-                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
+                  style: context.bodyMedium.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.darkTextColor,
+                  ),
                 ),
+
                 Gap(4.h),
+
                 Text(
-                  'Claims $claims',
+                  "$business • $discount",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: context.bodySmall.copyWith(
                     color: AppColors.subtitleTextColor,
                   ),
@@ -102,13 +116,26 @@ class TopPerformingOffersList extends StatelessWidget {
               ],
             ),
           ),
+
           Gap(12.w),
-          Text(
-            percentage,
-            style: context.bodyMedium.copyWith(
-              fontWeight: FontWeight.bold,
-              color: AppColors.emeraldGreenColor,
-            ),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                "$claims",
+                style: context.titleMedium.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+              Text(
+                "Claims",
+                style: context.bodySmall.copyWith(
+                  color: AppColors.subtitleTextColor,
+                ),
+              ),
+            ],
           ),
         ],
       ),

@@ -35,6 +35,7 @@ import 'package:som_spot/features/other/view/change_password_screen.dart';
 import 'package:som_spot/features/other/view/help_and_support_screen.dart';
 import 'package:som_spot/features/other/view/privacy_policy_screen.dart';
 import 'package:som_spot/features/other/view/terms_and_conditions_screen.dart';
+import 'package:som_spot/features/profile/edit_profile/view/edit_influencer_profile_screen.dart';
 // Feature screens imports
 import 'package:som_spot/features/profile/edit_profile/view/edit_profile_screen.dart';
 import 'package:som_spot/features/profile/main_profile/view/profile_screen.dart';
@@ -53,9 +54,11 @@ import '../../features/auth/intro/choose_role/view/choose_role_screen.dart';
 import '../../features/auth/intro/onboarding/binding/onboard_binding.dart';
 import '../../features/customer/customer_home/binding/home_binding.dart';
 import '../../features/influencer_all/binding/influencer_binding.dart';
+import '../../features/influencer_all/core/influencer_tasks/response/influencer_tasks_response.dart';
 import '../../features/influencer_all/influencer_apply_campaign/view/influencer_apply_campaign_screen.dart';
 import '../../features/influencer_all/influencer_campaign_details/view/influencer_campaign_details_screen.dart';
 import '../../features/influencer_all/influencer_my_campaigns/view/influencer_my_campaigns_screen.dart';
+import '../../features/influencer_all/influencer_publish_proof/binding/influencer_publush_proof_binding.dart';
 import '../../features/influencer_all/influencer_publish_proof/view/influencer_publish_proof_screen.dart';
 import '../../features/influencer_all/influencer_search/view/influencer_search_screen.dart';
 import '../../features/influencer_all/influencer_submit_content/args/submit_content_args.dart';
@@ -275,6 +278,7 @@ class AppRouter {
           );
         },
       ),
+      ////
       GoRoute(
         name: RoutePath.editProfileScreen,
         path: RoutePath.editProfileScreen.addBasePath,
@@ -288,7 +292,21 @@ class AppRouter {
           );
         },
       ),
+      GoRoute(
+        name: RoutePath.editInfluencerScreen,
+        path: RoutePath.editInfluencerScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: BindingWrapper(
+              binding: EditInfluencerBinding(),
+              child: const EditInfluencerScreen(),
+            ),
+            state: state,
+          );
+        },
+      ),
 
+      ////
       GoRoute(
         name: RoutePath.completeBusinessProfileScreen,
         path: RoutePath.completeBusinessProfileScreen.addBasePath,
@@ -861,8 +879,10 @@ class AppRouter {
           return _buildPageWithAnimation(
             state: state,
             child: BindingWrapper(
-              binding: InfluencerBinding(),
-              child: const InfluencerPublishProofScreen(),
+              binding: InfluencerPublushProofBinding(),
+              child: InfluencerPublishProofScreen(
+                task: state.extra as InfluencerTaskModel,
+              ),
             ),
           );
         },

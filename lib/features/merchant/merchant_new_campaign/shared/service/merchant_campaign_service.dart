@@ -33,7 +33,7 @@ class MerchantCampaignService {
   Future<ApiResponse<PaginatedResult<MerchantCampaignModel>>> getCampaigns({
     int page = 1,
     int limit = 10,
-    String status = "all",
+    String status = "",
   }) async {
     try {
       final response = await _repository.getCampaigns(
@@ -149,12 +149,14 @@ class MerchantCampaignService {
   Future<ApiResponse<PaginatedResult<CampaignContentModel>>>
   getCampaignContents({
     required String campaignId,
+    required String status,
     int page = 1,
     int limit = 10,
   }) async {
     try {
       final response = await _repository.getCampaignContents(
         campaignId: campaignId,
+        status: status,
         page: page,
         limit: limit,
       );
@@ -219,6 +221,28 @@ class MerchantCampaignService {
     } catch (e, s) {
       debugPrint("Get Campaign Content Details Error $e");
 
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
+
+  //
+  Future<ApiResponse<Response>> verifyPublication({
+    required String applicationId,
+    required String action,
+  }) async {
+    try {
+      final response = await _repository.verifyPublication(
+        applicationId: applicationId,
+        action: action,
+      );
+
+      return ApiResponse.success(data: response);
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Verify Publication Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: "Something went wrong");

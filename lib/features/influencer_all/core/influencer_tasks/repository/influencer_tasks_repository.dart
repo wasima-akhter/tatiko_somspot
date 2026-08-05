@@ -60,4 +60,15 @@ class InfluencerTasksRepository {
       queryParams: {"applicationId": applicationId},
     );
   }
+
+  Future<Response> submitPost({
+    required String applicationId,
+    required String postUrl,
+  }) {
+    return _apiClient.patch(
+      url: ApiUrls.submitCreatorPost(),
+      body: {"applicationId": applicationId, "postUrl": postUrl},
+      showResponse: true,
+    );
+  }
 }

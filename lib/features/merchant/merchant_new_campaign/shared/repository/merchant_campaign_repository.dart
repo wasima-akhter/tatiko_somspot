@@ -18,13 +18,15 @@ class MerchantCampaignRepository {
   Future<Response> getCampaigns({
     int page = 1,
     int limit = 10,
-    String status = "all",
+    String status = "",
   }) {
     return _apiClient.get(
       showResponse: true,
       url: ApiUrls.merchantCampaigns(),
 
-      queryParams: {'page': page, 'limit': limit, 'status': status},
+      queryParams: (status.isEmpty)
+          ? {'page': page, 'limit': limit}
+          : {'page': page, 'limit': limit, 'status': status},
     );
   }
 
@@ -59,6 +61,7 @@ class MerchantCampaignRepository {
   /// Content tab in campaign-details screen
   Future<Response> getCampaignContents({
     required String campaignId,
+    required String status,
     int page = 1,
     int limit = 10,
   }) {
@@ -68,6 +71,7 @@ class MerchantCampaignRepository {
       queryParams: {
         "campaignId": campaignId,
         "hasContent": true,
+
         "page": page,
         "limit": limit,
       },
@@ -108,5 +112,17 @@ class MerchantCampaignRepository {
     debugPrint('loadContentDetails--> repo body: ${response.data}');
 
     return response;
+  }
+
+  //
+  Future<Response> verifyPublication({
+    required String applicationId,
+    required String action,
+  }) {
+    return _apiClient.patch(
+      url: ApiUrls.verifyPublication(),
+      showResponse: true,
+      body: {"applicationId": applicationId, "action": action},
+    );
   }
 }

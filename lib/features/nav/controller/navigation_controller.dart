@@ -121,9 +121,8 @@ class NavigationControllerMain extends GetxController {
   int get tabSaved => 2;
   int get tabAlerts => 3;
 
-  int get tabDiscover => 1;
-  int get tabTasks => 2;
-  int get tabWallet => 3;
+  int get tabTasks => 1;
+  int get tabWallet => 2;
 
   void changeTab(int index) {
     selectedNavIndex.value = index;
@@ -163,10 +162,6 @@ class NavigationControllerMain extends GetxController {
 
   void goToTabAlerts() {
     changeTab(tabAlerts);
-  }
-
-  void goToTabDiscover() {
-    changeTab(tabDiscover);
   }
 
   void goToTabTasks() {

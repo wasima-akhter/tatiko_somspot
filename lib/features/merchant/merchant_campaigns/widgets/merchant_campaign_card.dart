@@ -1,7 +1,6 @@
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
 import '../../../../share/controller/screen_export.dart';
-import '../../merchant_campaign_details/controller/merchant_campaign_details_controller.dart';
 import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
 import '../../merchant_new_campaign/shared/response/merchant_campaign_model.dart';
 import '../modules/merchant_campaign_tag.dart';
@@ -21,9 +20,9 @@ class MerchantCampaignCard extends StatelessWidget {
       onTap: () {
         //
 
-        if (Get.isRegistered<MerchantCampaignDetailsController>()) {
-          Get.delete<MerchantCampaignDetailsController>(force: true);
-        }
+        // if (Get.isRegistered<MerchantCampaignDetailsController>()) {
+        //   Get.delete<MerchantCampaignDetailsController>(force: true);
+        // }
         AppRouter.route.pushNamed(
           RoutePath.merchantCampaignDetailsScreen,
           extra: campaign.id,

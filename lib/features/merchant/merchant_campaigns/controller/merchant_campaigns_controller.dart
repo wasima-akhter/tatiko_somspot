@@ -28,7 +28,7 @@ class MerchantCampaignsController extends GetxController {
         return "live";
 
       case MerchantCampaignTab.all:
-        return "all";
+        return "";
     }
   }
 
@@ -95,7 +95,7 @@ class MerchantCampaignsController extends GetxController {
 
     selectedTab.value = tab;
 
-    await paginator.loadInitial();
+    await paginator.refresh();
   }
 
   Future<void> loadCampaigns() {

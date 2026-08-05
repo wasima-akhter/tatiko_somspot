@@ -351,8 +351,8 @@ class _InfluencerSubmitContentScreenState
   }
 
   Future<void> _submitContent() async {
-    if (_videoUrlController.text.isEmpty) {
-      ApiSnackbar.show("Please paste the video link first");
+    if (_draftVideo == null && _videoUrlController.text.trim().isEmpty) {
+      ApiSnackbar.show("Please upload a video or provide a video URL.");
       return;
     }
 
@@ -363,11 +363,6 @@ class _InfluencerSubmitContentScreenState
 
     if (_thumbnail == null) {
       ApiSnackbar.show("Please select a thumbnail.");
-      return;
-    }
-
-    if (_draftVideo == null && _videoUrlController.text.trim().isEmpty) {
-      ApiSnackbar.show("Please upload a video or provide a video URL.");
       return;
     }
 

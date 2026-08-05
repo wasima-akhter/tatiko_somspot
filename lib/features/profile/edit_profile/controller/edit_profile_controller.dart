@@ -64,6 +64,8 @@ class EditProfileController extends GetxController {
 
       final profile = result.data!;
 
+      await profileController.getProfile();
+
       profileController.userName.value = profile.name;
 
       profileController.userPhone.value = profile.phone ?? "";

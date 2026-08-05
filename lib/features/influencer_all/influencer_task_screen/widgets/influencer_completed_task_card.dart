@@ -111,6 +111,7 @@ class InfluencerTaskCompletedCard extends StatelessWidget {
               onPressed: () {
                 AppRouter.route.pushNamed(
                   RoutePath.influencerPublishProofScreen,
+                  extra: task,
                 );
               },
               icon: const Icon(Icons.send_outlined),

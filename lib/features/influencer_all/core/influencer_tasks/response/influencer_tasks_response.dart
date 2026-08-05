@@ -91,9 +91,14 @@ class InfluencerTaskModel {
 
       draftMediaType: json["draftMediaType"]?.toString(),
 
-      draftVideoUrl: json["draftVideoUrl"]?.toString(),
-
-      submittedAt: DateTime.tryParse(json["submittedAt"]?.toString() ?? ""),
+      draftVideoUrl:
+          (json["draftVideo"] != null &&
+              json["draftVideo"].toString().isNotEmpty)
+          ? json["draftVideo"].toString()
+          : (json["draftVideoUrl"] != null &&
+                json["draftVideoUrl"].toString().isNotEmpty)
+          ? json["draftVideoUrl"].toString()
+          : null,
 
       // New fields
       caption: json["caption"]?.toString(),

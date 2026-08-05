@@ -9,6 +9,8 @@ import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/refresh_indicator/refresh_indicator.dart';
+import '../../../../utils/enum/app_enum.dart';
+import '../widgets/influencer_edit_option_bottom_sheet.dart';
 import '../widgets/profile_header.dart';
 
 class ProfileScreen extends GetView<ProfileScreenController> {
@@ -45,11 +47,32 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                         ProfileMenuItem(
                           icon: Iconsax.user_edit,
                           title: AppStrings.editProfile.tr,
-                          onTap: () => AppRouter.route.pushNamed(
-                            RoutePath.editProfileScreen,
-                          ),
-                        ),
 
+                          onTap: () {
+                            final role = CommonController.to.role.value;
+
+                            switch (role) {
+                              case UserRole.merchandiser:
+                                AppRouter.route.pushNamed(
+                                  RoutePath.editProfileScreen,
+                                );
+
+                                break;
+
+                              case UserRole.influencer:
+                                showInfluencerEditBottomSheet(context);
+
+                                break;
+
+                              case UserRole.customer:
+                                AppRouter.route.pushNamed(
+                                  RoutePath.editProfileScreen,
+                                );
+
+                                break;
+                            }
+                          },
+                        ),
                         Obx(() {
                           final commonController = CommonController.to;
 
@@ -81,19 +104,19 @@ class ProfileScreen extends GetView<ProfileScreenController> {
 
                           // Influencer Menu
                           if (commonController.isInfluencer) {
-                            return Column(
-                              children: [
-                                ProfileMenuItem(
-                                  icon: Icons.bookmark_outline_rounded,
-                                  title: "My Campaigns",
-                                  onTap: () {
-                                    AppRouter.route.pushNamed(
-                                      RoutePath.influencerMyCampaigns,
-                                    );
-                                  },
-                                ),
-                              ],
-                            );
+                            // return Column(
+                            //   children: [
+                            //     ProfileMenuItem(
+                            //       icon: Icons.bookmark_outline_rounded,
+                            //       title: "My Campaigns",
+                            //       onTap: () {
+                            //         AppRouter.route.pushNamed(
+                            //           RoutePath.influencerMyCampaigns,
+                            //         );
+                            //       },
+                            //     ),
+                            //   ],
+                            // );
                           }
 
                           // Customer Menu
@@ -153,7 +176,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                           onTap: () {
                             AppToast.info(
                               context: context,
-                              message: "Change password option coming soon.",
+                              message: "Loading...",
                             );
                             AppRouter.route.pushNamed(
                               RoutePath.changePasswordScreen,
@@ -243,6 +266,18 @@ class ProfileScreen extends GetView<ProfileScreenController> {
           ),
         ),
       ),
+    );
+  }
+
+  void showInfluencerEditBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+
+      backgroundColor: Colors.transparent,
+
+      isScrollControlled: true,
+
+      builder: (_) => const InfluencerEditOptionBottomSheet(),
     );
   }
 

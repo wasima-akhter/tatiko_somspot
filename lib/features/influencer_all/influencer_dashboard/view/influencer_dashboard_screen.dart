@@ -10,117 +10,208 @@ import '../widgets/influencer_active_tasks.dart';
 import '../widgets/influencer_earnings_card.dart';
 import '../widgets/influencer_performance_grid.dart';
 
-class InfluencerDashboardScreen extends StatefulWidget {
+class InfluencerDashboardScreen extends StatelessWidget {
   const InfluencerDashboardScreen({super.key});
 
   @override
-  State<InfluencerDashboardScreen> createState() =>
-      _InfluencerDashboardScreenState();
-}
-
-class _InfluencerDashboardScreenState extends State<InfluencerDashboardScreen> {
-  @override
   Widget build(BuildContext context) {
     final controller = InfluencerDashboardController.to;
-    final profileController = controller.profileController;
     return Scaffold(
       backgroundColor: AppColors.softBackgroundColor,
 
       body: CustomRefreshIndicator(
-        onRefresh: () async {
-          await controller.profileController.getProfile();
-        },
+        onRefresh: controller.refreshHomeData,
+
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
-          ),
+          physics: const BouncingScrollPhysics(),
 
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+
             children: [
-              DashCommonHeaderCont(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Obx(
-                      () => ApiStatusBuilder(
-                        status: profileController.profileLoading.value,
-                        errorMessage: profileController.errorMessage.value,
-                        onRetry: profileController.getProfile,
+              _headerSection(controller),
 
-                        loadingWidget: DashboardCommonHeaderSecShimmer(),
-                        builder: (_) {
-                          return DashboardCommonHeaderSec(
-                            data: DashboardHeaderModel(
-                              userName: controller.userName,
-                              userProfileImage: controller.userProfileImage,
-                              userAddress: controller.userAddress,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-
-                    Gap(16.h),
-                    InfluencerEarningsCard(),
-                  ],
-                ),
-              ),
-              Gap(12.h),
+              Gap(20.h),
 
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
+
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+
                   children: [
-                    Text(
-                      "Performance",
-                      style: context.titleMedium.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.darkTextColor,
-                      ),
-                    ),
-                    Gap(12.h),
+                    _performanceSection(context),
 
-                    InfluencerPerformanceGrid(),
                     Gap(20.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Active Tasks",
-                          style: context.titleMedium.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
 
-                        GestureDetector(
-                          onTap: () {
-                            NavigationControllerMain.to.goToTabTasks();
-                          },
-                          child: Text(
-                            "View all",
-                            style: context.bodySmall.copyWith(
-                              // color: AppColors.primaryColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    _activeTasksSection(context),
 
-                    Gap(12.h),
-
-                    InfluencerActiveTasks(),
+                    Gap(30.h),
                   ],
                 ),
               ),
-
-              Gap(30.h),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  // ==========================================================
+  // Header
+  // ==========================================================
+
+  Widget _headerSection(InfluencerDashboardController controller) {
+    return DashCommonHeaderCont(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+
+        children: [
+          Obx(
+            () => ApiStatusBuilder(
+              status: controller.dashboardStatus.value,
+
+              errorMessage: controller.errorMessage.value,
+
+              onRetry: controller.getDashboardOverview,
+
+              loadingWidget: DashboardCommonHeaderSecShimmer(),
+
+              builder: (_) {
+                final data = controller.dashboardData!;
+
+                return DashboardCommonHeaderSec(
+                  data: DashboardHeaderModel(
+                    userName: data.name.obs,
+                    userProfileImage: data.profileImage.obs,
+                    userAddress: data.location.obs,
+                  ),
+                );
+              },
+            ),
+          ),
+
+          Gap(16.h),
+
+          Obx(
+            () => ApiStatusBuilder(
+              status: controller.dashboardStatus.value,
+
+              errorMessage: controller.errorMessage.value,
+
+              onRetry: controller.getDashboardOverview,
+
+              loadingWidget: InfluencerEarningsCard(isLoading: true),
+
+              builder: (_) {
+                return InfluencerEarningsCard(
+                  isLoading: false,
+                  data: controller.dashboardData!,
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  // ==========================================================
+  // Performance
+  // ==========================================================
+
+  Widget _performanceSection(BuildContext context) {
+    final controller = InfluencerDashboardController.to;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+
+      children: [
+        Text(
+          "Performance",
+          style: context.titleMedium.copyWith(
+            fontWeight: FontWeight.w700,
+            color: AppColors.darkTextColor,
+          ),
+        ),
+
+        Gap(12.h),
+
+        Obx(
+          () => ApiStatusBuilder(
+            status: controller.dashboardStatus.value,
+
+            errorMessage: controller.errorMessage.value,
+
+            onRetry: controller.getDashboardOverview,
+
+            loadingWidget: InfluencerPerformanceGrid(isLoading: true),
+
+            builder: (_) {
+              return InfluencerPerformanceGrid(
+                isLoading: false,
+                data: controller.dashboardData!,
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ==========================================================
+  // Active Tasks
+  // ==========================================================
+
+  Widget _activeTasksSection(BuildContext context) {
+    final controller = InfluencerDashboardController.to;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+          children: [
+            Text(
+              "Active Tasks",
+              style: context.titleMedium.copyWith(fontWeight: FontWeight.w700),
+            ),
+
+            GestureDetector(
+              onTap: () {
+                NavigationControllerMain.to.goToTabTasks();
+              },
+
+              child: Text(
+                "View all",
+                style: context.bodySmall.copyWith(fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
+
+        Gap(12.h),
+
+        Obx(
+          () => ApiStatusBuilder(
+            status: controller.dashboardStatus.value,
+
+            errorMessage: controller.errorMessage.value,
+
+            onRetry: controller.getDashboardOverview,
+
+            loadingWidget: InfluencerActiveTasks(isLoading: true, data: null),
+
+            builder: (_) {
+              return InfluencerActiveTasks(
+                isLoading: false,
+                data: controller.dashboardData,
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

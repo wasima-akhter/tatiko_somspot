@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:som_spot/features/influencer_all/core/influencer_tasks/service/influencer_tasks_service.dart';
+import 'package:som_spot/features/influencer_all/influencer_dashboard/service/influencer_dashboard_service.dart';
+import 'package:som_spot/features/merchant/stats/binding/stats_binding.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
 
@@ -13,6 +15,7 @@ import '../../influencer_all/influencer_dashboard/controller/influencer_dashboar
 import '../../influencer_all/influencer_discover/controller/influencer_discover_controller.dart';
 import '../../influencer_all/influencer_task_screen/controller/influencer_task_controller.dart';
 import '../../influencer_all/influencer_wallet/controller/influencer_wallet_controller.dart';
+import '../../influencer_all/influencer_wallet/service/influencer_wallet_service.dart';
 import '../../merchant/dashboard_merchant/controller/dashboard_merchant_controller.dart';
 import '../../merchant/dashboard_merchant/service/dashboard_merchant_service.dart';
 import '../../merchant/listings/binding/merchant_listing_binding.dart';
@@ -49,7 +52,7 @@ class NavigationBinding extends Bindings {
       fenix: true,
     );
     Get.lazyPut<InfluencerWalletController>(
-      () => InfluencerWalletController(),
+      () => InfluencerWalletController(sl<InfluencerWalletService>()),
       fenix: true,
     );
 
@@ -61,9 +64,11 @@ class NavigationBinding extends Bindings {
 
     MerchantListingBinding().dependencies();
 
+    StatsBinding().dependencies();
+
     //Influencer Dashboard
     Get.lazyPut<InfluencerDashboardController>(
-      () => InfluencerDashboardController(),
+      () => InfluencerDashboardController(sl<InfluencerDashboardService>()),
       fenix: true,
     );
     // customer

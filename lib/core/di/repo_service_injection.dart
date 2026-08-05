@@ -4,9 +4,15 @@ import 'package:som_spot/core/service/datasource/remote/api_client.dart';
 import 'package:som_spot/core/service/network/network_checker.dart';
 import 'package:som_spot/features/auth/completed_profile_influencer/service/influencer_complete_profile_service.dart';
 import 'package:som_spot/features/influencer_all/core/influencer_tasks/repository/influencer_tasks_repository.dart';
+import 'package:som_spot/features/influencer_all/influencer_dashboard/repository/influencer_dashboard_repository.dart';
+import 'package:som_spot/features/influencer_all/influencer_dashboard/service/influencer_dashboard_service.dart';
+import 'package:som_spot/features/influencer_all/influencer_wallet/repository/influencer_wallet_repository.dart';
+import 'package:som_spot/features/influencer_all/influencer_wallet/service/influencer_wallet_service.dart';
 import 'package:som_spot/features/merchant/listings/repository/manage_business_repository.dart';
 import 'package:som_spot/features/merchant/listings/service/manage_listing_service.dart';
 import 'package:som_spot/features/merchant/merchant_new_campaign/shared/repository/merchant_campaign_repository.dart';
+import 'package:som_spot/features/merchant/stats/repository/stats_repository.dart';
+import 'package:som_spot/features/merchant/stats/service/stats_service.dart';
 
 import '../../features/auth/complete_business_profile/repository/complete_business_profile_repository.dart';
 import '../../features/auth/complete_business_profile/service/complete_business_profile_service.dart';
@@ -27,7 +33,9 @@ import '../../features/offers/shared/repository/offers_repository.dart';
 import '../../features/offers/shared/service/offers_service.dart';
 import '../../features/other/repository/other_repository.dart';
 import '../../features/other/service/other_service.dart';
+import '../../features/profile/repository/influencer_profile_repository.dart';
 import '../../features/profile/repository/profile_repository.dart';
+import '../../features/profile/service/influencer_profile_service.dart';
 import '../../features/profile/service/profile_service.dart';
 
 final sl = GetIt.instance;
@@ -169,6 +177,13 @@ Future<void> initDependencies() async {
     () => DashboardMerchantService(sl<DashboardMerchantRepository>()),
   );
 
+  sl.registerLazySingleton<StatsRepository>(
+    () => StatsRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<StatsService>(
+    () => StatsService(sl<StatsRepository>()),
+  );
   // =====================
   // Merchant Business Profile Update
   // =====================
@@ -193,7 +208,7 @@ Future<void> initDependencies() async {
     () => MerchantCampaignService(sl<MerchantCampaignRepository>()),
   );
   // =====================
-  // INFLUENCER Task service
+  // INFLUENCER Task
   // =====================
 
   sl.registerLazySingleton<InfluencerTasksRepository>(
@@ -202,5 +217,39 @@ Future<void> initDependencies() async {
 
   sl.registerLazySingleton<InfluencerTasksService>(
     () => InfluencerTasksService(sl<InfluencerTasksRepository>()),
+  );
+
+  // =====================
+  // Influencer Dashboard
+  // =====================
+
+  sl.registerLazySingleton<InfluencerDashboardRepository>(
+    () => InfluencerDashboardRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<InfluencerDashboardService>(
+    () => InfluencerDashboardService(sl<InfluencerDashboardRepository>()),
+  );
+  // =====================
+  // Influencer Wallet
+  // =====================
+
+  sl.registerLazySingleton<InfluencerWalletRepository>(
+    () => InfluencerWalletRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<InfluencerWalletService>(
+    () => InfluencerWalletService(sl<InfluencerWalletRepository>()),
+  );
+  // =====================
+  // Influencer Info edit
+  // =====================
+
+  sl.registerLazySingleton<InfluencerProfileRepository>(
+    () => InfluencerProfileRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<InfluencerProfileService>(
+    () => InfluencerProfileService(sl<InfluencerProfileRepository>()),
   );
 }

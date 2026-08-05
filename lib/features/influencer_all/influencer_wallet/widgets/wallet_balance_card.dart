@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../utils/color/app_colors.dart';
 import '../controller/influencer_wallet_controller.dart';
+import '../helper/influencer_wallet_helper.dart';
 
 class WalletBalanceCard extends StatelessWidget {
   const WalletBalanceCard({super.key});
@@ -26,7 +27,7 @@ class WalletBalanceCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(.08),
+            color: Colors.black.withValues(alpha: .08),
             blurRadius: 14,
             offset: const Offset(0, 8),
           ),
@@ -51,7 +52,7 @@ class WalletBalanceCard extends StatelessWidget {
             ),
           ),
 
-          Divider(color: Colors.white.withOpacity(.25), thickness: 1),
+          Divider(color: Colors.white.withValues(alpha: .25), thickness: 1),
 
           SizedBox(height: 14.h),
 
@@ -61,8 +62,11 @@ class WalletBalanceCard extends StatelessWidget {
                 Expanded(
                   child: _walletButton(
                     title: "Withdraw",
-                    isActive: controller.selectedTab.value == 0,
-                    onPressed: () => controller.changeTab(0),
+                    isActive:
+                        controller.selectedTab.value ==
+                        InfluencerWalletTab.withdraw,
+                    onPressed: () =>
+                        controller.changeTab(InfluencerWalletTab.withdraw),
                   ),
                 ),
 
@@ -71,8 +75,11 @@ class WalletBalanceCard extends StatelessWidget {
                 Expanded(
                   child: _walletButton(
                     title: "Analytics",
-                    isActive: controller.selectedTab.value == 1,
-                    onPressed: () => controller.changeTab(1),
+                    isActive:
+                        controller.selectedTab.value ==
+                        InfluencerWalletTab.analytics,
+                    onPressed: () =>
+                        controller.changeTab(InfluencerWalletTab.analytics),
                   ),
                 ),
               ],
