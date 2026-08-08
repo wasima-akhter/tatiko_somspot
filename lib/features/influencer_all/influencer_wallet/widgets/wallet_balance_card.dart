@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../utils/color/app_colors.dart';
 import '../controller/influencer_wallet_controller.dart';
@@ -37,7 +38,7 @@ class WalletBalanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Earnings this period",
+            AppStrings.earningsThisPeriod.tr,
             style: TextStyle(color: Colors.white70, fontSize: 11.sp),
           ),
 
@@ -61,7 +62,7 @@ class WalletBalanceCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: _walletButton(
-                    title: "Withdraw",
+                    title: AppStrings.withdraw.tr,
                     isActive:
                         controller.selectedTab.value ==
                         InfluencerWalletTab.withdraw,
@@ -74,7 +75,7 @@ class WalletBalanceCard extends StatelessWidget {
 
                 Expanded(
                   child: _walletButton(
-                    title: "Analytics",
+                    title: AppStrings.analytics.tr,
                     isActive:
                         controller.selectedTab.value ==
                         InfluencerWalletTab.analytics,

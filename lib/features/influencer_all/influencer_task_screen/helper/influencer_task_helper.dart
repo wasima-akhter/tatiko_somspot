@@ -1,16 +1,23 @@
+import 'package:get/get.dart';
+
+import '../../../../utils/app_strings/app_strings.dart';
+
 enum InfluencerTaskTab { active, pending, completed, published }
 
 extension InfluencerTaskTabX on InfluencerTaskTab {
   String get title {
     switch (this) {
       case InfluencerTaskTab.active:
-        return "Active";
+        return AppStrings.active.tr;
+
       case InfluencerTaskTab.pending:
-        return "Pending";
+        return AppStrings.pending.tr;
+
       case InfluencerTaskTab.completed:
-        return "Completed";
+        return AppStrings.completed.tr;
+
       case InfluencerTaskTab.published:
-        return "Published";
+        return AppStrings.published.tr;
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:som_spot/features/profile/edit_profile/controller/edit_profile_controller.dart';
+import 'package:som_spot/helper/validator/text_field_validator.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
@@ -132,12 +133,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       color: AppColors.hintTextColor,
                       size: 20.sp,
                     ),
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return "Please enter your full name";
-                      }
-                      return null;
-                    },
+
+                    validator: TextFieldValidator.name(),
+
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.r),
                       borderSide: BorderSide(
@@ -174,12 +172,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       color: AppColors.hintTextColor,
                       size: 20.sp,
                     ),
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return "Please enter your phone number";
-                      }
-                      return null;
-                    },
+                    validator: TextFieldValidator.phone(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.r),
                       borderSide: BorderSide(

@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:som_spot/share/controller/screen_export.dart';
 
 import 'stat_card.dart';
 
@@ -15,7 +13,7 @@ class PerformanceGrid extends StatelessWidget {
           child: StatCard(
             icon: Iconsax.eye,
             iconColor: Colors.blue,
-            title: "Total Views",
+            title: AppStrings.totalViews.tr,
             value: "45K",
           ),
         ),
@@ -24,7 +22,7 @@ class PerformanceGrid extends StatelessWidget {
           child: StatCard(
             icon: Iconsax.magic_star,
             iconColor: Colors.purple,
-            title: "Total Clicks",
+            title: AppStrings.totalClicks.tr,
             value: "3.2K",
           ),
         ),
@@ -33,7 +31,7 @@ class PerformanceGrid extends StatelessWidget {
           child: StatCard(
             icon: Iconsax.tick_circle,
             iconColor: Colors.green,
-            title: "Claims",
+            title: AppStrings.claims.tr,
             value: "480",
           ),
         ),

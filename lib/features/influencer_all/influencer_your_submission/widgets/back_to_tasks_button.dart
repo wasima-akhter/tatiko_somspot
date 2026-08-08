@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../utils/color/app_colors.dart';
 
@@ -30,8 +32,8 @@ class BackToTasksButton extends StatelessWidget {
             Navigator.pop(context);
           },
 
-          child: const Text(
-            "Back to Tasks",
+          child: Text(
+            AppStrings.backToTasks.tr,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
           ),
         ),

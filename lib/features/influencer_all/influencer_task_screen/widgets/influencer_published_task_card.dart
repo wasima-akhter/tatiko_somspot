@@ -51,7 +51,7 @@ class InfluencerTaskPublishedCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Text(
-                  "Published",
+                  AppStrings.published.tr,
                   style: TextStyle(
                     color: const Color(0xff3B82F6),
                     fontSize: 10.sp,
@@ -81,8 +81,9 @@ class InfluencerTaskPublishedCard extends StatelessWidget {
           /// Content Box
           InfoBox(
             icon: Icons.ondemand_video_outlined,
-            title: "Content",
-            value: "1 ${_capitalize(task.campaign?.contentType ?? '')} Video",
+            title: AppStrings.content.tr,
+            value:
+                "1 ${_capitalize(task.campaign?.contentType ?? '')} ${AppStrings.video.tr}",
           ),
 
           SizedBox(height: 18.h),
@@ -104,7 +105,7 @@ class InfluencerTaskPublishedCard extends StatelessWidget {
               ),
               icon: const Icon(Icons.open_in_new, size: 18),
               label: Text(
-                "View Original Post",
+                AppStrings.viewOriginalPost.tr,
                 style: context.titleMedium.copyWith(color: Colors.white),
               ),
             ),

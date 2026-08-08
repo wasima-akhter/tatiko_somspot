@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:som_spot/core/custom_assets/assets.gen.dart';
 import 'package:som_spot/core/service/datasource/local/app_storage.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
@@ -30,11 +31,19 @@ class _SplashScreenState extends State<SplashScreen> {
       return;
     }
 
-    // Language not selected
-    if (!storage.hasSelectedLanguage) {
-      AppRouter.route.goNamed(RoutePath.chooseLanguageScreen);
+    if (kDebugMode) {
+      if (storage.hasSelectedLanguage) {
+        AppRouter.route.goNamed(RoutePath.chooseLanguageScreen);
 
-      return;
+        return;
+      }
+    } else {
+      // Language not selected
+      if (!storage.hasSelectedLanguage) {
+        AppRouter.route.goNamed(RoutePath.chooseLanguageScreen);
+
+        return;
+      }
     }
 
     // Role not selected

@@ -51,7 +51,7 @@ class InfluencerTaskPendingCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Text(
-                  "Pending merchant review",
+                  AppStrings.pendingMerchantReview.tr,
                   style: TextStyle(
                     color: const Color(0xffF59E0B),
                     fontSize: 10.sp,
@@ -76,15 +76,16 @@ class InfluencerTaskPendingCard extends StatelessWidget {
               Expanded(
                 child: InfoBox(
                   icon: Icons.ondemand_video_outlined,
-                  title: "Content",
-                  value: "1 ${task.campaign?.contentType} Video",
+                  title: AppStrings.content.tr,
+                  value:
+                      "1 ${task.campaign?.contentType} ${AppStrings.video.tr}",
                 ),
               ),
               SizedBox(width: 10.w),
               Expanded(
                 child: InfoBox(
                   icon: Icons.calendar_today_outlined,
-                  title: "Deadline",
+                  title: AppStrings.deadline.tr,
                   value: DateConverter.formatDate(
                     dateTime: task.campaign?.endDate,
                   ),
@@ -116,7 +117,7 @@ class InfluencerTaskPendingCard extends StatelessWidget {
                 SizedBox(width: 8.w),
                 Expanded(
                   child: Text(
-                    "Sent to merchant for review. We'll notify you once it's approved.",
+                    AppStrings.sentToMerchantForReview.tr,
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: Colors.grey.shade700,
@@ -142,7 +143,8 @@ class InfluencerTaskPendingCard extends StatelessWidget {
                   ),
                 );
               },
-              child: const Text("View Submission"),
+
+              child: Text(AppStrings.viewSubmission.tr),
             ),
           ),
         ],

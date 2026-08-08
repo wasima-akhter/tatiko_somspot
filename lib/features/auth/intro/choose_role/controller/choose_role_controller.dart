@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 
+import '../../../../../core/service/datasource/local/app_storage.dart';
 import '../../../../../utils/common_controller/common_controller.dart';
 import '../../../../../utils/enum/app_enum.dart';
+import '../../splash/app_flow_router.dart';
 
 class ChooseRoleController extends GetxController {
   static ChooseRoleController get to => Get.find();
@@ -38,7 +40,13 @@ class ChooseRoleController extends GetxController {
 
     debugPrint("Selected role: ${role.name}");
 
-    CommonController.to.setRole(role);
+    if (!CommonController.to.setRole(role)) {
+      return;
+    }
+
+    AppStorage.to.setSelectedRole(selectedRole.value!);
+
+    AppFlowRouter.afterRoleSelected();
 
     AppRouter.route.goNamed(RoutePath.onboardingScreen);
   }

@@ -46,7 +46,7 @@ class InfluencerTaskCompletedCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Text(
-                  "Merchant approved",
+                  AppStrings.merchantApproved.tr,
                   style: TextStyle(
                     color: const Color(0xff22C55E),
                     fontSize: 10.sp,
@@ -68,8 +68,9 @@ class InfluencerTaskCompletedCard extends StatelessWidget {
 
           InfoBox(
             icon: Icons.ondemand_video_outlined,
-            title: "Content",
-            value: "1 ${task.campaign?.contentType.capitalizeWords()} Video",
+            title: AppStrings.content.tr,
+            value:
+                "1 ${task.campaign?.contentType.capitalizeWords()} ${AppStrings.video.tr}",
           ),
 
           SizedBox(height: 12.h),
@@ -91,7 +92,7 @@ class InfluencerTaskCompletedCard extends StatelessWidget {
                 SizedBox(width: 8.w),
                 Expanded(
                   child: Text(
-                    "Ready to publish to social media.",
+                    AppStrings.readyToPublishToSocialMedia.tr,
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: Colors.grey.shade700,
@@ -115,7 +116,7 @@ class InfluencerTaskCompletedCard extends StatelessWidget {
                 );
               },
               icon: const Icon(Icons.send_outlined),
-              label: const Text("Publish to Social Media"),
+              label: Text(AppStrings.publishToSocialMedia.tr),
             ),
           ),
         ],

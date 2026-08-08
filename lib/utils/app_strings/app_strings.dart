@@ -87,7 +87,6 @@ class AppStrings {
   static const String finishAndExplore = "finish_and_explore";
 
   // Home Screen
-  static const String goodMorning = "good_morning";
   static const String searchPlaceholder = "search_placeholder";
   static const String categories = "categories";
   static const String seeAll = "see_all";
@@ -122,7 +121,6 @@ class AppStrings {
   static const String claims = "claims";
   static const String reviews = "reviews";
   static const String account = "account";
-  static const String editProfile = "edit_profile";
   static const String savedItems = "saved_items";
   static const String myClaims = "my_claims";
   static const String preferences = "preferences";
@@ -136,6 +134,8 @@ class AppStrings {
   // Additional keys for Edit Profile, Claims, Support, About
   static const String saveChanges = "save_changes";
   static const String active = "active";
+  static const String completed = "completed";
+
   static const String expired = "expired";
   static const String view = "view";
   static const String offerClaimed = "offer_claimed";
@@ -325,7 +325,7 @@ class AppStrings {
   static const String expiresIn = "expires_in";
 
   // ─── Analytics/Stats ───
-  static const String analytics = "analytics";
+
   static const String last7Days = "last_7_days";
   static const String last30Days = "last_30_days";
   static const String last90Days = "last_90_days";
@@ -369,5 +369,283 @@ class AppStrings {
   // Influencer Strings
   static const String discover = "discover";
   static const String tasks = "tasks";
+  static const String task = "task ";
   static const String wallet = "wallet";
+
+  //-----------------------   NEW ONES: ----
+  static const String chooseYourRole = "choose_your_role";
+
+  static const String roleSelectionSubtitle = "role_selection_subtitle";
+
+  static const String accountRoleError = "account_role_error";
+
+  static const String accountRoleErrorDesc = "account_role_error_desc";
+
+  static const String goodMorning = "good_morning";
+
+  static const String goodAfternoon = "good_afternoon";
+
+  static const String goodEvening = "good_evening";
+
+  static const String goodNight = "good_night";
+
+  static const String totalEarnings = "total_earnings";
+
+  static const String pending = "pending";
+
+  static const String withdraw = "withdraw";
+
+  static const String performance = "performance";
+
+  static const String totalClicks = "total_clicks";
+
+  static const String activeTasks = "active_tasks";
+
+  static const String viewAll = "view_all";
+
+  static const String loadingBusiness = "loading_business";
+
+  static const String loadingCampaignName = "loading_campaign_name";
+
+  static const String videoContent = "video_content";
+
+  static const String unknownBusiness = "unknown_business";
+
+  static const String contentTask = "content_task";
+
+  static const String noActiveTasks = "no_active_tasks";
+
+  static const String assignedTasksSubtitle = "assigned_tasks_subtitle";
+
+  static const String user = "user";
+
+  static const String loadingLocation = "loading_location";
+
+  static const String successfullyLoggedOut = "successfully_logged_out";
+
+  static const String followers = "followers";
+
+  static const String campaigns = "campaigns";
+
+  static const String somethingWentWrong = "something_went_wrong";
+  //
+  static const String emailRequired = "email_required";
+
+  static const String validEmailAddress = "valid_email_address";
+
+  static const String passwordRequired = "password_required";
+
+  static const String passwordMin6 = "password_min_6";
+
+  static const String passwordMin8 = "password_min_8";
+
+  static const String passwordUppercaseRequired = "password_uppercase_required";
+
+  static const String uppercaseRequired = "uppercase_required";
+
+  static const String passwordNumberRequired = "password_number_required";
+
+  static const String numberRequired = "number_required";
+
+  static const String confirmPasswordRequired = "confirm_password_required";
+
+  static const String enterPasswordFirst = "enter_password_first";
+
+  static const String passwordsDoNotMatch = "passwords_do_not_match";
+
+  static const String otpRequired = "otp_required";
+
+  static const String otpMustBe6Digits = "otp_must_be_6_digits";
+
+  static const String otpNumbersOnly = "otp_numbers_only";
+
+  static const String websiteUrlRequired = "website_url_required";
+
+  static const String validWebsiteUrl = "valid_website_url";
+
+  static const String urlProtocolRequired = "url_protocol_required";
+
+  static const String nameRequired = "name_required";
+
+  static const String validName = "valid_name";
+
+  static const String validFullName = "valid_full_name";
+
+  static const String phoneNumberRequired = "phone_number_required";
+
+  static const String validPhoneNumber = "valid_phone_number";
+
+  static const String usernameRequired = "username_required";
+
+  static const String usernameInvalidLength = "username_invalid_length";
+
+  static const String usernameInvalidCharacters = "username_invalid_characters";
+
+  static const String valueRequired = "value_required";
+
+  static const String fieldRequired = "field_required";
+
+  static const String validNumber = "valid_number";
+
+  static const String addressRequired = "address_required";
+
+  static const String validAddress = "valid_address";
+
+  static const String cityRequired = "city_required";
+
+  static const String validCityName = "valid_city_name";
+
+  static const String zipcodeRequired = "zipcode_required";
+
+  static const String validZipcode = "valid_zipcode";
+
+  static const String countryRequired = "country_required";
+
+  static const String validCountryName = "valid_country_name";
+
+  static const String descriptionRequired = "description_required";
+
+  static const String descriptionMinLength = "description_min_length";
+
+  static const String postalCodeRequired = "postal_code_required";
+
+  static const String validPostalCode = "valid_postal_code";
+
+  static const String dateOfBirthRequired = "date_of_birth_required";
+
+  static const String validDateOfBirth = "valid_date_of_birth";
+
+  static const String invalidDateFormat = "invalid_date_format";
+
+  static const String dateOfBirthFuture = "date_of_birth_future";
+
+  static const String invalidDateOfBirth = "invalid_date_of_birth";
+
+  static const String genderRequired = "gender_required";
+
+  static const String validGender = "valid_gender";
+  static const String loading = "Loading...";
+
+  static const String editProfile = "edit_profile";
+  static const String basicInformation = "basic_information";
+  static const String influencerInformation = "influencer_information";
+
+  static const String topPerformingContent = "top_performing_content";
+
+  static const String jan = "jan";
+  static const String feb = "feb";
+  static const String mar = "mar";
+  static const String apr = "apr";
+  static const String may = "may";
+  static const String jun = "jun";
+
+  static const String earningsTrend = "earnings_trend";
+  static const String monthly = "monthly";
+  static const String noEarningsDataYet = "no_earnings_data_yet";
+  static const String completeCampaignsAndTasks =
+      "complete_campaigns_and_tasks";
+  static const String earningsThisPeriod = "earnings_this_period";
+  static const String analytics = "analytics";
+  static const String all = "all";
+
+  static const String noItemsFound = "no_items_found";
+  static const String listCurrentlyEmpty = "list_currently_empty";
+  static const String content = "content";
+  static const String deadline = "deadline";
+  static const String submitContent = "submit_content";
+  static const String video = "video";
+
+  static const String pendingMerchantReview = "pending_merchant_review";
+  static const String sentToMerchantForReview = "sent_to_merchant_for_review";
+  static const String viewSubmission = "view_submission";
+
+  static const String merchantApproved = "merchant_approved";
+  static const String readyToPublishToSocialMedia =
+      "ready_to_publish_to_social_media";
+  static const String publishToSocialMedia = "publish_to_social_media";
+  static const String published = "published";
+  static const String viewOriginalPost = "view_original_post";
+  static const String myTasks = "my_tasks";
+
+  static const String tiktok = "tiktok";
+  static const String instagram = "instagram";
+  static const String facebook = "facebook";
+  static const String youtube = "youtube";
+
+  //
+  static const String submitPublishedVideoLinkForMerchantApproval =
+      "submit_published_video_link_for_merchant_approval";
+  static const String platform = "platform";
+  static const String selectPlatform = "select_platform";
+  static const String caption = "caption";
+  static const String writeCaptionUsedInYourPost =
+      "write_caption_used_in_your_post";
+  static const String thumbnail = "thumbnail";
+  static const String selectThumbnail = "select_thumbnail";
+  static const String uploadVideoOptional = "upload_video_optional";
+  static const String chooseVideo = "choose_video";
+  static const String videoLink = "video_link";
+  static const String pasteSocialVideoUrl = "paste_social_video_url";
+  static const String submitForReview = "submit_for_review";
+
+  static const String uploadVideoOrProvideVideoUrl =
+      "upload_video_or_provide_video_url";
+  static const String enterCaption = "enter_caption";
+  static const String selectThumbnailRequired = "select_thumbnail_required";
+  static const String selectPlatformRequired = "select_platform_required";
+
+  static const String contentSubmitted = "content_submitted";
+  static const String merchantWillReviewContent =
+      "merchant_will_review_content";
+
+  static const String yourSubmission = "your_submission";
+  static const String unknownStore = "unknown_store";
+  static const String campaignContent = "campaign_content";
+  static const String unknown = "unknown";
+  static const String submittedContent = "submitted_content";
+
+  static const String backToTasks = "back_to_tasks";
+
+  static const String publishAndProof = "publish_and_proof";
+  static const String campaign = "campaign";
+  static const String publishApprovedDraftMessage =
+      "publish_approved_draft_message";
+  static const String socialMediaPostUrl = "social_media_post_url";
+  static const String addLivePostLink = "add_live_post_link";
+  static const String confirmPublishing = "confirm_publishing";
+  static const String publishingConfirmed = "publishing_confirmed";
+  static const String campaignMovedToPublished = "campaign_moved_to_published";
+
+  // edit profile
+
+  static const String editInfluencerProfile = "edit_influencer_profile";
+  static const String influencerDetails = "influencer_details";
+  static const String updateAudienceInformation = "update_audience_information";
+  static const String influencerType = "influencer_type";
+  static const String selectInfluencerType = "select_influencer_type";
+  static const String bio = "bio";
+  static const String bioExample = "bio_example";
+  static const String pleaseEnterYourBio = "please_enter_your_bio";
+  static const String followerCount = "follower_count";
+  static const String enterTotalFollowers = "enter_total_followers";
+  static const String pleaseEnterFollowerCount = "please_enter_follower_count";
+  static const String socialAccounts = "social_accounts";
+
+  static const String usernameHint = "username_hint";
+  static const String pageUsername = "page_username";
+
+  static const String enterYourBio = "enter_your_bio";
+  static const String enterFollowerCount = "enter_follower_count";
+
+  //
+  static const String business = "business";
+  static const String youtubeShort = "youtube_short";
+  static const String instagramReel = "instagram_reel";
+  static const String facebookReel = "facebook_reel";
+  static const String tiktokVideo = "tiktok_video";
+  static const String xPost = "x_post";
+  static const String socialMediaPost = "social_media_post";
+
+  //
+  static const String myCampaigns = "my_campaigns";
 }

@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-
-import '../../../../utils/color/app_colors.dart';
-import '../../../../utils/extension/base_extension.dart';
+import '../../../../share/controller/screen_export.dart';
 
 class CampaignTabSwitcher extends StatelessWidget {
   final int activeCount;
@@ -32,7 +27,7 @@ class CampaignTabSwitcher extends StatelessWidget {
         children: [
           Expanded(
             child: _TabItem(
-              title: "Active",
+              title: AppStrings.active.tr,
               count: activeCount,
               selected: isActiveSelected,
               onTap: () => onChanged(true),
@@ -40,7 +35,7 @@ class CampaignTabSwitcher extends StatelessWidget {
           ),
           Expanded(
             child: _TabItem(
-              title: "Completed",
+              title: AppStrings.completed.tr,
               count: completedCount,
               selected: !isActiveSelected,
               onTap: () => onChanged(false),

@@ -1,3 +1,7 @@
+import 'package:get/get.dart';
+
+import '../../../../utils/app_strings/app_strings.dart';
+
 enum InfluencerWalletTab { withdraw, analytics }
 
 extension InfluencerWalletTabExtension on InfluencerWalletTab {
@@ -25,7 +29,7 @@ extension WalletAnalyticsPeriodExtension on WalletAnalyticsPeriod {
         return "30D";
 
       case WalletAnalyticsPeriod.all:
-        return "All";
+        return AppStrings.all.tr;
     }
   }
 

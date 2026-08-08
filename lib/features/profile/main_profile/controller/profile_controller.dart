@@ -4,6 +4,7 @@ import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/auth/controller/auth_controller.dart';
 import 'package:som_spot/features/profile/models/get_profile_model.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../helper/image/image_helper.dart';
 import '../../../../helper/location_converter/location-converter.dart';
@@ -69,23 +70,23 @@ class ProfileScreenController extends GetxController {
 
   void logout() {
     AuthController.to.logout();
-    AppToast.success(message: "You have successfully logged out.");
+    AppToast.success(message: AppStrings.successfullyLoggedOut.tr);
     AppRouter.route.goNamed(RoutePath.loginScreen);
   }
 
   List<ProfileStatModel> get profileStats {
     if (CommonController.to.isInfluencer) {
       return [
-        ProfileStatModel(title: "Followers", value: "50K"),
-        ProfileStatModel(title: "Engagement", value: "4.2%"),
-        ProfileStatModel(title: "Campaigns", value: "12"),
+        ProfileStatModel(title: AppStrings.followers.tr, value: "50K"),
+        ProfileStatModel(title: AppStrings.engagement.tr, value: "4.2%"),
+        ProfileStatModel(title: AppStrings.campaigns.tr, value: "12"),
       ];
     }
     if (CommonController.to.isCustomer) {
       return [
-        ProfileStatModel(title: "Saved", value: "25"),
-        ProfileStatModel(title: "Claims", value: "18"),
-        ProfileStatModel(title: "Reviews", value: "12"),
+        ProfileStatModel(title: AppStrings.saved.tr, value: "25"),
+        ProfileStatModel(title: AppStrings.claims.tr, value: "18"),
+        ProfileStatModel(title: AppStrings.reviews.tr, value: "12"),
       ];
     }
     return []; // merchandiser / fallback
@@ -111,7 +112,7 @@ class ProfileScreenController extends GetxController {
       await setProfileData(profile);
       profileLoadingMethod(ApiStatus.completed);
     } catch (_) {
-      errorMessage.value = "Something went wrong.";
+      errorMessage.value = AppStrings.somethingWentWrong.tr;
       profileLoadingMethod(ApiStatus.error);
     }
   }

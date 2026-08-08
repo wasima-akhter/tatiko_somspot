@@ -22,7 +22,7 @@ class InfluencerEditOptionBottomSheet extends StatelessWidget {
 
           children: [
             Text(
-              "Edit Profile",
+              AppStrings.editProfile.tr,
               style: context.headlineSmall.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.darkTextColor,
@@ -32,7 +32,7 @@ class InfluencerEditOptionBottomSheet extends StatelessWidget {
             Gap(24.h),
 
             CustomButton(
-              text: "Basic Information",
+              text: AppStrings.basicInformation.tr,
 
               onTap: () {
                 Navigator.pop(context);
@@ -44,8 +44,7 @@ class InfluencerEditOptionBottomSheet extends StatelessWidget {
             Gap(16.h),
 
             CustomButton(
-              text: "Influencer Information",
-
+              text: AppStrings.influencerInformation.tr,
               onTap: () {
                 Navigator.pop(context);
 

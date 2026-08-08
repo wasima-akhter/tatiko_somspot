@@ -85,7 +85,15 @@ class AuthService {
   }
 
   Future<RegisterResponse> register(RegisterRequest request) async {
-    final response = await _repository.register(request);
+    final selectedRole = storage.selectedRole;
+
+    if (selectedRole == null) {
+      throw Exception('A role must be selected before registration.');
+    }
+
+    final registerRequest = request.copyWith(role: selectedRole.name);
+
+    final response = await _repository.register(registerRequest);
 
     final result = ApiParser.parse<RegisterResponse>(
       response,
@@ -93,9 +101,8 @@ class AuthService {
     );
 
     if (result.success && result.data?.isActive == false) {
-      await storage.setPendingEmail(request.email);
-
-      await storage.setPendingRole(request.role);
+      await storage.setPendingEmail(registerRequest.email);
+      await storage.setPendingRole(registerRequest.role);
     }
 
     return result.data!;

@@ -1,0 +1,10 @@
+"Choose Your Role"
+"Select the role you'd like to use across SomSpot. You can change it anytime.",
+ "Continue",
+  final List<String> roleTitles = const ["Customer", "Merchant", "Influencer"];
+ ApiSnackbar.show(
+        title: 'Account Role Error',
+        'We couldn’t determine your account role. Please try again. If the problem continues, contact support.',
+
+        type: SnackbarType.error,
+      );

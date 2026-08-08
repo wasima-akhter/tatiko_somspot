@@ -19,7 +19,7 @@ class InfluencerMyCampaignsScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          "My Campaigns",
+          AppStrings.myCampaigns.tr,
           style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
         ),
         centerTitle: false,

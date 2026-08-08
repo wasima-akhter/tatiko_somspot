@@ -20,12 +20,12 @@ class EarningsTrendChart extends StatelessWidget {
     if (earningsTrend == null || earningsTrend!.isEmpty) {
       // fallback placeholder
       return [
-        _ChartData("Jan", 0),
-        _ChartData("Feb", 0),
-        _ChartData("Mar", 0),
-        _ChartData("Apr", 0),
-        _ChartData("May", 0),
-        _ChartData("Jun", 0),
+        _ChartData(AppStrings.jan, 0),
+        _ChartData(AppStrings.feb.tr, 0),
+        _ChartData(AppStrings.mar.tr, 0),
+        _ChartData(AppStrings.apr.tr, 0),
+        _ChartData(AppStrings.may.tr, 0),
+        _ChartData(AppStrings.jun.tr, 0),
       ];
     }
 
@@ -54,7 +54,7 @@ class EarningsTrendChart extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Earnings Trend",
+                  AppStrings.earningsTrend.tr,
                   style: context.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.darkTextColor,
@@ -68,7 +68,7 @@ class EarningsTrendChart extends StatelessWidget {
                 SizedBox(width: 4.w),
 
                 Text(
-                  "Monthly",
+                  AppStrings.monthly.tr,
                   style: context.bodySmall.copyWith(
                     color: Colors.grey,
                     fontWeight: FontWeight.w600,
@@ -194,7 +194,7 @@ class EarningsTrendChart extends StatelessWidget {
           Gap(10.h),
 
           Text(
-            "No earnings data yet",
+            AppStrings.noEarningsDataYet.tr,
             style: context.bodyMedium.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.darkTextColor,
@@ -206,7 +206,7 @@ class EarningsTrendChart extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.w),
             child: Text(
-              "Complete campaigns and tasks to see your earnings trend here",
+              AppStrings.completeCampaignsAndTasks.tr,
               textAlign: TextAlign.center,
               style: context.bodySmall.copyWith(
                 color: AppColors.subtitleTextColor,

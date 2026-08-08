@@ -17,6 +17,7 @@ class InfluencerYourSubmissionScreen extends StatefulWidget {
     super.key,
     required this.influencerSubmissionArgs,
   });
+
   @override
   State<InfluencerYourSubmissionScreen> createState() =>
       _InfluencerYourSubmissionScreenState();
@@ -39,8 +40,7 @@ class _InfluencerYourSubmissionScreenState
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
-      title: "Your Submission",
-
+      title: AppStrings.yourSubmission.tr,
       body: Column(
         children: [
           Expanded(
@@ -81,9 +81,12 @@ class _InfluencerYourSubmissionScreenState
                           videoUrl: task.draftVideoUrl ?? "",
 
                           storeName:
-                              task.campaign?.business?.name ?? "Unknown Store",
+                              task.campaign?.business?.name ??
+                              AppStrings.unknownStore.tr,
 
-                          title: task.campaign?.name ?? "Campaign Content",
+                          title:
+                              task.campaign?.name ??
+                              AppStrings.campaignContent.tr,
 
                           description: task.caption?.isNotEmpty == true
                               ? task.caption!
@@ -92,7 +95,7 @@ class _InfluencerYourSubmissionScreenState
                           platform:
                               task.platform ??
                               task.campaign?.contentType ??
-                              "Unknown",
+                              AppStrings.unknown.tr,
 
                           duration: task.campaign?.videoLengthSec != null
                               ? "${task.campaign!.videoLengthSec}s"
@@ -120,7 +123,8 @@ class _InfluencerYourSubmissionScreenState
                                 context,
                                 videoUrl: video,
                                 title:
-                                    task.campaign?.name ?? "Submitted Content",
+                                    task.campaign?.name ??
+                                    AppStrings.submittedContent.tr,
                               );
                             }
                           },

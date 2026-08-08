@@ -17,7 +17,7 @@ class InfluencerDashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = InfluencerDashboardController.to;
     return Scaffold(
-      backgroundColor: AppColors.softBackgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
 
       body: CustomRefreshIndicator(
         onRefresh: controller.refreshHomeData,
@@ -127,7 +127,7 @@ class InfluencerDashboardScreen extends StatelessWidget {
 
       children: [
         Text(
-          "Performance",
+          AppStrings.performance.tr,
           style: context.titleMedium.copyWith(
             fontWeight: FontWeight.w700,
             color: AppColors.darkTextColor,
@@ -174,7 +174,7 @@ class InfluencerDashboardScreen extends StatelessWidget {
 
           children: [
             Text(
-              "Active Tasks",
+              AppStrings.activeTasks.tr,
               style: context.titleMedium.copyWith(fontWeight: FontWeight.w700),
             ),
 
@@ -184,7 +184,7 @@ class InfluencerDashboardScreen extends StatelessWidget {
               },
 
               child: Text(
-                "View all",
+                AppStrings.viewAll.tr,
                 style: context.bodySmall.copyWith(fontWeight: FontWeight.w600),
               ),
             ),

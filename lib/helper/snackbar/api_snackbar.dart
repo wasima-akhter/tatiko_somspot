@@ -5,7 +5,11 @@ import '../../utils/app_keys/app_keys.dart';
 enum SnackbarType { success, error, warning, info }
 
 class ApiSnackbar {
-  static void show(String message, {SnackbarType type = SnackbarType.error}) {
+  static void show(
+    String message, {
+    String? title,
+    SnackbarType type = SnackbarType.error,
+  }) {
     final messenger = AppKeys.scaffoldMessengerKey.currentState;
 
     if (messenger == null) {
@@ -18,14 +22,30 @@ class ApiSnackbar {
       ..showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
-
           margin: const EdgeInsets.all(16),
-
           duration: const Duration(seconds: 3),
-
           backgroundColor: _color(type),
-
-          content: Text(message, style: const TextStyle(color: Colors.white)),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (title != null && title.isNotEmpty)
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              if (title != null && title.isNotEmpty)
+                const SizedBox(height: 4),
+              Text(
+                message,
+                style: const TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
         ),
       );
   }
@@ -34,13 +54,10 @@ class ApiSnackbar {
     switch (type) {
       case SnackbarType.success:
         return Colors.green;
-
       case SnackbarType.error:
         return Colors.red;
-
       case SnackbarType.warning:
         return Colors.orange;
-
       case SnackbarType.info:
         return Colors.blue;
     }

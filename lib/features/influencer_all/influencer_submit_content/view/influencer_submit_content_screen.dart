@@ -37,10 +37,10 @@ class _InfluencerSubmitContentScreenState
   String? _selectedPlatform;
 
   final List<String> _platforms = [
-    "tiktok",
-    "instagram",
-    "facebook",
-    "youtube",
+    AppStrings.tiktok.tr,
+    AppStrings.instagram.tr,
+    AppStrings.facebook.tr,
+    AppStrings.youtube.tr,
   ];
 
   Future<void> _pickThumbnail() async {
@@ -78,7 +78,7 @@ class _InfluencerSubmitContentScreenState
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
-      title: "Submit Content",
+      title: AppStrings.submitContent.tr,
       onPressed: () => AppRouter.route.pop(),
 
       body: SafeArea(
@@ -109,7 +109,7 @@ class _InfluencerSubmitContentScreenState
 
                     children: [
                       Text(
-                        "Task: ${widget.args.taskName}",
+                        "${AppStrings.task.tr}: ${widget.args.taskName}",
                         style: context.titleMedium.copyWith(
                           fontWeight: FontWeight.w600,
                           color: const Color(0xff581C87),
@@ -119,7 +119,9 @@ class _InfluencerSubmitContentScreenState
                       Gap(6.h),
 
                       Text(
-                        "Submit your published video link for merchant approval.",
+                        AppStrings
+                            .submitPublishedVideoLinkForMerchantApproval
+                            .tr,
                         style: context.bodySmall.copyWith(
                           color: Colors.deepPurple,
                         ),
@@ -131,7 +133,7 @@ class _InfluencerSubmitContentScreenState
                 Gap(14.h),
 
                 Text(
-                  "Platform",
+                  AppStrings.platform.tr,
                   style: context.titleMedium.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -141,20 +143,20 @@ class _InfluencerSubmitContentScreenState
 
                 CustomDropdownField<String>(
                   value: _selectedPlatform,
-                  hintText: "Select platform",
+                  hintText: AppStrings.selectPlatform.tr,
                   items: _platforms,
                   labelBuilder: (platform) =>
                       platform[0].toUpperCase() + platform.substring(1),
                   onChanged: (value) {
                     setState(() {
-                      _selectedPlatform = value;
+                      _selectedPlatform = value?.toLowerCase();
                     });
                   },
                 ),
                 Gap(10.h),
 
                 Text(
-                  "Caption",
+                  AppStrings.caption.tr,
                   style: context.titleMedium.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -164,7 +166,7 @@ class _InfluencerSubmitContentScreenState
 
                 CustomTextField(
                   controller: _captionController,
-                  hintText: "Write the caption used in your post",
+                  hintText: AppStrings.writeCaptionUsedInYourPost.tr,
                   fillColor: Colors.white,
                   maxLines: 4,
                   minLines: 2,
@@ -172,7 +174,7 @@ class _InfluencerSubmitContentScreenState
                 Gap(20.h),
 
                 Text(
-                  "Thumbnail",
+                  AppStrings.thumbnail.tr,
                   style: context.titleMedium.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -198,7 +200,7 @@ class _InfluencerSubmitContentScreenState
                             children: [
                               const Icon(Icons.image_outlined),
                               Gap(8.h),
-                              const Text("Select Thumbnail"),
+                              Text(AppStrings.selectThumbnail.tr),
                             ],
                           )
                         : Stack(
@@ -238,7 +240,7 @@ class _InfluencerSubmitContentScreenState
                 Gap(14.h),
 
                 Text(
-                  "Upload Video (Optional)",
+                  AppStrings.uploadVideoOptional.tr,
                   style: context.titleMedium.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -270,7 +272,7 @@ class _InfluencerSubmitContentScreenState
                         Expanded(
                           child: Text(
                             _draftVideo == null
-                                ? "Choose video"
+                                ? AppStrings.chooseVideo.tr
                                 : _draftVideo!.path.split('/').last,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -293,7 +295,7 @@ class _InfluencerSubmitContentScreenState
 
                 /// Video URL
                 Text(
-                  "Video Link",
+                  AppStrings.videoLink.tr,
                   style: context.titleMedium.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -303,7 +305,7 @@ class _InfluencerSubmitContentScreenState
 
                 CustomTextField(
                   controller: _videoUrlController,
-                  hintText: "Paste your TikTok / Instagram video URL",
+                  hintText: AppStrings.pasteSocialVideoUrl.tr,
                   fillColor: Colors.white,
 
                   prefixIcon: const Icon(Icons.link, color: Colors.grey),
@@ -337,7 +339,7 @@ class _InfluencerSubmitContentScreenState
                       isLoading:
                           InfluencerTaskController.to.submitDraftStatus.value ==
                           ApiStatus.loading,
-                      text: "Submit for Review",
+                      text: AppStrings.submitForReview.tr,
                       onTap: _submitContent,
                     ),
                   ),
@@ -352,25 +354,24 @@ class _InfluencerSubmitContentScreenState
 
   Future<void> _submitContent() async {
     if (_draftVideo == null && _videoUrlController.text.trim().isEmpty) {
-      ApiSnackbar.show("Please upload a video or provide a video URL.");
+      ApiSnackbar.show(AppStrings.uploadVideoOrProvideVideoUrl.tr);
       return;
     }
 
     if (_captionController.text.trim().isEmpty) {
-      ApiSnackbar.show("Please enter a caption.");
+      ApiSnackbar.show(AppStrings.enterCaption.tr);
       return;
     }
 
     if (_thumbnail == null) {
-      ApiSnackbar.show("Please select a thumbnail.");
+      ApiSnackbar.show(AppStrings.selectThumbnailRequired.tr);
       return;
     }
 
     if (_selectedPlatform == null) {
-      ApiSnackbar.show("Please select a platform.");
+      ApiSnackbar.show(AppStrings.selectPlatformRequired.tr);
       return;
     }
-
     final success = await InfluencerTaskController.to.submitDraft(
       applicationId: widget.args.applicationId,
       draftVideoUrl: _draftVideo == null
@@ -387,8 +388,8 @@ class _InfluencerSubmitContentScreenState
     AppRouter.route.goNamed(
       RoutePath.successScreen,
       extra: SuccessScreenArgs(
-        title: "Content Submitted!",
-        subtitle: "The merchant will review your content before approval.",
+        title: AppStrings.contentSubmitted.tr,
+        subtitle: AppStrings.merchantWillReviewContent.tr,
         autoNavigateAfter: const Duration(seconds: 3),
         onAutoNavigate: () {
           AppRouter.route.goNamed(RoutePath.navigationPages);

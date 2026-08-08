@@ -7,6 +7,7 @@ import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/influencer_all/influencer_task_screen/controller/influencer_task_controller.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/share/widgets/button/custom_button.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../utils/color/app_colors.dart';
 import '../../../../utils/extension/base_extension.dart';
@@ -64,9 +65,10 @@ class MyCampaignCard extends StatelessWidget {
                 ),
 
                 SizedBox(height: 4.h),
-
                 Text(
-                  isCompleted ? "Completed" : "In Progress",
+                  isCompleted
+                      ? AppStrings.completed.tr
+                      : AppStrings.inProgress.tr,
                   style: context.bodySmall.copyWith(
                     color: isCompleted ? Colors.green : Colors.orange,
                     fontWeight: FontWeight.w600,
@@ -80,7 +82,7 @@ class MyCampaignCard extends StatelessWidget {
             width: 70.w,
             height: 42.h,
             child: CustomButton(
-              text: "View",
+              text: AppStrings.view.tr,
               onTap: () {
                 AppRouter.route.pushReplacementNamed(RoutePath.navigationPages);
                 NavigationControllerMain.to.goToTabTasks();

@@ -83,8 +83,9 @@ class InfluencerTaskActiveCard extends StatelessWidget {
               Expanded(
                 child: InfoBox(
                   icon: Icons.ondemand_video_outlined,
-                  title: "Content",
-                  value: "1 ${task.campaign?.contentType.capitalize} Video",
+                  title: AppStrings.content.tr,
+                  value:
+                      "1 ${task.campaign?.contentType.capitalize} ${AppStrings.video}",
                 ),
               ),
 
@@ -93,7 +94,7 @@ class InfluencerTaskActiveCard extends StatelessWidget {
               Expanded(
                 child: InfoBox(
                   icon: Icons.calendar_today_outlined,
-                  title: "Deadline",
+                  title: AppStrings.deadline.tr,
                   value: DateConverter.formatDate(
                     dateTime: task.campaign?.endDate,
                   ),
@@ -108,7 +109,7 @@ class InfluencerTaskActiveCard extends StatelessWidget {
             width: double.infinity,
             height: 46.h,
             child: CustomButton(
-              text: "Submit Content",
+              text: AppStrings.submitContent.tr,
               icon: Icons.cloud_upload_outlined,
               backgroundColor: AppColors.primaryColor,
               onTap: () {

@@ -1,6 +1,8 @@
 import 'package:som_spot/share/controller/language_controller.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 
+import '../../splash/app_flow_router.dart';
+
 class ChooseLanguageScreen extends StatelessWidget {
   ChooseLanguageScreen({super.key});
 
@@ -46,19 +48,23 @@ class ChooseLanguageScreen extends StatelessWidget {
                     final lang = _controller.languages[index];
 
                     return Obx(() {
+                      // Compare the selected enum's language code
+                      // with the current LanguageModel's code.
                       final isSelected =
-                          _controller.selectedIndex.value == index;
+                          _controller.selectedLanguageCode == lang.languageCode;
 
                       return _LanguageCard(
                         flag: lang.imageUrl,
                         name: lang.languageName,
-                        nativeName: lang.countryCode == 'SO'
-                            ? 'Somali'
-                            : lang.countryCode == 'SA'
-                            ? 'Arabic'
-                            : 'English',
+                        nativeName: _getNativeLanguageName(lang.languageCode),
                         isSelected: isSelected,
-                        onTap: () => _controller.selectLanguage(index),
+                        onTap: () {
+                          final language = _controller.languageFromCode(
+                            lang.languageCode,
+                          );
+
+                          _controller.selectLanguage(language);
+                        },
                       );
                     });
                   },
@@ -71,7 +77,8 @@ class ChooseLanguageScreen extends StatelessWidget {
                 child: CustomButton(
                   text: AppStrings.continueText.tr,
                   onTap: () {
-                    AppRouter.route.goNamed(RoutePath.chooseRoleScreen);
+                    AppFlowRouter.afterLanguageSelected();
+                    // AppRouter.route.goNamed(RoutePath.chooseRoleScreen);
                   },
                 ),
               ),
@@ -80,6 +87,20 @@ class ChooseLanguageScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getNativeLanguageName(String languageCode) {
+    switch (languageCode) {
+      case 'so':
+        return 'Somali';
+
+      case 'ar':
+        return 'العربية';
+
+      case 'en':
+      default:
+        return 'English';
+    }
   }
 }
 
@@ -133,6 +154,7 @@ class _LanguageCard extends StatelessWidget {
               ),
               child: Text(flag, style: const TextStyle(fontSize: 22)),
             ),
+
             const Gap(14),
 
             // ── Language Name + Native Name ──

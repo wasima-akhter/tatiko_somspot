@@ -37,7 +37,7 @@ class InfluencerEarningsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Total Earnings",
+            AppStrings.totalEarnings.tr,
             style: context.bodySmall.copyWith(
               color: Colors.white.withValues(alpha: .85),
               fontSize: 11.sp,
@@ -70,7 +70,7 @@ class InfluencerEarningsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Pending",
+                    AppStrings.pending.tr,
                     style: context.bodySmall.copyWith(
                       color: Colors.white.withValues(alpha: .8),
                       fontSize: 10.sp,
@@ -105,7 +105,7 @@ class InfluencerEarningsCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Text(
-                    "Withdraw",
+                    AppStrings.withdraw.tr,
                     style: context.bodySmall.copyWith(
                       color: AppColors.purpleAccentColor,
                       fontWeight: FontWeight.w700,

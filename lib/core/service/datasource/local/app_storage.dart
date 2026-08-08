@@ -38,6 +38,8 @@ class AppStorage extends GetxService {
 
   static const String profileCompletedKey = 'profile_completed';
 
+  static const String selectedRoleKey = 'selected_role';
+
   // -----------------------
   // onboarding
   // -----------------------
@@ -95,6 +97,27 @@ class AppStorage extends GetxService {
   }
 
   Future<void> setRole(UserRole role) => _storage.write(roleKey, role.name);
+
+  // selected role key for splash navigation:
+  // -----------------------
+  // selected role
+  // -----------------------
+
+  UserRole? get selectedRole {
+    final value = _storage.read(selectedRoleKey);
+
+    if (value == null) return null;
+
+    return UserRole.values.firstWhereOrNull((e) => e.name == value);
+  }
+
+  Future setSelectedRole(UserRole role) {
+    return _storage.write(selectedRoleKey, role.name);
+  }
+
+  Future clearSelectedRole() {
+    return _storage.remove(selectedRoleKey);
+  }
 
   // -----------------------
   // pending role

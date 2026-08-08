@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:som_spot/helper/snackbar/api_snackbar.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../enum/app_enum.dart';
 
 class CommonController extends GetxController {
   static CommonController get to => Get.find();
 
-  final List<String> roleTitles = const ["Customer", "Merchant", "Influencer"];
+  // final List<String> roleTitles = const ["Customer", "Merchant", "Influencer"];
+  final List<String> roleTitles = [
+    AppStrings.customer,
+    AppStrings.merchant,
+    AppStrings.influencer,
+  ];
 
   final List<UserRole> roles = const [
     UserRole.customer,
@@ -20,7 +27,21 @@ class CommonController extends GetxController {
   bool get isCustomer => role.value.isCustomer;
   bool get isInfluencer => role.value.isInfluencer;
 
-  void setRole(UserRole newRole) => role.value = newRole;
+  bool setRole(UserRole? newRole) {
+    if (newRole == null) {
+      ApiSnackbar.show(
+        title: AppStrings.accountRoleError.tr,
+        AppStrings.accountRoleErrorDesc.tr,
+
+        type: SnackbarType.error,
+      );
+
+      return false;
+    }
+
+    role.value = newRole;
+    return true;
+  }
 }
 
 extension UserRoleExtension on UserRole {
@@ -35,7 +56,7 @@ extension UserRoleExtension on UserRole {
     }
   }
 
-  static UserRole fromString(String? value) {
+  static UserRole? fromString(String? value) {
     switch (value?.toLowerCase()) {
       case 'creator':
         return UserRole.influencer;
@@ -44,10 +65,10 @@ extension UserRoleExtension on UserRole {
       case 'user':
         return UserRole.customer;
       default:
-        debugPrint(
-          "⚠️ [UserRole] Unrecognized role value: '$value' — defaulting to customer",
-        );
-        return UserRole.customer; // safer default than influencer
+        debugPrint("⚠️ [UserRole] Unrecognized role value: '$value'");
+        return null;
     }
   }
+
+  //
 }

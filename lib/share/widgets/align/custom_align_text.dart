@@ -3,7 +3,7 @@ import 'package:som_spot/share/controller/screen_export.dart';
 class CustomAlignText extends StatelessWidget {
   const CustomAlignText({
     super.key,
-    this.alignment = Alignment.centerLeft,
+    this.alignment,
     required this.text,
     this.fontSize,
     this.fontWeight,
@@ -13,7 +13,12 @@ class CustomAlignText extends StatelessWidget {
     this.textAlign,
   });
 
-  final Alignment alignment;
+  /// If null, automatically uses the app's current text direction.
+  ///
+  /// LTR -> Alignment.centerLeft
+  /// RTL -> Alignment.centerRight
+  final Alignment? alignment;
+
   final String text;
   final double? fontSize;
   final FontWeight? fontWeight;
@@ -24,18 +29,26 @@ class CustomAlignText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
+
+    final resolvedAlignment =
+        alignment ?? (isRtl ? Alignment.centerRight : Alignment.centerLeft);
+
+    final resolvedTextAlign =
+        textAlign ?? (isRtl ? TextAlign.right : TextAlign.left);
+
     return Align(
-      alignment: alignment,
+      alignment: resolvedAlignment,
       child: Text(
         text,
-        textAlign: textAlign ?? TextAlign.start,
+        textAlign: resolvedTextAlign,
         maxLines: maxLine,
         style:
             style ??
             context.titleSmall.copyWith(
               fontWeight: fontWeight ?? FontWeight.w500,
               fontSize: fontSize,
-              color: AppColors.blackMainTextColor,
+              color: color ?? AppColors.blackMainTextColor,
             ),
       ),
     );

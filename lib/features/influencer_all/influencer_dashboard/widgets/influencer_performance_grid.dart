@@ -19,7 +19,7 @@ class InfluencerPerformanceGrid extends StatelessWidget {
       children: [
         Expanded(
           child: DashboardStatCard(
-            title: "Total Views",
+            title: AppStrings.totalViews.tr,
             value: isLoading ? "0" : "0",
             icon: Iconsax.eye,
             iconColor: AppColors.blueAccentColor,
@@ -30,7 +30,7 @@ class InfluencerPerformanceGrid extends StatelessWidget {
 
         Expanded(
           child: DashboardStatCard(
-            title: "Total Clicks",
+            title: AppStrings.totalClicks.tr,
             value: isLoading ? "0" : "0",
             icon: Iconsax.magic_star,
             iconColor: AppColors.purpleAccentColor,
@@ -41,7 +41,7 @@ class InfluencerPerformanceGrid extends StatelessWidget {
 
         Expanded(
           child: DashboardStatCard(
-            title: "Claims",
+            title: AppStrings.claims.tr,
             value: isLoading ? "0" : "${data?.claims ?? 0}",
             icon: Iconsax.tick_circle,
             iconColor: AppColors.emeraldGreenColor,

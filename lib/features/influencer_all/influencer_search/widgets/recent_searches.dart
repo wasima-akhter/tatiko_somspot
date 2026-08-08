@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:iconsax/iconsax.dart';
-
-import '../../../../utils/color/app_colors.dart';
-import '../../../../utils/extension/base_extension.dart';
+import '../../../../share/controller/screen_export.dart';
 
 class RecentSearches extends StatelessWidget {
   RecentSearches({super.key});
@@ -29,14 +23,13 @@ class RecentSearches extends StatelessWidget {
             Gap(6.w),
 
             Text(
-              "Recent Searches",
+              AppStrings.recentSearches.tr,
               style: context.titleSmall.copyWith(fontWeight: FontWeight.w600),
             ),
-
             const Spacer(),
 
             Text(
-              "Clear",
+              AppStrings.clear.tr,
               style: context.titleSmall.copyWith(
                 color: AppColors.blueAccentColor,
               ),

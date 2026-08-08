@@ -259,7 +259,10 @@ class AuthController extends GetxController {
     final user = me.data!;
 
     //  // Save role globally
-    CommonController.to.setRole(UserRoleExtension.fromString(user.role));
+    // CommonController.to.setRole(UserRoleExtension.fromString(user.role));
+    if (!CommonController.to.setRole(UserRoleExtension.fromString(user.role))) {
+      return;
+    }
 
     // inactive account
     if (!user.isActive) {

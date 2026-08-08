@@ -22,6 +22,22 @@ class RegisterRequest {
     required this.confirmPassword,
   });
 
+  RegisterRequest copyWith({
+    String? role,
+    String? name,
+    String? email,
+    String? password,
+    String? confirmPassword,
+  }) {
+    return RegisterRequest(
+      role: role ?? this.role,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      password: password ?? this.password,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       "role": role,

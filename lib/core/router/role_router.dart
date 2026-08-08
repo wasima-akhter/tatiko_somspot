@@ -23,7 +23,10 @@ class RoleRouter {
     final user = response.data!;
 
     //  // Save role globally
-    CommonController.to.setRole(UserRoleExtension.fromString(user.role));
+    // CommonController.to.setRole(UserRoleExtension.fromString(user.role));
+    if (!CommonController.to.setRole(UserRoleExtension.fromString(user.role))) {
+      return;
+    }
 
     if (!user.isActive) {
       final resend = await service.resendOtp(

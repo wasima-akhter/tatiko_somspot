@@ -27,7 +27,7 @@ class InfluencerWalletScreen extends StatelessWidget {
               Gap(12.h),
 
               Text(
-                "Wallet",
+                AppStrings.wallet.tr,
                 style: context.headlineSmall.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.darkTextColor,
@@ -52,7 +52,7 @@ class InfluencerWalletScreen extends StatelessWidget {
                           Gap(20.h),
 
                           Text(
-                            "Performance",
+                            AppStrings.performance.tr,
                             style: context.titleMedium.copyWith(
                               fontWeight: FontWeight.w600,
                               color: AppColors.darkTextColor,
@@ -88,7 +88,7 @@ class InfluencerWalletScreen extends StatelessWidget {
                           Gap(20.h),
 
                           Text(
-                            "Top Performing Content",
+                            AppStrings.topPerformingContent.tr,
                             style: context.titleMedium.copyWith(
                               fontWeight: FontWeight.w600,
                             ),

@@ -1,0 +1,24 @@
+Text('...')
+
+hintText: "..."
+
+labelText: "..."
+
+title: "..."
+
+message: "..."
+
+SnackBar(
+  content: Text("...")
+)
+
+Get.snackbar(
+  "Title",
+  "Message",
+)
+
+showDialog(
+  ...
+)
+
+const Text("...")

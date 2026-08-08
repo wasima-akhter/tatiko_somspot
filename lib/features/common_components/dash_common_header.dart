@@ -1,17 +1,9 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
-import '../../core/router/route_path.dart';
 import '../../helper/text_utils/string_helper.dart';
+import '../../share/controller/screen_export.dart';
 import '../../share/widgets/network_image/custom_network_image.dart';
-import '../../utils/color/app_colors.dart';
-import '../../utils/extension/base_extension.dart';
 
 class DashboardHeaderModel {
   final RxString userName;
@@ -73,7 +65,7 @@ class DashboardCommonHeaderSec extends StatelessWidget {
                         Obx(
                           () => Text(
                             data.userName.value.isEmpty
-                                ? "User"
+                                ? AppStrings.user.tr.toUpperCase()
                                 : data.userName.value.capitalizeWords(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -130,7 +122,7 @@ class DashboardCommonHeaderSec extends StatelessWidget {
               child: Obx(
                 () => Text(
                   data.userAddress.value.isEmpty
-                      ? "Loading location..."
+                      ? AppStrings.loadingLocation.tr
                       : data.userAddress.value,
                   style: context.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: 0.9),

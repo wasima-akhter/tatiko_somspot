@@ -68,7 +68,7 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
     final controller = InfluencerPublishProofController.to;
     return ScaffoldWrapper(
       backgroundColor: Colors.blue.shade50,
-      title: "Publish & Proof",
+      title: AppStrings.publishAndProof.tr,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16.w),
@@ -81,14 +81,13 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
 
               StatusMessageCard(
                 status: widget.task.status,
-                title: widget.task.campaign?.name ?? "Campaign",
-                message:
-                    "Your draft has been approved. Publish it on your selected platform, then submit the live post URL for verification.",
+                title: widget.task.campaign?.name ?? AppStrings.campaign.tr,
+                message: AppStrings.publishApprovedDraftMessage.tr,
               ),
 
               SizedBox(height: 24.h),
 
-              const SectionTitle(title: "Select platform"),
+              SectionTitle(title: AppStrings.selectPlatform.tr),
 
               SizedBox(height: 14.h),
 
@@ -104,9 +103,8 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
               SizedBox(height: 20.h),
 
               ProofInputCard(
-                title: "Social media post URL",
-                description:
-                    "Add the live post link now, or return later to include it.",
+                title: AppStrings.socialMediaPostUrl.tr,
+                description: AppStrings.addLivePostLink.tr,
                 controller: proofController,
                 hintText: _hintForPlatform(),
               ),
@@ -115,7 +113,7 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
 
               Obx(
                 () => CustomButton(
-                  text: "Confirm Publishing",
+                  text: AppStrings.confirmPublishing.tr,
                   isLoading:
                       controller.submitPostStatus.value == ApiStatus.loading,
                   onTap: () {
@@ -156,19 +154,20 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
     AppRouter.route.goNamed(
       RoutePath.successScreen,
       extra: SuccessScreenArgs(
-        title: "Publishing Confirmed!",
-        subtitle:
-            "Your campaign has been moved to Published. We'll verify your live post shortly.",
+        title: AppStrings.publishingConfirmed.tr,
+        subtitle: AppStrings.campaignMovedToPublished.tr,
         autoNavigateAfter: const Duration(seconds: 3),
         onAutoNavigate: () {
           AppRouter.route.goNamed(RoutePath.navigationPages);
 
           if (Get.isRegistered<NavigationControllerMain>()) {
             debugPrint('going to tasks tab');
+
             NavigationControllerMain.to.goToTabTasks();
 
             if (Get.isRegistered<InfluencerTaskController>()) {
               debugPrint('going to tasks tab > published tab');
+
               InfluencerTaskController.to.selectedTab.value =
                   InfluencerTaskTab.published;
             }

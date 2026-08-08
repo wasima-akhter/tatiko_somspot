@@ -24,10 +24,10 @@ class InfluencerActiveTasks extends StatelessWidget {
               highlightColor: Colors.white,
               child: _taskCard(
                 context,
-                restaurant: "Loading Business",
-                title: "Loading Campaign Name",
-                subtitle: "Video Content",
-                status: "ACTIVE",
+                restaurant: AppStrings.loadingBusiness.tr,
+                title: AppStrings.loadingCampaignName.tr,
+                subtitle: AppStrings.videoContent.tr,
+                status: AppStrings.active.tr.toUpperCase(),
                 statusColor: Colors.grey,
               ),
             ),
@@ -48,7 +48,7 @@ class InfluencerActiveTasks extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 12.h),
           child: _taskCard(
             context,
-            restaurant: task.businessName ?? "Unknown Business",
+            restaurant: task.businessName ?? AppStrings.unknownBusiness.tr,
             title: task.campaignName ?? "Campaign",
             subtitle: _getSubtitle(task),
             status: task.statusLabel ?? task.stage ?? "",
@@ -70,7 +70,7 @@ class InfluencerActiveTasks extends StatelessWidget {
       parts.add(task.contentType!.replaceAll("_", " ").capitalizeFirst!);
     }
 
-    return parts.isEmpty ? "Content task" : parts.join(" • ");
+    return parts.isEmpty ? AppStrings.contentTask.tr : parts.join(" • ");
   }
 
   Color _getStatusColor(String? stage) {
@@ -200,7 +200,7 @@ class InfluencerActiveTasks extends StatelessWidget {
           Gap(12.h),
 
           Text(
-            "No active tasks",
+            AppStrings.noActiveTasks.tr,
             style: context.bodyMedium.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.darkTextColor,
@@ -210,7 +210,7 @@ class InfluencerActiveTasks extends StatelessWidget {
           Gap(4.h),
 
           Text(
-            "Your assigned tasks for campaigns will appear here",
+            AppStrings.assignedTasksSubtitle.tr,
             textAlign: TextAlign.center,
             style: context.bodySmall.copyWith(
               color: AppColors.subtitleTextColor,

@@ -73,8 +73,8 @@ class MyApp extends StatelessWidget {
         builder: DevicePreview.appBuilder,
         // locale: DevicePreview.locale(context),
         locale: Locale(
-          Get.find<LanguageController>().selectedLanguage.languageCode,
-          Get.find<LanguageController>().selectedLanguage.countryCode,
+          Get.find<LanguageController>().selectedLanguageModel.languageCode,
+          Get.find<LanguageController>().selectedLanguageModel.countryCode,
         ),
 
         // ── Routing (go_router) ───────────────────────────────────────────
@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
         // darkTheme: darkTheme,  // Uncomment when dark theme is ready
 
         // ── Localisation ──────────────────────────────────────────────────
-        translations: Messages(languages: languages),
+        translations: Messages(languages: languages!),
         fallbackLocale: const Locale('en', 'US'),
       ),
     );

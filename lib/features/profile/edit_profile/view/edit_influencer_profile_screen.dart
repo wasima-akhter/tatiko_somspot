@@ -15,12 +15,7 @@ class EditInfluencerScreen extends StatelessWidget {
     final formKey = GlobalKey<FormState>();
 
     return ScaffoldWrapper(
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        title: const Text("Edit Creator Profile"),
-        centerTitle: true,
-      ),
-
+      title: AppStrings.editInfluencerProfile.tr,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -34,22 +29,16 @@ class EditInfluencerScreen extends StatelessWidget {
 
                 children: [
                   Gap(24.h),
-
                   Text(
-                    "Creator Details",
-
+                    AppStrings.influencerDetails.tr,
                     style: context.headlineMedium.copyWith(
                       fontWeight: FontWeight.bold,
-
                       color: AppColors.darkTextColor,
                     ),
                   ),
 
-                  Gap(8.h),
-
                   Text(
-                    "Update your audience information and social presence",
-
+                    AppStrings.updateAudienceInformation.tr,
                     style: context.bodyLarge.copyWith(
                       color: AppColors.subtitleTextColor,
                     ),
@@ -61,11 +50,9 @@ class EditInfluencerScreen extends StatelessWidget {
                   // CATEGORY
                   // ------------------------------------------------
                   Text(
-                    "Influencer Type",
-
+                    AppStrings.influencerType.tr,
                     style: context.bodyLarge.copyWith(
                       fontWeight: FontWeight.w600,
-
                       color: AppColors.darkTextColor,
                     ),
                   ),
@@ -74,7 +61,7 @@ class EditInfluencerScreen extends StatelessWidget {
 
                   Obx(
                     () => CustomDropdownField<String>(
-                      hintText: "Select Influencer Type",
+                      hintText: AppStrings.selectInfluencerType.tr,
 
                       items: controller.influencerCategories
                           .map((e) => e.name)
@@ -102,11 +89,8 @@ class EditInfluencerScreen extends StatelessWidget {
                   // ------------------------------------------------
                   CustomTextField(
                     controller: controller.bioController,
-
-                    title: "Bio",
-
-                    hintText:
-                        "Example: I run the biggest food review page in Mogadishu",
+                    title: AppStrings.bio.tr,
+                    hintText: AppStrings.bioExample.tr,
 
                     maxLines: 5,
 
@@ -120,7 +104,7 @@ class EditInfluencerScreen extends StatelessWidget {
 
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return "Please enter your bio";
+                        return AppStrings.pleaseEnterYourBio.tr;
                       }
 
                       return null;
@@ -135,10 +119,8 @@ class EditInfluencerScreen extends StatelessWidget {
                   CustomTextField(
                     controller: controller.followerCountController,
 
-                    title: "Follower Count",
-
-                    hintText: "Enter total followers",
-
+                    title: AppStrings.followerCount.tr,
+                    hintText: AppStrings.enterTotalFollowers.tr,
                     keyboardType: TextInputType.number,
 
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -153,7 +135,7 @@ class EditInfluencerScreen extends StatelessWidget {
 
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return "Please enter follower count";
+                        return AppStrings.pleaseEnterFollowerCount.tr;
                       }
 
                       return null;
@@ -161,17 +143,13 @@ class EditInfluencerScreen extends StatelessWidget {
                   ),
 
                   Gap(24.h),
-
                   Text(
-                    "Social Accounts",
-
+                    AppStrings.socialAccounts.tr,
                     style: context.bodyLarge.copyWith(
                       fontWeight: FontWeight.w600,
-
                       color: AppColors.darkTextColor,
                     ),
                   ),
-
                   Gap(10.h),
 
                   // ------------------------------------------------
@@ -180,9 +158,8 @@ class EditInfluencerScreen extends StatelessWidget {
                   CustomTextField(
                     controller: controller.tiktokController,
 
-                    title: "TikTok",
-
-                    hintText: "@username",
+                    title: AppStrings.tiktok.tr,
+                    hintText: AppStrings.usernameHint.tr,
 
                     prefixIcon: Icon(
                       Iconsax.video,
@@ -200,10 +177,8 @@ class EditInfluencerScreen extends StatelessWidget {
                   // ------------------------------------------------
                   CustomTextField(
                     controller: controller.instagramController,
-
-                    title: "Instagram",
-
-                    hintText: "@username",
+                    title: AppStrings.instagram.tr,
+                    hintText: AppStrings.usernameHint.tr,
 
                     prefixIcon: Icon(
                       Iconsax.instagram,
@@ -221,10 +196,8 @@ class EditInfluencerScreen extends StatelessWidget {
                   // ------------------------------------------------
                   CustomTextField(
                     controller: controller.facebookController,
-
-                    title: "Facebook",
-
-                    hintText: "Page username",
+                    title: AppStrings.facebook.tr,
+                    hintText: AppStrings.pageUsername.tr,
 
                     prefixIcon: Icon(
                       Icons.facebook,
@@ -242,7 +215,7 @@ class EditInfluencerScreen extends StatelessWidget {
                       width: double.infinity,
 
                       child: CustomButton(
-                        text: "Save Changes",
+                        text: AppStrings.saveChanges.tr,
 
                         isLoading: controller.isLoading.value,
 

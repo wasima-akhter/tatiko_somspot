@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:iconsax/iconsax.dart';
-
-import '../../../../utils/extension/base_extension.dart';
+import '../../../../share/controller/screen_export.dart';
 import 'trending_search_card.dart';
 
 class TrendingSearch extends StatelessWidget {
@@ -28,7 +23,7 @@ class TrendingSearch extends StatelessWidget {
             Gap(6.w),
 
             Text(
-              "Trending Now",
+              AppStrings.trendingNow.tr,
               style: context.titleSmall.copyWith(fontWeight: FontWeight.w600),
             ),
           ],

@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
-import '../../../../utils/color/app_colors.dart';
-import '../../../../utils/extension/base_extension.dart';
+import '../../../../share/controller/screen_export.dart';
 import '../../core/influencer_tasks/response/influencer_tasks_response.dart';
 
 class SubmissionInfoCard extends StatelessWidget {
@@ -15,18 +12,18 @@ class SubmissionInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final campaign = task.campaign;
 
-    final businessName = campaign?.business?.name ?? "Business";
-    final campaignTitle = campaign?.name ?? "Campaign";
+    final businessName = campaign?.business?.name ?? AppStrings.business.tr;
+    final campaignTitle = campaign?.name ?? AppStrings.campaign.tr;
 
     final platform = (task.platform ?? "").toLowerCase();
 
     final platformLabel = switch (platform) {
-      "youtube" => "YouTube Short",
-      "instagram" => "Instagram Reel",
-      "facebook" => "Facebook Reel",
-      "tiktok" => "TikTok Video",
-      "twitter" || "x" => "X Post",
-      _ => "Social Media Post",
+      "youtube" => AppStrings.youtubeShort.tr,
+      "instagram" => AppStrings.instagramReel.tr,
+      "facebook" => AppStrings.facebookReel.tr,
+      "tiktok" => AppStrings.tiktokVideo.tr,
+      "twitter" || "x" => AppStrings.xPost.tr,
+      _ => AppStrings.socialMediaPost.tr,
     };
 
     final platformIcon = switch (platform) {
@@ -79,7 +76,7 @@ class SubmissionInfoCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    "1 $platformLabel",
+                    "${1} $platformLabel",
                     style: context.bodyMedium.copyWith(
                       color: AppColors.purpleAccentColor,
                       fontWeight: FontWeight.w500,

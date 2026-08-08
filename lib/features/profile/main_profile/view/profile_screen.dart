@@ -176,7 +176,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                           onTap: () {
                             AppToast.info(
                               context: context,
-                              message: "Loading...",
+                              message: AppStrings.loading.tr,
                             );
                             AppRouter.route.pushNamed(
                               RoutePath.changePasswordScreen,

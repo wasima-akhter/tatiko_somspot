@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 
 import '../../../../utils/extension/base_extension.dart';
@@ -37,12 +39,12 @@ class ActiveTasks extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Active Tasks",
+              AppStrings.activeTasks.tr,
               style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
             ),
 
             Text(
-              "View all",
+              AppStrings.viewAll.tr,
               style: context.bodySmall.copyWith(
                 color: Colors.grey,
                 fontWeight: FontWeight.w600,

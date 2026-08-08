@@ -17,10 +17,10 @@ class ChooseRoleScreen extends GetView<ChooseRoleController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Gap(40),
-              Text("Choose Your Role", style: context.headlineMedium),
+              Text(AppStrings.chooseYourRole.tr, style: context.headlineMedium),
               const Gap(8),
               Text(
-                "Select the role you'd like to use across SomSpot. You can change it anytime.",
+                AppStrings.roleSelectionSubtitle.tr,
                 style: context.bodyLarge,
               ),
               const Gap(32),
@@ -36,7 +36,9 @@ class ChooseRoleScreen extends GetView<ChooseRoleController> {
                       final isSelected = controller.selectedRole.value == role;
 
                       return _RoleCard(
-                        title: controller.roleTitles[index],
+                        title:
+                            controller.roleTitles[index].tr.capitalizeFirst ??
+                            '',
                         isSelected: isSelected,
                         onTap: () => controller.selectRole(role),
                       );
@@ -49,7 +51,7 @@ class ChooseRoleScreen extends GetView<ChooseRoleController> {
                 padding: const EdgeInsets.only(bottom: 32, top: 16),
                 child: Obx(
                   () => CustomButton(
-                    text: "Continue",
+                    text: AppStrings.continueText.tr,
                     isLoading: false,
                     onTap: controller.canContinue
                         ? controller.confirmAndContinue

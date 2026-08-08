@@ -1,10 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+
+import '../../utils/app_strings/app_strings.dart';
 
 class TextFieldValidator {
   static String? Function(String?) required({required String errorText}) {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return errorText;
+
+      if (trimmed.isEmpty) {
+        return errorText.tr;
+      }
+
       return null;
     };
   }
@@ -12,11 +19,17 @@ class TextFieldValidator {
   static String? Function(String?) email() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Email is required";
+
+      if (trimmed.isEmpty) {
+        return AppStrings.emailRequired.tr;
+      }
 
       final emailRegex = RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$');
 
-      if (!emailRegex.hasMatch(trimmed)) return "Enter a valid email address";
+      if (!emailRegex.hasMatch(trimmed)) {
+        return AppStrings.validEmailAddress.tr;
+      }
+
       return null;
     };
   }
@@ -25,24 +38,43 @@ class TextFieldValidator {
     return (value) {
       final trimmed = value?.trim() ?? '';
 
-      if (trimmed.isEmpty) return "Password is required";
-      if (trimmed.length < 8) return "Password must be at least 8 characters";
-      if (!RegExp(r'[A-Z]').hasMatch(trimmed)) return "Must contain at least one uppercase letter";
-      if (!RegExp(r'[0-9]').hasMatch(trimmed)) return "Must contain at least one number";
+      if (trimmed.isEmpty) {
+        return AppStrings.passwordRequired.tr;
+      }
+
+      if (trimmed.length < 8) {
+        return AppStrings.passwordMin8.tr;
+      }
+
+      if (!RegExp(r'[A-Z]').hasMatch(trimmed)) {
+        return AppStrings.uppercaseRequired.tr;
+      }
+
+      if (!RegExp(r'[0-9]').hasMatch(trimmed)) {
+        return AppStrings.numberRequired.tr;
+      }
 
       return null;
     };
   }
 
-  static String? Function(String?) confirmPassword(TextEditingController originalController) {
+  static String? Function(String?) confirmPassword(
+    TextEditingController originalController,
+  ) {
     return (value) {
       final trimmed = value?.trim() ?? '';
+      final originalPassword = originalController.text.trim();
 
-      if (trimmed.isEmpty) return "Confirm password is required";
-      if (originalController.text.trim().isEmpty) return "Enter password first";
+      if (trimmed.isEmpty) {
+        return AppStrings.confirmPasswordRequired.tr;
+      }
 
-      if (trimmed != originalController.text.trim()) {
-        return "Passwords do not match";
+      if (originalPassword.isEmpty) {
+        return AppStrings.enterPasswordFirst.tr;
+      }
+
+      if (trimmed != originalPassword) {
+        return AppStrings.passwordsDoNotMatch.tr;
       }
 
       return null;
@@ -52,17 +84,33 @@ class TextFieldValidator {
   static String? Function(String?) otp() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "OTP is required";
-      if (trimmed.length != 6) return "OTP must be 6 digits";
-      if (!RegExp(r'^[0-9]{6}$').hasMatch(trimmed)) return "OTP must contain only numbers";
+
+      if (trimmed.isEmpty) {
+        return AppStrings.otpRequired.tr;
+      }
+
+      if (trimmed.length != 6) {
+        return AppStrings.otpMustBe6Digits.tr;
+      }
+
+      if (!RegExp(r'^[0-9]{6}$').hasMatch(trimmed)) {
+        return AppStrings.otpNumbersOnly.tr;
+      }
+
       return null;
     };
   }
 
-  static String? Function(String?) requiredField({String label = "This field"}) {
+  static String? Function(String?) requiredField({
+    String label = AppStrings.fieldRequired,
+  }) {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "$label is required";
+
+      if (trimmed.isEmpty) {
+        return '${label.tr} ${'required'.tr}';
+      }
+
       return null;
     };
   }
@@ -70,11 +118,20 @@ class TextFieldValidator {
   static String? Function(String?) website() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Website URL is required";
 
-      final urlPattern = RegExp(r'^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$', caseSensitive: false);
+      if (trimmed.isEmpty) {
+        return AppStrings.websiteUrlRequired.tr;
+      }
 
-      if (!urlPattern.hasMatch(trimmed)) return "Enter a valid website URL";
+      final urlPattern = RegExp(
+        r'^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$',
+        caseSensitive: false,
+      );
+
+      if (!urlPattern.hasMatch(trimmed)) {
+        return AppStrings.validWebsiteUrl.tr;
+      }
+
       return null;
     };
   }
@@ -82,11 +139,17 @@ class TextFieldValidator {
   static String? Function(String?) name() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Name is required";
 
-      final nameRegex = RegExp(r"^[a-zA-Z\s.]{2,}$");
+      if (trimmed.isEmpty) {
+        return AppStrings.nameRequired.tr;
+      }
 
-      if (!nameRegex.hasMatch(trimmed)) return "Enter a valid name";
+      final nameRegex = RegExp(r'^[a-zA-Z\s.]{2,}$');
+
+      if (!nameRegex.hasMatch(trimmed)) {
+        return AppStrings.validName.tr;
+      }
+
       return null;
     };
   }
@@ -94,10 +157,16 @@ class TextFieldValidator {
   static String? Function(String?) phone() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Phone number is required";
+
+      if (trimmed.isEmpty) {
+        return AppStrings.phoneNumberRequired.tr;
+      }
 
       final phoneRegex = RegExp(r'^\+?[0-9]{10,15}$');
-      if (!phoneRegex.hasMatch(trimmed)) return "Enter a valid phone number";
+
+      if (!phoneRegex.hasMatch(trimmed)) {
+        return AppStrings.validPhoneNumber.tr;
+      }
 
       return null;
     };
@@ -106,24 +175,35 @@ class TextFieldValidator {
   static String? Function(String?) username() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Username is required";
+
+      if (trimmed.isEmpty) {
+        return AppStrings.usernameRequired.tr;
+      }
 
       final usernameRegex = RegExp(r'^[a-zA-Z0-9_]{3,20}$');
+
       if (!usernameRegex.hasMatch(trimmed)) {
-        return "Username must be 3–20 characters (letters, numbers, underscores)";
+        return AppStrings.usernameInvalidLength.tr;
       }
+
       return null;
     };
   }
 
-  static String? Function(String?) number({String label = "Value"}) {
+  static String? Function(String?) number({
+    String label = AppStrings.valueRequired,
+  }) {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "$label is required";
+
+      if (trimmed.isEmpty) {
+        return '${label.tr} ${'required'.tr}';
+      }
 
       if (!RegExp(r'^\d+(\.\d+)?$').hasMatch(trimmed)) {
-        return "Enter a valid number";
+        return AppStrings.validNumber.tr;
       }
+
       return null;
     };
   }
@@ -131,40 +211,63 @@ class TextFieldValidator {
   static String? Function(String?) address() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Address is required";
-      if (trimmed.length < 5) return "Enter a valid address";
+
+      if (trimmed.isEmpty) {
+        return AppStrings.addressRequired.tr;
+      }
+
+      if (trimmed.length < 5) {
+        return AppStrings.validAddress.tr;
+      }
+
       return null;
     };
   }
 
-  // City
   static String? Function(String?) city() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "City is required";
-      if (trimmed.length < 2) return "Enter a valid city name";
+
+      if (trimmed.isEmpty) {
+        return AppStrings.cityRequired.tr;
+      }
+
+      if (trimmed.length < 2) {
+        return AppStrings.validCityName.tr;
+      }
+
       return null;
     };
   }
 
-  // Zipcode
   static String? Function(String?) zipcode() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Zipcode is required";
-      if (!RegExp(r'^\d{4,10}$').hasMatch(trimmed)) {
-        return "Enter a valid zipcode";
+
+      if (trimmed.isEmpty) {
+        return AppStrings.zipcodeRequired.tr;
       }
+
+      if (!RegExp(r'^\d{4,10}$').hasMatch(trimmed)) {
+        return AppStrings.validZipcode.tr;
+      }
+
       return null;
     };
   }
 
-  // Country
   static String? Function(String?) country() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Country is required";
-      if (trimmed.length < 2) return "Enter a valid country name";
+
+      if (trimmed.isEmpty) {
+        return AppStrings.countryRequired.tr;
+      }
+
+      if (trimmed.length < 2) {
+        return AppStrings.validCountryName.tr;
+      }
+
       return null;
     };
   }
@@ -172,8 +275,17 @@ class TextFieldValidator {
   static String? Function(String?) description({int minLength = 10}) {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Description is required";
-      if (trimmed.length < minLength) return "Description must be at least $minLength characters";
+
+      if (trimmed.isEmpty) {
+        return AppStrings.descriptionRequired.tr;
+      }
+
+      if (trimmed.length < minLength) {
+        return AppStrings.descriptionMinLength.trParams({
+          'min': minLength.toString(),
+        });
+      }
+
       return null;
     };
   }
@@ -181,11 +293,15 @@ class TextFieldValidator {
   static String? Function(String?) postalCode() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Postal code is required";
+
+      if (trimmed.isEmpty) {
+        return AppStrings.postalCodeRequired.tr;
+      }
 
       if (!RegExp(r'^[0-9]{4,10}$').hasMatch(trimmed)) {
-        return "Enter a valid postal code";
+        return AppStrings.validPostalCode.tr;
       }
+
       return null;
     };
   }
@@ -193,24 +309,35 @@ class TextFieldValidator {
   static String? Function(String?) dateOfBirth() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Date of birth is required";
 
-      if (!RegExp(r'^(0[1-9]|[12][0-9]|3[01])[-/](0[1-9]|1[0-2])[-/](\d{4})$').hasMatch(trimmed)) {
-        return "Please enter a valid date of birth (DD/MM/YYYY)";
+      if (trimmed.isEmpty) {
+        return AppStrings.dateOfBirthRequired.tr;
       }
 
-      final dateParts = trimmed.split(RegExp(r'[-/ ]')); // Split date by separator
+      if (!RegExp(
+        r'^(0[1-9]|[12][0-9]|3[01])[-/](0[1-9]|1[0-2])[-/](\d{4})$',
+      ).hasMatch(trimmed)) {
+        return AppStrings.validDateOfBirth.tr;
+      }
+
+      final dateParts = trimmed.split(RegExp(r'[-/ ]'));
+
       final day = int.tryParse(dateParts[0]);
       final month = int.tryParse(dateParts[1]);
       final year = int.tryParse(dateParts[2]);
 
-      if (day == null || month == null || year == null) return "Invalid date format";
+      if (day == null || month == null || year == null) {
+        return AppStrings.invalidDateFormat.tr;
+      }
 
       try {
         final date = DateTime(year, month, day);
-        if (date.isAfter(DateTime.now())) return "Date of birth cannot be in the future";
-      } catch (e) {
-        return "Invalid date of birth";
+
+        if (date.isAfter(DateTime.now())) {
+          return AppStrings.dateOfBirthFuture.tr;
+        }
+      } catch (_) {
+        return AppStrings.invalidDateOfBirth.tr;
       }
 
       return null;
@@ -220,166 +347,16 @@ class TextFieldValidator {
   static String? Function(String?) gender() {
     return (value) {
       final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Gender is required";
+
+      if (trimmed.isEmpty) {
+        return AppStrings.genderRequired.tr;
+      }
 
       if (!['male', 'female', 'other'].contains(trimmed.toLowerCase())) {
-        return "Please select a valid gender (male, female, other)";
+        return AppStrings.validGender.tr;
       }
 
       return null;
     };
   }
 }
-
-
-/*
-import 'package:flutter/material.dart';
-
-class TextFieldValidator {
-
-  static String? Function(String?) required({required String errorText}) {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return errorText;
-      return null;
-    };
-  }
-
-  static String? Function(String?) email() {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Email is required";
-      final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-      if (!emailRegex.hasMatch(trimmed)) return "Enter a valid email address";
-      return null;
-    };
-  }
-
-  static String? Function(String?) password() {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Password is required";
-      if (trimmed.length < 6) return "Password must be at least 6 characters";
-      if (!RegExp(r'[A-Z]').hasMatch(trimmed)) return "Password must contain at least one uppercase letter";
-      if (!RegExp(r'[0-9]').hasMatch(trimmed)) return "Password must contain at least one number";
-      return null;
-    };
-  }
-
-  static String? Function(String?) confirmPassword(TextEditingController originalController) {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Confirm password is required";
-      if (trimmed != originalController.text.trim()) return "Passwords do not match";
-      return null;
-    };
-  }
-
-  static String? Function(String?) otp() {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "OTP is required";
-      if (trimmed.length != 6) return "OTP must be 6 digits";
-      if (!RegExp(r'^[0-9]{6}$').hasMatch(trimmed)) return "OTP must contain only numbers";
-      return null;
-    };
-  }
-
-  static String? Function(String?) requiredField({String label = "This field"}) {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "$label is required";
-      return null;
-    };
-  }
-
-  static String? Function(String?) website() {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Website URL is required";
-
-      final urlPattern = RegExp(
-        r'^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$',
-        caseSensitive: false,
-      );
-
-      if (!urlPattern.hasMatch(trimmed)) return "Enter a valid website URL";
-      if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://')) {
-        return "URL must start with http:// or https://";
-      }
-
-      return null;
-    };
-  }
-
-  static String? Function(String?) name() {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Name is required";
-      final nameRegex = RegExp(r"^[a-zA-Z\s]{2,}$");
-      if (!nameRegex.hasMatch(trimmed)) return "Enter a valid full name";
-      return null;
-    };
-  }
-
-  static String? Function(String?) phone() {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Phone number is required";
-      final phoneRegex = RegExp(r'^\+?[0-9]{10,15}$');
-      if (!phoneRegex.hasMatch(trimmed)) return "Enter a valid phone number";
-      return null;
-    };
-  }
-
-  static String? Function(String?) username() {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Username is required";
-      final usernameRegex = RegExp(r'^[a-zA-Z0-9_]{3,20}$');
-      if (!usernameRegex.hasMatch(trimmed)) {
-        return "Username must be 3–20 characters and can only include letters, numbers, or underscores";
-      }
-      return null;
-    };
-  }
-
-  static String? Function(String?) number({String label = "Value"}) {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "$label is required";
-      final numberRegex = RegExp(r'^\d+(\.\d+)?$');
-      if (!numberRegex.hasMatch(trimmed)) return "Enter a valid number";
-      return null;
-    };
-  }
-
-  static String? Function(String?) address() {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Address is required";
-      if (trimmed.length < 5) return "Enter a valid address";
-      return null;
-    };
-  }
-
-  static String? Function(String?) description({int minLength = 10}) {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Description is required";
-      if (trimmed.length < minLength) return "Description must be at least $minLength characters";
-      return null;
-    };
-  }
-
-  static String? Function(String?) postalCode() {
-    return (value) {
-      final trimmed = value?.trim() ?? '';
-      if (trimmed.isEmpty) return "Postal code is required";
-      final zipRegex = RegExp(r'^[0-9]{4,10}$');
-      if (!zipRegex.hasMatch(trimmed)) return "Enter a valid postal code";
-      return null;
-    };
-  }
-}
-*/

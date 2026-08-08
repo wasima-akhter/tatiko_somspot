@@ -13,11 +13,19 @@ class LanguageDialogContent extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: List.generate(langController.languages.length, (index) {
           final lang = langController.languages[index];
-          final isSelected = langController.selectedIndex.value == index;
+
+          // Check selection using language code instead of index.
+          final isSelected =
+              langController.selectedLanguageCode == lang.languageCode;
 
           return GestureDetector(
             onTap: () {
-              langController.selectLanguage(index);
+              final language = langController.languageFromCode(
+                lang.languageCode,
+              );
+
+              langController.selectLanguage(language);
+
               Navigator.pop(context);
             },
             child: Container(
@@ -37,6 +45,7 @@ class LanguageDialogContent extends StatelessWidget {
               ),
               child: Row(
                 children: [
+                  // ── Flag ──
                   Container(
                     width: 40.w,
                     height: 28.h,
@@ -52,7 +61,10 @@ class LanguageDialogContent extends StatelessWidget {
                       style: TextStyle(fontSize: 22.sp),
                     ),
                   ),
+
                   Gap(14.w),
+
+                  // ── Language Name ──
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,11 +79,7 @@ class LanguageDialogContent extends StatelessWidget {
                         ),
                         Gap(2.h),
                         Text(
-                          lang.countryCode == 'SO'
-                              ? 'Somali'
-                              : lang.countryCode == 'SA'
-                              ? 'Arabic'
-                              : 'English',
+                          _getNativeLanguageName(lang.languageCode),
                           style: context.bodySmall.copyWith(
                             color: AppColors.hintTextColor,
                           ),
@@ -79,6 +87,8 @@ class LanguageDialogContent extends StatelessWidget {
                       ],
                     ),
                   ),
+
+                  // ── Selection Indicator ──
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 200),
                     child: isSelected
@@ -116,5 +126,19 @@ class LanguageDialogContent extends StatelessWidget {
         }),
       );
     });
+  }
+
+  String _getNativeLanguageName(String languageCode) {
+    switch (languageCode) {
+      case 'so':
+        return 'Somali';
+
+      case 'ar':
+        return 'العربية';
+
+      case 'en':
+      default:
+        return 'English';
+    }
   }
 }

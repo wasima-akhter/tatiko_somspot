@@ -21,7 +21,7 @@ class InfluencerSearchScreen extends StatelessWidget {
         ),
 
         title: Text(
-          "Search",
+          AppStrings.search.tr,
           style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
         ),
 
@@ -53,7 +53,7 @@ class InfluencerSearchScreen extends StatelessWidget {
                     // Gap(16.h),
                     TextField(
                       decoration: InputDecoration(
-                        hintText: "Search businesses, deals...",
+                        hintText: AppStrings.searchBusinessesDeals.tr,
 
                         hintStyle: context.bodySmall.copyWith(
                           color: Colors.grey,

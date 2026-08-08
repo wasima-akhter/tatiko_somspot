@@ -100,10 +100,9 @@ class ProfileStatisticsSection extends StatelessWidget {
         children: List.generate(stats.length, (index) {
           return Expanded(
             child: Padding(
-              padding: EdgeInsets.only(
-                right: index == stats.length - 1 ? 0 : 12.w,
+              padding: EdgeInsetsDirectional.only(
+                end: index == stats.length - 1 ? 0 : 12.w,
               ),
-
               child: ProfileStatCard(
                 label: stats[index].title,
                 value: stats[index].value,

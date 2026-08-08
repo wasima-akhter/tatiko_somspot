@@ -131,22 +131,21 @@ class EditInfluencerController extends GetxController {
   // ---------------------------------------------------------------------------
   // VALIDATION
   // ---------------------------------------------------------------------------
-
   bool validateCreatorProfile() {
     if (selectedInfluencerCategoryId.value.isEmpty) {
-      AppToast.error(message: "Please select influencer type");
+      AppToast.error(message: AppStrings.selectInfluencerType.tr);
 
       return false;
     }
 
     if (bioController.text.trim().isEmpty) {
-      AppToast.error(message: "Please enter your bio");
+      AppToast.error(message: AppStrings.enterYourBio.tr);
 
       return false;
     }
 
     if (followerCountController.text.trim().isEmpty) {
-      AppToast.error(message: "Please enter follower count");
+      AppToast.error(message: AppStrings.enterFollowerCount.tr);
 
       return false;
     }
