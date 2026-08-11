@@ -19,6 +19,8 @@ class ApiStatusBuilder extends StatelessWidget {
   final bool isLoadingMore;
   final bool hasMore;
 
+  final Widget? noDataWidget;
+
   const ApiStatusBuilder({
     super.key,
     required this.status,
@@ -28,6 +30,7 @@ class ApiStatusBuilder extends StatelessWidget {
     this.loadingWidget,
     this.isLoadingMore = false,
     this.hasMore = false,
+    this.noDataWidget,
   });
 
   @override
@@ -43,7 +46,16 @@ class ApiStatusBuilder extends StatelessWidget {
         return ErrorCard(onTap: onRetry, message: errorMessage);
 
       case ApiStatus.noDataFound:
-        return NoDataCard(onTap: onRetry);
+        return
+        // HomeEmptyState(
+        //       icon: Icons.location_off_outlined,
+        //       title: 'No Nearby Places Yet',
+        //       message:
+        //           'We couldn’t find any businesses nearby right now.\n'
+        //           'Try again to discover places around you.',
+        //       onRetry: onRetry,
+        //     )
+        noDataWidget ?? NoDataCard(onTap: onRetry, buttonText: "Retry");
 
       case ApiStatus.completed:
         return SingleChildScrollView(

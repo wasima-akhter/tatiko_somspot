@@ -3,16 +3,14 @@ import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 
+import '../../../../helper/text_utils/string_helper.dart';
+
 class HomeHeaderWidget extends StatelessWidget {
   const HomeHeaderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = HomeController.to;
-
-    print(
-      "HOME PROFILE INSTANCE: ${identityHashCode(HomeController.to.profileController)}",
-    );
 
     return Container(
       width: double.infinity,
@@ -55,7 +53,7 @@ class HomeHeaderWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      AppStrings.goodMorning.tr,
+                      getGreeting(),
                       style: context.bodyMedium.copyWith(
                         color: Colors.white.withValues(alpha: 0.85),
                         fontWeight: FontWeight.w400,

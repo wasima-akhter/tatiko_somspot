@@ -162,4 +162,29 @@ class ApiUrls {
 
   static String influencerDashboard() => "$base/creator/dashboard";
   static String creatorWalletAnalytics() => "$base/creator/wallet/analytics";
+
+  // customer home
+  static String getCreatorContent() {
+    return "$base/creator/content";
+  }
+
+  static String getNearbyBusinesses() {
+    return "$base/business/get-all";
+  }
+
+  static String customerSearch() {
+    return '$base/search';
+  }
+
+  static String customerRecentSearches() {
+    return '$base/search/recent';
+  }
+
+  static String customerClearRecentSearches() {
+    return '$base/search/recent/clear';
+  }
+
+  static String customerTrendingSearches() {
+    return '$base/search/trending';
+  }
 }

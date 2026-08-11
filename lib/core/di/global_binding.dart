@@ -8,6 +8,7 @@ import '../../features/auth/core/service/auth_service.dart';
 import '../../features/core/business/binding/business_binding.dart';
 import '../../features/core/category/category_binding.dart';
 import '../../features/core/location/controller/business_location_controller.dart';
+import '../../features/core/location/current_location/current_location_controller.dart';
 import '../../features/nav/controller/navigation_controller.dart';
 import '../../features/other/controller/other_binding.dart';
 import 'repo_service_injection.dart';
@@ -31,4 +32,6 @@ void initGlobalBinding() {
   BusinessBinding().dependencies();
 
   Get.lazyPut(() => BusinessLocationController(), fenix: true);
+
+  Get.put<LocationController>(LocationController(), permanent: true);
 }

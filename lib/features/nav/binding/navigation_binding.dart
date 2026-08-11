@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:som_spot/features/customer/customer_home/service/home_content_service.dart';
 import 'package:som_spot/features/influencer_all/core/influencer_tasks/service/influencer_tasks_service.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/service/influencer_dashboard_service.dart';
 import 'package:som_spot/features/merchant/stats/binding/stats_binding.dart';
@@ -10,7 +11,7 @@ import '../../alerts/controller/alerts_controller.dart';
 import '../../customer/customer_home/binding/home_binding.dart';
 import '../../customer/customer_home/controller/home_controller.dart';
 import '../../customer/saved/controller/saved_controller.dart';
-import '../../customer/search/controller/search_controller.dart';
+import '../../customer/search/binding/search_binding.dart';
 import '../../influencer_all/influencer_dashboard/controller/influencer_dashboard_controller.dart';
 import '../../influencer_all/influencer_discover/controller/influencer_discover_controller.dart';
 import '../../influencer_all/influencer_task_screen/controller/influencer_task_controller.dart';
@@ -73,14 +74,15 @@ class NavigationBinding extends Bindings {
     );
     // customer
 
-    Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
+    Get.lazyPut<HomeController>(
+      () => HomeController(sl<HomeContentService>()),
+      fenix: true,
+    );
 
     HomeBinding().dependencies();
 
-    Get.lazyPut<SearchScreenController>(
-      () => SearchScreenController(),
-      fenix: true,
-    );
+    SearchBinding().dependencies();
+
     Get.lazyPut<SavedScreenController>(
       () => SavedScreenController(),
       fenix: true,

@@ -70,5 +70,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+<string>Som Spot uses your location to show nearby businesses and personalize location-based results.</string>
 </dict>
 </plist>

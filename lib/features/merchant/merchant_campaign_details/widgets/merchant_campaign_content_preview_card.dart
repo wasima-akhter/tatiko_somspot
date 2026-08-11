@@ -93,7 +93,7 @@ class MerchantCampaignContentPreviewCard extends StatelessWidget {
                                 ),
                                 Gap(8.h),
                                 Text(
-                                  "Video Content",
+                                  AppStrings.videoContent.tr,
                                   style: context.bodySmall.copyWith(
                                     color: Colors.white70,
                                   ),

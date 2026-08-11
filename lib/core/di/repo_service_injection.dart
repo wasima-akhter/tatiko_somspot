@@ -3,6 +3,10 @@ import 'package:get_it/get_it.dart';
 import 'package:som_spot/core/service/datasource/remote/api_client.dart';
 import 'package:som_spot/core/service/network/network_checker.dart';
 import 'package:som_spot/features/auth/completed_profile_influencer/service/influencer_complete_profile_service.dart';
+import 'package:som_spot/features/customer/customer_home/repository/customer_home_repository.dart';
+import 'package:som_spot/features/customer/customer_home/service/home_content_service.dart';
+import 'package:som_spot/features/customer/search/repository/customer_search_repository.dart';
+import 'package:som_spot/features/customer/search/service/customer_search_service.dart';
 import 'package:som_spot/features/influencer_all/core/influencer_tasks/repository/influencer_tasks_repository.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/repository/influencer_dashboard_repository.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/service/influencer_dashboard_service.dart';
@@ -251,5 +255,29 @@ Future<void> initDependencies() async {
 
   sl.registerLazySingleton<InfluencerProfileService>(
     () => InfluencerProfileService(sl<InfluencerProfileRepository>()),
+  );
+
+  // =====================
+  // Customer Home
+  // =====================
+
+  sl.registerLazySingleton<HomeContentRepository>(
+    () => HomeContentRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<HomeContentService>(
+    () => HomeContentService(sl<HomeContentRepository>()),
+  );
+
+  // =====================
+  // Customer Search
+  // =====================
+
+  sl.registerLazySingleton<CustomerSearchRepository>(
+    () => CustomerSearchRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<CustomerSearchService>(
+    () => CustomerSearchService(sl<CustomerSearchRepository>()),
   );
 }
