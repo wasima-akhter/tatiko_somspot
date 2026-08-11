@@ -1,5 +1,4 @@
 import 'package:image_picker/image_picker.dart';
-import 'package:som_spot/features/core/business/controller/business-controller.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/features/offers/offers_list/controller/offer_controller.dart';
 import 'package:som_spot/helper/date_converter/date_converter.dart';
@@ -7,6 +6,7 @@ import 'package:som_spot/helper/toast/toast_helper.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 
 import '../../../../share/base_controller/base_form_controller.dart';
+import '../../../core/business/controller/business-controller.dart';
 import '../../../offers/shared/request/offers_request.dart';
 import '../../../offers/shared/service/offers_service.dart';
 
@@ -32,13 +32,73 @@ class CreateOfferController extends BaseFormController {
         imagePath.value = image.path;
       }
     } catch (e) {
-      AppToast.error(message: 'Failed to pick image');
+      AppToast.error(message: AppStrings.failedToPickImage.tr);
     }
   }
 
   void clearImage() {
     imagePath.value = '';
   }
+
+  // -----------------------------------------------------------------------------
+  // Business Logic
+  // -----------------------------------------------------------------------------
+
+  Future<bool> _resolveBusiness() async {
+    debugPrint('business resolve method');
+    businessError.value = null;
+
+    await BusinessController.to.myBusinessesPaginator.refresh();
+
+    final businesses = BusinessController.to.myBusinessesPaginator.items;
+
+    if (businesses.isNotEmpty) {
+      businessId.value = businesses.first.id;
+    }
+
+    return _validateBusiness();
+  }
+
+  bool _validateBusiness() {
+    if (businessId.value.isNotEmpty) {
+      return true;
+    }
+
+    businessError.value = AppStrings.unableToIdentifyBusiness.tr;
+
+    AppToast.error(message: AppStrings.unableToIdentifyBusinessTryAgain.tr);
+
+    return false;
+  }
+
+  // -----------------------------------------------------------------------------
+  // Form Validation
+  // -----------------------------------------------------------------------------
+
+  bool _validateCreateOffer({
+    required String startDate,
+    required String endDate,
+  }) {
+    if (!formKey.currentState!.validate()) {
+      return false;
+    }
+
+    if (startDate.isEmpty || endDate.isEmpty) {
+      AppToast.error(message: AppStrings.pleaseSelectOfferDates.tr);
+      return false;
+    }
+
+    if (imagePath.isEmpty) {
+      AppToast.error(message: AppStrings.pleaseSelectAnImage.tr);
+      return false;
+    }
+
+    return true;
+  }
+
+  // -----------------------------------------------------------------------------
+  // Create Offer
+  // -----------------------------------------------------------------------------
 
   Future<void> createOffer({
     required String title,
@@ -47,35 +107,21 @@ class CreateOfferController extends BaseFormController {
     required String startDate,
     required String endDate,
   }) async {
-    businessError.value = null;
-    await BusinessController.to.myBusinessesPaginator.refresh();
-    final businesses = BusinessController.to.myBusinessesPaginator.items;
+    // Validate offer form data.
+    final isValid = _validateCreateOffer(
+      startDate: startDate,
+      endDate: endDate,
+    );
 
-    if (businesses.isNotEmpty) {
-      businessId.value = businesses.first.id;
-    }
-
-    if (businessId.value.isEmpty) {
-      businessError.value = "Unable to identify the associated business.";
-
-      AppToast.error(
-        message:
-            "Unable to identify the associated business. Please try again.",
-      );
-
+    if (!isValid) {
       return;
     }
 
-    if (!formKey.currentState!.validate()) {
-      return;
-    }
+    //
+    // Resolve and validate the associated business.
+    final businessResolved = await _resolveBusiness();
 
-    if (startDate.isEmpty || endDate.isEmpty) {
-      AppToast.error(message: "Please select offer dates");
-      return;
-    }
-    if (imagePath.isEmpty) {
-      AppToast.error(message: "Please select an image");
+    if (!businessResolved) {
       return;
     }
 
@@ -84,17 +130,11 @@ class CreateOfferController extends BaseFormController {
     try {
       final request = CreateOfferRequest(
         business: businessId.value,
-
         title: title.trim(),
-
         discountLabel: "${discount.trim()}%",
-
         description: description.trim(),
-
         terms: "Dine-in only. One claim per customer.",
-
         startAt: DateConverter().formatMdY_to_DateTime(startDate),
-
         endAt: DateConverter().formatMdY_to_DateTime(endDate),
       );
 
@@ -110,7 +150,7 @@ class CreateOfferController extends BaseFormController {
 
       submitSuccess();
 
-      showSuccess("Offer created successfully");
+      showSuccess(AppStrings.offerCreatedSuccessfully.tr);
 
       resetForm(
         formKey: formKey,
@@ -118,15 +158,16 @@ class CreateOfferController extends BaseFormController {
         extraReset: [clearImage, () {}],
       );
 
-      // update offer list
+      // Update offer list.
       await OffersController.to.refreshOffers();
 
       AppRouter.route.goNamed(RoutePath.navigationPages);
+
       NavigationControllerMain.to.goToTabOffers();
     } catch (e) {
-      submitFailure("Something went wrong");
+      submitFailure(AppStrings.somethingWentWrong.tr);
 
-      AppToast.error(message: "Something went wrong");
+      AppToast.error(message: AppStrings.somethingWentWrong.tr);
     }
   }
 

@@ -11,6 +11,7 @@ import '../../core/service/datasource/local/app_storage.dart';
 enum AppLanguage { somali, english, arabic }
 
 class LanguageController extends GetxController implements GetxService {
+  static LanguageController get to => Get.find();
   // ─────────────────────────────────────────────
   // UI State
   // ─────────────────────────────────────────────
@@ -80,6 +81,8 @@ class LanguageController extends GetxController implements GetxService {
     Get.updateLocale(
       Locale(languageModel.languageCode, languageModel.countryCode),
     );
+
+    update(); // if any GetBuilder widgets depend on this too
   }
 
   // ─────────────────────────────────────────────

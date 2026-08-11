@@ -269,12 +269,13 @@
   "pause": "Hakad",
   "edit_offer": "Wax Ka Baddal Dalabka",
   "expires_in": "Wuxuu dhacayaa",
-  "last_7_days": "7 maalmood ee ugu dambeeyay",
-  "last_30_days": "30 maalmood ee ugu dambeeyay",
-  "last_90_days": "90 maalmood ee ugu dambeeyay",
+  "last_7_days": "7d ee u dambeeyay",
+  "last_30_days": "30d ee u dambeeyay",
+  "last_90_days": "90d ee u dambeeyay",
+  "no_top_performing_offers": "Weli ma jiraan dalabyo waxqabad fiican leh",
   "clicks": "Gujisyada",
   "top_performing_offers": "Bixinta ugu Wanaagsan",
-  "claims_count": "Dalabaadka {count}",
+  "claims_count": "Dalabaadka @count",
   "current_plan": "Qorshaha Hadda",
   "pro_monthly": "Pro Bille",
   "upgrade": "Hormari",
@@ -489,5 +490,94 @@
   "tiktok_video": "TikTok Video",
   "x_post": "Qoraal X",
   "social_media_post": "Qoraal Baraha Bulshada",
-  "my_campaigns": "Ololahayga"
+  "my_campaigns": "Ololahayga",
+
+  "offer_title_hint": "Geli cinwaanka dalabka",
+  "offer_title_required": "Cinwaanka dalabka waa loo baahan yahay",
+  "offer_title_too_short": "Cinwaanka dalabka aad buu u gaaban yahay",
+
+  "offer_discount_label": "Dhimis",
+  "offer_discount_hint": "Geli boqolkiiba dhimista",
+  "offer_discount_required": "Dhimistu waa loo baahan yahay",
+  "offer_discount_invalid": "Fadlan geli qiimo dhimis sax ah",
+  "offer_discount_between_one_and_hundred": "Dhimistu waa inay u dhexeysaa 1 iyo 100",
+
+  "offer_description_hint": "Geli sharaxaadda dalabka",
+
+  "offer_date_hint": "Dooro taariikhda",
+
+  "unable_to_identify_business": "Lama aqoonsan karo ganacsiga ku xiran.",
+  "offer_created_successfully": "Dalabka si guul leh ayaa loo abuuray",
+  "please_select_offer_dates": "Fadlan dooro taariikhaha dalabka",
+  "please_select_an_image": "Fadlan dooro sawir",
+  "unable_to_identify_business_try_again": "Lama aqoonsan karo ganacsiga ku xiran. Fadlan mar kale isku day.",
+  "failed_to_pick_image": "Doorashada sawirka way fashilantay",
+
+  "recent_claims_claimed_by": "Waxaa dalbaday {customer}",
+  "recent_claims_loading_title": "Cinwaanka dalabka ayaa la soo rarayaa",
+  "recent_claims_customer": "Waxaa dalbaday macmiil",
+  "recent_claims_just_now": "Hadda",
+
+  "recent_claims_empty_title": "Ma jiraan dalabyo dhowaan la qaatay",
+  "recent_claims_empty_description": "Dalabyada laga qaatay dalabyadaada ayaa halkan ka muuqan doona.",
+
+  "top_deals_loading_title": "Cinwaanka dalabka ayaa la soo rarayaa",
+  "top_deals_loading_business": "Ganacsiga ayaa la soo rarayaa",
+  "top_deals_claims": "@count dalab",
+  "top_deals_percentage_fallback": "0%",
+
+  "top_deals_empty_title": "Ma jiraan dalabyo sare",
+  "top_deals_empty_description": "Dalabyadaada sida ugu fiican u shaqeeya ayaa halkan ka muuqan doona.",
+  "offer_description_required": "Sharaxaadda waa loo baahan yahay",
+  "offer_description_too_short": "Sharaxaadda waa inay ahaataa ugu yaraan 10 xaraf",
+  "offer_updated_successfully": "Dalabka si guul leh ayaa loo cusboonaysiiyay",
+
+  "offer_ended": "Dhamaaday",
+  "offer_claims": "@count sheegasho",
+  "offer_edit": "Wax ka beddel",
+  "offer_starts_in": "Waxay bilaabanaysaa",
+  "offer_days": "@count maalmood",
+  "offer_hours": "@count saacadood",
+  "offer_minutes": "@count daqiiqo",
+
+  "no_campaigns_found": "Wax ololeyaal ah lama helin",
+  "influencer_campaigns": "Ololayaasha Influencers",
+  "influencer_campaigns_description": "Ku gaadh macaamiil cusub adigoo adeegsanaya abuurayaasha maxalliga ah ee lagu kalsoon yahay",
+  "active_campaign": "Olole firfircoon",
+  "in_review": "Dib-u-eegis",
+
+  "create_campaign": "Abuur Olole",
+  "live": "Firfircoon",
+
+  "budget_spent": "Miisaaniyadda la isticmaalay",
+  "days_left": "@count maalmood ayaa haray",
+
+  "budget": "Miisaaniyadda",
+  "campaign_details": "Faahfaahinta Ololaha",
+
+  "influencers": "Saameeyayaasha",
+  "creators": "Abuurayaasha",
+  "package": "Xirmada",
+  "duration": "Muddada",
+  "campaign_timeline": "Jadwalka Ololaha",
+  "admin_assigns_creators_description": "Maamulka SomSpot ayaa u qoondeeya abuurayaasha. Halkan ka raac horumarkooda oo dib u eeg nuxurka ay soo gudbiyaan.",
+  "campaign_submitted": "Ololaha waa la gudbiyay",
+  "admin_approval": "Ansixinta maamulka",
+  "influencers_assigned": "Saameeyayaasha ayaa la qoondeeyay",
+  "content_review": "Dib-u-eegista nuxurka",
+
+  "influencers_assigned_by_admin": "Saameeyayaashan waxaa qoondeeyay Maamulka SomSpot. Qoondayntooda lagama beddeli karo app-ka ganacsadaha.",
+  "no_influencers_assigned_yet": "Weli lama qoondeyn saameeyayaal",
+
+  "assigned": "La qoondeeyay",
+  "view_profile": "Eeg Profile-ka",
+
+  "engage": "Isdhexgal",
+  "pitch": "Soo jeedin",
+  "content_details": "Faahfaahinta Nuxurka",
+
+  "published_and_verified": "La daabacay oo la xaqiijiyay",
+  "pending_review": "Dib-u-eegis ayaa socota",
+  "content_is_live_earned": "Nuxurkaagu waa toos. Waxaad kasbatay $@amount.",
+  "content_submitted_waiting_approval": "Nuxurkaaga waa la gudbiyay. Waxaa la sugayaa oggolaanshaha ganacsadaha."
 }

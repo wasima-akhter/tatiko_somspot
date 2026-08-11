@@ -14,7 +14,7 @@ class MerchantCampaignOverviewTab extends StatelessWidget {
         Gap(14.h),
 
         Text(
-          "Campaign Timeline",
+          AppStrings.campaignTimeline.tr,
           style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
         ),
 

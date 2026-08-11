@@ -121,7 +121,7 @@ class MerchantCampaignTimeline
 
                 Expanded(
                   child: Text(
-                    "SomSpot Admin assigns creators. Track their progress and review submitted content here.",
+                    AppStrings.adminAssignsCreatorsDescription.tr,
 
                     style: context.bodySmall.copyWith(fontSize: 10.sp),
                   ),
@@ -237,19 +237,19 @@ class MerchantCampaignTimeline
   String _stageTitle(String stage) {
     switch (stage) {
       case "submitted":
-        return "Campaign submitted";
+        return AppStrings.campaignSubmitted.tr;
 
       case "admin_approval":
-        return "Admin approval";
+        return AppStrings.adminApproval.tr;
 
       case "influencers_assigned":
-        return "Influencers assigned";
+        return AppStrings.influencersAssigned.tr;
 
       case "content_review":
-        return "Content review";
+        return AppStrings.contentReview.tr;
 
       case "published":
-        return "Published";
+        return AppStrings.published.tr;
 
       default:
         return stage;

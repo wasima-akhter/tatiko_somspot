@@ -102,7 +102,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
             if (widget.title != null)
               CustomAlignText(
                 text: widget.title ?? "",
-                style: context.titleMedium,
+                maxLine: 1,
+                style: context.titleMedium.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             TextFormField(
               onTap: widget.onTap,

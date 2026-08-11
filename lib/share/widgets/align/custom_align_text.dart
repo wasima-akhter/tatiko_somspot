@@ -43,6 +43,7 @@ class CustomAlignText extends StatelessWidget {
         text,
         textAlign: resolvedTextAlign,
         maxLines: maxLine,
+        overflow: TextOverflow.ellipsis,
         style:
             style ??
             context.titleSmall.copyWith(

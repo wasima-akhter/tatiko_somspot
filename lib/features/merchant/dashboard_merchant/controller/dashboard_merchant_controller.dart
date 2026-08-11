@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../utils/enum/app_enum.dart';
 import '../../../profile/main_profile/controller/profile_controller.dart';
@@ -19,7 +20,7 @@ class DashboardMerchantController extends GetxController {
   RxString get userAddress => profileController.userLocationString;
 
   String get displayName {
-    return userName.value.isEmpty ? "User" : userName.value;
+    return userName.value.isEmpty ? AppStrings.user.tr : userName.value;
   }
 
   String get displayAvatar {
@@ -98,7 +99,7 @@ class DashboardMerchantController extends GetxController {
 
       dashboardStatusMethod(ApiStatus.completed);
     } catch (e) {
-      errorMessage.value = "Something went wrong.";
+      errorMessage.value = AppStrings.somethingWentWrong.tr;
 
       dashboardStatusMethod(ApiStatus.error);
     }

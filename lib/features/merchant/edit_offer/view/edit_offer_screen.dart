@@ -217,19 +217,19 @@ class _EditOfferScreenState extends State<EditOfferScreen> {
 
               Gap(8.h),
 
+              Gap(8.h),
+
               CustomTextField(
                 controller: _titleController,
-
-                hintText: 'e.g. 20% Off Family Platter',
-
+                hintText: AppStrings.offerTitleHint.tr,
                 fillColor: AppColors.white,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return "Offer title is required";
+                    return AppStrings.offerTitleRequired.tr;
                   }
 
-                  if (value.length < 3) {
-                    return "Title is too short";
+                  if (value.trim().length < 3) {
+                    return AppStrings.offerTitleTooShort.tr;
                   }
 
                   return null;
@@ -238,32 +238,29 @@ class _EditOfferScreenState extends State<EditOfferScreen> {
 
               Gap(20.h),
 
-              _buildLabel(AppStrings.discount.tr),
+              _buildLabel(AppStrings.offerDiscountLabel.tr),
 
               Gap(8.h),
 
               CustomTextField(
                 controller: _discountController,
-
-                hintText: '+e.g. 20% or BOGO',
-
+                hintText: AppStrings.offerDiscountHint.tr,
                 fillColor: AppColors.white,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return "Discount is required";
+                    return AppStrings.offerDiscountRequired.tr;
                   }
 
                   final discount = int.tryParse(value);
 
                   if (discount == null) {
-                    return "Enter a valid discount";
+                    return AppStrings.offerDiscountInvalid.tr;
                   }
 
                   if (discount <= 0 || discount > 100) {
-                    return "Discount must be between 1 and 100";
+                    return AppStrings.offerDiscountRangeError.tr;
                   }
 
                   return null;
@@ -300,19 +297,17 @@ class _EditOfferScreenState extends State<EditOfferScreen> {
 
               CustomTextField(
                 controller: _descriptionController,
-
+                hintText: AppStrings.offerDescriptionHint.tr,
                 fillColor: AppColors.white,
-
                 maxLines: 5,
-
                 minLines: 5,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return "Description is required";
+                    return AppStrings.offerDescriptionRequired.tr;
                   }
 
-                  if (value.length < 10) {
-                    return "Description must be at least 10 characters";
+                  if (value.trim().length < 10) {
+                    return AppStrings.offerDescriptionTooShort.tr;
                   }
 
                   return null;

@@ -272,9 +272,11 @@
   "last_7_days": "آخر 7 أيام",
   "last_30_days": "آخر 30 يوم",
   "last_90_days": "آخر 90 يوم",
+
+  "no_top_performing_offers": "لا توجد عروض متميزة حتى الآن",
   "clicks": "النقرات",
   "top_performing_offers": "أفضل العروض أداءً",
-  "claims_count": "المطالبات {count}",
+  "claims_count": "المطالبات @count",
   "current_plan": "الخطة الحالية",
   "pro_monthly": "برو شهرياً",
   "upgrade": "ترقية",
@@ -489,5 +491,91 @@
   "tiktok_video": "فيديو TikTok",
   "x_post": "منشور X",
   "social_media_post": "منشور على وسائل التواصل الاجتماعي",
-  "my_campaigns": "حملاتي"
+  "my_campaigns": "حملاتي",
+
+  "offer_title_hint": "أدخل عنوان العرض",
+  "offer_title_required": "عنوان العرض مطلوب",
+  "offer_title_too_short": "عنوان العرض قصير جدًا",
+
+  "offer_discount_label": "الخصم",
+  "offer_discount_hint": "أدخل نسبة الخصم",
+  "offer_discount_required": "الخصم مطلوب",
+  "offer_discount_invalid": "يرجى إدخال نسبة خصم صحيحة",
+  "offer_discount_between_one_and_hundred": "يجب أن تكون نسبة الخصم بين 1 و100",
+
+  "offer_description_hint": "أدخل وصف العرض",
+
+  "offer_date_hint": "اختر التاريخ",
+
+  "unable_to_identify_business": "تعذر تحديد النشاط التجاري المرتبط.",
+  "offer_created_successfully": "تم إنشاء العرض بنجاح",
+  "please_select_offer_dates": "يرجى تحديد تواريخ العرض",
+  "please_select_an_image": "يرجى اختيار صورة",
+  "unable_to_identify_business_try_again": "تعذر تحديد النشاط التجاري المرتبط. يرجى المحاولة مرة أخرى.",
+  "failed_to_pick_image": "فشل في اختيار الصورة",
+
+  "recent_claims_claimed_by": "تم الطلب بواسطة {customer}",
+  "recent_claims_loading_title": "جارٍ تحميل عنوان العرض",
+  "recent_claims_customer": "تم الطلب بواسطة العميل",
+  "recent_claims_just_now": "الآن",
+
+  "recent_claims_empty_title": "لا توجد مطالبات حديثة",
+  "recent_claims_empty_description": "ستظهر المطالبات من عروضك هنا.",
+
+  "top_deals_loading_title": "جارٍ تحميل عنوان العرض",
+  "top_deals_loading_business": "جارٍ تحميل اسم النشاط التجاري",
+  "top_deals_claims": "@count مطالبة",
+  "top_deals_percentage_fallback": "0%",
+
+  "top_deals_empty_title": "لا توجد عروض مميزة",
+  "top_deals_empty_description": "ستظهر هنا عروضك الأفضل أداءً.",
+
+  "offer_description_required": "وصف العرض مطلوب",
+  "offer_description_too_short": "يجب أن يكون وصف العرض 10 أحرف على الأقل",
+  "offer_updated_successfully": "تم تحديث العرض بنجاح",
+
+  "offer_ended": "انتهى",
+  "offer_claims": "@count مطالبة",
+  "offer_edit": "تعديل",
+  "offer_starts_in": "يبدأ خلال",
+  "offer_days": "@count يوم",
+  "offer_hours": "@count ساعة",
+  "offer_minutes": "@count دقيقة",
+  "no_campaigns_found": "لم يتم العثور على حملات",
+  "influencer_campaigns": "حملات المؤثرين",
+  "influencer_campaigns_description": "الوصول إلى عملاء جدد من خلال صناع المحتوى المحليين الموثوقين",
+  "active_campaign": "حملة نشطة",
+  "in_review": "قيد المراجعة",
+
+  "create_campaign": "إنشاء حملة",
+  "live": "نشطة",
+
+  "budget_spent": "الميزانية المنفقة",
+  "days_left": "متبقي @count يوم",
+  "budget": "الميزانية",
+  "campaign_details": "تفاصيل الحملة",
+
+  "influencers": "المؤثرون",
+  "creators": "منشئو المحتوى",
+  "package": "الباقة",
+  "duration": "المدة",
+  "campaign_timeline": "الجدول الزمني للحملة",
+  "admin_assigns_creators_description": "يقوم مشرفو SomSpot بتعيين منشئي المحتوى. يمكنك متابعة تقدمهم ومراجعة المحتوى الذي يقدمونه هنا.",
+
+  "campaign_submitted": "تم تقديم الحملة",
+  "admin_approval": "موافقة المشرف",
+  "influencers_assigned": "تم تعيين المؤثرين",
+  "content_review": "مراجعة المحتوى",
+  "influencers_assigned_by_admin": "تم تعيين هؤلاء المؤثرين من قِبل مشرفي SomSpot. لا يمكن تغيير التعيين من تطبيق التاجر.",
+  "no_influencers_assigned_yet": "لم يتم تعيين أي مؤثرين بعد",
+
+  "assigned": "تم التعيين",
+  "view_profile": "عرض الملف الشخصي",
+  "engage": "التفاعل",
+  "pitch": "العرض",
+  "content_details": "تفاصيل المحتوى",
+  "published_and_verified": "تم النشر والتحقق",
+  "pending_review": "قيد المراجعة",
+  "content_is_live_earned": "المحتوى الخاص بك منشور. لقد ربحت $@amount.",
+  "content_submitted_waiting_approval": "تم تقديم المحتوى الخاص بك. في انتظار موافقة التاجر."
 }

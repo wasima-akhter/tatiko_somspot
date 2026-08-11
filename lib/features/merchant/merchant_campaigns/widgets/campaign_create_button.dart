@@ -32,7 +32,7 @@ class CampaignCreateButton extends StatelessWidget {
             SizedBox(width: 6.w),
 
             Text(
-              "Create Campaign",
+              AppStrings.createCampaign.tr,
               style: context.bodyMedium.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,

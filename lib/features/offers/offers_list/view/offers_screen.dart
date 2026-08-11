@@ -108,9 +108,11 @@ class _OffersScreenState extends State<OffersScreen> {
 
     if (offer.status.toLowerCase() == "expired" || offer.endAt.isBefore(now)) {
       return OfferDisplayData(
-        timeText: "Ended ${_formatDate(offer.endAt)}",
+        timeText: "${AppStrings.offerEnded.tr} ${_formatDate(offer.endAt)}",
         isEndingSoon: false,
-        actionText: "${offer.totalClaims} claims",
+        actionText: AppStrings.offerClaims.trParams({
+          'count': offer.totalClaims.toString(),
+        }),
         actionType: OfferActionType.claims,
       );
     }
@@ -120,7 +122,9 @@ class _OffersScreenState extends State<OffersScreen> {
         return OfferDisplayData(
           timeText: _getRemainingTime(offer.endAt),
           isEndingSoon: offer.endAt.difference(DateTime.now()).inDays < 3,
-          actionText: "${offer.totalClaims} claims",
+          actionText: AppStrings.offerClaims.trParams({
+            'count': offer.totalClaims.toString(),
+          }),
           actionType: OfferActionType.claims,
         );
 
@@ -128,15 +132,17 @@ class _OffersScreenState extends State<OffersScreen> {
         return OfferDisplayData(
           timeText: _getStartsInTime(offer.startAt),
           isEndingSoon: false,
-          actionText: "Edit",
+          actionText: AppStrings.offerEdit.tr,
           actionType: OfferActionType.edit,
         );
 
       case "expired":
         return OfferDisplayData(
-          timeText: "Ended ${_formatDate(offer.endAt)}",
+          timeText: "${AppStrings.offerEnded.tr} ${_formatDate(offer.endAt)}",
           isEndingSoon: false,
-          actionText: "${offer.totalClaims} claims",
+          actionText: AppStrings.offerClaims.trParams({
+            'count': offer.totalClaims.toString(),
+          }),
           actionType: OfferActionType.claims,
         );
 
@@ -144,7 +150,9 @@ class _OffersScreenState extends State<OffersScreen> {
         return OfferDisplayData(
           timeText: "",
           isEndingSoon: false,
-          actionText: "${offer.totalClaims} claims",
+          actionText: AppStrings.offerClaims.trParams({
+            'count': offer.totalClaims.toString(),
+          }),
           actionType: OfferActionType.claims,
         );
     }
@@ -157,14 +165,17 @@ class _OffersScreenState extends State<OffersScreen> {
     final duration = start.difference(now);
 
     if (duration.inDays > 0) {
-      return "Starts in ${duration.inDays} days";
+      return '${AppStrings.offerStartsIn.tr} \n'
+          '${AppStrings.offerDays.trParams({'count': duration.inDays.toString()})}';
     }
 
     if (duration.inHours > 0) {
-      return "Starts in ${duration.inHours} hours";
+      return '${AppStrings.offerStartsIn.tr} \n'
+          '${AppStrings.offerHours.trParams({'count': duration.inHours.toString()})}';
     }
 
-    return "Starts in ${duration.inMinutes} minutes";
+    return '${AppStrings.offerStartsIn.tr} \n'
+        '${AppStrings.offerMinutes.trParams({'count': duration.inMinutes.toString()})}';
   }
 
   String _formatDate(DateTime date) {
@@ -175,13 +186,21 @@ class _OffersScreenState extends State<OffersScreen> {
     final duration = endAt.difference(DateTime.now());
 
     if (duration.inDays > 0) {
-      return "${duration.inDays} days";
+      return AppStrings.offerDays.trParams({
+        'count': duration.inDays.toString(),
+      });
     }
 
     if (duration.inHours > 0) {
-      return "${duration.inHours} hours";
+      return AppStrings.offerHours.trParams({
+        'count': duration.inHours.toString(),
+      });
     }
 
-    return "${duration.inMinutes} minutes";
+    return AppStrings.offerMinutes.trParams({
+      'count': duration.inMinutes.toString(),
+    });
   }
+
+  //
 }

@@ -17,7 +17,7 @@ class HomeDealsWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              AppStrings.todaysBestDeals.tr,
+              "Recommended by content".tr,
               style: context.titleLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.darkTextColor,

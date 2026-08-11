@@ -151,7 +151,8 @@ class InfluencerTaskController extends GetxController {
 
     if (!response.success) {
       taskDetailStatus.value = ApiStatus.error;
-      taskDetailError = response.message;
+      // taskDetailError = response.message;
+      taskDetailError = "Invalid task information. Please try again.";
       return;
     }
 

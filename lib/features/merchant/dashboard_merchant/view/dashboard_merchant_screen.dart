@@ -173,28 +173,37 @@ class _DashboardMerchantScreenState extends State<DashboardMerchantScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             DashboardSectionTitle(title: AppStrings.topDeals.tr),
 
-            Row(
-              children: [
-                Icon(
-                  Icons.emoji_events_outlined,
-                  size: 14.sp,
-                  color: AppColors.amberYellowColor,
-                ),
+            const Spacer(),
 
-                Gap(4.w),
-
-                Text(
-                  AppStrings.rankedByClaims.tr,
-                  style: context.bodySmall.copyWith(
-                    color: AppColors.subtitleTextColor,
-                    fontSize: 11.sp,
+            Flexible(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.emoji_events_outlined,
+                    size: 14.sp,
+                    color: AppColors.amberYellowColor,
                   ),
-                ),
-              ],
+
+                  Gap(4.w),
+
+                  Flexible(
+                    child: Text(
+                      AppStrings.rankedByClaims.tr,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                      style: context.bodySmall.copyWith(
+                        color: AppColors.subtitleTextColor,
+                        fontSize: 11.sp,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -206,12 +215,10 @@ class _DashboardMerchantScreenState extends State<DashboardMerchantScreen> {
             status: controller.dashboardStatus.value,
             errorMessage: controller.errorMessage.value,
             onRetry: controller.getDashboardOverview,
-
             loadingWidget: TopDealsList(
               isLoading: true,
               deals: MerchantDashboardModel.empty().topDeals,
             ),
-
             builder: (_) {
               return TopDealsList(
                 isLoading: false,

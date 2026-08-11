@@ -122,7 +122,7 @@ class InfluencerRequestBottomSheet extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 title: formatCount(creator.followerCount),
-                subtitle: "Followers",
+                subtitle: AppStrings.followers.tr,
               ),
             ),
 
@@ -131,7 +131,7 @@ class InfluencerRequestBottomSheet extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 title: "${creator.engagementRate}%",
-                subtitle: "Engage",
+                subtitle: AppStrings.engage.tr,
               ),
             ),
 
@@ -140,7 +140,7 @@ class InfluencerRequestBottomSheet extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 title: creator.doneCount.toString(),
-                subtitle: "Done",
+                subtitle: AppStrings.done.tr,
               ),
             ),
           ],
@@ -152,7 +152,7 @@ class InfluencerRequestBottomSheet extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            "Pitch",
+            AppStrings.pitch.tr,
             style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
           ),
         ),
@@ -266,7 +266,7 @@ class InfluencerRequestBottomSheet extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Pitch",
+              AppStrings.pitch.tr,
               style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
             ),
           ),

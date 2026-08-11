@@ -12,120 +12,6 @@ import '../widgets/merchant_campaign_influencers_tab.dart';
 import '../widgets/merchant_campaign_overview_tab.dart';
 import '../widgets/merchant_campaign_published_tab.dart';
 
-/*
-class MerchantCampaignDetailsScreen extends StatelessWidget {
-  const MerchantCampaignDetailsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ScaffoldWrapper(
-      title: "Campaign Details",
-      onPressed: () => AppRouter.route.pop(),
-
-      body: SafeArea(
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-
-          slivers: [
-            SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              sliver: SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Gap(10.h),
-
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Obx(
-                            () => Text(
-                              (MerchantCampaignDetailsController
-                                          .to
-                                          .campaign
-                                          .value
-                                          ?.name ??
-                                      '')
-                                  .capitalizeWords(),
-                              style: context.headlineSmall.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        Obx(
-                          () => MerchantCampaignStatusTag(
-                            status: MerchantCampaignStatusExtension.fromApi(
-                              MerchantCampaignDetailsController
-                                      .to
-                                      .campaign
-                                      .value
-                                      ?.status ??
-                                  '',
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    Gap(6.h),
-                    Obx(() {
-                      final campaign =
-                          MerchantCampaignDetailsController.to.campaign.value;
-
-                      final offerText = campaign?.offer != null
-                          ? "${campaign!.offer!.title.capitalizeWords()} ${campaign.offer!.discountLabel}"
-                          : null;
-
-                      final budgetText =
-                          "Budget: \$${campaign?.totalBudget.toStringAsFixed(0) ?? "0"}";
-
-                      return Text(
-                        [
-                          if (offerText != null && offerText.trim().isNotEmpty)
-                            offerText,
-                          budgetText,
-                        ].join(" • "),
-                        style: context.bodySmall.copyWith(
-                          color: AppColors.subtitleTextColor,
-                        ),
-                      );
-                    }),
-
-                    Gap(14.h),
-                    MerchantCampaignDetailsTabs(),
-                    Gap(14.h),
-
-                    Obx(() {
-                      switch (MerchantCampaignDetailsController
-                          .to
-                          .selectedTab
-                          .value) {
-                        case MerchantCampaignDetailsTab.overview:
-                          return const MerchantCampaignOverviewTab();
-
-                        case MerchantCampaignDetailsTab.influencers:
-                          return const MerchantCampaignInfluencersTab();
-
-                        case MerchantCampaignDetailsTab.content:
-                          return const MerchantCampaignContentTab();
-                        case MerchantCampaignDetailsTab.published:
-                          return const MerchantCampaignPublishedTab();
-                      }
-                    }), // overview tab content.
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-*/
-
 class MerchantCampaignDetailsScreen
     extends GetView<MerchantCampaignDetailsController> {
   const MerchantCampaignDetailsScreen({super.key});
@@ -133,7 +19,7 @@ class MerchantCampaignDetailsScreen
   @override
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
-      title: "Campaign Details",
+      title: AppStrings.campaignDetails.tr,
       onPressed: AppRouter.route.pop,
 
       body: SafeArea(
@@ -184,11 +70,11 @@ class _CampaignHeader extends GetView<MerchantCampaignDetailsController> {
 
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Text(
                   (campaign?.name ?? "").capitalizeWords(),
-
                   style: context.headlineSmall.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -225,7 +111,7 @@ class _CampaignHeader extends GetView<MerchantCampaignDetailsController> {
         : null;
 
     final budget =
-        "Budget: \$${campaign?.totalBudget.toStringAsFixed(0) ?? "0"}";
+        "${AppStrings.budget.tr.capitalizeWords()}: \$${campaign?.totalBudget.toStringAsFixed(0) ?? "0"}";
 
     return [
       if (offerText != null && offerText.trim().isNotEmpty) offerText,

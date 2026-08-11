@@ -7,7 +7,7 @@ class ChooseLanguageScreen extends StatelessWidget {
   ChooseLanguageScreen({super.key});
 
   // Fetch the globally injected controller (from initGetx)
-  final _controller = Get.find<LanguageController>();
+  final _controller = LanguageController.to;
 
   @override
   Widget build(BuildContext context) {

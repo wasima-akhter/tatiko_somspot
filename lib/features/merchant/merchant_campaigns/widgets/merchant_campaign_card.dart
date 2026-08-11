@@ -74,7 +74,8 @@ class MerchantCampaignCard extends StatelessWidget {
             Gap(4.h),
 
             Text(
-              (campaign.business?.name ?? "Campaign").capitalizeWords(),
+              (campaign.business?.name ?? AppStrings.campaign.tr)
+                  .capitalizeWords(),
               style: context.bodySmall.copyWith(
                 color: AppColors.subtitleTextColor,
               ),
@@ -86,7 +87,7 @@ class MerchantCampaignCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
               children: [
-                Text("Budget spent", style: context.bodySmall),
+                Text(AppStrings.budgetSpent.tr, style: context.bodySmall),
 
                 Text(
                   campaign.budgetText,
@@ -126,11 +127,13 @@ class MerchantCampaignCard extends StatelessWidget {
 
                 Gap(12.w),
 
-                Icon(Iconsax.clock, size: 14.sp),
+                if (campaign.daysLeftText.isNotEmpty) ...[
+                  Icon(Iconsax.clock, size: 14.sp),
 
-                Gap(4.w),
+                  Gap(4.w),
 
-                Text(campaign.daysLeftText, style: context.bodySmall),
+                  Text(campaign.daysLeftText, style: context.bodySmall),
+                ],
               ],
             ),
           ],

@@ -86,7 +86,7 @@ class _MerchantCampaignScreenState extends State<MerchantCampaignScreen> {
                               padding: EdgeInsets.only(top: 40.h),
 
                               child: Text(
-                                "No campaigns found",
+                                AppStrings.noCampaignsFound.tr,
 
                                 style: context.bodyMedium.copyWith(
                                   color: AppColors.subtitleTextColor,

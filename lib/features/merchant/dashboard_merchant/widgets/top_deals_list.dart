@@ -25,7 +25,8 @@ class TopDealsList extends StatelessWidget {
             _buildTopDealItem(
               context: context,
               title: deal.title,
-              subtitle: '${deal.businessName} • ${deal.totalClaims} claims',
+              businessName: deal.businessName,
+              totalClaims: deal.totalClaims,
               percentage: deal.discountLabel,
               percentageColor: AppColors.emeraldGreenColor,
               isLoading: isLoading,
@@ -41,11 +42,15 @@ class TopDealsList extends StatelessWidget {
   Widget _buildTopDealItem({
     required BuildContext context,
     required String title,
-    required String subtitle,
+    required String businessName,
+    required int totalClaims,
     required String percentage,
     required Color percentageColor,
     required bool isLoading,
   }) {
+    final subtitle = businessName.isEmpty
+        ? AppStrings.topDealsLoadingBusiness.tr
+        : '$businessName • ${AppStrings.topDealsClaims.trParams({'count': totalClaims.toString()})}';
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
@@ -87,7 +92,7 @@ class TopDealsList extends StatelessWidget {
                   isLoading: isLoading,
                   child: Text(
                     title.isEmpty
-                        ? 'Loading deal title'
+                        ? AppStrings.topDealsLoadingTitle.tr
                         : title.capitalizeWords(),
                     style: context.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
@@ -102,7 +107,8 @@ class TopDealsList extends StatelessWidget {
                   isLoading: isLoading,
                   child: Text(
                     subtitle.isEmpty
-                        ? 'Loading business • 0 claims'
+                        ? '${AppStrings.topDealsLoadingBusiness.tr} • '
+                              '${AppStrings.topDealsClaims.trParams({'count': '0'})}'
                         : subtitle.capitalizeWords(),
                     style: context.bodySmall.copyWith(
                       color: AppColors.subtitleTextColor,
@@ -119,7 +125,9 @@ class TopDealsList extends StatelessWidget {
           AutoShimmerAnimate(
             isLoading: isLoading,
             child: Text(
-              percentage.isEmpty ? '0%' : percentage,
+              percentage.isEmpty
+                  ? AppStrings.topDealsPercentageFallback.tr
+                  : percentage,
               style: context.bodySmall.copyWith(
                 fontWeight: FontWeight.bold,
                 color: percentageColor,
@@ -169,7 +177,7 @@ class EmptyTopDeals extends StatelessWidget {
           Gap(12.h),
 
           Text(
-            "No Top Deals",
+            AppStrings.topDealsEmptyTitle.tr,
             style: context.bodyMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.darkTextColor,
@@ -179,7 +187,7 @@ class EmptyTopDeals extends StatelessWidget {
           Gap(4.h),
 
           Text(
-            "Your best performing deals will appear here.",
+            AppStrings.topDealsEmptyDescription.tr,
             textAlign: TextAlign.center,
             style: context.bodySmall.copyWith(
               color: AppColors.subtitleTextColor,

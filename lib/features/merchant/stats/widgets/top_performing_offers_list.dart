@@ -14,7 +14,7 @@ class TopPerformingOffersList extends GetView<StatsController> {
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 40.h),
             child: Text(
-              "No top performing offers yet.",
+              AppStrings.noTopPerformingOffers.tr,
               style: context.bodyMedium.copyWith(
                 color: AppColors.subtitleTextColor,
               ),
@@ -130,7 +130,7 @@ class TopPerformingOffersList extends GetView<StatsController> {
                 ),
               ),
               Text(
-                "Claims",
+                AppStrings.claims.tr,
                 style: context.bodySmall.copyWith(
                   color: AppColors.subtitleTextColor,
                 ),

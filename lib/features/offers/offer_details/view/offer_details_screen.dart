@@ -19,29 +19,7 @@ class OfferDetailsScreen extends GetView<OfferDetailController> {
     return ScaffoldWrapper(
       backgroundColor: AppColors.softBackgroundColor,
 
-      appBar: AppBar(
-        backgroundColor: AppColors.softBackgroundColor,
-        elevation: 0,
-
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            color: AppColors.darkTextColor,
-            size: 20.sp,
-          ),
-        ),
-
-        title: Text(
-          AppStrings.offerDetails.tr,
-          style: context.titleMedium.copyWith(
-            fontWeight: FontWeight.w600,
-            color: AppColors.darkTextColor,
-          ),
-        ),
-
-        titleSpacing: 0,
-      ),
+      title: AppStrings.offerDetails.tr,
 
       body: Obx(
         () => ApiStatusBuilder(

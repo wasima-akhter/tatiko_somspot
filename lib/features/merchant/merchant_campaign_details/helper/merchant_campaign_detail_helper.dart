@@ -1,16 +1,19 @@
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
+
 enum MerchantCampaignDetailsTab { overview, influencers, content, published }
 
 extension MerchantCampaignDetailsTabExtension on MerchantCampaignDetailsTab {
   String get title {
     switch (this) {
       case MerchantCampaignDetailsTab.overview:
-        return "Overview";
+        return AppStrings.overview.tr;
       case MerchantCampaignDetailsTab.influencers:
-        return "Influencers";
+        return AppStrings.influencers.tr;
       case MerchantCampaignDetailsTab.content:
-        return "Content";
+        return AppStrings.content.tr;
       case MerchantCampaignDetailsTab.published:
-        return "Published";
+        return AppStrings.published.tr;
     }
   }
 }

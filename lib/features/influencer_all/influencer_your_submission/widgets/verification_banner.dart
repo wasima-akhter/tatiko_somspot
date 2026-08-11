@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../../../../utils/extension/base_extension.dart';
+import '../../../../share/controller/screen_export.dart';
 
 enum SubmissionStatus { verified, pendingReview }
 
@@ -19,11 +17,12 @@ class VerificationBanner extends StatelessWidget {
 
     final iconColor = isVerified ? Colors.green : Colors.orange;
 
-    final title = isVerified ? "Published & Verified" : "Pending Review";
-
+    final title = isVerified
+        ? AppStrings.publishedAndVerified.tr
+        : AppStrings.pendingReview.tr;
     final subtitle = isVerified
-        ? "Your content is live. You earned \$125.00."
-        : "Your content is submitted. Waiting for merchant approval.";
+        ? AppStrings.contentIsLiveEarned.trParams({"amount": "125.00"})
+        : AppStrings.contentSubmittedWaitingApproval.tr;
 
     return Container(
       padding: const EdgeInsets.all(12),

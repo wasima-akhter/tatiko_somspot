@@ -20,17 +20,37 @@ class EditOfferController extends BaseFormController {
   final formKey = GlobalKey<FormState>();
 
   final RxnString selectedBusinessId = RxnString();
-
   final RxnString businessError = RxnString();
 
   final ImagePicker _picker = ImagePicker();
 
   final RxString imagePath = ''.obs;
 
+  // ---------------------------------------------------------------------------
+  // Business Logic
+  // ---------------------------------------------------------------------------
+
   void selectBusinessId(String businessId) {
     selectedBusinessId.value = businessId;
     businessError.value = null;
   }
+
+  bool _validateBusiness() {
+    if (selectedBusinessId.value != null &&
+        selectedBusinessId.value!.isNotEmpty) {
+      return true;
+    }
+
+    businessError.value = AppStrings.unableToIdentifyBusiness.tr;
+
+    AppToast.error(message: AppStrings.unableToIdentifyBusinessTryAgain.tr);
+
+    return false;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Image Logic
+  // ---------------------------------------------------------------------------
 
   Future<void> pickImage() async {
     try {
@@ -40,13 +60,42 @@ class EditOfferController extends BaseFormController {
         imagePath.value = image.path;
       }
     } catch (e) {
-      AppToast.error(message: "Failed to pick image");
+      AppToast.error(message: AppStrings.failedToPickImage.tr);
     }
   }
 
   void clearImage() {
     imagePath.value = '';
   }
+
+  // ---------------------------------------------------------------------------
+  // Form Validation
+  // ---------------------------------------------------------------------------
+
+  bool _validateUpdateOffer({
+    required String startDate,
+    required String endDate,
+  }) {
+    if (!formKey.currentState!.validate()) {
+      return false;
+    }
+
+    if (startDate.isEmpty || endDate.isEmpty) {
+      AppToast.error(message: AppStrings.pleaseSelectOfferDates.tr);
+      return false;
+    }
+
+    if (imagePath.value.isEmpty) {
+      AppToast.error(message: AppStrings.pleaseSelectAnImage.tr);
+      return false;
+    }
+
+    return true;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Update Offer
+  // ---------------------------------------------------------------------------
 
   Future<void> updateOffer({
     required String offerId,
@@ -56,28 +105,18 @@ class EditOfferController extends BaseFormController {
     required String startDate,
     required String endDate,
   }) async {
-    businessError.value = null;
-
-    if (selectedBusinessId.value == null) {
-      businessError.value = "Unable to identify the associated business.";
-      AppToast.error(
-        message:
-            "Unable to identify the associated business. Please try again.",
-      );
+    // Validate associated business.
+    if (!_validateBusiness()) {
       return;
     }
 
-    if (!formKey.currentState!.validate()) {
-      return;
-    }
+    // Validate offer form data.
+    final isValid = _validateUpdateOffer(
+      startDate: startDate,
+      endDate: endDate,
+    );
 
-    if (startDate.isEmpty || endDate.isEmpty) {
-      AppToast.error(message: "Please select offer dates");
-      return;
-    }
-
-    if (imagePath.value.isEmpty) {
-      AppToast.error(message: "Please select an image");
+    if (!isValid) {
       return;
     }
 
@@ -93,17 +132,11 @@ class EditOfferController extends BaseFormController {
       final request = UpdateOfferRequest(
         offerId: offerId,
         business: selectedBusinessId.value!,
-
         title: title.trim(),
-
         discountLabel: "${discount.trim()}%",
-
         description: description.trim(),
-
         terms: "Dine-in only. One claim per customer.",
-
         startAt: DateConverter().formatMdY_to_DateTime(startDate),
-
         endAt: DateConverter().formatMdY_to_DateTime(endDate),
       );
 
@@ -119,7 +152,7 @@ class EditOfferController extends BaseFormController {
 
       submitSuccess();
 
-      showSuccess("Offer updated successfully");
+      showSuccess(AppStrings.offerUpdatedSuccessfully.tr);
 
       resetForm(
         formKey: formKey,
@@ -127,14 +160,14 @@ class EditOfferController extends BaseFormController {
         extraReset: [clearImage, () {}],
       );
 
-      // await OfferDetailController.to.getOfferDetails();
       AppRouter.route.pop(true);
     } catch (e, s) {
       debugPrint(e.toString());
       debugPrintStack(stackTrace: s);
 
-      submitFailure(e.toString());
-      AppToast.error(message: e.toString());
+      submitFailure(AppStrings.somethingWentWrong.tr);
+
+      AppToast.error(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

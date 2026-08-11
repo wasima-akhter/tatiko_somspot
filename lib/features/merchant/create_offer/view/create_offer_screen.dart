@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
+import '../../../../share/controller/language_controller.dart';
 import '../../../../share/controller/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/controller/business-controller.dart';
@@ -38,6 +39,22 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
     startDateController = TextEditingController();
     endDateController = TextEditingController();
     descriptionController = TextEditingController();
+
+    loadLanguages();
+  }
+
+  Future<void> loadLanguages() async {
+    final languages = await LanguageController.getLanguages();
+
+    print('Languages: $languages');
+
+    languages.forEach((language, translations) {
+      print('Language: $language');
+
+      translations.forEach((key, value) {
+        print('  $key: $value');
+      });
+    });
   }
 
   @override
@@ -55,27 +72,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
-      appBar: AppBar(
-        backgroundColor: AppColors.backgroundColorNew,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            size: 20.sp,
-            color: AppColors.darkTextColor,
-          ),
-        ),
-        title: Text(
-          AppStrings.createNewOffer.tr,
-          style: context.titleLarge.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.darkTextColor,
-          ),
-        ),
-        centerTitle: false,
-      ),
+      title: AppStrings.createNewOffer.tr,
 
       body: Form(
         key: controller.formKey,
@@ -93,14 +90,14 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
 
               CustomTextField(
                 controller: titleController,
-                hintText: "e.g. 20% Off Family Platter",
+                hintText: AppStrings.offerTitleHint.tr,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return "Offer title is required";
+                    return AppStrings.offerTitleRequired.tr;
                   }
 
                   if (value.length < 3) {
-                    return "Title is too short";
+                    return AppStrings.offerTitleTooShort.tr;
                   }
 
                   return null;
@@ -113,23 +110,23 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
 
               CustomTextField(
                 controller: discountController,
-                hintText: "e.g. 20",
+                hintText: AppStrings.offerDiscountHint.tr,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
 
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return "Discount is required";
+                    return AppStrings.offerDiscountRequired.tr;
                   }
 
                   final discount = int.tryParse(value);
 
                   if (discount == null) {
-                    return "Enter a valid discount";
+                    return AppStrings.offerDiscountInvalid.tr;
                   }
 
                   if (discount <= 0 || discount > 100) {
-                    return "Discount must be between 1 and 100";
+                    return AppStrings.offerDiscountRangeError.tr;
                   }
 
                   return null;
@@ -164,16 +161,17 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
 
               CustomTextField(
                 controller: descriptionController,
-                hintText: "What's included? Any restrictions?",
+                hintText: AppStrings.offerDescriptionHint.tr,
                 fillColor: AppColors.white,
                 maxLines: 5,
+                minLines: 2,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return "Description is required";
+                    return AppStrings.descriptionRequired.tr;
                   }
 
                   if (value.length < 10) {
-                    return "Description must be at least 10 characters";
+                    return AppStrings.descriptionMinLength.tr;
                   }
 
                   return null;

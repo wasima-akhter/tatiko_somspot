@@ -166,7 +166,8 @@ class OfferListCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                        _buildAction(),
+                        Gap(4.w),
+                        Expanded(child: _buildAction()),
                       ],
                     ),
                   ],
@@ -184,6 +185,7 @@ class OfferListCard extends StatelessWidget {
       case OfferActionType.claims:
         return Text(
           actionText,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             color: AppColors.emeraldGreenColor,
             fontWeight: FontWeight.w600,
@@ -200,6 +202,7 @@ class OfferListCard extends StatelessWidget {
           ),
           child: Text(
             actionText,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: AppColors.emeraldGreenColor,
               fontWeight: FontWeight.w600,
@@ -221,6 +224,7 @@ class OfferListCard extends StatelessWidget {
             ),
             child: Text(
               actionText,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: AppColors.blueAccentColor,
                 fontWeight: FontWeight.w600,

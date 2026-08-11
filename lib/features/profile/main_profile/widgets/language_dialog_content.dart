@@ -6,7 +6,7 @@ class LanguageDialogContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final langController = Get.find<LanguageController>();
+    final langController = LanguageController.to;
 
     return Obx(() {
       return Column(
@@ -19,14 +19,12 @@ class LanguageDialogContent extends StatelessWidget {
               langController.selectedLanguageCode == lang.languageCode;
 
           return GestureDetector(
-            onTap: () {
+            onTap: () async {
               final language = langController.languageFromCode(
                 lang.languageCode,
               );
-
-              langController.selectLanguage(language);
-
-              Navigator.pop(context);
+              await langController.selectLanguage(language);
+              if (context.mounted) Navigator.pop(context);
             },
             child: Container(
               margin: EdgeInsets.only(bottom: 12.h),

@@ -84,8 +84,7 @@ class InfluencerTaskActiveCard extends StatelessWidget {
                 child: InfoBox(
                   icon: Icons.ondemand_video_outlined,
                   title: AppStrings.content.tr,
-                  value:
-                      "1 ${task.campaign?.contentType.capitalize} ${AppStrings.video}",
+                  value: "1 ${task.campaign?.contentType.capitalize}",
                 ),
               ),
 

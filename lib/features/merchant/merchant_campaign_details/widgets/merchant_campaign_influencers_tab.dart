@@ -44,7 +44,7 @@ class MerchantCampaignInfluencersTab
                 Padding(
                   padding: EdgeInsets.only(top: 30.h),
                   child: Text(
-                    "No creators assigned yet",
+                    AppStrings.noInfluencersAssignedYet.tr,
                     style: context.bodyMedium.copyWith(
                       color: AppColors.subtitleTextColor,
                     ),
@@ -150,7 +150,7 @@ class MerchantCampaignInfluencersTab
 
           Expanded(
             child: Text(
-              "These creators were assigned by SomSpot Admin. Assignment cannot be changed from the merchant app.",
+              AppStrings.influencersAssignedByAdmin.tr,
               style: context.bodySmall,
             ),
           ),

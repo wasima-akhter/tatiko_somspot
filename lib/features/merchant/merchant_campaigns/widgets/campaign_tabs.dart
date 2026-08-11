@@ -15,9 +15,9 @@ class CampaignTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      MerchantCampaignTab.all: "All",
-      MerchantCampaignTab.pending: "Pending",
-      MerchantCampaignTab.live: "Live",
+      MerchantCampaignTab.all: AppStrings.all.tr,
+      MerchantCampaignTab.pending: AppStrings.pending.tr,
+      MerchantCampaignTab.live: AppStrings.live.tr,
     };
 
     return Row(

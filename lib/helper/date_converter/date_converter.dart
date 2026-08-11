@@ -1,15 +1,22 @@
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class DateConverter {
   static String formatDate({
     DateTime? dateTime,
     String format = 'MMM dd, yyyy',
+    String? locale,
   }) {
     try {
       final dt = dateTime ?? DateTime.now();
-      return DateFormat(format).format(dt);
+
+      final currentLocale = locale ?? Get.locale?.toLanguageTag() ?? 'en-US';
+
+      return DateFormat(format, currentLocale).format(dt);
     } catch (e) {
-      return dateTime?.toString() ?? '';
+      // return dateTime?.toString() ?? '';
+      final dt = dateTime ?? DateTime.now();
+      return DateFormat(format).format(dt);
     }
   }
 

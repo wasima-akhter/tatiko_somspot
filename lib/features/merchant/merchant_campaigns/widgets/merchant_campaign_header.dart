@@ -44,7 +44,7 @@ class MerchantCampaignHeader extends StatelessWidget {
               Gap(8.w),
 
               Text(
-                "Influencer Campaigns",
+                AppStrings.influencerCampaigns.tr,
                 style: context.titleMedium.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
@@ -56,7 +56,7 @@ class MerchantCampaignHeader extends StatelessWidget {
           Gap(18.h),
 
           Text(
-            "Reach new customers through trusted local creators",
+            AppStrings.influencerCampaignsDescription.tr,
             style: context.bodySmall.copyWith(color: Colors.white),
           ),
 
@@ -74,9 +74,16 @@ class MerchantCampaignHeader extends StatelessWidget {
 
               loadingWidget: Row(
                 children: [
-                  _stat(context, "Active campaign", null, isLoading: true),
+                  _stat(
+                    context,
+                    AppStrings.activeCampaign.tr,
+                    null,
+                    isLoading: true,
+                  ),
+
                   Gap(12.w),
-                  _stat(context, "In Review", null, isLoading: true),
+
+                  _stat(context, AppStrings.inReview.tr, null, isLoading: true),
                 ],
               ),
 
@@ -85,7 +92,7 @@ class MerchantCampaignHeader extends StatelessWidget {
                   children: [
                     _stat(
                       context,
-                      "Active campaign",
+                      AppStrings.activeCampaign.tr,
                       "${controller.summaryCampaigns.value?.active ?? 0}",
                     ),
 
@@ -93,7 +100,7 @@ class MerchantCampaignHeader extends StatelessWidget {
 
                     _stat(
                       context,
-                      "In Review",
+                      AppStrings.inReview.tr,
                       "${controller.summaryCampaigns.value?.inReview ?? 0}",
                     ),
                   ],

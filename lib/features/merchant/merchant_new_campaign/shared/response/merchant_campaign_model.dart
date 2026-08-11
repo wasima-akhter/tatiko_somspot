@@ -1,3 +1,4 @@
+import '../../../../../share/controller/screen_export.dart';
 import '../../../../core/business/response/business-response.dart';
 
 class MerchantCampaignModel {
@@ -81,7 +82,9 @@ class MerchantCampaignModel {
 
   String get applicants => assignedCount.toString();
 
-  String get daysLeftText => daysLeft == null ? "" : "$daysLeft days left";
+  String get daysLeftText => daysLeft == null
+      ? ""
+      : AppStrings.daysLeft.trParams({'count': daysLeft.toString()});
 }
 
 class CampaignTimelineModel {

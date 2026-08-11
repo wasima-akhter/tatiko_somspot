@@ -38,7 +38,10 @@ class MerchantCampaignOverviewCard
 
             package: campaign.contentType,
 
-            duration: "${campaign.daysLeft} days left",
+            duration: AppStrings.daysLeft.trParams({
+              'count': campaign.daysLeft.toString(),
+            }),
+            //  "${campaign.daysLeft} ${AppStrings.daysLeft.tr}",
           );
         },
       ),
@@ -66,9 +69,9 @@ class MerchantCampaignOverviewCard
         children: [
           Row(
             children: [
-              Expanded(child: _item("Budget", budget)),
+              Expanded(child: _item(AppStrings.budget.tr, budget)),
 
-              Expanded(child: _item("Creators", creators)),
+              Expanded(child: _item(AppStrings.influencers.tr, creators)),
             ],
           ),
 
@@ -76,9 +79,9 @@ class MerchantCampaignOverviewCard
 
           Row(
             children: [
-              Expanded(child: _item("Package", package)),
+              Expanded(child: _item(AppStrings.package.tr, package)),
 
-              Expanded(child: _item("Duration", duration)),
+              Expanded(child: _item(AppStrings.duration.tr, duration)),
             ],
           ),
         ],

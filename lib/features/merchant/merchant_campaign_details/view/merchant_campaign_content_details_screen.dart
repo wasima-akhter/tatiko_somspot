@@ -35,16 +35,10 @@ class _MerchantCampaignContentDetailsScreenState
   @override
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
-      backgroundColor: AppColors.backgroundColorNew,
-
-      appBar: AppBar(
-        backgroundColor: AppColors.backgroundColorNew,
-
-        title: Text(
-          "Content Details",
-          style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
-        ),
-      ),
+      title: AppStrings.contentDetails.tr,
+      onPressed: () {
+        AppRouter.route.pop();
+      },
 
       body: Obx(
         () => ApiStatusBuilder(
@@ -64,7 +58,7 @@ class _MerchantCampaignContentDetailsScreenState
                 storeName: data.creator.name,
                 storeImage: data.creator.profileImage,
 
-                title: "Submitted Content",
+                title: AppStrings.submittedContent.tr,
 
                 description: data.caption?.capitalizeFirst ?? '',
 
@@ -74,7 +68,9 @@ class _MerchantCampaignContentDetailsScreenState
 
                 thumbnail: data.thumbnail, // if available
 
-                status: data.status.capitalizeWords(), // if available
+                status: data.status
+                    .replaceAll('_', ' ')
+                    .capitalizeWords(), // if available
 
                 category: data.draftMediaType, // if available
 
@@ -87,7 +83,7 @@ class _MerchantCampaignContentDetailsScreenState
                     AppVideoOverlay.show(
                       context,
                       videoUrl: data.draftVideoUrl!,
-                      title: "Submitted Content",
+                      title: AppStrings.submittedContent.tr,
                     );
                   }
                 },

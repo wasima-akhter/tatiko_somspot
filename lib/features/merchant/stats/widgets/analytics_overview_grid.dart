@@ -9,7 +9,7 @@ class AnalyticsOverviewGrid extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Overview',
+          AppStrings.overview.tr,
           style: context.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.darkTextColor,

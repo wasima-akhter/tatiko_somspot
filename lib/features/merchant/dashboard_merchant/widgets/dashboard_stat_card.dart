@@ -49,6 +49,8 @@ class DashboardStatCard extends StatelessWidget {
 
           Text(
             title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: context.bodySmall.copyWith(
               color: AppColors.subtitleTextColor,
               fontSize: 10.sp,

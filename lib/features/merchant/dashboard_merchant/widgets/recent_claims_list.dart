@@ -30,7 +30,9 @@ class RecentClaimsList extends StatelessWidget {
               context: context,
               title: claim.title,
               subtitle: claim.customerName != null
-                  ? 'Claimed by ${claim.customerName}'
+                  ? AppStrings.recentClaimsClaimedBy.trParams({
+                      'customer': claim.customerName!,
+                    })
                   : '',
               isLoading: isLoading,
             ),
@@ -90,7 +92,7 @@ class RecentClaimsList extends StatelessWidget {
                   isLoading: isLoading,
                   child: Text(
                     title.isEmpty
-                        ? 'Loading claim title'
+                        ? AppStrings.recentClaimsLoadingTitle.tr
                         : title.capitalizeWords(),
                     style: context.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
@@ -105,7 +107,7 @@ class RecentClaimsList extends StatelessWidget {
                   isLoading: isLoading,
                   child: Text(
                     subtitle.isEmpty
-                        ? 'Claimed by customer'
+                        ? AppStrings.recentClaimsCustomer.tr
                         : subtitle.capitalizeWords(),
                     style: context.bodySmall.copyWith(
                       color: AppColors.subtitleTextColor,
@@ -127,8 +129,16 @@ class RecentClaimsList extends StatelessWidget {
                 color: AppColors.emeraldGreenColor.withValues(alpha: .1),
                 borderRadius: BorderRadius.circular(20.r),
               ),
+              // child: Text(
+              //   AppStrings.justNow.tr,
+              //   style: context.bodySmall.copyWith(
+              //     fontWeight: FontWeight.w600,
+              //     color: AppColors.emeraldGreenColor,
+              //     fontSize: 10.sp,
+              //   ),
+              // ),
               child: Text(
-                AppStrings.justNow.tr,
+                AppStrings.recentClaimsJustNow.tr,
                 style: context.bodySmall.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.emeraldGreenColor,
@@ -180,7 +190,7 @@ class EmptyRecentClaims extends StatelessWidget {
           Gap(12.h),
 
           Text(
-            "No Recent Claims",
+            AppStrings.recentClaimsEmptyTitle.tr,
             style: context.bodyMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.darkTextColor,
@@ -190,7 +200,7 @@ class EmptyRecentClaims extends StatelessWidget {
           Gap(4.h),
 
           Text(
-            "Claims from your offers will appear here.",
+            AppStrings.recentClaimsEmptyDescription.tr,
             textAlign: TextAlign.center,
             style: context.bodySmall.copyWith(
               color: AppColors.subtitleTextColor,

@@ -333,6 +333,8 @@ class AppStrings {
   static const String topPerformingOffers = "top_performing_offers";
   static const String claimsCount = "claims_count";
 
+  static const String noTopPerformingOffers = "no_top_performing_offers";
+
   // ─── Subscription/Profile ───
   static const String currentPlan = "current_plan";
   static const String proMonthly = "pro_monthly";
@@ -503,8 +505,6 @@ class AppStrings {
 
   static const String validCountryName = "valid_country_name";
 
-  static const String descriptionRequired = "description_required";
-
   static const String descriptionMinLength = "description_min_length";
 
   static const String postalCodeRequired = "postal_code_required";
@@ -648,4 +648,122 @@ class AppStrings {
 
   //
   static const String myCampaigns = "my_campaigns";
+
+  //MERCHANT
+  // Create Offer
+  static const String offerTitleHint = "offer_title_hint";
+  static const String offerTitleRequired = "offer_title_required";
+  static const String offerTitleTooShort = "offer_title_too_short";
+
+  static const String offerDiscountLabel = "offer_discount_label";
+  static const String offerDiscountHint = "offer_discount_hint";
+  static const String offerDiscountRequired = "offer_discount_required";
+  static const String offerDiscountInvalid = "offer_discount_invalid";
+  static const String offerDiscountRangeError =
+      "offer_discount_between_one_and_hundred";
+
+  static const String offerDescriptionHint = "offer_description_hint";
+
+  static const String offerDateHint = "offer_date_hint";
+
+  static const String descriptionRequired = "description_required";
+
+  static const String unableToIdentifyBusiness = "unable_to_identify_business";
+  static const String offerCreatedSuccessfully = "offer_created_successfully";
+  static const String offerUpdatedSuccessfully = "offer_updated_successfully";
+  static const String pleaseSelectOfferDates = "please_select_offer_dates";
+  static const String pleaseSelectAnImage = "please_select_an_image";
+  static const String unableToIdentifyBusinessTryAgain =
+      "unable_to_identify_business_try_again";
+  static const String failedToPickImage = "failed_to_pick_image";
+
+  //
+  static const String recentClaimsClaimedBy = "recent_claims_claimed_by";
+  static const String recentClaimsLoadingTitle = "recent_claims_loading_title";
+  static const String recentClaimsCustomer = "recent_claims_customer";
+  static const String recentClaimsJustNow = "recent_claims_just_now";
+
+  static const String recentClaimsEmptyTitle = "recent_claims_empty_title";
+  static const String recentClaimsEmptyDescription =
+      "recent_claims_empty_description";
+
+  //
+  static const String topDealsLoadingTitle = "top_deals_loading_title";
+  static const String topDealsLoadingBusiness = "top_deals_loading_business";
+  static const String topDealsClaims = "top_deals_claims";
+  static const String topDealsPercentageFallback =
+      "top_deals_percentage_fallback";
+
+  static const String topDealsEmptyTitle = "top_deals_empty_title";
+  static const String topDealsEmptyDescription = "top_deals_empty_description";
+
+  //
+
+  static const String offerDescriptionRequired = "offer_description_required";
+  static const String offerDescriptionTooShort = "offer_description_too_short";
+
+  //
+  static const String offerEnded = "offer_ended";
+  static const String offerClaims = "offer_claims";
+  static const String offerEdit = "offer_edit";
+
+  static const String offerStartsIn = "offer_starts_in";
+  static const String offerDays = "offer_days";
+  static const String offerHours = "offer_hours";
+  static const String offerMinutes = "offer_minutes";
+
+  // campaigns in merchant
+  static const String noCampaignsFound = "no_campaigns_found";
+  static const String influencerCampaigns = "influencer_campaigns";
+  static const String influencerCampaignsDescription =
+      "influencer_campaigns_description";
+
+  static const String activeCampaign = "active_campaign";
+  static const String inReview = "in_review";
+
+  static const String createCampaign = "create_campaign";
+
+  static const String live = "live";
+
+  static const String budgetSpent = "budget_spent";
+  static const String daysLeft = "days_left";
+
+  //
+  static const String budget = "budget";
+  static const String campaignDetails = "campaign_details";
+
+  static const String influencers = "influencers";
+
+  static const String creators = "creators";
+  static const String package = "package";
+  static const String duration = "duration";
+  static const String campaignTimeline = "campaign_timeline";
+  static const String adminAssignsCreatorsDescription =
+      "admin_assigns_creators_description";
+
+  //
+  static const String campaignSubmitted = "campaign_submitted";
+  static const String adminApproval = "admin_approval";
+  static const String influencersAssigned = "influencers_assigned";
+  static const String contentReview = "content_review";
+
+  //
+  static const String influencersAssignedByAdmin =
+      "influencers_assigned_by_admin";
+  static const String noInfluencersAssignedYet = "no_influencers_assigned_yet";
+
+  static const String assigned = "assigned";
+
+  static const String viewProfile = "view_profile";
+  static const String engage = "engage";
+  static const String pitch = "pitch";
+
+  static const String contentDetails = "content_details";
+
+  // Influencer submit content
+  static const String publishedAndVerified = "published_and_verified";
+  static const String pendingReview = "pending_review";
+  static const String contentIsLiveEarned = "content_is_live_earned";
+  static const String contentSubmittedWaitingApproval =
+      "content_submitted_waiting_approval";
 }

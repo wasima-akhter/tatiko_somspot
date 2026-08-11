@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 
@@ -38,7 +40,7 @@ class CampaignDateField extends StatelessWidget {
       title: label,
       controller: controller,
       readOnly: true,
-      hintText: "Jul 15, 2025",
+      hintText: AppStrings.offerDateHint.tr,
       suffixIcon: const Icon(Icons.calendar_today_outlined, size: 18),
       onTap: () => _pickDate(context),
     );

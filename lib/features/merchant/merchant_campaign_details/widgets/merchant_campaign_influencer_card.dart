@@ -60,7 +60,7 @@ class MerchantCampaignInfluencerCard extends StatelessWidget {
                     Gap(2.h),
 
                     Text(
-                      "• ${creator.category?.name ?? ""}",
+                      "• ${creator.category?.name ?? ""}", // translation from backend should show acc to lang
                       style: context.bodySmall.copyWith(
                         color: AppColors.subtitleTextColor,
                       ),
@@ -76,7 +76,7 @@ class MerchantCampaignInfluencerCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
-                  "Assigned",
+                  AppStrings.assigned.tr,
                   style: TextStyle(
                     fontSize: 10.sp,
                     color: AppColors.primaryColor,
@@ -106,7 +106,7 @@ class MerchantCampaignInfluencerCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
-                  "View Profile",
+                  AppStrings.viewProfile.tr,
                   style: context.bodySmall.copyWith(
                     fontWeight: FontWeight.w500,
                     color: AppColors.darkTextColor,

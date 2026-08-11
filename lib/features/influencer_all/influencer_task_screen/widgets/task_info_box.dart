@@ -29,9 +29,13 @@ class InfoBox extends StatelessWidget {
             children: [
               Icon(icon, size: 14.sp, color: Colors.grey),
               SizedBox(width: 4.w),
-              Text(
-                title,
-                style: context.bodySmall.copyWith(color: Colors.grey),
+              Flexible(
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.bodySmall.copyWith(color: Colors.grey),
+                ),
               ),
             ],
           ),

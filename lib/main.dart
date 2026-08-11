@@ -73,8 +73,8 @@ class MyApp extends StatelessWidget {
         builder: DevicePreview.appBuilder,
         // locale: DevicePreview.locale(context),
         locale: Locale(
-          Get.find<LanguageController>().selectedLanguageModel.languageCode,
-          Get.find<LanguageController>().selectedLanguageModel.countryCode,
+          LanguageController.to.selectedLanguageModel.languageCode,
+          LanguageController.to.selectedLanguageModel.countryCode,
         ),
 
         // ── Routing (go_router) ───────────────────────────────────────────
