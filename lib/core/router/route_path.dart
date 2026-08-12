@@ -40,8 +40,10 @@ class RoutePath {
   static const String termsAndConditionsScreen = 'termsAndConditionsScreen';
   static const String topDealsScreen = 'topDealsScreen';
   static const String nearbyYouScreen = 'nearbyYouScreen';
-  static const String merchantDetailsScreen = 'merchantDetailsScreen';
+  static const String customerBusinessDetailsScreen =
+      'customerBusinessDetailsScreen';
   static const String offerDetailsScreen = 'offerDetailsScreen';
+  static const String offerClaimScreen = 'offerClaimScreen';
   static const String categoryMerchantsScreen = 'categoryMerchantsScreen';
   static const String claimedOfferDetailsScreen = 'claimedOfferDetailsScreen';
   static const String createOfferScreen = 'createOfferScreen';

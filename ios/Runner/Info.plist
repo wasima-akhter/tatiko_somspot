@@ -73,5 +73,8 @@
 
 	<key>NSLocationWhenInUseUsageDescription</key>
 <string>Som Spot uses your location to show nearby businesses and personalize location-based results.</string>
+
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>We need access to save your claim QR code to your photos.</string>
 </dict>
 </plist>

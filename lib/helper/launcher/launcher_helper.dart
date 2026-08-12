@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LauncherHelper {
   /// Launches the phone dialer with the specified [phoneNumber].
-  static Future<void> launchPhoneDialer(BuildContext context, String phoneNumber) async {
-    final Uri dialUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
+  static Future<void> launchPhoneDialer(
+    BuildContext context,
+    String phoneNumber,
+  ) async {
+    final Uri dialUri = Uri(scheme: 'tel', path: phoneNumber);
+
+    debugPrint('"phoneNumber  : $phoneNumber');
+
     try {
       if (await canLaunchUrl(dialUri)) {
         await launchUrl(dialUri);
@@ -23,10 +26,7 @@ class LauncherHelper {
       }
     } catch (e) {
       if (context.mounted) {
-        AppToast.info(
-          context: context,
-          message: "Could not launch dialer: $e",
-        );
+        AppToast.info(context: context, message: "Could not launch dialer: $e");
       }
     }
   }
@@ -34,11 +34,74 @@ class LauncherHelper {
   /// Launches Google Maps with a query.
   static Future<void> launchGoogleMaps(String query) async {
     final encodedQuery = Uri.encodeComponent(query);
-    final googleMapsUrl = Uri.parse("https://www.google.com/maps/search/?api=1&query=$encodedQuery");
+    final googleMapsUrl = Uri.parse(
+      "https://www.google.com/maps/search/?api=1&query=$encodedQuery",
+    );
     try {
       await launchUrl(googleMapsUrl, mode: LaunchMode.externalApplication);
     } catch (e) {
       debugPrint("Could not launch Google Maps: $e");
+    }
+  }
+
+  static Future<void> launchDirectionsInGoogleMaps({
+    required double destinationLatitude,
+    required double destinationLongitude,
+    double? startLatitude,
+    double? startLongitude,
+  }) async {
+    final destination = '$destinationLatitude,$destinationLongitude';
+
+    final queryParams = <String, String>{
+      'api': '1',
+      'destination': destination,
+      'travelmode': 'driving',
+      'dir_action': 'navigate',
+    };
+
+    // Optionally specify the starting location.
+    if (startLatitude != null && startLongitude != null) {
+      queryParams['origin'] = '$startLatitude,$startLongitude';
+    }
+
+    final url = Uri.https('www.google.com', '/maps/dir/', queryParams);
+
+    try {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      debugPrint('Could not launch Google Maps: $e');
+    }
+  }
+
+  static Future<void> launchDirectionsInAppleMaps({
+    String? destination,
+    double? startLatitude,
+    double? startLongitude,
+    double? destinationLatitude,
+    double? destinationLongitude,
+  }) async {
+    final params = <String, String>{'dirflg': 'd'};
+
+    if (startLatitude != null && startLongitude != null) {
+      params['saddr'] = '$startLatitude,$startLongitude';
+    }
+
+    if (destinationLatitude != null && destinationLongitude != null) {
+      params['daddr'] = '$destinationLatitude,$destinationLongitude';
+    } else if (destination != null && destination.isNotEmpty) {
+      params['daddr'] = destination;
+    }
+
+    final url = Uri(
+      scheme: 'https',
+      host: 'maps.apple.com',
+      queryParameters: params,
+    );
+
+    try {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      debugPrint('Could not launch Apple Maps: $e');
     }
   }
 
@@ -54,7 +117,11 @@ class LauncherHelper {
   }
 
   /// Shares merchant details using standard device sharing sheets.
-  static Future<void> shareMerchant(BuildContext context, {required String title, required String category}) async {
+  static Future<void> shareMerchant(
+    BuildContext context, {
+    required String title,
+    required String category,
+  }) async {
     try {
       await Share.share(
         'Check out $title ($category) on SomSpot! Download the app now.',
@@ -71,7 +138,10 @@ class LauncherHelper {
   }
 
   /// Launches WhatsApp with the specified [phoneNumber].
-  static Future<void> launchWhatsApp(BuildContext context, String phoneNumber) async {
+  static Future<void> launchWhatsApp(
+    BuildContext context,
+    String phoneNumber,
+  ) async {
     // Clean the phone number of all non-numeric characters
     final cleanPhoneNumber = phoneNumber.replaceAll(RegExp(r'[^\d]'), '');
     final whatsAppUrl = Uri.parse("https://wa.me/$cleanPhoneNumber");
@@ -99,4 +169,3 @@ class LauncherHelper {
     }
   }
 }
-

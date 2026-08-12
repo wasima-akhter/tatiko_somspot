@@ -5,6 +5,7 @@ import '../../../../utils/multipart/multipart_body.dart';
 import '../../../offers/shared/response/offers_response.dart';
 import '../repository/offers_repository.dart';
 import '../request/offers_request.dart';
+import '../response/claimed_offer_model.dart';
 
 class OfferService {
   final OfferRepository _repository;
@@ -102,6 +103,27 @@ class OfferService {
     } catch (e, s) {
       debugPrint("Update Offer Error: $e");
 
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: "Something went wrong");
+    }
+  }
+
+  // ============================================================
+  // Claim Offer
+  // ============================================================
+
+  Future<ApiResponse<ClaimOfferModel>> claimOffer(String offerId) async {
+    try {
+      final response = await _repository.claimOffer(offerId);
+
+      final data = response.data['data'];
+
+      return ApiResponse.success(data: ClaimOfferModel.fromJson(data));
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Claim Offer Error => $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: "Something went wrong");

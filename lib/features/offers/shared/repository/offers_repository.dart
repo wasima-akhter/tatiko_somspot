@@ -69,6 +69,17 @@ class OfferRepository {
       ),
     );
   }
+  // ============================================================
+  // Claim Offer
+  // ============================================================
+
+  Future<Response> claimOffer(String offerId) {
+    return _apiClient.post(
+      url: ApiUrls.claimOfferByCustomer(),
+      body: {'offerId': offerId},
+      showResponse: true,
+    );
+  }
 
   //
 }

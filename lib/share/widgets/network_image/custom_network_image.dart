@@ -73,6 +73,7 @@ class CustomNetworkImage extends StatelessWidget {
     }
 
     return CachedNetworkImage(
+      // fake one:      "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Zmxvd2VyfGVufDB8fDB8fHww" ??
       imageUrl: getImageUrl(imageUrl, ApiUrls.base),
       fit: fit,
       imageBuilder: (context, imageProvider) => Container(

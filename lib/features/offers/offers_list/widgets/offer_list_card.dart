@@ -1,3 +1,4 @@
+import 'package:som_spot/features/offers/offer_details/helper/offer_details_arg_model.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
 
@@ -38,7 +39,10 @@ class OfferListCard extends StatelessWidget {
         if (Get.isRegistered<OfferDetailController>()) {
           Get.delete<OfferDetailController>();
         }
-        AppRouter.route.pushNamed(RoutePath.offerDetailsScreen, extra: offerId);
+        AppRouter.route.pushNamed(
+          RoutePath.offerDetailsScreen,
+          extra: OfferDetailsArgs(offerId: offerId),
+        );
       },
       child: Container(
         height: 120.h,

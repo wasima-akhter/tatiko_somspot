@@ -58,7 +58,7 @@ class CategoryMerchantsScreen extends StatelessWidget {
                 final item = controller.merchants[index];
                 return GestureDetector(
                   onTap: () => AppRouter.route.pushNamed(
-                    RoutePath.merchantDetailsScreen,
+                    RoutePath.customerBusinessDetailsScreen,
                     extra: item,
                   ),
                   child: Container(

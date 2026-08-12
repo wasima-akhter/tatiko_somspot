@@ -1,14 +1,11 @@
-import 'package:som_spot/features/customer/customer_home/controller/home_deals_controller.dart';
-import 'package:som_spot/features/customer/customer_home/widgets/home_shimmer_widgets.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
-import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 
 class HomeTopDealsWidget extends StatelessWidget {
   const HomeTopDealsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = HomeDealsController.to;
+    // final controller = HomeDealsController.to;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,6 +33,10 @@ class HomeTopDealsWidget extends StatelessWidget {
           ],
         ),
         Gap(16.h),
+
+        Text("top deal list (2)"),
+
+        /*
         Obx(() {
           if (controller.isLoading.value) {
             return const TopDealShimmer();
@@ -77,7 +78,7 @@ class HomeTopDealsWidget extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () => AppRouter.route.pushNamed(
                     RoutePath.offerDetailsScreen,
-                    extra: "offerId",
+                         extra: OfferDetailsArgs(offerId: offerId),
                   ),
                   child: Container(
                     width: double.infinity,
@@ -106,7 +107,7 @@ class HomeTopDealsWidget extends StatelessWidget {
                                   bottomLeft: Radius.circular(16.r),
                                 ),
                                 child: CustomNetworkImage(
-                                  imageUrl: deal.imageUrl,
+                                  imageUrl: deal.offerImage ?? '',
                                   width: 110.w,
                                   height: 110.h,
                                   fit: BoxFit.cover,
@@ -125,7 +126,7 @@ class HomeTopDealsWidget extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(4.r),
                                   ),
                                   child: Text(
-                                    deal.discount,
+                                    deal.discountLabel,
                                     style: context.bodySmall.copyWith(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -146,7 +147,7 @@ class HomeTopDealsWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  deal.merchantName,
+                                  deal.business?.name ?? '',
                                   style: context.bodyMedium.copyWith(
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.bold,
@@ -172,7 +173,7 @@ class HomeTopDealsWidget extends StatelessWidget {
                                     ),
                                     Gap(4.w),
                                     Text(
-                                      deal.timeLeft,
+                                      deal.endAt,
                                       style: context.bodySmall.copyWith(
                                         color: AppColors.warning,
                                         fontWeight: FontWeight.w600,
@@ -217,6 +218,7 @@ class HomeTopDealsWidget extends StatelessWidget {
             }),
           );
         }),
+     */
       ],
     );
   }

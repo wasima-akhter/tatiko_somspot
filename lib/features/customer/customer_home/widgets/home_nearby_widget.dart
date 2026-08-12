@@ -117,7 +117,7 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
 
                     return GestureDetector(
                       onTap: () => AppRouter.route.pushNamed(
-                        RoutePath.merchantDetailsScreen,
+                        RoutePath.customerBusinessDetailsScreen,
                         extra: item,
                       ),
                       child: Container(

@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:som_spot/core/service/datasource/remote/api_client.dart';
 import 'package:som_spot/core/service/network/network_checker.dart';
 import 'package:som_spot/features/auth/completed_profile_influencer/service/influencer_complete_profile_service.dart';
+import 'package:som_spot/features/customer/customer_business_details/shared/repository/customer_business_details_repository.dart';
+import 'package:som_spot/features/customer/customer_business_details/shared/service/customer_business_details_service.dart';
 import 'package:som_spot/features/customer/customer_home/repository/customer_home_repository.dart';
 import 'package:som_spot/features/customer/customer_home/service/home_content_service.dart';
 import 'package:som_spot/features/customer/search/repository/customer_search_repository.dart';
@@ -279,5 +281,17 @@ Future<void> initDependencies() async {
 
   sl.registerLazySingleton<CustomerSearchService>(
     () => CustomerSearchService(sl<CustomerSearchRepository>()),
+  );
+  // =====================
+  // Customer business Detail
+  // =====================
+
+  sl.registerLazySingleton<CustomerBusinessDetailsRepository>(
+    () => CustomerBusinessDetailsRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<CustomerBusinessDetailsService>(
+    () =>
+        CustomerBusinessDetailsService(sl<CustomerBusinessDetailsRepository>()),
   );
 }

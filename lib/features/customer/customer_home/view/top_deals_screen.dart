@@ -1,5 +1,4 @@
-import 'package:som_spot/features/customer/customer_home/controller/home_deals_controller.dart';
-import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
+import 'package:som_spot/features/customer/customer_home/controller/home_controller.dart';
 
 import '../../../../share/controller/screen_export.dart';
 
@@ -8,7 +7,7 @@ class TopDealsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<HomeDealsController>();
+    final controller = Get.find<HomeController>();
 
     return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
@@ -29,7 +28,9 @@ class TopDealsScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: SafeArea(
+      body: Text("top deal screen"),
+      /*
+       SafeArea(
         child: Obx(() {
           if (controller.isLoading.value && controller.topDeals.isEmpty) {
             return const Center(
@@ -191,7 +192,7 @@ class TopDealsScreen extends StatelessWidget {
                                             ),
                                             Gap(4.w),
                                             Text(
-                                              deal.timeLeft,
+                                              deal.endAt,
                                               style: context.bodySmall.copyWith(
                                                 color: AppColors.warning,
                                                 fontWeight: FontWeight.bold,
@@ -241,6 +242,7 @@ class TopDealsScreen extends StatelessWidget {
           );
         }),
       ),
+      */
     );
   }
 }

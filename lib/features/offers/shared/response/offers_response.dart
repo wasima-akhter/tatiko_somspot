@@ -13,6 +13,12 @@ class OfferModel {
   final int estimatedValue;
   final DateTime createdAt;
 
+  // Claim information
+  bool isClaimed;
+  final String? claimCode;
+  final String? claimStatus;
+  final String? claimId;
+
   OfferModel({
     required this.id,
     this.business,
@@ -27,6 +33,10 @@ class OfferModel {
     required this.totalClaims,
     required this.estimatedValue,
     required this.createdAt,
+    required this.isClaimed,
+    this.claimCode,
+    this.claimStatus,
+    this.claimId,
   });
 
   factory OfferModel.fromJson(Map<String, dynamic> json) {
@@ -43,6 +53,7 @@ class OfferModel {
       terms: json['terms'] ?? '',
 
       startAt: DateTime.tryParse(json['startAt'] ?? '') ?? DateTime.now(),
+
       endAt: DateTime.tryParse(json['endAt'] ?? '') ?? DateTime.now(),
 
       status: json['status'] ?? '',
@@ -52,6 +63,12 @@ class OfferModel {
       estimatedValue: json['estimatedValue'] ?? 0,
 
       createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
+
+      // Claim information
+      isClaimed: json['isClaimed'] as bool? ?? false,
+      claimCode: json['claimCode'] as String?,
+      claimStatus: json['claimStatus'] as String?,
+      claimId: json['claimId'] as String?,
     );
   }
 }

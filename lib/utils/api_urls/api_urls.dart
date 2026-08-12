@@ -187,4 +187,16 @@ class ApiUrls {
   static String customerTrendingSearches() {
     return '$base/search/trending';
   }
+
+  static String getCustomerBusinessDetails() {
+    return '$base/business/get';
+  }
+
+  static String getCustomerOffers() {
+    return '$base/offer/get-all';
+  }
+
+  static String claimOfferByCustomer() {
+    return '$base/claim/claim-offer';
+  }
 }

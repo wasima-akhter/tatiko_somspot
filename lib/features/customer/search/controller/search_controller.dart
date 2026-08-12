@@ -87,6 +87,8 @@ class SearchScreenController extends GetxController {
     } catch (e) {
       searchStatus.value = ApiStatus.error;
       searchErrorMessage.value = e.toString();
+    } finally {
+      FocusManager.instance.primaryFocus?.unfocus();
     }
   }
 
@@ -100,6 +102,9 @@ class SearchScreenController extends GetxController {
     searchStatus.value = ApiStatus.completed;
 
     searchErrorMessage.value = null;
+
+    loadRecentSearches();
+    loadTrendingSearches();
   }
 
   Future<void> searchRecent(RecentSearchModel item) async {
@@ -151,6 +156,10 @@ class SearchScreenController extends GetxController {
       if (response.success) {
         recentSearches.clear();
         clearRecentSearchStatus.value = ApiStatus.completed;
+
+        // update recent search
+
+        await loadRecentSearches();
 
         return true;
       }

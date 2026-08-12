@@ -52,7 +52,12 @@ import '../../features/auth/completed_profile_influencer/view/completed_profile_
 import '../../features/auth/core/binding/auth_binding.dart';
 import '../../features/auth/intro/choose_role/view/choose_role_screen.dart';
 import '../../features/auth/intro/onboarding/binding/onboard_binding.dart';
+import '../../features/customer/customer_business_details/shared/binding/customer_business_details_binding.dart';
+import '../../features/customer/customer_business_details/view/customer_business_details_screen.dart';
 import '../../features/customer/customer_home/binding/home_binding.dart';
+import '../../features/customer/customer_offer_claim/controller/customer_offer_claim_controller.dart';
+import '../../features/customer/customer_offer_claim/helper/customer_offer_claim_helper.dart';
+import '../../features/customer/customer_offer_claim/view/customer_offer_claim_screen.dart';
 import '../../features/influencer_all/binding/influencer_binding.dart';
 import '../../features/influencer_all/core/influencer_tasks/response/influencer_tasks_response.dart';
 import '../../features/influencer_all/influencer_apply_campaign/view/influencer_apply_campaign_screen.dart';
@@ -71,6 +76,7 @@ import '../../features/merchant/merchant_campaign_details/view/merchant_campaign
 import '../../features/merchant/merchant_new_campaign/shared/binding/merchant_new_campaign_binding.dart';
 import '../../features/merchant/merchant_new_campaign/view/pricing_packages_screen.dart';
 import '../../features/nav/binding/navigation_binding.dart';
+import '../../features/offers/offer_details/helper/offer_details_arg_model.dart';
 import '../../features/offers/shared/binding/edit_offer_binding.dart';
 import '../../features/offers/shared/binding/offer_details_binding.dart';
 import '../../features/other/controller/other_binding.dart';
@@ -487,8 +493,25 @@ class AppRouter {
       ),
 
       // =====================================================
-      // CUSTOMER DEALS & DISCOVERY ROUTES
+      // CUSTOMER  ROUTES
       // =====================================================
+      GoRoute(
+        name: RoutePath.customerBusinessDetailsScreen,
+        path: RoutePath.customerBusinessDetailsScreen.addBasePath,
+        pageBuilder: (context, state) {
+          final businessId = state.extra as String;
+
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: CustomerBusinessDetailsBinding(businessId: businessId),
+              child: const CustomerBusinessDetailsScreen(),
+            ),
+          );
+        },
+      ),
+
+      //
       GoRoute(
         name: RoutePath.topDealsScreen,
         path: RoutePath.topDealsScreen.addBasePath,
@@ -633,14 +656,40 @@ class AppRouter {
         name: RoutePath.offerDetailsScreen,
         path: RoutePath.offerDetailsScreen.addBasePath,
         pageBuilder: (context, state) {
-          final offerId = state.extra as String;
+          final args = state.extra;
+
+          if (args is! OfferDetailsArgs) {
+            return _buildPageWithAnimation(
+              state: state,
+              child: const SizedBox.shrink(),
+            );
+          }
 
           return _buildPageWithAnimation(
             state: state,
             child: BindingWrapper(
-              key: ValueKey(offerId),
-              binding: OfferDetailsBinding(offerId),
-              child: OfferDetailsScreen(offerId: offerId),
+              key: ValueKey('${args.offerId}_${args.isFromClaim}'),
+              binding: OfferDetailsBinding(args),
+              child: const OfferDetailsScreen(),
+            ),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RoutePath.offerClaimScreen,
+        path: RoutePath.offerClaimScreen.addBasePath,
+        pageBuilder: (context, state) {
+          final args = state.extra as OfferClaimArgs;
+
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              key: ValueKey(args.claimCode),
+              binding: BindingsBuilder(() {
+                Get.put(OfferClaimController(claimCode: args.claimCode));
+              }),
+              child: const OfferClaimScreen(),
             ),
           );
         },

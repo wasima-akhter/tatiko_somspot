@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 
 import '../controller/home_category_controller.dart';
-import '../controller/home_deals_controller.dart';
 import '../controller/home_nearby_controller.dart';
 
 class HomeBinding extends Bindings {
@@ -9,7 +8,7 @@ class HomeBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<HomeCategoryController>(() => HomeCategoryController());
 
-    Get.lazyPut<HomeDealsController>(() => HomeDealsController());
+    // Get.lazyPut<HomeDealsController>(() => HomeDealsController());
 
     Get.lazyPut<HomeNearbyController>(() => HomeNearbyController());
   }

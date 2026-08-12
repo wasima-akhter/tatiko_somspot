@@ -8,7 +8,6 @@ import '../../../profile/main_profile/controller/profile_controller.dart';
 import '../model/home_content_creator_model.dart';
 import '../service/home_content_service.dart';
 import 'home_category_controller.dart';
-import 'home_deals_controller.dart';
 import 'home_nearby_controller.dart';
 
 class HomeController extends GetxController {
@@ -143,15 +142,12 @@ class HomeController extends GetxController {
     try {
       final categoryController = HomeCategoryController.to;
 
-      final dealsController = Get.find<HomeDealsController>();
-
       final nearbyController = Get.find<HomeNearbyController>();
 
       await Future.wait([
         Future(() => fetchCreatorContent()),
         Future(() => profileController.getProfile()),
         Future(() => categoryController.fetchCategories()),
-        Future(() => dealsController.fetchDeals(isRefresh: true)),
         Future(() => nearbyController.fetchNearbyMerchants(isRefresh: true)),
       ]);
     } catch (e) {

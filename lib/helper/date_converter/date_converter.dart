@@ -80,9 +80,15 @@ class DateConverter {
   /// Returns formatted date + time (e.g. "Jun 12, 2025 10:30 AM")
   static String formatDateTime({
     DateTime? dateTime,
-    String pattern = 'MMM dd, yyyy, hh:mm a',
+    String pattern = 'MMM dd, yyyy • hh:mm a',
+    bool showExpired = false,
   }) {
     final dt = dateTime ?? DateTime.now();
+
+    if (showExpired && dt.isBefore(DateTime.now())) {
+      return 'Expired';
+    }
+
     return DateFormat(pattern).format(dt);
   }
 
@@ -161,5 +167,95 @@ class DateConverter {
     } catch (_) {
       return time;
     }
+  }
+
+  // app- time - related methods
+  String remainingTime(DateTime date) {
+    final now = DateTime.now();
+
+    if (!date.isAfter(now)) {
+      return 'Expired';
+    }
+
+    int years = date.year - now.year;
+    int months = date.month - now.month;
+
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    DateTime current = DateTime(
+      now.year + years,
+      now.month + months,
+      now.day,
+      now.hour,
+      now.minute,
+      now.second,
+      now.millisecond,
+      now.microsecond,
+    );
+
+    // If the calculated date is past the target,
+    // adjust the month/year calculation.
+    if (current.isAfter(date)) {
+      if (months > 0) {
+        months--;
+
+        current = DateTime(
+          now.year + years,
+          now.month + months,
+          now.day,
+          now.hour,
+          now.minute,
+          now.second,
+          now.millisecond,
+          now.microsecond,
+        );
+      } else if (years > 0) {
+        years--;
+
+        current = DateTime(
+          now.year + years,
+          now.month,
+          now.day,
+          now.hour,
+          now.minute,
+          now.second,
+          now.millisecond,
+          now.microsecond,
+        );
+      }
+    }
+
+    final difference = date.difference(current);
+
+    final days = difference.inDays;
+    final hours = difference.inHours.remainder(24);
+    final minutes = difference.inMinutes.remainder(60);
+
+    final parts = <String>[];
+
+    if (years > 0) {
+      parts.add('${years}y');
+    }
+
+    if (months > 0) {
+      parts.add('${months}mo');
+    }
+
+    if (days > 0) {
+      parts.add('${days}d');
+    }
+
+    if (hours > 0) {
+      parts.add('${hours}h');
+    }
+
+    if (minutes > 0) {
+      parts.add('${minutes}m');
+    }
+
+    return parts.isEmpty ? 'Expired' : parts.join(' ');
   }
 }
