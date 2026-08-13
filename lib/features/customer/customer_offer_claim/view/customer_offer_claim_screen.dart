@@ -270,3 +270,31 @@ class OfferClaimScreen extends GetView<OfferClaimController> {
     );
   }
 }
+
+/*
+
+5.5 Single Claim QR Code Screen
+Route: GET {{baseUrl}}/claim/get
+Auth: Bearer <USER_JWT_TOKEN>
+Query Filters: claimId=6a7965d5f792519d4eada808
+Success Response (200 OK):
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Claim retrieved successfully",
+  "data": {
+    "_id": "6a7965d5f792519d4eada808",
+    "code": "SOM-84291",
+    "status": "claimed",
+    "expiresAt": "2026-08-12T05:47:01.442Z",
+    "offer": {
+      "title": "20% Off Family Platter",
+      "discountLabel": "20% OFF"
+    },
+    "business": {
+      "name": "Hilib Macaan Restaurant"
+    }
+  }
+}
+
+*/

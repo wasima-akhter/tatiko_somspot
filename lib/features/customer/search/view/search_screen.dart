@@ -240,6 +240,7 @@ class SearchScreen extends GetView<SearchScreenController> {
         onRetry: () {
           controller.search(controller.searchController.text);
         },
+        loadingWidget: const SearchResultsShimmer(),
         builder: (_) {
           if (controller.searchResults.isEmpty) {
             return _buildNoSearchResults(context);

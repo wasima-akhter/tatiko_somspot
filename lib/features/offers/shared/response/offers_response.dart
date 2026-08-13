@@ -13,6 +13,8 @@ class OfferModel {
   final int estimatedValue;
   final DateTime createdAt;
 
+  final bool? isSaved;
+
   // Claim information
   bool isClaimed;
   final String? claimCode;
@@ -37,6 +39,7 @@ class OfferModel {
     this.claimCode,
     this.claimStatus,
     this.claimId,
+    this.isSaved,
   });
 
   factory OfferModel.fromJson(Map<String, dynamic> json) {
@@ -63,6 +66,7 @@ class OfferModel {
       estimatedValue: json['estimatedValue'] ?? 0,
 
       createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
+      isSaved: json['isSaved'] as bool? ?? false,
 
       // Claim information
       isClaimed: json['isClaimed'] as bool? ?? false,

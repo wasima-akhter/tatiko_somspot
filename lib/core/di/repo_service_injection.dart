@@ -7,6 +7,8 @@ import 'package:som_spot/features/customer/customer_business_details/shared/repo
 import 'package:som_spot/features/customer/customer_business_details/shared/service/customer_business_details_service.dart';
 import 'package:som_spot/features/customer/customer_home/repository/customer_home_repository.dart';
 import 'package:som_spot/features/customer/customer_home/service/home_content_service.dart';
+import 'package:som_spot/features/customer/review/repository/review_repository.dart';
+import 'package:som_spot/features/customer/saved/shared/repository/saved_repository.dart';
 import 'package:som_spot/features/customer/search/repository/customer_search_repository.dart';
 import 'package:som_spot/features/customer/search/service/customer_search_service.dart';
 import 'package:som_spot/features/influencer_all/core/influencer_tasks/repository/influencer_tasks_repository.dart';
@@ -31,6 +33,8 @@ import '../../features/core/business/repository/business-repository.dart';
 import '../../features/core/business/service/business-service.dart';
 import '../../features/core/category/repository/category_repository.dart';
 import '../../features/core/category/service/category_service.dart';
+import '../../features/customer/review/service/review_service.dart';
+import '../../features/customer/saved/shared/service/saved_service.dart';
 import '../../features/influencer_all/core/influencer_tasks/service/influencer_tasks_service.dart';
 import '../../features/merchant/dashboard_merchant/repository/dashboard_merchant_repository.dart';
 import '../../features/merchant/dashboard_merchant/service/dashboard_merchant_service.dart';
@@ -293,5 +297,27 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<CustomerBusinessDetailsService>(
     () =>
         CustomerBusinessDetailsService(sl<CustomerBusinessDetailsRepository>()),
+  );
+  // =====================
+  // Save Business and offer
+  // =====================
+
+  sl.registerLazySingleton<SavedRepository>(
+    () => SavedRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<SavedService>(
+    () => SavedService(sl<SavedRepository>()),
+  );
+  // =====================
+  // Reviews of offer in Customer
+  // =====================
+
+  sl.registerLazySingleton<ReviewRepository>(
+    () => ReviewRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<ReviewService>(
+    () => ReviewService(sl<ReviewRepository>()),
   );
 }

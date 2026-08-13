@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:som_spot/utils/color/app_colors.dart';
+import '../../controller/screen_export.dart';
 
 enum AppDialogType { info, success, warning, error, custom }
 
@@ -29,7 +28,7 @@ class AppDialog {
       horizontal: 20,
       vertical: 16,
     ),
-    double maxWidth = 380,
+    double? maxWidth,
   }) {
     IconData defaultIcon;
     Color typeColor;
@@ -133,8 +132,12 @@ class AppDialog {
             scale: curvedAnimation,
             child: Center(
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: maxWidth),
+                constraints: BoxConstraints(maxWidth: maxWidth ?? 1.sw * 0.95),
                 child: Dialog(
+                  insetPadding: EdgeInsets.symmetric(
+                    horizontal: 24.w,
+                    vertical: 24.h,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(borderRadius),
                   ),

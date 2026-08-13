@@ -1,5 +1,6 @@
+import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
+
 import '../../../../../share/controller/screen_export.dart';
-import '../../../../../share/widgets/loading/loading_widget.dart';
 import '../../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../controller/search_controller.dart';
 import '../../response/customer_search_response.dart';
@@ -16,7 +17,7 @@ class RecentSearchesSection extends StatelessWidget {
         status: controller.recentSearchStatus.value,
         errorMessage: controller.recentSearchErrorMessage.value,
         onRetry: controller.loadRecentSearches,
-        loadingWidget: const LoadingWidget(),
+        loadingWidget: const RecentSearchesSectionShimmer(),
         noDataWidget: const NoRecentSearchWidget(),
         builder: (_) {
           return Column(
@@ -212,6 +213,103 @@ class NoRecentSearchWidget extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class RecentSearchesSectionShimmer extends StatelessWidget {
+  const RecentSearchesSectionShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [_buildHeader(), Gap(8.h), _buildSearchChips(), Gap(24.h)],
+    );
+  }
+
+  Widget _buildHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            _shimmerCircle(18.sp),
+            Gap(8.w),
+            _shimmerBox(width: 115.w, height: 15.h, radius: 4.r),
+          ],
+        ),
+
+        _shimmerBox(width: 38.w, height: 13.h, radius: 4.r),
+      ],
+    );
+  }
+
+  Widget _buildSearchChips() {
+    return Wrap(
+      spacing: 8.w,
+      runSpacing: 8.h,
+      children: [
+        _shimmerChip(width: 82.w),
+        _shimmerChip(width: 112.w),
+        _shimmerChip(width: 70.w),
+        _shimmerChip(width: 96.w),
+        _shimmerChip(width: 125.w),
+        _shimmerChip(width: 78.w),
+      ],
+    );
+  }
+
+  Widget _shimmerChip({required double width}) {
+    return AutoShimmerAnimate(
+      isLoading: true,
+      baseColor: AppColors.white,
+      child: Container(
+        width: width,
+        height: 35.h,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.r),
+          border: Border.all(
+            color: AppColors.backgroundsLinesColor,
+            width: 1.w,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _shimmerBox({
+    required double width,
+    required double height,
+    required double radius,
+  }) {
+    return AutoShimmerAnimate(
+      isLoading: true,
+      baseColor: AppColors.white,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(radius),
+        ),
+      ),
+    );
+  }
+
+  Widget _shimmerCircle(double size) {
+    return AutoShimmerAnimate(
+      isLoading: true,
+      baseColor: AppColors.white,
+      child: Container(
+        width: size,
+        height: size,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
         ),
       ),
     );

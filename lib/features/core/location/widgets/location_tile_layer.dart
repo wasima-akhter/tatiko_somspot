@@ -8,10 +8,11 @@ class LocationTileLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TileLayer(
-      urlTemplate:
-          'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${AppConfig.mapTilerApiKey}',
-      userAgentPackageName: 'com.somspot.app',
+      urlTemplate: AppConfig.mapTilerUrlTemplate,
 
+      userAgentPackageName: AppConfig.userAgentPackageName,
+      // 'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${AppConfig.mapTilerApiKey}',
+      // 'com.somspot.app',
       tileDisplay: const TileDisplay.fadeIn(
         duration: Duration(milliseconds: 250),
       ),

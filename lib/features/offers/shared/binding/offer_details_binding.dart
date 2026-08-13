@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:som_spot/features/customer/saved/shared/service/saved_service.dart';
 
 import '../../../../core/di/repo_service_injection.dart';
 import '../../offer_details/controller/offer_detail_controller.dart';
@@ -15,6 +16,7 @@ class OfferDetailsBinding extends Bindings {
     Get.lazyPut<OfferDetailController>(
       () => OfferDetailController(
         sl<OfferService>(),
+        savedService: sl<SavedService>(),
         offerId: args.offerId,
         isFromClaim: args.isFromClaim,
       ),

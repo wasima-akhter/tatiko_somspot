@@ -199,4 +199,21 @@ class ApiUrls {
   static String claimOfferByCustomer() {
     return '$base/claim/claim-offer';
   }
+
+  // Saving the business or offers
+
+  static String toggleSaving() {
+    return '$base/saved/toggle';
+  }
+
+  static String getSavedItems() {
+    return '$base/saved/get-all';
+  }
+
+  // Reviews of offers (Customer)
+  static String getBusinessReviews() => '$base/review/get-business-reviews';
+
+  static String postReview() => '$base/review/post-review';
+
+  static String getAllReviews() => '$base/review/get-all-reviews';
 }

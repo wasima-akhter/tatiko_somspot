@@ -10,25 +10,20 @@ class MerchantOffersTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = CustomerBusinessDetailsController.to;
+
     return Obx(
       () => ApiStatusBuilder(
-        status:
-            CustomerBusinessDetailsController.to.offersPaginator.status.value,
-        errorMessage: CustomerBusinessDetailsController
-            .to
-            .offersPaginator
-            .errorMessage
-            .value,
-        onRetry: CustomerBusinessDetailsController.to.refreshOffers,
+        status: controller.offersPaginator.status.value,
+        errorMessage: controller.offersPaginator.errorMessage.value,
+        onRetry: controller.refreshOffers,
+
         isLoadingMore:
-            CustomerBusinessDetailsController
-                .to
-                .offersPaginator
-                .loadMoreStatus
-                .value ==
+            controller.offersPaginator.loadMoreStatus.value ==
             ApiStatus.loading,
-        hasMore:
-            CustomerBusinessDetailsController.to.offersPaginator.hasMore.value,
+
+        hasMore: controller.offersPaginator.hasMore.value,
+
         builder: (_) => const MerchantOffersList(),
       ),
     );

@@ -36,11 +36,9 @@ class AppConfig {
 
   static const String mapTilerApiKey = 'iZOT5cBIqXvIjbqVsEBm';
 
-  /*
-  static final List<Map<String, dynamic>> factFastList = [
-    {"icon": Icon(Iconsax.location), "title": AppStrings.location, "subTitle": "Los Angeles, CA – Griffith Park Fields"},
-    {"icon": Icon(Iconsax.shop), "title": AppStrings.experience, "subTitle": "5 years"},
-    {"icon": Icon(Iconsax.verify_otp), "title": AppStrings.certificate, "subTitle": "3", "eye": Icon(Iconsax.eye)},
-  ];
-*/
+  static const String mapTilerUrlTemplate =
+      'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png'
+      '?key=$mapTilerApiKey';
+
+  static const String userAgentPackageName = 'com.somspot.app';
 }

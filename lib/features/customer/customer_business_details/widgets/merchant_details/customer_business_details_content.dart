@@ -16,7 +16,7 @@ class MerchantDetailsContent extends StatelessWidget {
       children: [
         const MerchantDetailsTabBar(),
         Gap(16.h),
-        const MerchantDetailsTabContent(),
+        Expanded(child: const MerchantDetailsTabContent()),
       ],
     );
   }

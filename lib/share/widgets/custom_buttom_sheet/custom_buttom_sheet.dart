@@ -234,7 +234,7 @@ class DirectionsBottomSheet extends StatelessWidget {
             ),
             Gap(16.h),
 
-            // Mock Map Card
+            // Real Map Card
             LayoutBuilder(
               builder: (context, constraints) {
                 final width = constraints.maxWidth;
@@ -266,10 +266,13 @@ class DirectionsBottomSheet extends StatelessWidget {
                               ),
                               children: [
                                 TileLayer(
-                                  urlTemplate:
-                                      'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${AppConfig.mapTilerApiKey}',
+                                  urlTemplate: AppConfig.mapTilerUrlTemplate,
+
                                   userAgentPackageName:
-                                      'com.yourcompany.yourapp',
+                                      AppConfig.userAgentPackageName,
+                                  //    urlTemplate:  'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${AppConfig.mapTilerApiKey}',
+                                  // userAgentPackageName:
+                                  //     'com.yourcompany.yourapp',
                                 ),
 
                                 // Route

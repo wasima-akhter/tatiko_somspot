@@ -22,6 +22,8 @@ class BusinessDetailsModel {
   final String? closesAt;
   final String? opensAt;
 
+  final bool? isSaved;
+
   BusinessDetailsModel({
     required this.id,
     required this.owner,
@@ -45,6 +47,7 @@ class BusinessDetailsModel {
     required this.isOpen,
     required this.closesAt,
     required this.opensAt,
+    this.isSaved,
   });
 
   factory BusinessDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -95,6 +98,8 @@ class BusinessDetailsModel {
 
       closesAt: json['closesAt']?.toString(),
       opensAt: json['opensAt']?.toString(),
+
+      isSaved: json['isSaved'] as bool? ?? false,
     );
   }
 

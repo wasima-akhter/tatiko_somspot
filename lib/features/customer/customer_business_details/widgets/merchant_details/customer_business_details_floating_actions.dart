@@ -1,13 +1,15 @@
-import 'package:som_spot/features/customer/customer_home/model/merchant_model.dart';
-import 'package:som_spot/helper/toast/toast_helper.dart';
 import 'package:som_spot/share/controller/screen_export.dart';
+
+import '../../../../../share/widgets/loading/loading_widget.dart';
+import '../../../../../share/widgets/ui_status_builder/api_status_builder.dart';
+import '../../controller/customer_business_details_controller.dart';
 
 class MerchantDetailsFloatingActions extends StatelessWidget {
   const MerchantDetailsFloatingActions({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final merchant = mockMerchants.first;
+    final controller = CustomerBusinessDetailsController.to;
 
     return Positioned(
       top: MediaQuery.of(context).padding.top + 8.h,
@@ -20,15 +22,26 @@ class MerchantDetailsFloatingActions extends StatelessWidget {
             icon: Icons.arrow_back_ios_new,
             onTap: () => Navigator.of(context).pop(),
           ),
-          MerchantDetailsActionButton(
-            icon: Icons.bookmark_border_rounded,
-            onTap: () {
-              AppToast.success(
-                context: context,
-                message: '${merchant.title} ${AppStrings.savedToBookmarks.tr}',
-              );
-            },
-          ),
+
+          Obx(() {
+            return ApiStatusBuilder(
+              status: controller.saveStatus.value,
+              errorMessage: controller.saveErrorMessage.value,
+              onRetry: controller.toggleBusinessSaved,
+              loadingWidget: const LoadingWidget(),
+              builder: (context) {
+                final isSaved = controller.isBusinessSaved.value;
+
+                return MerchantDetailsActionButton(
+                  icon: isSaved
+                      ? Icons.bookmark_rounded
+                      : Icons.bookmark_border_rounded,
+                  color: isSaved ? AppColors.blueAccentColor : null,
+                  onTap: controller.toggleBusinessSaved,
+                );
+              },
+            );
+          }),
         ],
       ),
     );
@@ -38,11 +51,13 @@ class MerchantDetailsFloatingActions extends StatelessWidget {
 class MerchantDetailsActionButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
+  final Color? color;
 
   const MerchantDetailsActionButton({
     super.key,
     required this.icon,
     required this.onTap,
+    this.color,
   });
 
   @override
@@ -56,7 +71,7 @@ class MerchantDetailsActionButton extends StatelessWidget {
           color: Colors.black.withValues(alpha: 0.4),
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, color: Colors.white, size: 18.sp),
+        child: Icon(icon, color: color ?? Colors.white, size: 18.sp),
       ),
     );
   }

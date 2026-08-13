@@ -1,8 +1,10 @@
+import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 
 import '../../../../share/controller/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../../utils/common_controller/common_controller.dart';
+import '../../shared/response/offers_response.dart';
 import '../controller/offer_detail_controller.dart';
 import '../shimmer/offer_details_shimmer.dart';
 import '../widgets/claim_offer_now_button.dart';
@@ -72,22 +74,35 @@ class OfferDetailsScreen extends GetView<OfferDetailController> {
                                 child: Row(
                                   children: [
                                     // Share
-                                    _buildActionButton(
-                                      icon: Icons.share_outlined,
-                                      onTap: () {
-                                        // Add your share implementation here.
-                                      },
-                                    ),
+                                    // _buildActionButton(
+                                    //   icon: Icons.share_outlined,
+                                    //   onTap: () {
+                                    //     // Add your share implementation here.
+                                    //   },
+                                    // ),
 
-                                    Gap(8.w),
+                                    // Gap(8.w),
 
                                     // Bookmark
-                                    _buildActionButton(
-                                      icon: Icons.bookmark_border_rounded,
-                                      onTap: () {
-                                        // Add your bookmark implementation here.
-                                      },
-                                    ),
+                                    Obx(() {
+                                      return ApiStatusBuilder(
+                                        errorMessage:
+                                            controller.saveErrorMessage.value,
+                                        onRetry: () {},
+                                        status: controller.saveStatus.value,
+                                        loadingWidget: LoadingWidget(),
+
+                                        builder: (context) => _buildActionButton(
+                                          icon: controller.isOfferSaved.value
+                                              ? Icons.bookmark_rounded
+                                              : Icons.bookmark_border_rounded,
+                                          color: controller.isOfferSaved.value
+                                              ? AppColors.blueAccentColor
+                                              : null,
+                                          onTap: controller.toggleOfferSaved,
+                                        ),
+                                      );
+                                    }),
                                   ],
                                 ),
                               ),
@@ -95,36 +110,7 @@ class OfferDetailsScreen extends GetView<OfferDetailController> {
                               Positioned(
                                 top: 18.h,
                                 left: 12.w,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 8.w,
-                                    vertical: 4.h,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8.r),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.star,
-                                        color: AppColors
-                                            .orangeSecondaryAccentColor,
-                                        size: 14.sp,
-                                      ),
-                                      Gap(4.w),
-                                      Text(
-                                        offer.business?.ratingAvg
-                                                ?.toStringAsFixed(1) ??
-                                            '0.0',
-                                        style: context.bodySmall.copyWith(
-                                          color: AppColors.darkTextColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                child: RatingBadge(offer: offer),
                               ),
                           ],
                         ),
@@ -163,6 +149,7 @@ class OfferDetailsScreen extends GetView<OfferDetailController> {
   Widget _buildActionButton({
     required IconData icon,
     required VoidCallback onTap,
+    required Color? color,
   }) {
     return Material(
       color: Colors.white,
@@ -174,8 +161,46 @@ class OfferDetailsScreen extends GetView<OfferDetailController> {
         child: SizedBox(
           width: 40.w,
           height: 40.w,
-          child: Icon(icon, color: AppColors.darkTextColor, size: 20.sp),
+          child: Icon(
+            icon,
+            color: color ?? AppColors.darkTextColor,
+            size: 20.sp,
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class RatingBadge extends StatelessWidget {
+  final OfferModel offer;
+
+  const RatingBadge({super.key, required this.offer});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.star,
+            color: AppColors.orangeSecondaryAccentColor,
+            size: 14.sp,
+          ),
+          Gap(4.w),
+          Text(
+            offer.business?.ratingAvg?.toStringAsFixed(1) ?? '0.0',
+            style: context.bodySmall.copyWith(
+              color: AppColors.darkTextColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }
