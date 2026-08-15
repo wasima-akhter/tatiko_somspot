@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 
 import '../../../../core/service/datasource/remote/api_exception.dart';
-import '../../../../core/service/datasource/remote/api_parser.dart';
 import '../../../../core/service/datasource/remote/api_response.dart';
+import '../../../../share/model/pagination_meta_model.dart';
+import '../../../../share/widgets/paginator/paginator.dart';
 import '../model/category_model.dart';
 import '../repository/category_repository.dart';
 
@@ -11,18 +12,27 @@ class CategoryService {
 
   CategoryService(this._repository);
 
-  Future<ApiResponse<List<CategoryModel>>> getCategories() async {
+  Future<ApiResponse<PaginatedResult<CategoryModel>>> getCategories({
+    int page = 1,
+    int limit = 10,
+  }) async {
     try {
-      final response = await _repository.getAllCategories();
+      final response = await _repository.getAllCategories(
+        page: page,
+        limit: limit,
+      );
 
-      return ApiParser.parse<List<CategoryModel>>(
-        response,
+      final responseData = response.data;
+      final resultList =
+          (responseData['data']?['result'] ?? responseData['result'] ?? [])
+              as List;
+      final metaJson = responseData['data']?['meta'] ?? responseData['meta'];
 
-        mapper: (json) {
-          final result = json["result"] as List? ?? [];
-
-          return result.map((e) => CategoryModel.fromJson(e)).toList();
-        },
+      return ApiResponse.success(
+        data: PaginatedResult<CategoryModel>(
+          data: resultList.map((e) => CategoryModel.fromJson(e)).toList(),
+          meta: metaJson != null ? PaginationMeta.fromJson(metaJson) : null,
+        ),
       );
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);

@@ -41,7 +41,9 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
               ),
             ),
             GestureDetector(
-              onTap: () => AppRouter.route.pushNamed(RoutePath.nearbyYouScreen),
+              onTap: () => AppRouter.route.pushNamed(
+                RoutePath.customerBusinessListScreen,
+              ),
               child: Text(
                 AppStrings.seeAll.tr,
                 style: context.bodyMedium.copyWith(
@@ -118,7 +120,7 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
                     return GestureDetector(
                       onTap: () => AppRouter.route.pushNamed(
                         RoutePath.customerBusinessDetailsScreen,
-                        extra: item,
+                        extra: item.id,
                       ),
                       child: Container(
                         decoration: BoxDecoration(
@@ -222,11 +224,13 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
                                         size: 16.sp,
                                       ),
                                       Gap(4.w),
-                                      Text(
-                                        item.address,
-                                        style: context.bodySmall.copyWith(
-                                          color: AppColors.subtitleTextColor,
-                                          fontWeight: FontWeight.w500,
+                                      Expanded(
+                                        child: Text(
+                                          item.address,
+                                          style: context.bodySmall.copyWith(
+                                            color: AppColors.subtitleTextColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ),
                                       Gap(16.w),

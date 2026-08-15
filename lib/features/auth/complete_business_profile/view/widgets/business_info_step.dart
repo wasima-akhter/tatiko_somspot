@@ -2,6 +2,8 @@ import 'package:som_spot/features/auth/complete_business_profile/controller/comp
 import 'package:som_spot/share/controller/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
+import '../../../../../share/widgets/network_image/custom_network_image.dart';
+import '../../../../../utils/enum/app_enum.dart';
 import '../../../../core/category/controller/category_controller.dart';
 
 class BusinessCategory {
@@ -73,16 +75,17 @@ class BusinessInfoStep extends StatelessWidget {
           Gap(12.h),
 
           // Category Selector
+          // Category Selector
           Obx(() {
-            if (categoryController.isLoading.value) {
+            if (categoryController.categoryPaginator.status.value ==
+                    ApiStatus.loading &&
+                categoryController.categories.isEmpty) {
               return const Center(child: CircularProgressIndicator());
             }
 
             return Wrap(
               spacing: 12.w,
-
               runSpacing: 12.h,
-
               children: categoryController.categories.map((category) {
                 final isSelected =
                     controller.selectedCategoryId.value == category.id;
@@ -91,66 +94,52 @@ class BusinessInfoStep extends StatelessWidget {
                   onTap: () {
                     controller.selectedCategoryId.value = category.id;
                   },
-
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
-
                     width: 74.w,
-
                     padding: EdgeInsets.symmetric(
                       vertical: 12.h,
                       horizontal: 4.w,
                     ),
-
                     decoration: BoxDecoration(
                       color: isSelected
                           ? AppColors.primaryColor.withValues(alpha: 0.05)
                           : AppColors.white,
-
                       borderRadius: BorderRadius.circular(12.r),
-
                       border: Border.all(
                         color: isSelected
                             ? AppColors.primaryColor
                             : AppColors.backgroundsLinesColor,
-
                         width: isSelected ? 1.5 : 1.0,
                       ),
                     ),
-
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-
                       children: [
-                        Icon(
-                          _getCategoryIcon(category.icon),
-
-                          color: isSelected
-                              ? AppColors.primaryColor
-                              : AppColors.subtitleTextColor,
-
-                          size: 24.sp,
+                        SizedBox(
+                          width: 24.w,
+                          height: 24.w,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4.r),
+                            child: CustomNetworkImage(
+                              imageUrl: category.icon,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-
                         Gap(8.h),
-
                         Text(
                           category.name,
-
                           textAlign: TextAlign.center,
-
                           style: context.labelSmall.copyWith(
                             fontWeight: isSelected
                                 ? FontWeight.w600
                                 : FontWeight.normal,
-
                             color: isSelected
                                 ? AppColors.primaryColor
                                 : AppColors.darkTextColor,
                           ),
-
                           maxLines: 1,
-
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -160,7 +149,6 @@ class BusinessInfoStep extends StatelessWidget {
               }).toList(),
             );
           }),
-
           Gap(24.h),
 
           CustomTextField(

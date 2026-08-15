@@ -74,8 +74,7 @@ class HomeHeaderWidget extends StatelessWidget {
               ),
               // Notification Bell
               GestureDetector(
-                onTap: () =>
-                    NavigationControllerMain.to.selectedNavIndex.value = 3,
+                onTap: () => AppRouter.route.pushNamed(RoutePath.alertScreen),
                 child: Container(
                   width: 44.w,
                   height: 44.h,

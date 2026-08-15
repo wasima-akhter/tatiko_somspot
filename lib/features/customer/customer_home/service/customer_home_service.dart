@@ -5,10 +5,10 @@ import '../../../core/business/response/business-response.dart';
 import '../model/home_content_creator_model.dart';
 import '../repository/customer_home_repository.dart';
 
-class HomeContentService {
+class CustromerHomeService {
   final HomeContentRepository _repository;
 
-  HomeContentService(this._repository);
+  CustromerHomeService(this._repository);
 
   Future<ApiResponse<List<CreatorContentModel>>> getCreatorContent() async {
     try {

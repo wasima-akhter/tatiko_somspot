@@ -41,7 +41,7 @@ class EditInfluencerController extends GetxController {
   final selectedInfluencerCategoryId = "".obs;
 
   RxList<CategoryModel> get influencerCategories =>
-      CategoryController.to.categories;
+      CategoryController.to.categoryPaginator.items;
 
   String get selectedInfluencerCategoryName {
     return influencerCategories
@@ -65,7 +65,7 @@ class EditInfluencerController extends GetxController {
     super.onInit();
 
     if (CategoryController.to.categories.isEmpty) {
-      CategoryController.to.fetchCategories();
+      CategoryController.to.loadInitialCategories();
     }
 
     getCreatorProfile();

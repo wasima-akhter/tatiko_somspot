@@ -13,7 +13,7 @@ class CustomerHomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: AppColors.backgroundColor,
       body: RefreshIndicator(
         color: AppColors.primaryColor,
         onRefresh: () => controller.refreshHomeData(),

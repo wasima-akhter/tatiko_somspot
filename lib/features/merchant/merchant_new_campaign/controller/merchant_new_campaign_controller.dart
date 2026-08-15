@@ -72,7 +72,8 @@ class MerchantNewCampaignController extends BaseFormController {
   // API Data Getters
   // ============================================================
 
-  RxList<CategoryModel> get categories => CategoryController.to.categories;
+  RxList<CategoryModel> get categories =>
+      CategoryController.to.categoryPaginator.items;
 
   RxList<OfferModel> get offers => OffersController.to.paginator.items;
 
@@ -301,7 +302,7 @@ class MerchantNewCampaignController extends BaseFormController {
     super.onInit();
 
     if (CategoryController.to.categories.isEmpty) {
-      CategoryController.to.fetchCategories();
+      CategoryController.to.loadInitialCategories();
     }
     if (BusinessController.to.myBusinessesPaginator.items.isEmpty) {
       BusinessController.to.refreshBusinesses();
@@ -330,7 +331,7 @@ class MerchantNewCampaignController extends BaseFormController {
       pageStatus.value = ApiStatus.loading;
 
       if (CategoryController.to.categories.isEmpty) {
-        await CategoryController.to.fetchCategories();
+        await CategoryController.to.loadInitialCategories();
       }
 
       if (BusinessController.to.myBusinessesPaginator.items.isEmpty) {

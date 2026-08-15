@@ -9,15 +9,18 @@ class CategoryRepository {
 
   CategoryRepository(this._apiClient);
 
-  Future<Response> getAllCategories() {
+  Future<Response> getAllCategories({int page = 1, int limit = 10}) {
     return _apiClient.get(
       url: ApiUrls.getCategories(),
       skipAuth: true,
-
-      queryParams:
-          CommonController.to.isCustomer || CommonController.to.isMerchandiser
-          ? {"type": "merchant"}
-          : {"type": "creator"},
+      showResponse: true,
+      queryParams: {
+        "page": page,
+        "limit": limit,
+        ...(CommonController.to.isCustomer || CommonController.to.isMerchandiser
+            ? {"type": "merchant"}
+            : {"type": "creator"}),
+      },
     );
   }
 }

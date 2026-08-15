@@ -1,67 +1,111 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class NotificationModel {
-  final String title;
-  final String description;
-  final String time;
-  final RxBool isUnread;
-
-  NotificationModel({
-    required this.title,
-    required this.description,
-    required this.time,
-    required bool isUnread,
-  }) : isUnread = isUnread.obs;
-}
+import '../../../helper/snackbar/api_snackbar.dart';
+import '../../../share/widgets/paginator/paginator.dart';
+import '../../../utils/enum/app_enum.dart';
+import '../model/alerts_model.dart';
+import '../service/alerts_service.dart';
 
 class AlertsScreenController extends GetxController {
-  // Loading state
-  final rxIsLoading = false.obs;
+  final AlertsService _service;
+
+  AlertsScreenController(this._service);
+
+  static AlertsScreenController get to => Get.find();
+
+  final listScrollController = ScrollController();
+
+  late final Paginator<NotificationModel> paginator;
 
   @override
   void onInit() {
     super.onInit();
-    rxIsLoading.value = true;
-    Future.delayed(const Duration(milliseconds: 2500), () {
-      rxIsLoading.value = false;
+
+    paginator = Paginator(
+      fetchPage: (page, limit) async {
+        try {
+          final response = await _service.getAllNotifications(
+            page: page,
+            limit: limit,
+          );
+
+          return response.data!;
+        } catch (e) {
+          rethrow;
+        }
+      },
+    );
+
+    listScrollController.addListener(() {
+      if (listScrollController.position.pixels >=
+          listScrollController.position.maxScrollExtent - 200) {
+        loadMore();
+      }
     });
+
+    loadNotifications();
   }
 
-  // Feed list
-  final rxNotifications = <NotificationModel>[
-    NotificationModel(
-      title: "New deal at Hilib Macaan",
-      description: "20% off family platter — claim before it ends.",
-      time: "5m ago",
-      isUnread: true,
-    ),
-    NotificationModel(
-      title: "Liido Beach Cafe reviewed",
-      description: "A new 5-star review just came in.",
-      time: "1h ago",
-      isUnread: true,
-    ),
-    NotificationModel(
-      title: "Offer claimed successfully",
-      description: "Your coffee combo is ready to redeem.",
-      time: "3h ago",
-      isUnread: false,
-    ),
-    NotificationModel(
-      title: "Welcome to SomSpot",
-      description: "Discover local deals near you anytime.",
-      time: "2d ago",
-      isUnread: false,
-    ),
-  ].obs;
+  @override
+  void onClose() {
+    listScrollController.dispose();
+    paginator.dispose();
+    super.onClose();
+  }
 
-  void markAllAsRead() {
-    for (var notification in rxNotifications) {
-      notification.isUnread.value = false;
+  Future<void> loadNotifications() {
+    return paginator.loadInitial();
+  }
+
+  Future<void> loadMore() {
+    return paginator.loadMore();
+  }
+
+  Future<void> refreshNotifications() {
+    return paginator.refresh();
+  }
+
+  List<NotificationModel> get notifications => paginator.items;
+  final markAllStatus = ApiStatus.completed.obs;
+  final markAllErrorMessage = ''.obs;
+
+  //
+  Future<void> markAllAsRead() async {
+    if (markAllStatus.value == ApiStatus.loading) return;
+
+    markAllStatus.value = ApiStatus.loading;
+    markAllErrorMessage.value = '';
+
+    try {
+      final response = await _service.markAllNotificationsAsRead();
+
+      if (response.success) {
+        for (final notification in paginator.items) {
+          notification.isUnread.value = false;
+        }
+
+        markAllStatus.value = ApiStatus.completed;
+
+        ApiSnackbar.show(response.message, type: SnackbarType.success);
+      } else {
+        markAllStatus.value = ApiStatus.error;
+        markAllErrorMessage.value = response.message;
+
+        ApiSnackbar.show(response.message);
+      }
+    } catch (e, s) {
+      markAllStatus.value = ApiStatus.error;
+      markAllErrorMessage.value = 'Something went wrong';
+
+      debugPrint('Mark All Notifications As Read Error => $e');
+      debugPrintStack(stackTrace: s);
+
+      ApiSnackbar.show('Something went wrong');
     }
   }
 
   void toggleUnread(int index) {
-    rxNotifications[index].isUnread.toggle();
+    paginator.items[index].isUnread.toggle();
   }
 }

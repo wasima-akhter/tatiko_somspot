@@ -10,6 +10,7 @@ class ScaffoldWrapper extends StatelessWidget {
     this.resizeToAvoidBottomInset = true,
     this.title,
     this.onPressed,
+    this.actions,
   });
 
   final PreferredSizeWidget? appBar;
@@ -18,6 +19,7 @@ class ScaffoldWrapper extends StatelessWidget {
   final Color? backgroundColor;
   final bool resizeToAvoidBottomInset;
   final String? title;
+  final List<Widget>? actions;
 
   final void Function()? onPressed;
 
@@ -50,7 +52,10 @@ class ScaffoldWrapper extends StatelessWidget {
             ),
             centerTitle: false,
             titleSpacing: 0,
+
+            actions: actions ?? [],
           ),
+
       body: Padding(
         padding: EdgeInsets.only(bottom: safeBottom),
         child: body,

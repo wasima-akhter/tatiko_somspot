@@ -2,11 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:som_spot/core/service/datasource/remote/api_client.dart';
 import 'package:som_spot/core/service/network/network_checker.dart';
+import 'package:som_spot/features/alerts/repository/alerts_repository.dart';
+import 'package:som_spot/features/alerts/service/alerts_service.dart';
 import 'package:som_spot/features/auth/completed_profile_influencer/service/influencer_complete_profile_service.dart';
+import 'package:som_spot/features/customer/claims/shared/repository/claims_repository.dart';
+import 'package:som_spot/features/customer/claims/shared/service/claims_service.dart';
 import 'package:som_spot/features/customer/customer_business_details/shared/repository/customer_business_details_repository.dart';
 import 'package:som_spot/features/customer/customer_business_details/shared/service/customer_business_details_service.dart';
 import 'package:som_spot/features/customer/customer_home/repository/customer_home_repository.dart';
-import 'package:som_spot/features/customer/customer_home/service/home_content_service.dart';
+import 'package:som_spot/features/customer/customer_home/service/customer_home_service.dart';
 import 'package:som_spot/features/customer/review/repository/review_repository.dart';
 import 'package:som_spot/features/customer/saved/shared/repository/saved_repository.dart';
 import 'package:som_spot/features/customer/search/repository/customer_search_repository.dart';
@@ -271,8 +275,8 @@ Future<void> initDependencies() async {
     () => HomeContentRepository(sl<ApiClient>()),
   );
 
-  sl.registerLazySingleton<HomeContentService>(
-    () => HomeContentService(sl<HomeContentRepository>()),
+  sl.registerLazySingleton<CustromerHomeService>(
+    () => CustromerHomeService(sl<HomeContentRepository>()),
   );
 
   // =====================
@@ -319,5 +323,27 @@ Future<void> initDependencies() async {
 
   sl.registerLazySingleton<ReviewService>(
     () => ReviewService(sl<ReviewRepository>()),
+  );
+  // =====================
+  // Alerts
+  // =====================
+
+  sl.registerLazySingleton<AlertsRepository>(
+    () => AlertsRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<AlertsService>(
+    () => AlertsService(sl<AlertsRepository>()),
+  );
+  // =====================
+  // Claims (Customer)
+  // =====================
+
+  sl.registerLazySingleton<ClaimsRepository>(
+    () => ClaimsRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<ClaimsService>(
+    () => ClaimsService(sl<ClaimsRepository>()),
   );
 }

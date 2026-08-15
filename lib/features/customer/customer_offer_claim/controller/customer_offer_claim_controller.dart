@@ -1,3 +1,4 @@
+import '../../../../helper/qr_code/qr_code_helper.dart';
 import '../../../../share/controller/screen_export.dart';
 
 class OfferClaimController extends GetxController {
@@ -9,5 +10,21 @@ class OfferClaimController extends GetxController {
 
   void onDone() {
     AppRouter.route.pop();
+  }
+
+  // Inside OfferClaimController
+  final isDownloading = false.obs;
+
+  Future<void> downloadQrCode(BuildContext context) async {
+    isDownloading.value = true;
+    try {
+      await QrCodeHelper.download(
+        context,
+        claimCode,
+        fileName: 'claim_$claimCode',
+      );
+    } finally {
+      isDownloading.value = false;
+    }
   }
 }

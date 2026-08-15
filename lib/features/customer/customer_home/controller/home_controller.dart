@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:som_spot/features/core/category/controller/category_controller.dart';
 
 import '../../../../share/widgets/paginator/paginator.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/response/business-response.dart';
 import '../../../profile/main_profile/controller/profile_controller.dart';
+import '../../customer_business_list/controller/customer_business_list_controller.dart';
 import '../model/home_content_creator_model.dart';
-import '../service/home_content_service.dart';
-import 'home_category_controller.dart';
-import 'home_nearby_controller.dart';
+import '../service/customer_home_service.dart';
 
 class HomeController extends GetxController {
   HomeController(this._service);
 
-  final HomeContentService _service;
+  final CustromerHomeService _service;
 
   static HomeController get to => Get.find();
 
@@ -25,6 +25,9 @@ class HomeController extends GetxController {
 
   ProfileScreenController get profileController => ProfileScreenController.to;
 
+  //
+
+  final selectedCategoryId = "".obs;
   // ---------------------------------------------------------------------------
   // Nearby Businesses
   // ---------------------------------------------------------------------------
@@ -38,8 +41,8 @@ class HomeController extends GetxController {
   String? nearbyBusinessesError;
 
   // Current nearby-business search parameters
-  double _nearbyLat = 23.8103;
-  double _nearbyLng = 90.4125;
+  final nearbyLat = 23.8103.obs;
+  final nearbyLng = 90.4125.obs;
   final double _nearbyRadiusKm = 10;
   String? _nearbyCategory;
 
@@ -52,8 +55,8 @@ class HomeController extends GetxController {
     // Load profile once.
     profileController.getProfile();
 
-    _nearbyLat = profileController.userLocationCords.value.coordinates.first;
-    _nearbyLng = profileController.userLocationCords.value.coordinates.last;
+    // _nearbyLat = profileController.userLocationCords.value.coordinates.first;
+    // _nearbyLng = profileController.userLocationCords.value.coordinates.last;
 
     _initNearbyBusinessesPaginator();
 
@@ -69,13 +72,15 @@ class HomeController extends GetxController {
   }
 
   void _initNearbyBusinessesPaginator() {
+    debugPrint('nearbyLat : $nearbyLat');
+
     nearbyBusinessesPaginator = Paginator<BusinessModel>(
       fetchPage: (page, limit) async {
         final response = await _service.getNearbyBusinesses(
           page: page,
           limit: limit,
-          lat: _nearbyLat,
-          lng: _nearbyLng,
+          lat: nearbyLat.value,
+          lng: nearbyLng.value,
           radiusKm: _nearbyRadiusKm,
           category: _nearbyCategory,
         );
@@ -140,15 +145,15 @@ class HomeController extends GetxController {
     isRefreshing.value = true;
 
     try {
-      final categoryController = HomeCategoryController.to;
+      final categoryController = CategoryController.to;
 
-      final nearbyController = Get.find<HomeNearbyController>();
+      final nearbyController = Get.find<CustomerBusinessListController>();
 
       await Future.wait([
         Future(() => fetchCreatorContent()),
         Future(() => profileController.getProfile()),
-        Future(() => categoryController.fetchCategories()),
-        Future(() => nearbyController.fetchNearbyMerchants(isRefresh: true)),
+        Future(() => categoryController.refreshCategories()),
+        Future(() => nearbyController.refreshBusinesses(isRefresh: true)),
       ]);
     } catch (e) {
       // handle error if required

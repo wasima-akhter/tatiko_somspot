@@ -194,27 +194,44 @@ class OfferClaimScreen extends GetView<OfferClaimController> {
 
                               Gap(12.w),
 
+                              // Download Button with Loading
                               Expanded(
-                                child: ElevatedButton.icon(
-                                  onPressed: () async {
-                                    await QrCodeHelper.download(
-                                      context,
-                                      controller.claimCode,
-                                      fileName: 'claim_${controller.claimCode}',
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.download_rounded,
-                                    size: 17.sp,
-                                  ),
-                                  label: const Text('Download'),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF42A5FF),
-                                    foregroundColor: Colors.white,
-                                    minimumSize: Size(double.infinity, 42.h),
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.r),
+                                child: Obx(
+                                  () => ElevatedButton.icon(
+                                    onPressed: controller.isDownloading.value
+                                        ? null
+                                        : () => controller.downloadQrCode(
+                                            context,
+                                          ),
+                                    icon: controller.isDownloading.value
+                                        ? SizedBox(
+                                            width: 17.sp,
+                                            height: 17.sp,
+                                            child:
+                                                const CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  color: Colors.white,
+                                                ),
+                                          )
+                                        : Icon(
+                                            Icons.download_rounded,
+                                            size: 17.sp,
+                                          ),
+                                    label: Text(
+                                      controller.isDownloading.value
+                                          ? 'Saving...'
+                                          : 'Download',
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF42A5FF),
+                                      foregroundColor: Colors.white,
+                                      minimumSize: Size(double.infinity, 42.h),
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          10.r,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -223,10 +240,6 @@ class OfferClaimScreen extends GetView<OfferClaimController> {
                           ),
 
                           Gap(20.h),
-
-                          // ==================================================
-                          // Done Button
-                          // ==================================================
 
                           // ==================================================
                           // Done Button

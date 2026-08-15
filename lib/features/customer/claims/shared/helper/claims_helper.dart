@@ -1,0 +1,1 @@
+enum ClaimsTabType { active, expired }

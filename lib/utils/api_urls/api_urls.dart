@@ -216,4 +216,19 @@ class ApiUrls {
   static String postReview() => '$base/review/post-review';
 
   static String getAllReviews() => '$base/review/get-all-reviews';
+
+  // Alerts
+  static String getAllNotifications() {
+    return '$base/notification/get-all-notifications';
+  }
+
+  static String markNotificationsAsRead() {
+    return '$base/notification/update-as-mark-unread';
+  }
+
+  // Claims( Customer)
+
+  static String claimWalletList() {
+    return '$base/claim/wallet';
+  }
 }

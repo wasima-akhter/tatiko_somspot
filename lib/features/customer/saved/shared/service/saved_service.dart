@@ -2,6 +2,8 @@ import '../../../../../share/export/service_export.dart';
 import '../../../../../share/model/pagination_meta_model.dart';
 import '../../../../../share/widgets/paginator/paginator.dart';
 import '../repository/saved_repository.dart';
+import '../response/saved_business_model.dart';
+import '../response/saved_offer_model.dart';
 import '../response/toggole_saved_response.dart';
 
 class SavedService {
@@ -36,22 +38,35 @@ class SavedService {
   }
 
   /// Get saved businesses.
-  Future<ApiResponse<PaginatedResult<Map<String, dynamic>>>>
-  getSavedBusinesses({int page = 1, int limit = 10}) async {
-    return getSavedItems(type: 'business', page: page, limit: limit);
-  }
-
-  /// Get saved offers/deals.
-  Future<ApiResponse<PaginatedResult<Map<String, dynamic>>>> getSavedOffers({
+  Future<ApiResponse<PaginatedResult<SavedBusinessModel>>> getSavedBusinesses({
     int page = 1,
     int limit = 10,
   }) async {
-    return getSavedItems(type: 'offer', page: page, limit: limit);
+    return getSavedItems<SavedBusinessModel>(
+      type: 'business',
+      page: page,
+      limit: limit,
+      fromJson: SavedBusinessModel.fromJson,
+    );
+  }
+
+  /// Get saved offers/deals.
+  Future<ApiResponse<PaginatedResult<SavedOfferModel>>> getSavedOffers({
+    int page = 1,
+    int limit = 10,
+  }) async {
+    return getSavedItems<SavedOfferModel>(
+      type: 'offer',
+      page: page,
+      limit: limit,
+      fromJson: SavedOfferModel.fromJson,
+    );
   }
 
   /// Get saved businesses or offers by type.
-  Future<ApiResponse<PaginatedResult<Map<String, dynamic>>>> getSavedItems({
+  Future<ApiResponse<PaginatedResult<T>>> getSavedItems<T>({
     required String type,
+    required T Function(Map<String, dynamic> json) fromJson,
     int page = 1,
     int limit = 10,
   }) async {
@@ -68,18 +83,30 @@ class SavedService {
 
       final data = response.data['data'];
 
+      if (data is! Map) {
+        return ApiResponse.failure(message: "Invalid saved items response");
+      }
+
+      final result = data['result'];
+
+      final items = result is List
+          ? result
+                .whereType<Map>()
+                .map((e) => fromJson(Map<String, dynamic>.from(e)))
+                .toList()
+          : <T>[];
+
+      final meta = data['meta'] is Map
+          ? PaginationMeta.fromJson(Map<String, dynamic>.from(data['meta']))
+          : PaginationMeta.fromJson({});
+
       return ApiResponse.success(
-        data: PaginatedResult<Map<String, dynamic>>(
-          data: List<Map<String, dynamic>>.from(
-            (data['result'] ?? []).map((e) => Map<String, dynamic>.from(e)),
-          ),
-          meta: PaginationMeta.fromJson(data['meta']),
-        ),
+        data: PaginatedResult<T>(data: items, meta: meta),
       );
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Saved Items Error: $e");
+      debugPrint("Get Saved $type Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: "Something went wrong");

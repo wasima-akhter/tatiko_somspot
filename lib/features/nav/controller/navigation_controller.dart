@@ -15,7 +15,7 @@ import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../../utils/enum/app_enum.dart';
-import '../../claims/view/claims_screen.dart';
+import '../../customer/claims/view/claims_screen.dart';
 import '../../influencer_all/influencer_wallet/view/influencer_wallet_screen.dart';
 
 class NavigationControllerMain extends GetxController {

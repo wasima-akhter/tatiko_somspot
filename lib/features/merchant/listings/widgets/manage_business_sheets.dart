@@ -99,7 +99,7 @@ class _EditBusinessProfileSheet extends StatelessWidget {
     final controller = MerchantListingController.to;
     final categoryController = CategoryController.to;
 
-    categoryController.fetchCategories();
+    categoryController.loadInitialCategories();
     controller.loadBusiness();
 
     return Container(

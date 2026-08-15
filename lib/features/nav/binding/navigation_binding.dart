@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
-import 'package:som_spot/features/customer/customer_home/service/home_content_service.dart';
+import 'package:som_spot/features/alerts/service/alerts_service.dart';
+import 'package:som_spot/features/customer/claims/shared/binding/claims_binding.dart';
+import 'package:som_spot/features/customer/customer_home/service/customer_home_service.dart';
+import 'package:som_spot/features/customer/saved/shared/service/saved_service.dart';
 import 'package:som_spot/features/influencer_all/core/influencer_tasks/service/influencer_tasks_service.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/service/influencer_dashboard_service.dart';
 import 'package:som_spot/features/merchant/stats/binding/stats_binding.dart';
@@ -75,7 +78,7 @@ class NavigationBinding extends Bindings {
     // customer
 
     Get.lazyPut<HomeController>(
-      () => HomeController(sl<HomeContentService>()),
+      () => HomeController(sl<CustromerHomeService>()),
       fenix: true,
     );
 
@@ -84,17 +87,18 @@ class NavigationBinding extends Bindings {
     SearchBinding().dependencies();
 
     Get.lazyPut<SavedScreenController>(
-      () => SavedScreenController(),
+      () => SavedScreenController(sl<SavedService>()),
       fenix: true,
     );
     Get.lazyPut<AlertsScreenController>(
-      () => AlertsScreenController(),
+      () => AlertsScreenController(sl<AlertsService>()),
       fenix: true,
     );
 
     //
     // Offers
     OffersBinding().dependencies();
+    ClaimsBinding().dependencies();
   }
 }
 

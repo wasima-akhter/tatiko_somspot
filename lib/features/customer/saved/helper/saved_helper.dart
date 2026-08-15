@@ -1,0 +1,1 @@
+enum SavedTabType { businesses, offers }

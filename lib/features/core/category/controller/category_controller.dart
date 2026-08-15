@@ -1,38 +1,70 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../helper/snackbar/api_snackbar.dart';
+import '../../../../share/widgets/paginator/paginator.dart';
 import '../model/category_model.dart';
 import '../service/category_service.dart';
 
 class CategoryController extends GetxController {
-  final CategoryService _service;
-
   CategoryController(this._service);
+
+  final CategoryService _service;
 
   static CategoryController get to => Get.find();
 
-  final categories = <CategoryModel>[].obs;
-  final isLoading = false.obs;
+  // ---------------------------------------------------------------------------
+  // Category Paginator & Scroll
+  // ---------------------------------------------------------------------------
+
+  late final Paginator<CategoryModel> categoryPaginator;
+  final categoryScrollController = ScrollController();
+
+  List<CategoryModel> get categories => categoryPaginator.items;
 
   @override
   void onInit() {
     super.onInit();
-    fetchCategories();
+    _initCategoryPaginator();
+    categoryScrollController.addListener(_onCategoryScroll);
+    loadInitialCategories();
   }
 
-  Future<void> fetchCategories() async {
-    try {
-      isLoading.value = true;
+  Future<void> loadInitialCategories() async {
+    await categoryPaginator.loadInitial();
+  }
 
-      final response = await _service.getCategories();
+  void _initCategoryPaginator() {
+    categoryPaginator = Paginator<CategoryModel>(
+      fetchPage: (page, limit) async {
+        final response = await _service.getCategories(page: page, limit: limit);
+        return response.data!;
+      },
+    );
+  }
 
-      if (response.success && response.data != null) {
-        categories.value = response.data!;
-      } else {
-        ApiSnackbar.show(response.message, type: SnackbarType.error);
-      }
-    } finally {
-      isLoading.value = false;
+  void _onCategoryScroll() {
+    if (!categoryScrollController.hasClients) return;
+
+    final position = categoryScrollController.position;
+
+    if (position.pixels >= position.maxScrollExtent - 200) {
+      loadMoreCategories();
     }
+  }
+
+  Future<void> loadMoreCategories() {
+    return categoryPaginator.loadMore();
+  }
+
+  Future<void> refreshCategories() {
+    return categoryPaginator.refresh();
+  }
+
+  @override
+  void onClose() {
+    categoryScrollController.removeListener(_onCategoryScroll);
+    categoryScrollController.dispose();
+    categoryPaginator.dispose();
+    super.onClose();
   }
 }

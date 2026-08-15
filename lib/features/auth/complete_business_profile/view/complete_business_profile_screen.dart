@@ -6,7 +6,6 @@ import 'package:som_spot/features/auth/complete_business_profile/view/widgets/co
 import 'package:som_spot/features/auth/complete_business_profile/view/widgets/location_step.dart';
 
 import '../../../../share/controller/screen_export.dart';
-import '../../../core/category/controller/category_controller.dart';
 
 class CompleteBusinessProfileScreen extends StatefulWidget {
   const CompleteBusinessProfileScreen({super.key});
@@ -19,8 +18,6 @@ class CompleteBusinessProfileScreen extends StatefulWidget {
 class _CompleteBusinessProfileScreenState
     extends State<CompleteBusinessProfileScreen> {
   final controller = CompleteBusinessProfileController.to;
-
-  final categoryController = CategoryController.to;
 
   final selectedCategoryId = RxnString();
 

@@ -14,9 +14,11 @@ import 'package:som_spot/features/auth/login/login_screen.dart';
 import 'package:som_spot/features/auth/reset/reset_password_screen.dart';
 import 'package:som_spot/features/auth/sign_up/sign_up_screen.dart';
 import 'package:som_spot/features/business_info/view/business_info_screen.dart';
-import 'package:som_spot/features/claims/view/claims_screen.dart';
-import 'package:som_spot/features/customer/customer_home/view/category_merchants_screen.dart';
-import 'package:som_spot/features/customer/customer_home/view/nearby_you_screen.dart';
+import 'package:som_spot/features/core/category/category_binding.dart';
+import 'package:som_spot/features/core/category/view/category_list_screen.dart';
+import 'package:som_spot/features/customer/claims/view/claims_screen.dart';
+import 'package:som_spot/features/customer/customer_business_list/binding/customer_business_list_binding.dart';
+import 'package:som_spot/features/customer/customer_business_list/view/customer_business_list_screen.dart';
 import 'package:som_spot/features/customer/customer_home/view/top_deals_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/view/influencer_dashboard_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_discover/view/influencer_discover_screen.dart';
@@ -54,6 +56,7 @@ import '../../features/auth/intro/choose_role/view/choose_role_screen.dart';
 import '../../features/auth/intro/onboarding/binding/onboard_binding.dart';
 import '../../features/customer/customer_business_details/shared/binding/customer_business_details_binding.dart';
 import '../../features/customer/customer_business_details/view/customer_business_details_screen.dart';
+import '../../features/customer/customer_business_list/arg/customer_business_list_arg_model.dart';
 import '../../features/customer/customer_home/binding/home_binding.dart';
 import '../../features/customer/customer_offer_claim/controller/customer_offer_claim_controller.dart';
 import '../../features/customer/customer_offer_claim/helper/customer_offer_claim_helper.dart';
@@ -496,6 +499,21 @@ class AppRouter {
       // CUSTOMER  ROUTES
       // =====================================================
       GoRoute(
+        name: RoutePath.categoryListScreen,
+        path: RoutePath.categoryListScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            state: state,
+            child: BindingWrapper(
+              binding: CategoryBinding(),
+              child: const CategoryListScreen(),
+            ),
+          );
+        },
+      ),
+
+      //
+      GoRoute(
         name: RoutePath.customerBusinessDetailsScreen,
         path: RoutePath.customerBusinessDetailsScreen.addBasePath,
         pageBuilder: (context, state) {
@@ -527,30 +545,16 @@ class AppRouter {
       ),
 
       GoRoute(
-        name: RoutePath.nearbyYouScreen,
-        path: RoutePath.nearbyYouScreen.addBasePath,
+        name: RoutePath.customerBusinessListScreen,
+        path: RoutePath.customerBusinessListScreen.addBasePath,
         pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            state: state,
-            child: BindingWrapper(
-              binding: HomeBinding(),
-              child: const NearbyYouScreen(),
-            ),
-          );
-        },
-      ),
-
-      GoRoute(
-        name: RoutePath.categoryMerchantsScreen,
-        path: RoutePath.categoryMerchantsScreen.addBasePath,
-        pageBuilder: (context, state) {
-          final categoryName = (state.extra as String?) ?? 'Category';
+          final categoryInfo = (state.extra as CustomerBusinessListArgModel?);
 
           return _buildPageWithAnimation(
             state: state,
             child: BindingWrapper(
-              binding: HomeBinding(),
-              child: CategoryMerchantsScreen(categoryName: categoryName),
+              binding: CustomerBusinessListBinding(categoryInfo: categoryInfo),
+              child: CustomerBusinessListScreen(),
             ),
           );
         },

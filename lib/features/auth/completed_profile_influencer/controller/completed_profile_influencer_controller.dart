@@ -50,7 +50,7 @@ class CompletedProfileInfluencerController extends GetxController {
 
   // API Categories
   RxList<CategoryModel> get influencerCategories =>
-      CategoryController.to.categories;
+      CategoryController.to.categoryPaginator.items;
 
   // Selected category name (for display)
   String get selectedInfluencerCategoryName {
@@ -108,7 +108,7 @@ class CompletedProfileInfluencerController extends GetxController {
     location.reset(initialLatLng: const LatLng(23.8103, 90.4125));
 
     if (CategoryController.to.categories.isEmpty) {
-      CategoryController.to.fetchCategories();
+      CategoryController.to.loadInitialCategories();
     }
   }
 

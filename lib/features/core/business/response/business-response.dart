@@ -2,6 +2,7 @@ import '../../../../share/model/pagination_meta_model.dart';
 
 class BusinessModel {
   final String id;
+  final String owner;
   final String name;
   final String description;
   final String logo;
@@ -13,34 +14,43 @@ class BusinessModel {
   final double ratingAvg;
   final int ratingCount;
   final bool isOpen;
+  final String? closesAt;
+  final String? opensAt;
+  final double distanceKm;
+  final String distanceLabel;
   final BusinessCategory? category;
   final List<String> gallery;
   final List<BusinessHourModel> openingHours;
-
   final double latitude;
   final double longitude;
-
+  final String timezone;
   final String city;
 
   BusinessModel({
     required this.id,
+    required this.owner,
     required this.name,
     required this.description,
     required this.logo,
     required this.coverImage,
     required this.phone,
+    required this.whatsapp,
     required this.address,
     required this.status,
     required this.ratingAvg,
     required this.ratingCount,
     required this.isOpen,
+    this.closesAt,
+    this.opensAt,
+    required this.distanceKm,
+    required this.distanceLabel,
     this.category,
     required this.gallery,
     required this.openingHours,
     required this.latitude,
     required this.longitude,
+    required this.timezone,
     required this.city,
-    required this.whatsapp,
   });
 
   factory BusinessModel.fromJson(Map<String, dynamic> json) {
@@ -49,6 +59,7 @@ class BusinessModel {
 
     return BusinessModel(
       id: json["_id"] ?? "",
+      owner: json["owner"] ?? "",
       name: json["name"] ?? "",
       description: json["description"] ?? "",
       logo: json["logo"] ?? "",
@@ -60,21 +71,21 @@ class BusinessModel {
       ratingAvg: (json["ratingAvg"] ?? 0).toDouble(),
       ratingCount: json["ratingCount"] ?? 0,
       isOpen: json["isOpen"] ?? false,
-
+      closesAt: json["closesAt"],
+      opensAt: json["opensAt"],
+      distanceKm: (json["distanceKm"] ?? 0).toDouble(),
+      distanceLabel: json["distanceLabel"] ?? "",
       category: json["category"] == null
           ? null
           : BusinessCategory.fromJson(json["category"]),
-
       openingHours: (json["openingHours"] as List<dynamic>? ?? [])
           .map((e) => BusinessHourModel.fromJson(e))
           .toList(),
-
       longitude: coordinates.isNotEmpty
           ? (coordinates[0] as num).toDouble()
           : 0,
-
       latitude: coordinates.length > 1 ? (coordinates[1] as num).toDouble() : 0,
-
+      timezone: json["timezone"] ?? "",
       city: json["timezone"] ?? "",
       gallery: List<String>.from(json["gallery"] ?? []),
     );
@@ -144,7 +155,6 @@ class BusinessPaginationResponse {
       businesses: (json["result"] as List? ?? [])
           .map((e) => BusinessModel.fromJson(e))
           .toList(),
-
       meta: PaginationMeta.fromJson(json["meta"]),
     );
   }
