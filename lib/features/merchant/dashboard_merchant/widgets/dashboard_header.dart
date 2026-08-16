@@ -1,14 +1,9 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../common_components/dash_common_header.dart';
 import '../../../common_components/dash_common_header_cont.dart';
 import '../controller/dashboard_merchant_controller.dart';
-
-/*
-class DashboardHeader extends StatelessWidget { const DashboardHeader({super.key}); @override Widget build(BuildContext context) { final controller = DashboardMerchantController.to; final profileController = controller.profileController; return DashCommonHeaderCont( child: Column( crossAxisAlignment: CrossAxisAlignment.start, children: [ Obx( () => ApiStatusBuilder( status: profileController.profileLoading.value, errorMessage: profileController.errorMessage.value, onRetry: profileController.getProfile, loadingWidget: DashboardCommonHeaderSecShimmer(), builder: (_) { return DashboardCommonHeaderSec( data: DashboardHeaderModel( userName: controller.userName, userProfileImage: controller.userProfileImage, userAddress: controller.userAddress, ), ); }, ), ), Gap(16.h), _CreateOfferSection(), ], ), ); } }
-
-*/
 
 class DashboardHeader extends StatelessWidget {
   const DashboardHeader({super.key});

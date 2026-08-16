@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
 
@@ -27,6 +27,7 @@ class CampaignTabs extends StatelessWidget {
         final active = selected == tab;
 
         return GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () => onChange(tab),
 
           child: Container(

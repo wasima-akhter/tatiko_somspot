@@ -1,7 +1,4 @@
-import 'package:go_router/go_router.dart';
-
-import '../../../core/router/route_path.dart';
-import '../../../share/controller/screen_export.dart';
+import '../../../share/export/screen_export.dart';
 import '../../nav/controller/navigation_controller.dart';
 import '../controller/subscription_controller.dart';
 
@@ -29,6 +26,7 @@ class SubscriptionPlanCard extends StatelessWidget {
         : AppColors.blueAccentColor;
 
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),

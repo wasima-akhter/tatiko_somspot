@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 class DateConverter {
   static String formatDate({
@@ -86,7 +87,7 @@ class DateConverter {
     final dt = dateTime ?? DateTime.now();
 
     if (showExpired && dt.isBefore(DateTime.now())) {
-      return 'Expired';
+      return AppStrings.expired.tr;
     }
 
     return DateFormat(pattern).format(dt);
@@ -174,7 +175,7 @@ class DateConverter {
     final now = DateTime.now();
 
     if (!date.isAfter(now)) {
-      return 'Expired';
+      return AppStrings.expired.tr;
     }
 
     int years = date.year - now.year;
@@ -256,6 +257,6 @@ class DateConverter {
       parts.add('${minutes}m');
     }
 
-    return parts.isEmpty ? 'Expired' : parts.join(' ');
+    return parts.isEmpty ? AppStrings.expired.tr : parts.join(' ');
   }
 }

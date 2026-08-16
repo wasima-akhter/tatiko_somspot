@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/align/custom_align_text.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -142,6 +142,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 suffix: widget.suffix,
                 suffixIcon: widget.isPassword
                     ? GestureDetector(
+                        behavior: HitTestBehavior.opaque,
                         onTap: toggle,
                         child: Padding(
                           padding: const EdgeInsets.only(

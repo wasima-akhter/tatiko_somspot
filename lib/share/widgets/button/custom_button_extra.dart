@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:som_spot/share/widgets/custom_text/custom_text.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
-
 
 class CustomButtonExtra extends StatelessWidget {
   const CustomButtonExtra({
@@ -25,7 +23,7 @@ class CustomButtonExtra extends StatelessWidget {
     this.showIcon = false,
     this.iconSize = 20,
     this.borderColor,
-   this.icon,
+    this.icon,
     this.fontWeight,
   });
 
@@ -51,54 +49,60 @@ class CustomButtonExtra extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(),
-        margin: EdgeInsets.symmetric(vertical: marginVertical, horizontal: marginHorizontal),
+        margin: EdgeInsets.symmetric(
+          vertical: marginVertical,
+          horizontal: marginHorizontal,
+        ),
         alignment: Alignment.center,
         height: height,
         width: width,
         decoration: BoxDecoration(
           border: isBorder
-              ? Border.all(color: borderColor ?? Colors.black, width: borderWidth ?? 2)  // Ensure fallback if borderColor is null
+              ? Border.all(
+                  color: borderColor ?? Colors.black,
+                  width: borderWidth ?? 2,
+                ) // Ensure fallback if borderColor is null
               : null,
           borderRadius: BorderRadius.circular(borderRadius ?? 6),
           color: fillColor,
         ),
-        child: isLoading? Center(child: CircularProgressIndicator(color: AppColors.primaryColor,),):
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomText(
-              fontSize: fontSize ?? 18.sp,
-              fontWeight: fontWeight??FontWeight.w700,
-              color: textColor,
-              textAlign: TextAlign.center,
-              text: title,
-            ),
-            Gap(8),
-            // Show icon only if showIcon is true
-            showIcon ? icon?? SizedBox() : SizedBox.shrink(),
-          ],
-        ),
+        child: isLoading
+            ? Center(
+                child: CircularProgressIndicator(color: AppColors.primaryColor),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomText(
+                    fontSize: fontSize ?? 18.sp,
+                    fontWeight: fontWeight ?? FontWeight.w700,
+                    color: textColor,
+                    textAlign: TextAlign.center,
+                    text: title,
+                  ),
+                  Gap(8),
+                  // Show icon only if showIcon is true
+                  showIcon ? icon ?? SizedBox() : SizedBox.shrink(),
+                ],
+              ),
       ),
     );
   }
 }
 
-
 class DefaultProgressIndicator extends StatelessWidget {
   final Color? color;
   final double? strokeWidth;
-  const DefaultProgressIndicator({
-    super.key,
-    this.color,
-    this.strokeWidth,
-  });
+  const DefaultProgressIndicator({super.key, this.color, this.strokeWidth});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox( height: 15.w,
+    return SizedBox(
+      height: 15.w,
       width: 15.w,
       child: CircularProgressIndicator(
         color: color ?? AppColors.white,
@@ -107,4 +111,3 @@ class DefaultProgressIndicator extends StatelessWidget {
     );
   }
 }
-

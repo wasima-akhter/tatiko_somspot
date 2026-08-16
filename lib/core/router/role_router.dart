@@ -2,7 +2,7 @@
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 
-import '../../features/auth/completed_profile_customer_merchandiser/view/completed_profile_customer_args.dart';
+import '../../features/auth/completed_profile_customer_merchandiser/completed_profile_customer_args.dart';
 import '../../features/auth/core/requests/auth_request.dart';
 import '../../features/auth/core/service/auth_service.dart';
 import '../../helper/snackbar/api_snackbar.dart';

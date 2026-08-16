@@ -1,5 +1,5 @@
 import 'package:som_spot/helper/validator/text_field_validator.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
@@ -34,6 +34,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               const Gap(16),
               // ── Back Button ──
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () => AppRouter.route.pop(),
                 child: const Icon(
                   Icons.arrow_back_ios_new,

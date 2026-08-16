@@ -3,7 +3,7 @@ import 'package:som_spot/features/customer/customer_business_list/arg/customer_b
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 
 import '../../../../helper/text_utils/string_extension.dart';
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../customer_business_list/controller/customer_business_list_controller.dart';
@@ -47,6 +47,7 @@ class HomeCategoriesWidget extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () =>
                         AppRouter.route.pushNamed(RoutePath.categoryListScreen),
                     child: Text(
@@ -69,6 +70,7 @@ class HomeCategoriesWidget extends StatelessWidget {
                         (item) => Padding(
                           padding: EdgeInsets.only(right: 12.w),
                           child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
                             onTap: () {
                               if (Get.isRegistered<
                                 CustomerBusinessListController
@@ -145,96 +147,3 @@ class HomeCategoriesWidget extends StatelessWidget {
     });
   }
 }
-
-/*
-class HomeCategoriesWidget extends StatelessWidget {
-  const HomeCategoriesWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final categoryController = CategoryController.to;
-    final controller = HomeController.to;
-
-    return // Category Selector
-    Obx(() {
-      return ApiStatusBuilder(
-        status: categoryController.categoryPaginator.status.value,
-        errorMessage: categoryController.categoryPaginator.errorMessage.value,
-        onRetry: () => categoryController.categoryPaginator.refresh(),
-        isLoadingMore:
-            categoryController.categoryPaginator.loadMoreStatus.value ==
-            ApiStatus.loading,
-        hasMore: categoryController.categoryPaginator.hasMore.value,
-        builder: (_) {
-          return Wrap(
-            spacing: 12.w,
-            runSpacing: 12.h,
-            children: categoryController.categories.map((category) {
-              final isSelected =
-                  controller.selectedCategoryId.value == category.id;
-
-              return GestureDetector(
-                onTap: () {
-                  controller.selectedCategoryId.value = category.id;
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  width: 74.w,
-                  padding: EdgeInsets.symmetric(
-                    vertical: 12.h,
-                    horizontal: 4.w,
-                  ),
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? AppColors.primaryColor.withValues(alpha: 0.05)
-                        : AppColors.white,
-                    borderRadius: BorderRadius.circular(12.r),
-                    border: Border.all(
-                      color: isSelected
-                          ? AppColors.primaryColor
-                          : AppColors.backgroundsLinesColor,
-                      width: isSelected ? 1.5 : 1.0,
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        width: 24.w,
-                        height: 24.w,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4.r),
-                          child: CustomNetworkImage(
-                            imageUrl: category.icon,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Gap(8.h),
-                      Text(
-                        category.name,
-                        textAlign: TextAlign.center,
-                        style: context.labelSmall.copyWith(
-                          fontWeight: isSelected
-                              ? FontWeight.w600
-                              : FontWeight.normal,
-                          color: isSelected
-                              ? AppColors.primaryColor
-                              : AppColors.darkTextColor,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }).toList(),
-          );
-        },
-      );
-    });
-  }
-}
-
-*/

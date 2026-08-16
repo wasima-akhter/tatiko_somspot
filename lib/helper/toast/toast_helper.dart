@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/core/router/routes.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 import 'package:som_spot/utils/color/app_colors.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
 
@@ -20,7 +21,7 @@ class AppToast {
     if (messenger == null) return;
 
     final displayMessage = (message?.trim().isEmpty ?? true)
-        ? "Something Went Wrong".tr
+        ? AppStrings.somethingWentWrong.tr
         : message!;
 
     final defaultBgColor =

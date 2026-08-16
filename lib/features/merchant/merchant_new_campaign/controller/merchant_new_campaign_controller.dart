@@ -10,6 +10,7 @@ import 'package:som_spot/features/merchant/merchant_campaigns/controller/merchan
 import 'package:som_spot/features/offers/shared/binding/offers_binding.dart';
 import 'package:som_spot/features/offers/shared/response/offers_response.dart';
 import 'package:som_spot/helper/snackbar/api_snackbar.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../helper/date_converter/date_converter.dart';
 import '../../../../share/base_controller/base_form_controller.dart';
@@ -142,41 +143,41 @@ class MerchantNewCampaignController extends BaseFormController {
 
   bool validateCampaignDetails() {
     if (campaignNameController.text.trim().isEmpty) {
-      return _showError("Campaign name is required");
+      return _showError(AppStrings.campaignNameIsRequired.tr);
     }
 
     if (selectedObjective.value.isEmpty) {
-      return _showError("Please select an objective");
+      return _showError(AppStrings.pleaseSelectAnObjective.tr);
     }
 
     if (selectedContentType.value.isEmpty) {
-      return _showError("Please select content type");
+      return _showError(AppStrings.pleaseSelectContentType.tr);
     }
 
     if (selectedOfferId.value.isEmpty) {
-      return _showError("Please select an offer");
+      return _showError(AppStrings.pleaseSelectAnOffer.tr);
     }
 
     if (selectedCategory.value.isEmpty) {
-      return _showError("Please select influencer category");
+      return _showError(AppStrings.pleaseSelectInfluencerCategory.tr);
     }
 
     final creators = int.tryParse(creatorCountController.text.trim());
 
     if (creators == null || creators <= 0) {
-      return _showError("Enter valid creator number");
+      return _showError(AppStrings.enterValidCreatorNumber.tr);
     }
 
     if (startDateController.text.trim().isEmpty) {
-      return _showError("Start date is required");
+      return _showError(AppStrings.startDateIsRequired.tr);
     }
 
     if (endDateController.text.trim().isEmpty) {
-      return _showError("End date is required");
+      return _showError(AppStrings.endDateIsRequired.tr);
     }
 
     if (requirementsController.text.trim().isEmpty) {
-      return _showError("Content requirements are required");
+      return _showError(AppStrings.contentRequirementsAreRequired.tr);
     }
 
     return true;
@@ -184,7 +185,7 @@ class MerchantNewCampaignController extends BaseFormController {
 
   bool validatePricing() {
     if (selectedPackage.value == null) {
-      return _showError("Please select a pricing package");
+      return _showError(AppStrings.pleaseSelectPricingPackage.tr);
     }
 
     return true;
@@ -230,7 +231,8 @@ class MerchantNewCampaignController extends BaseFormController {
     }
 
     if (business == null) {
-      submitFailure("Unable to identify the associated business.");
+      submitFailure(AppStrings.unableToIdentifyAssociatedBusiness.tr);
+
       return;
     }
 
@@ -281,7 +283,7 @@ class MerchantNewCampaignController extends BaseFormController {
 
       submitSuccess();
 
-      showSuccess("Campaign created successfully");
+      showSuccess(AppStrings.campaignCreatedSuccessfully.tr);
 
       await MerchantCampaignsController.to.refreshCampaigns();
 
@@ -290,7 +292,10 @@ class MerchantNewCampaignController extends BaseFormController {
       submitFailure(e.toString());
       debugPrint(stack.toString());
 
-      ApiSnackbar.show(type: SnackbarType.error, "Something went wrong");
+      ApiSnackbar.show(
+        type: SnackbarType.error,
+        AppStrings.somethingWentWrong.tr,
+      );
     }
   }
   // ============================================================
@@ -405,34 +410,34 @@ class MerchantNewCampaignController extends BaseFormController {
   //
   final packages = [
     PricingModel(
-      title: "20 Seconds Video",
-      subtitle: "Short Video • 20s",
-      description: "A little more room to show the offer in action.",
-      price: "\$5",
+      title: AppStrings.shortVideo.trParams({'seconds': '20'}),
+      subtitle: AppStrings.shortVideo.trParams({'seconds': '20'}),
+      description: AppStrings.littleMoreRoomToShowOffer.tr,
+      price: '\$5',
       videoLengthSec: 20,
     ),
 
     PricingModel(
-      title: "30 Seconds Video",
-      subtitle: "Standard Video • 30s",
-      description: "The most popular format for local campaigns.",
-      price: "\$7",
+      title: AppStrings.standardVideo.trParams({'seconds': '30'}),
+      subtitle: AppStrings.standardVideo.trParams({'seconds': '30'}),
+      description: AppStrings.mostPopularFormatForLocalCampaigns.tr,
+      price: '\$7',
       videoLengthSec: 30,
     ),
 
     PricingModel(
-      title: "45 Seconds Video",
-      subtitle: "Extended Video • 45s",
-      description: "Great for storytelling and product walkthroughs.",
-      price: "\$10",
+      title: AppStrings.extendedVideo.trParams({'seconds': '45'}),
+      subtitle: AppStrings.extendedVideo.trParams({'seconds': '45'}),
+      description: AppStrings.greatForStorytelling.tr,
+      price: '\$10',
       videoLengthSec: 45,
     ),
 
     PricingModel(
-      title: "60 Seconds Video",
-      subtitle: "Long Video • 60s",
-      description: "Full narrative, maximum detail and reach.",
-      price: "\$15",
+      title: AppStrings.longVideo.trParams({'seconds': '60'}),
+      subtitle: AppStrings.longVideo.trParams({'seconds': '60'}),
+      description: AppStrings.fullNarrativeMaximumDetail.tr,
+      price: '\$15',
       videoLengthSec: 60,
     ),
   ];

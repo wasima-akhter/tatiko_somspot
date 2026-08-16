@@ -7,33 +7,42 @@ class EditProfileRequest {
   final String phone;
   final File? profileImage;
 
+  final String? address;
 
+  final double? lng;
+  final double? lat;
   EditProfileRequest({
     required this.name,
     required this.phone,
     this.profileImage,
+    this.address,
+    this.lng,
+    this.lat,
   });
 
-
   Map<String, String> fields() {
-    return {
-      "name": name,
-      "phone": phone,
-    };
+    final fields = <String, String>{'name': name, 'phone': phone};
+
+    if (address != null) {
+      fields['address'] = address!;
+    }
+
+    if (lng != null) {
+      fields['lng'] = lng.toString();
+    }
+
+    if (lat != null) {
+      fields['lat'] = lat.toString();
+    }
+
+    return fields;
   }
 
-
   List<MultipartBody> files() {
-
     if (profileImage == null) {
       return [];
     }
 
-    return [
-      MultipartBody(
-        fieldKey: "profile_image",
-        file: profileImage!,
-      ),
-    ];
+    return [MultipartBody(fieldKey: "profile_image", file: profileImage!)];
   }
 }

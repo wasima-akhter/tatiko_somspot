@@ -1,5 +1,5 @@
 import 'package:som_spot/features/customer/customer_business_details/widgets/merchant_details/merchant_header_backdrop.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../widgets/merchant_details/customer_business_details_content.dart';
 import '../widgets/merchant_details/customer_business_details_floating_actions.dart';

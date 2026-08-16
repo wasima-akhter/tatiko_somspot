@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../merchant/dashboard_merchant/widgets/dashboard_stat_card.dart';
 import '../response/influencer_dashboard_response.dart';

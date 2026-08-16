@@ -1,4 +1,4 @@
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/custom_buttom_sheet/custom_buttom_sheet.dart';
 import '../../../../share/widgets/network_image/custom_network_image.dart';
 import '../../merchant_new_campaign/shared/response/merchant_campaign_detail_model.dart';

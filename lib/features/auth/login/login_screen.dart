@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:som_spot/features/auth/core/requests/auth_request.dart';
 import 'package:som_spot/helper/validator/text_field_validator.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
 import '../controller/auth_controller.dart';
@@ -107,6 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
                             onTap: () {
                               AppRouter.route.pushNamed(
                                 RoutePath.forgetPasswordScreen,

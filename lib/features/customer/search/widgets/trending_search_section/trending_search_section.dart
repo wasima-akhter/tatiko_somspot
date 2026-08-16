@@ -1,6 +1,6 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 
-import '../../../../../share/controller/screen_export.dart';
+import '../../../../../share/export/screen_export.dart';
 import '../../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../controller/search_controller.dart';
 
@@ -48,7 +48,7 @@ class TrendingSearchesHeader extends StatelessWidget {
         Icon(Iconsax.trend_up, color: AppColors.darkTextColor, size: 18.sp),
         Gap(8.w),
         Text(
-          "Trending Now",
+          AppStrings.trendingNow.tr,
           style: context.titleMedium.copyWith(
             color: AppColors.darkTextColor,
             fontWeight: FontWeight.w600,
@@ -102,6 +102,7 @@ class TrendingSearchItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(

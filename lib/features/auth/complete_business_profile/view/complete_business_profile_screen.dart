@@ -5,7 +5,7 @@ import 'package:som_spot/features/auth/complete_business_profile/view/widgets/bu
 import 'package:som_spot/features/auth/complete_business_profile/view/widgets/contact_step.dart';
 import 'package:som_spot/features/auth/complete_business_profile/view/widgets/location_step.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 
 class CompleteBusinessProfileScreen extends StatefulWidget {
   const CompleteBusinessProfileScreen({super.key});
@@ -39,6 +39,7 @@ class _CompleteBusinessProfileScreenState
                   children: [
                     // Back button
                     GestureDetector(
+                      behavior: HitTestBehavior.opaque,
                       onTap: () {
                         if (controller.currentStep.value > 0) {
                           controller.previousStep();

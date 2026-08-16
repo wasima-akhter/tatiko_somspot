@@ -1,6 +1,6 @@
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 
-import '../../share/controller/screen_export.dart';
+import '../../share/export/screen_export.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key, this.index = 0});

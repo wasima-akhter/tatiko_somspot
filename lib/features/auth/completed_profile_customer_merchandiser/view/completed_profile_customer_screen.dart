@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:som_spot/helper/validator/text_field_validator.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
+import '../completed_profile_customer_args.dart';
 import '../controller/completed_profile_customer_controller.dart';
-import 'completed_profile_customer_args.dart';
 
 class CompletedProfileCustomerScreen extends StatelessWidget {
   final CompletedProfileCustomerArgs args;
@@ -53,6 +53,7 @@ class CompletedProfileCustomerScreen extends StatelessWidget {
                   final imagePath = controller.profileImagePath.value;
 
                   return GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: controller.pickProfileImage,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 300),

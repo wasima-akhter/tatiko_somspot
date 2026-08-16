@@ -579,5 +579,196 @@
   "published_and_verified": "La daabacay oo la xaqiijiyay",
   "pending_review": "Dib-u-eegis ayaa socota",
   "content_is_live_earned": "Nuxurkaagu waa toos. Waxaad kasbatay $@amount.",
-  "content_submitted_waiting_approval": "Nuxurkaaga waa la gudbiyay. Waxaa la sugayaa oggolaanshaha ganacsadaha."
+  "content_submitted_waiting_approval": "Nuxurkaaga waa la gudbiyay. Waxaa la sugayaa oggolaanshaha ganacsadaha.",
+
+  "saving": "Waa la kaydinayaa...",
+  "download": "Soo dejiso",
+  "present_qr_code_to_merchant": "Tus koodhkan QR-ka ganacsadaha si aad u isticmaasho dalabkaaga.",
+
+  "get_directions": "Hel Jiho",
+  "choose_your_navigation_app": "Dooro app-ka hagidda aad rabto",
+  "fastest_route": "Waddada ugu dhakhsaha badan",
+  "google_maps": "Google Maps",
+  "apple_maps": "Apple Maps",
+
+  "closes_at": "Wuu xirmayaa",
+  "opens_at": "Wuu furmayaa",
+
+  "no_more_offers": "Ma jiraan dalabyo kale",
+
+  "no_reviews_yet": "Weli dib u eegis ma jiraan",
+  "be_the_first_to_review": "Noqo qofka ugu horreeya ee dib u eegis ka bixiya ganacsigan.",
+
+  "anonymous": "Qof aan la aqoon",
+  "ago": "ka hor",
+
+  "no_businesses_found_under_category": "Qaybtan ganacsi lagama helin.",
+
+  "try_again": "Mar kale isku day",
+  "no_nearby_merchants_found": "Lama helin ganacsato kuu dhow",
+  "no_nearby_places_yet": "Weli meelo kuu dhow lama helin",
+  "no_nearby_places_message": "Hadda ma aanan helin wax ganacsi ah oo kuu dhow.\nMar kale isku day si aad u ogaato meelaha kugu hareeraysan.",
+
+  "trending_influencer": "Saameeye Caan ah",
+  "recommended_by_content": "Waxaa lagu taliyay Mawduuc",
+
+  "no_content_yet": "Weli waxyaabo cusub ma jiraan",
+  "new_videos_will_appear_here": "Fiidiyowyo cusub ayaa halkan ka soo muuqan doona.",
+  "retry": "Mar kale isku day",
+
+  "qr_code": "Koodhka QR",
+  "show_this_code_to_merchant": "Tus koodhkan ganacsadaha si aad\nuga faa'iidaysato qiimo-dhimistaada.",
+  "your_claim_code": "Koodhkaaga Dalabka",
+  "copy": "Koobi",
+
+  "reset": "Dib u celi",
+  "search_businesses_or_deals": "Raadi ganacsiyo ama dalabyo...",
+
+  "no_recent_searches": "Raadin Dhawaan Ma Jiraan",
+  "your_recent_searches_will_appear_here": "Raadintaadii dhowayd ayaa halkan ka soo muuqan doonta",
+
+  "no_search_results": "Ma aanan helin wax ku habboon raadintaada.",
+  "reset_search": "Dib u deji raadinta",
+
+  "apply_for_campaign": "Codso Ololaha",
+  "why_are_you_a_good_fit": "Maxaad ugu habboon tahay?",
+  "tell_merchant_why_audience_would_love_offer": "U sheeg ganacsadaha sababta dhagaystayaashaadu u jeclaan lahaayeen dalabkan...",
+  "select_accounts_to_use": "Dooro Akoonnada La Isticmaalayo",
+  "submit_application": "Gudbi Codsiga",
+
+  "please_enter_social_media_post_url": "Fadlan geli URL-ka qoraalkaaga baraha bulshada.",
+  "please_enter_valid_post_url": "Fadlan geli URL qoraal sax ah.",
+
+  "publish": "Daabac",
+  "proof": "Caddeyn",
+
+  "invalid_task_information": "Macluumaadka hawshu ma saxna. Fadlan mar kale isku day.",
+
+  "deliverable": "Waxa la Gudbinayo",
+
+  "campaign_applicants_status": "@count codsade cusub · @reviewCount la eegayo",
+
+  "business_name_is_required": "Magaca ganacsiga waa loo baahan yahay",
+  "description_is_required": "Sharaxaadda waa loo baahan yahay",
+  "please_select_gallery_images": "Fadlan dooro sawirrada gallery-ga",
+  "please_select_at_least_one_open_day": "Fadlan dooro ugu yaraan hal maalin oo furan",
+  "address_is_required": "Cinwaanka waa loo baahan yahay",
+  "phone_number_is_required": "Lambarka telefoonka waa loo baahan yahay",
+  "enter_a_valid_phone_number": "Geli lambar telefoon oo sax ah",
+  "updated_successfully": "Si guul leh ayaa loo cusboonaysiiyay",
+
+  "please_select_a_category": "Fadlan dooro qayb",
+
+  "restaurant_name_example": "tusaale. Hilib Macaan Restaurant",
+  "review_hint": "Maxaad ka heshay ama ka necbayd? Sidee ayuu adeeggu ahaa?",
+
+  "reject_content": "Diid Nuxurka",
+  "please_provide_reason_for_rejecting": "Fadlan sheeg sababta aad u diidayso soo gudbintan.",
+  "rejection_reason": "Sababta Diidmada",
+  "rejection_reason_example": "Tusaale: Tayada fiidiyowgu ma cadda",
+  "rejection_reason_required_info": "Sababta diidmada waa loo baahan yahay si saameeyuhu u ogaado waxa uu hagaajinayo.",
+  "reject": "Diid",
+
+  "approve": "Oggolow",
+
+  "content_caption": "Qoraalka Nuxurka",
+
+  "no_published_content_yet": "Weli ma jiro nuxur la daabacay",
+
+  "campaign_name_is_required": "Magaca ololaha waa loo baahan yahay",
+  "please_select_an_objective": "Fadlan dooro ujeeddo",
+  "please_select_content_type": "Fadlan dooro nooca nuxurka",
+  "please_select_an_offer": "Fadlan dooro dalab",
+  "please_select_influencer_category": "Fadlan dooro qaybta saameeyaha",
+  "enter_valid_creator_number": "Geli tiro sax ah oo abuurayaal ah",
+  "start_date_is_required": "Taariikhda bilowga waa loo baahan yahay",
+  "end_date_is_required": "Taariikhda dhammaadka waa loo baahan yahay",
+  "content_requirements_are_required": "Shuruudaha nuxurka waa loo baahan yahay",
+  "please_select_pricing_package": "Fadlan dooro xirmada qiimaha",
+  "unable_to_identify_associated_business": "Lama aqoonsan karo ganacsiga ku xiran.",
+  "campaign_created_successfully": "Ololaha si guul leh ayaa loo abuuray",
+
+  "seconds_video": "Fiidiyow @seconds ilbiriqsi ah",
+
+  "short_video": "Fiidiyow Gaaban • @seconds",
+  "standard_video": "Fiidiyow Heerka ah • @seconds",
+  "extended_video": "Fiidiyow Dheeraad ah • @seconds",
+  "long_video": "Fiidiyow Dheer • @seconds",
+
+  "little_more_room_to_show_offer": "Meel yar oo dheeraad ah oo lagu muujiyo dalabka.",
+  "most_popular_format_for_local_campaigns": "Qaabka ugu caansan ee ololayaasha maxalliga ah.",
+  "great_for_storytelling": "Ku fiican sheeko-sheegidda iyo muujinta badeecadda.",
+  "full_narrative_maximum_detail": "Sheeko dhammaystiran, faahfaahin iyo gaarsiin ugu badan.",
+
+  "new_campaign": "Ololaha Cusub",
+  "campaign_name": "Magaca Ololaha",
+  "campaign_name_hint": "tusaale: Soo iibso 1 hel 1 bilaash Promo",
+  "select_offer": "Dooro Dalabka",
+  "select_category": "Dooro Qaybta",
+  "target_number_of_influencers": "Tirada Bartilmaameedka Influencers-ka",
+  "enter_number_of_influencers": "Geli tirada influencers-ka",
+  "content_requirements_hint": "tusaale: 1 TikTok Video, 2 Instagram Stories",
+  "preparing_campaign_form": "Foomka ololaha ayaa la diyaarinayaa...",
+
+  "preview_campaign": "Horudhaca Ololaha",
+  "campaign_overview": "Dulmarka Ololaha",
+  "name": "Magaca",
+  "objective": "Ujeeddada",
+  "content_type": "Nooca Mawduuca",
+  "offer": "Dalabka",
+  "video_length": "Dhererka Fiidiyowga",
+  "influencer_info": "Macluumaadka Influencer-ka",
+  "influencer_category": "Qaybta Influencer-ka",
+  "target_influencers": "Influencers-ka La Beegsanayo",
+  "selected_package": "Xirmada La Doortay",
+  "package_price": "Qiimaha Xirmada",
+  "total_campaign_cost": "Wadarta Kharashka Ololaha",
+  "content_requirements": "Shuruudaha Mawduuca",
+  "back_to_edit": "Ku Noqo Tafatirka",
+  "submit": "Gudbi",
+  "seconds": "ilbiriqsi",
+
+  "pricing_packages": "Xirmooyinka Qiimaha",
+  "preview": "Horudhac",
+  "days": "maalmo",
+
+  "poor": "Liita",
+  "fair": "Dhexdhexaad",
+  "okay": "Waa hagaag",
+  "good": "Wanaagsan",
+  "excellent": "Aad u wanaagsan",
+  "thank_you_for_rating_som_spot": "Waad ku mahadsan tahay qiimeynta SomSpot",
+
+  "rate_the_app": "Qiimee App-ka",
+
+  "email_us_online": "Noogu soo dir iimayl online",
+  "email_us": "Noogu soo dir iimayl",
+  "online": "Online",
+
+  "dialer_not_supported": "Adeegga wicitaanka lagama taageero qalabkan.",
+  "could_not_launch_dialer": "Lama furi karin adeegga wicitaanka",
+  "check_out_merchant_on_somspot": "Ka eeg @title (@category) SomSpot! Hadda soo dejiso app-ka.",
+  "somspot_merchant": "Ganacsade SomSpot: @title",
+  "could_not_share_merchant_details": "Lama wadaagi karin xogta ganacsadaha",
+  "whatsapp_cannot_be_opened": "WhatsApp lama furi karo.",
+  "could_not_launch_whatsapp": "Lama furi karin WhatsApp",
+
+  "claim_code_copied": "Koodhka sheegashada waa la koobiyeeyay",
+  "gallery_permission_required": "Oggolaanshaha gallery-ga ayaa loo baahan yahay",
+  "qr_code_saved_to_gallery": "Koodhka QR waxaa lagu kaydiyay gallery-ga",
+  "failed_to_save_qr_code": "Kaydinta koodhka QR waa fashilantay",
+
+  "rate_som_spot": "Qiimee SomSpot",
+  "enjoying_the_app_let_us_know": "Ma ku raaxaysanaysaa app-ka? Noo sheeg!",
+  "tap_to_rate": "Taabo si aad u qiimeyso",
+  "submit_rating": "Gudbi Qiimaynta",
+
+  "see_less": "Arag Wax Yar",
+  "see_more": "Arag Wax Badan",
+  "unknown_error_message": "Codsigu wuxuu la kulmay qalad aan la garanayn.\nFadlan mar kale isku day goor dambe.",
+  "something_went_wrong_retry": "Waxbaa qaldamay. Taabo si aad mar kale u isku daydo",
+  "offline_message": "Oops, internet-ka ma lihid. Hubi xiriirkaaga oo mar kale isku day.",
+
+  "unable_to_play_video": "Fiidiyowga lama daabici karo",
+  "video_may_be_unavailable_or_connection_failed": "Fiidiyowga lama heli karo ama isku xirka ayaa fashilmay."
 }

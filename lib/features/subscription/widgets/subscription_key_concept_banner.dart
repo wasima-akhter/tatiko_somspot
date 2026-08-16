@@ -1,4 +1,4 @@
-import '../../../share/controller/screen_export.dart';
+import '../../../share/export/screen_export.dart';
 
 class SubscriptionKeyConceptBanner extends StatelessWidget {
   const SubscriptionKeyConceptBanner({super.key});

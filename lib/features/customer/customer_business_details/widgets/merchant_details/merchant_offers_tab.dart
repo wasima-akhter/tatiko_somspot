@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/ui_status_builder/api_status_builder.dart';
 
 import '../../../../../utils/enum/app_enum.dart';

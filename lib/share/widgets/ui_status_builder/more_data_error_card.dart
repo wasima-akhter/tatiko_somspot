@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+
+import '../../../utils/app_strings/app_strings.dart';
 
 class MoreDataErrorCard extends StatelessWidget {
   const MoreDataErrorCard({
@@ -52,7 +55,7 @@ class MoreDataErrorCard extends StatelessWidget {
               const Gap(6),
               Flexible(
                 child: Text(
-                  message ?? "Something went wrong. Tap to try again",
+                  message ?? AppStrings.somethingWentWrongRetry.tr,
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

@@ -3,7 +3,7 @@ import 'package:som_spot/helper/date_converter/date_converter.dart';
 import 'package:som_spot/helper/snackbar/api_snackbar.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/network_image/custom_network_image.dart';
 import '../../../../share/widgets/video/video_overlay.dart';
 import '../../merchant_new_campaign/shared/response/merchant_campaign_model.dart';
@@ -16,6 +16,7 @@ class MerchantCampaignContentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () => AppRouter.route.pushNamed(
         RoutePath.merchantCampaignContentDetailsScreen,
         extra: data.id,
@@ -49,13 +50,14 @@ class MerchantCampaignContentCard extends StatelessWidget {
                       data.draftVideoUrl!.isNotEmpty)
                     Center(
                       child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
                         onTap: () {
                           AppVideoOverlay.show(
                             context,
 
                             videoUrl: data.draftVideoUrl!,
 
-                            title: "Submitted Content",
+                            title: AppStrings.submittedContent.tr,
                           );
                         },
 
@@ -189,7 +191,7 @@ class MerchantCampaignContentCard extends StatelessWidget {
                                       .value ==
                                   "reject",
 
-                              text: "Reject",
+                              text: AppStrings.reject.tr,
 
                               isOutlined: true,
 
@@ -221,7 +223,7 @@ class MerchantCampaignContentCard extends StatelessWidget {
                                       .value ==
                                   "approve",
 
-                              text: "Approve",
+                              text: AppStrings.approve.tr,
 
                               onTap: () async {
                                 await MerchantCampaignDetailsController.to
@@ -263,7 +265,8 @@ class MerchantCampaignContentCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Reject Content",
+                  AppStrings.rejectContent.tr,
+
                   style: context.titleLarge.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -272,7 +275,7 @@ class MerchantCampaignContentCard extends StatelessWidget {
                 Gap(8.h),
 
                 Text(
-                  "Please provide a reason for rejecting this submission.",
+                  AppStrings.pleaseProvideReasonForRejecting.tr,
                   style: context.bodyMedium.copyWith(
                     color: AppColors.subtitleTextColor,
                   ),
@@ -281,7 +284,7 @@ class MerchantCampaignContentCard extends StatelessWidget {
                 Gap(20.h),
 
                 Text(
-                  "Rejection Reason",
+                  AppStrings.rejectionReason.tr,
                   style: context.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -295,7 +298,7 @@ class MerchantCampaignContentCard extends StatelessWidget {
                   textInputAction: TextInputAction.newline,
 
                   decoration: InputDecoration(
-                    hintText: "Example: Video quality is not clear",
+                    hintText: AppStrings.rejectionReasonExample.tr,
 
                     hintStyle: context.bodySmall.copyWith(color: Colors.grey),
 
@@ -352,7 +355,7 @@ class MerchantCampaignContentCard extends StatelessWidget {
                           ),
 
                           child: Text(
-                            "Cancel",
+                            AppStrings.cancel.tr,
                             style: context.bodyMedium.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -372,7 +375,7 @@ class MerchantCampaignContentCard extends StatelessWidget {
 
                             if (value.isEmpty) {
                               ApiSnackbar.show(
-                                "A rejection reason is required so the influencer knows what to improve.",
+                                AppStrings.rejectionReasonRequiredInfo.tr,
                               );
                               return;
                             }
@@ -387,7 +390,7 @@ class MerchantCampaignContentCard extends StatelessWidget {
                           ),
 
                           child: Text(
-                            "Reject",
+                            AppStrings.reject.tr,
                             style: context.bodyMedium.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,

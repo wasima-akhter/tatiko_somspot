@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 import 'package:som_spot/share/widgets/ui_status_builder/api_status_builder.dart';
@@ -41,6 +41,7 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
               ),
             ),
             GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: () => AppRouter.route.pushNamed(
                 RoutePath.customerBusinessListScreen,
               ),
@@ -64,10 +65,8 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
                 controller.nearbyBusinessesPaginator.errorMessage.value,
             noDataWidget: HomeEmptyState(
               icon: Icons.location_off_outlined,
-              title: 'No Nearby Places Yet',
-              message:
-                  'We couldn’t find any businesses nearby right now.\n'
-                  'Try again to discover places around you.',
+              title: AppStrings.noNearbyPlacesYet.tr,
+              message: AppStrings.noNearbyPlacesMessage.tr,
               onRetry: controller.loadNearbyBusinesses,
             ),
             onRetry: controller.loadNearbyBusinesses,
@@ -93,7 +92,7 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
                   ),
                   child: Center(
                     child: Text(
-                      "No nearby merchants found",
+                      AppStrings.noNearbyMerchantsFound.tr,
                       style: context.bodyMedium.copyWith(
                         color: AppColors.subtitleTextColor,
                       ),
@@ -118,6 +117,7 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
                         controller.nearbyBusinessesPaginator.items[index];
 
                     return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
                       onTap: () => AppRouter.route.pushNamed(
                         RoutePath.customerBusinessDetailsScreen,
                         extra: item.id,
@@ -353,7 +353,7 @@ class HomeEmptyState extends StatelessWidget {
                     ),
                     icon: Icon(Icons.refresh_rounded, size: 14.sp),
                     label: Text(
-                      'Try Again',
+                      AppStrings.tryAgain.tr,
                       style: context.bodySmall.copyWith(
                         color: AppColors.primaryColor,
                         fontWeight: FontWeight.w700,

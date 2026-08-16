@@ -4,7 +4,7 @@ import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 
 import '../../../../features/merchant/merchant_campaign_details/controller/merchant_campaign_details_controller.dart';
 import '../../../../features/merchant/merchant_new_campaign/shared/response/merchant_campaign_detail_model.dart';
-import '../../../controller/screen_export.dart';
+import '../../../export/screen_export.dart';
 import '../../ui_status_builder/api_status_builder.dart';
 
 class InfluencerRequestBottomSheet extends StatelessWidget {

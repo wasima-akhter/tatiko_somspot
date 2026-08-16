@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
 import '../../../../share/controller/language_controller.dart';
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/controller/business-controller.dart';
 import '../../merchant_new_campaign/widgets/campaign_date_field.dart';
@@ -218,6 +218,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
   Widget _buildImagePicker() {
     // Cover Image Picker
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
         controller.pickImage();
       },

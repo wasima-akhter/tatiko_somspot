@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../../share/widgets/loading/loading_widget.dart';
 import '../../../../../share/widgets/ui_status_builder/api_status_builder.dart';
@@ -63,6 +63,7 @@ class MerchantDetailsActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
         height: 40.h,

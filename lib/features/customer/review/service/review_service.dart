@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide Response;
 
 import '../../../../../share/export/service_export.dart';
 import '../../../../../share/model/pagination_meta_model.dart';
 import '../../../../../share/widgets/paginator/paginator.dart';
+import '../../../../utils/app_strings/app_strings.dart';
 import '../repository/review_repository.dart';
 import '../response/review_response.dart';
 
@@ -65,7 +67,7 @@ class ReviewService {
       debugPrint("Get Business Reviews Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -89,7 +91,7 @@ class ReviewService {
       debugPrint("Post Review Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -140,7 +142,7 @@ class ReviewService {
       debugPrint("Get My Reviews Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

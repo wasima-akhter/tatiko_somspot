@@ -1,4 +1,4 @@
-import '../../../share/controller/screen_export.dart';
+import '../../../share/export/screen_export.dart';
 import '../controller/subscription_controller.dart';
 import 'subscription_plan_card.dart';
 

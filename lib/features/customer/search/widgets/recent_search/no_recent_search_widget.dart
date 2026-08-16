@@ -1,4 +1,4 @@
-import '../../../../../share/controller/screen_export.dart';
+import '../../../../../share/export/screen_export.dart';
 
 class NoRecentSearchWidget extends StatelessWidget {
   const NoRecentSearchWidget({super.key});
@@ -36,7 +36,7 @@ class NoRecentSearchWidget extends StatelessWidget {
             ),
             Gap(12.h),
             Text(
-              "No Recent Searches",
+              AppStrings.noRecentSearches.tr,
               style: context.titleMedium.copyWith(
                 color: AppColors.darkTextColor,
                 fontWeight: FontWeight.w600,
@@ -46,7 +46,7 @@ class NoRecentSearchWidget extends StatelessWidget {
             ),
             Gap(4.h),
             Text(
-              "Your recent searches will appear here",
+              AppStrings.yourRecentSearchesWillAppearHere.tr,
               style: context.bodyMedium.copyWith(
                 color: AppColors.hintTextColor,
                 fontSize: 12.sp,

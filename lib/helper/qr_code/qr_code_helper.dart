@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gal/gal.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class QrCodeHelper {
   QrCodeHelper._();
@@ -22,8 +22,8 @@ class QrCodeHelper {
     if (!context.mounted) return;
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Claim code copied'),
+      SnackBar(
+        content: Text(AppStrings.claimCodeCopied.tr),
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -86,7 +86,7 @@ class QrCodeHelper {
 
         if (!granted) {
           if (context.mounted) {
-            _showMessage(context, 'Gallery permission is required');
+            _showMessage(context, AppStrings.galleryPermissionRequired.tr);
           }
 
           return false;
@@ -96,7 +96,7 @@ class QrCodeHelper {
       await Gal.putImageBytes(bytes, name: fileName);
 
       if (context.mounted) {
-        _showMessage(context, 'QR code saved to gallery');
+        _showMessage(context, AppStrings.qrCodeSavedToGallery.tr);
       }
 
       return true;
@@ -104,6 +104,7 @@ class QrCodeHelper {
       debugPrint('QR Download Error => ${e.type.message}');
 
       if (context.mounted) {
+        // Keep plugin-specific error if available.
         _showMessage(context, e.type.message);
       }
 
@@ -113,7 +114,7 @@ class QrCodeHelper {
       debugPrintStack(stackTrace: s);
 
       if (context.mounted) {
-        _showMessage(context, 'Failed to save QR code');
+        _showMessage(context, AppStrings.failedToSaveQrCode.tr);
       }
 
       return false;

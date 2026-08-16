@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/app_strings/app_strings.dart';
+
 class ExpandableText extends StatefulWidget {
   final String text;
   final TextStyle? textStyle;
@@ -85,13 +87,14 @@ class _ExpandableTextState extends State<ExpandableText> {
         ),
         if (_isTextOverflowing)
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () {
               setState(() {
                 _isExpanded = !_isExpanded;
               });
             },
             child: Text(
-              _isExpanded ? 'See Less' : "See More",
+              _isExpanded ? AppStrings.seeLess.tr : AppStrings.seeMore.tr,
               style: widget.buttonStyle ?? context.textTheme.titleMedium,
             ),
           ),

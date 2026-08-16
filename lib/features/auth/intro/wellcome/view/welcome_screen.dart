@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:som_spot/core/custom_assets/assets.gen.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

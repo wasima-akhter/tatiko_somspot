@@ -2,7 +2,7 @@
 // 5. Saved Offers List Widget
 // -----------------------------------------------------------------------------
 import 'package:som_spot/features/customer/saved/controller/saved_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 import 'package:som_spot/share/widgets/ui_status_builder/api_status_builder.dart';

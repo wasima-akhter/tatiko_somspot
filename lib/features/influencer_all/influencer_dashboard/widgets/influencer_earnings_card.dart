@@ -1,6 +1,6 @@
 import 'package:som_spot/features/influencer_all/influencer_dashboard/response/influencer_dashboard_response.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class InfluencerEarningsCard extends StatelessWidget {
   final InfluencerDashboardModel? data;
@@ -92,6 +92,7 @@ class InfluencerEarningsCard extends StatelessWidget {
               ),
 
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
                   NavigationControllerMain.to.goToTabWallet();
                 },

@@ -577,5 +577,195 @@
   "published_and_verified": "تم النشر والتحقق",
   "pending_review": "قيد المراجعة",
   "content_is_live_earned": "المحتوى الخاص بك منشور. لقد ربحت $@amount.",
-  "content_submitted_waiting_approval": "تم تقديم المحتوى الخاص بك. في انتظار موافقة التاجر."
+  "content_submitted_waiting_approval": "تم تقديم المحتوى الخاص بك. في انتظار موافقة التاجر.",
+
+  "saving": "جارٍ الحفظ...",
+  "download": "تنزيل",
+  "present_qr_code_to_merchant": "اعرض رمز QR هذا على التاجر لاسترداد عرضك.",
+
+  "get_directions": "الحصول على الاتجاهات",
+  "choose_your_navigation_app": "اختر تطبيق الملاحة الخاص بك",
+  "fastest_route": "أسرع طريق",
+  "google_maps": "خرائط Google",
+  "apple_maps": "خرائط Apple",
+
+  "closes_at": "يغلق في",
+  "opens_at": "يفتح في",
+
+  "no_more_offers": "لا توجد عروض أخرى",
+
+  "no_reviews_yet": "لا توجد تقييمات بعد",
+  "be_the_first_to_review": "كن أول من يقيّم هذا النشاط التجاري.",
+
+  "anonymous": "مجهول",
+  "ago": "منذ",
+
+  "no_businesses_found_under_category": "لم يتم العثور على أي نشاط تجاري ضمن هذه الفئة.",
+
+  "try_again": "حاول مرة أخرى",
+  "no_nearby_merchants_found": "لم يتم العثور على تجار قريبين",
+  "no_nearby_places_yet": "لا توجد أماكن قريبة بعد",
+  "no_nearby_places_message": "لم نتمكن من العثور على أي أنشطة تجارية قريبة منك الآن.\nحاول مرة أخرى لاكتشاف الأماكن من حولك.",
+
+  "trending_influencer": "مؤثر رائج",
+  "recommended_by_content": "موصى به من خلال المحتوى",
+
+  "no_content_yet": "لا يوجد محتوى بعد",
+  "new_videos_will_appear_here": "ستظهر مقاطع فيديو جديدة هنا.",
+  "retry": "إعادة المحاولة",
+
+  "qr_code": "Koodhka QR",
+  "show_this_code_to_merchant": "Tus koodhkan ganacsadaha si aad\nuga faa'iidaysato qiimo-dhimistaada.",
+  "your_claim_code": "Koodhkaaga Dalabka",
+  "copy": "Koobi",
+
+  "reset": "إعادة تعيين",
+  "search_businesses_or_deals": "ابحث عن أنشطة تجارية أو عروض...",
+
+  "no_recent_searches": "لا توجد عمليات بحث حديثة",
+  "your_recent_searches_will_appear_here": "ستظهر عمليات البحث الأخيرة هنا",
+
+  "no_search_results": "لم نتمكن من العثور على أي شيء يطابق بحثك.",
+  "reset_search": "إعادة تعيين البحث",
+
+  "apply_for_campaign": "التقديم على الحملة",
+  "why_are_you_a_good_fit": "لماذا أنت مناسب؟",
+  "tell_merchant_why_audience_would_love_offer": "أخبر التاجر لماذا سيحب جمهورك هذا العرض...",
+  "select_accounts_to_use": "اختر الحسابات المستخدمة",
+  "submit_application": "إرسال الطلب",
+
+  "please_enter_social_media_post_url": "يرجى إدخال رابط منشورك على وسائل التواصل الاجتماعي.",
+  "please_enter_valid_post_url": "يرجى إدخال رابط منشور صالح.",
+
+  "publish": "نشر",
+  "proof": "إثبات",
+
+  "invalid_task_information": "معلومات المهمة غير صالحة. يرجى المحاولة مرة أخرى.",
+
+  "deliverable": "المطلوب تسليمه",
+
+  "campaign_applicants_status": "@count متقدمين جدد · @reviewCount قيد المراجعة",
+
+  "business_name_is_required": "اسم النشاط التجاري مطلوب",
+  "description_is_required": "الوصف مطلوب",
+  "please_select_gallery_images": "يرجى اختيار صور المعرض",
+  "please_select_at_least_one_open_day": "يرجى اختيار يوم مفتوح واحد على الأقل",
+  "address_is_required": "العنوان مطلوب",
+  "phone_number_is_required": "رقم الهاتف مطلوب",
+  "enter_a_valid_phone_number": "أدخل رقم هاتف صالحًا",
+  "updated_successfully": "تم التحديث بنجاح",
+
+  "please_select_a_category": "يرجى اختيار فئة",
+
+  "restaurant_name_example": "مثال: مطعم Hilib Macaan",
+  "review_hint": "ما الذي أعجبك أو لم يعجبك؟ كيف كانت الخدمة؟",
+
+  "reject_content": "رفض المحتوى",
+  "please_provide_reason_for_rejecting": "يرجى تقديم سبب لرفض هذا المحتوى.",
+  "rejection_reason": "سبب الرفض",
+  "rejection_reason_example": "مثال: جودة الفيديو غير واضحة",
+  "rejection_reason_required_info": "يجب تقديم سبب للرفض حتى يعرف المؤثر ما الذي يحتاج إلى تحسينه.",
+  "reject": "رفض",
+
+  "approve": "موافقة",
+  "content_caption": "وصف المحتوى",
+
+  "no_published_content_yet": "لا يوجد محتوى منشور بعد",
+
+  "campaign_name_is_required": "اسم الحملة مطلوب",
+  "please_select_an_objective": "يرجى اختيار هدف",
+  "please_select_content_type": "يرجى اختيار نوع المحتوى",
+  "please_select_an_offer": "يرجى اختيار عرض",
+  "please_select_influencer_category": "يرجى اختيار فئة المؤثر",
+  "enter_valid_creator_number": "أدخل عددًا صالحًا لمنشئي المحتوى",
+  "start_date_is_required": "تاريخ البدء مطلوب",
+  "end_date_is_required": "تاريخ الانتهاء مطلوب",
+  "content_requirements_are_required": "متطلبات المحتوى مطلوبة",
+  "please_select_pricing_package": "يرجى اختيار باقة الأسعار",
+  "unable_to_identify_associated_business": "تعذر تحديد النشاط التجاري المرتبط.",
+  "campaign_created_successfully": "تم إنشاء الحملة بنجاح",
+
+  "seconds_video": "فيديو @seconds ثانية",
+
+  "short_video": "فيديو قصير • @seconds",
+  "standard_video": "فيديو قياسي • @seconds",
+  "extended_video": "فيديو ممتد • @seconds",
+  "long_video": "فيديو طويل • @seconds",
+
+  "little_more_room_to_show_offer": "مساحة أكبر قليلًا لعرض العرض أثناء استخدامه.",
+  "most_popular_format_for_local_campaigns": "التنسيق الأكثر شيوعًا للحملات المحلية.",
+  "great_for_storytelling": "مناسب جدًا لسرد القصص وشرح المنتج.",
+  "full_narrative_maximum_detail": "سرد كامل، مع أقصى قدر من التفاصيل والوصول.",
+
+  "new_campaign": "حملة جديدة",
+  "campaign_name": "اسم الحملة",
+  "campaign_name_hint": "مثال: اشترِ واحدًا واحصل على الآخر مجانًا",
+
+  "select_offer": "اختر العرض",
+  "select_category": "اختر الفئة",
+  "target_number_of_influencers": "العدد المستهدف من المؤثرين",
+  "enter_number_of_influencers": "أدخل عدد المؤثرين",
+  "content_requirements_hint": "مثال: فيديو TikTok واحد، قصتا Instagram",
+  "preparing_campaign_form": "جارٍ تجهيز نموذج الحملة...",
+
+  "preview_campaign": "معاينة الحملة",
+  "campaign_overview": "نظرة عامة على الحملة",
+  "name": "الاسم",
+  "objective": "الهدف",
+  "content_type": "نوع المحتوى",
+  "offer": "العرض",
+  "video_length": "مدة الفيديو",
+  "influencer_info": "معلومات المؤثر",
+  "influencer_category": "فئة المؤثر",
+  "target_influencers": "المؤثرون المستهدفون",
+  "selected_package": "الباقة المختارة",
+  "package_price": "سعر الباقة",
+  "total_campaign_cost": "إجمالي تكلفة الحملة",
+  "content_requirements": "متطلبات المحتوى",
+  "back_to_edit": "العودة للتعديل",
+  "submit": "إرسال",
+  "seconds": "ثانية",
+
+  "pricing_packages": "باقات الأسعار",
+  "preview": "معاينة",
+  "days": "أيام",
+
+  "poor": "ضعيف",
+  "fair": "مقبول",
+  "okay": "جيد إلى حد ما",
+  "good": "جيد",
+  "excellent": "ممتاز",
+  "thank_you_for_rating_som_spot": "شكرًا لك على تقييم SomSpot",
+  "rate_the_app": "قيّم التطبيق",
+
+  "email_us_online": "راسلنا عبر البريد الإلكتروني",
+  "email_us": "راسلنا",
+  "online": "متصل",
+
+  "dialer_not_supported": "تطبيق الاتصال غير مدعوم على هذا الجهاز.",
+  "could_not_launch_dialer": "تعذر فتح تطبيق الاتصال",
+  "check_out_merchant_on_somspot": "اكتشف @title (@category) على SomSpot! حمّل التطبيق الآن.",
+  "somspot_merchant": "تاجر SomSpot: @title",
+  "could_not_share_merchant_details": "تعذر مشاركة تفاصيل التاجر",
+  "whatsapp_cannot_be_opened": "لا يمكن فتح WhatsApp.",
+  "could_not_launch_whatsapp": "تعذر فتح WhatsApp",
+
+  "claim_code_copied": "تم نسخ رمز الاسترداد",
+  "gallery_permission_required": "يلزم السماح بالوصول إلى المعرض",
+  "qr_code_saved_to_gallery": "تم حفظ رمز QR في المعرض",
+  "failed_to_save_qr_code": "تعذر حفظ رمز QR",
+
+  "rate_som_spot": "قيّم SomSpot",
+  "enjoying_the_app_let_us_know": "هل تستمتع بالتطبيق؟ أخبرنا برأيك!",
+  "tap_to_rate": "اضغط للتقييم",
+  "submit_rating": "إرسال التقييم",
+
+  "see_less": "عرض أقل",
+  "see_more": "عرض المزيد",
+  "unknown_error_message": "واجه التطبيق خطأ غير معروف.\nيرجى المحاولة مرة أخرى لاحقًا.",
+  "something_went_wrong_retry": "حدث خطأ ما. اضغط للمحاولة مرة أخرى",
+  "offline_message": "عذرًا، أنت غير متصل بالإنترنت. تحقق من اتصالك وحاول مرة أخرى.",
+
+  "unable_to_play_video": "تعذر تشغيل الفيديو",
+  "video_may_be_unavailable_or_connection_failed": "قد يكون الفيديو غير متاح أو فشل الاتصال."
 }

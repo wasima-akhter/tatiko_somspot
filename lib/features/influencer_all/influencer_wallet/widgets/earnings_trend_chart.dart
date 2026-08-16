@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../response/influencer_wallet_response.dart';
 
 class EarningsTrendChart extends StatelessWidget {

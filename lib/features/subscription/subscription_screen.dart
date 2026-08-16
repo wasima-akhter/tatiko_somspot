@@ -1,8 +1,6 @@
-
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 
-
-import '../../share/controller/screen_export.dart';
+import '../../share/export/screen_export.dart';
 import 'widgets/subscription_key_concept_banner.dart';
 import 'widgets/subscription_plan_list.dart';
 import 'widgets/subscription_step_item.dart';
@@ -200,6 +198,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               ),
               const Spacer(),
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
                   if (context.canPop()) {
                     context.pop();

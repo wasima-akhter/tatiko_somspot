@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/otp_text_field.dart';
 
 import '../../../share/widgets/loading/loading_widget.dart';
@@ -69,6 +69,7 @@ class _ForgetOtpScreenState extends State<ForgetOtpScreen> {
               const Gap(16),
               // ── Back Button ──
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () => AppRouter.route.pop(),
                 child: const Icon(
                   Icons.arrow_back_ios_new,

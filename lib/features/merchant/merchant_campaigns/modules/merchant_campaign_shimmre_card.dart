@@ -1,6 +1,6 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 
 class MerchantCampaignShimmerCard extends StatelessWidget {
   const MerchantCampaignShimmerCard({super.key});

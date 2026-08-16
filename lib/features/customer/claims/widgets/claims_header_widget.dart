@@ -2,7 +2,7 @@
 // 2. Claims Header Widget (`claims_header_widget.dart`)
 // -----------------------------------------------------------------------------
 import 'package:som_spot/features/customer/claims/controller/claims_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../shared/helper/claims_helper.dart';
 
@@ -86,7 +86,7 @@ class ClaimsHeaderWidget extends GetView<ClaimsController> {
                             child: GestureDetector(
                               behavior: HitTestBehavior.opaque,
                               onTap: () =>
-                                  controller.changeTab(ClaimsTabType.active),
+                                  controller.selectTab(ClaimsTabType.active),
                               child: Center(
                                 child: AnimatedDefaultTextStyle(
                                   duration: const Duration(milliseconds: 200),
@@ -106,7 +106,7 @@ class ClaimsHeaderWidget extends GetView<ClaimsController> {
                             child: GestureDetector(
                               behavior: HitTestBehavior.opaque,
                               onTap: () =>
-                                  controller.changeTab(ClaimsTabType.expired),
+                                  controller.selectTab(ClaimsTabType.expired),
                               child: Center(
                                 child: AnimatedDefaultTextStyle(
                                   duration: const Duration(milliseconds: 200),

@@ -1,5 +1,5 @@
 import 'package:som_spot/features/auth/intro/onboarding/model/onboarding_model.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class OnboardingPageCard extends StatelessWidget {
   final OnboardingModel model;

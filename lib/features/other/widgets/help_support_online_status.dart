@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 class HelpSupportOnlineStatus extends StatelessWidget {
   const HelpSupportOnlineStatus({super.key});
@@ -23,11 +25,11 @@ class HelpSupportOnlineStatus extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        const Text.rich(
+        Text.rich(
           TextSpan(
             children: [
               TextSpan(
-                text: "Email Us ",
+                text: AppStrings.emailUs.tr,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
@@ -35,7 +37,7 @@ class HelpSupportOnlineStatus extends StatelessWidget {
                 ),
               ),
               TextSpan(
-                text: "Online",
+                text: AppStrings.online.tr,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,

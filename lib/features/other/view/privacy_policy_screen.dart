@@ -1,6 +1,6 @@
 import 'package:flutter_html/flutter_html.dart';
 
-import '../../../share/controller/screen_export.dart';
+import '../../../share/export/screen_export.dart';
 import '../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../controller/other_controller.dart';
 
@@ -10,23 +10,15 @@ class PrivacyPolicyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = OtherController.to;
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await controller.getPrivacyPolicy();
+    });
     return ScaffoldWrapper(
-      backgroundColor: AppColors.backgroundColorNew,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          AppStrings.privacyPolicy.tr,
-          style: context.titleMedium.copyWith(
-            fontWeight: FontWeight.bold,
-            fontSize: 18.sp,
-            color: AppColors.darkTextColor,
-          ),
-        ),
-      ),
+      title: AppStrings.privacyPolicy.tr,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -1,6 +1,6 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../response/influencer_dashboard_response.dart';
 

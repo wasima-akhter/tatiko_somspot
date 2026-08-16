@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../influencer_my_campaigns/controller/influencer_my_campaigns_controller.dart';
+import '../discarded/influencer_my_campaigns/controller/influencer_my_campaigns_controller.dart';
 
 class InfluencerBinding extends Bindings {
   @override

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/utils.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 class CampaignBottomButtons extends StatelessWidget {
   final VoidCallback onNext;
@@ -29,7 +31,7 @@ class CampaignBottomButtons extends StatelessWidget {
                 ),
               ),
 
-              child: const Text("Cancel"),
+              child: Text(AppStrings.cancel.tr),
             ),
           ),
 
@@ -49,7 +51,10 @@ class CampaignBottomButtons extends StatelessWidget {
                 ),
               ),
 
-              child: const Text("Next", style: TextStyle(color: Colors.white)),
+              child: Text(
+                AppStrings.next.tr,
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ],

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../helper/toast/toast_helper.dart';
 
@@ -236,6 +236,32 @@ class BusinessLocationController extends GetxController {
 
     Future.delayed(const Duration(milliseconds: 100), () {
       _isSelectingSuggestion = false;
+    });
+  }
+
+  //
+  void setLocationFromProfile({
+    required LatLng latLng,
+    String? address,
+    String? city,
+  }) {
+    selectedLatLng.value = latLng;
+
+    if (address != null) {
+      addressController.text = address;
+    }
+
+    if (city != null) {
+      cityController.text = city;
+    }
+
+    // Move the map camera after the map has been rendered.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      try {
+        mapController.move(latLng, 15);
+      } catch (e) {
+        debugPrint('Could not move map: $e');
+      }
     });
   }
 

@@ -1,6 +1,6 @@
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../core/influencer_tasks/response/influencer_tasks_response.dart';
 
 class SubmissionInfoCard extends StatelessWidget {

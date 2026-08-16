@@ -1,6 +1,6 @@
 import 'package:flutter_html/flutter_html.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/custom_buttom_sheet/custom_buttom_sheet.dart';
 
 import '../../../core/custom_assets/assets.gen.dart';
@@ -157,7 +157,7 @@ class AboutSomSpotScreen extends StatelessWidget {
 
                           _buildLinkTile(
                             context: context,
-                            title: "Rate the App",
+                            title: AppStrings.rateTheApp.tr,
                             onTap: () {
                               showRatingBottomSheet(context);
                             },

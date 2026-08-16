@@ -1,6 +1,6 @@
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
-import '../../../../../share/controller/screen_export.dart';
+import '../../../../../share/export/screen_export.dart';
 import '../controller/choose_role_controller.dart';
 
 class ChooseRoleScreen extends GetView<ChooseRoleController> {
@@ -81,6 +81,7 @@ class _RoleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),

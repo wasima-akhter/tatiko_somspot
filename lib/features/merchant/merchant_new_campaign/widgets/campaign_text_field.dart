@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 
 class CampaignNumberField extends StatefulWidget {

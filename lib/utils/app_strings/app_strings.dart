@@ -766,4 +766,241 @@ class AppStrings {
   static const String contentIsLiveEarned = "content_is_live_earned";
   static const String contentSubmittedWaitingApproval =
       "content_submitted_waiting_approval";
+
+  // Customer Strings
+  static const String saving = "saving";
+  static const String download = "download";
+  static const String presentQrCodeToMerchant = "present_qr_code_to_merchant";
+
+  static const String getDirections = "get_directions";
+  static const String chooseYourNavigationApp = "choose_your_navigation_app";
+  static const String fastestRoute = "fastest_route";
+  static const String googleMaps = "google_maps";
+  static const String appleMaps = "apple_maps";
+
+  static const String closesAt = "closes_at";
+  static const String opensAt = "opens_at";
+
+  static const String noMoreOffers = "no_more_offers";
+
+  static const String noReviewsYet = "no_reviews_yet";
+  static const String beTheFirstToReview = "be_the_first_to_review";
+
+  static const String anonymous = "anonymous";
+  static const String ago = "ago";
+
+  static const String noBusinessesFoundUnderCategory =
+      "no_businesses_found_under_category";
+
+  static const String tryAgain = "try_again";
+  static const String noNearbyMerchantsFound = "no_nearby_merchants_found";
+  static const String noNearbyPlacesYet = "no_nearby_places_yet";
+  static const String noNearbyPlacesMessage = "no_nearby_places_message";
+
+  static const String trendingInfluencer = "trending_influencer";
+  static const String recommendedByContent = "recommended_by_content";
+
+  static const String noContentYet = "no_content_yet";
+  static const String newVideosWillAppearHere = "new_videos_will_appear_here";
+  static const String retry = "retry";
+
+  static const String qrCode = "qr_code";
+  static const String showThisCodeToMerchant = "show_this_code_to_merchant";
+  static const String yourClaimCode = "your_claim_code";
+  static const String copy = "copy";
+
+  static const String reset = "reset";
+  static const String searchBusinessesOrDeals = "search_businesses_or_deals";
+
+  static const String noRecentSearches = "no_recent_searches";
+  static const String yourRecentSearchesWillAppearHere =
+      "your_recent_searches_will_appear_here";
+
+  static const String noSearchResults = "no_search_results";
+  static const String resetSearch = "reset_search";
+
+  static const String applyForCampaign = "apply_for_campaign";
+  static const String whyAreYouAGoodFit = "why_are_you_a_good_fit";
+  static const String tellMerchantWhyAudienceWouldLoveOffer =
+      "tell_merchant_why_audience_would_love_offer";
+  static const String selectAccountsToUse = "select_accounts_to_use";
+  static const String submitApplication = "submit_application";
+
+  static const String pleaseEnterSocialMediaPostUrl =
+      "please_enter_social_media_post_url";
+
+  static const String pleaseEnterValidPostUrl = "please_enter_valid_post_url";
+
+  static const String publish = "publish";
+  static const String proof = "proof";
+
+  static const String invalidTaskInformation = "invalid_task_information";
+
+  static const String deliverable = "deliverable";
+
+  static const String campaignApplicantsStatus = "campaign_applicants_status";
+
+  static const String businessNameIsRequired = "business_name_is_required";
+  static const String descriptionIsRequired = "description_is_required";
+  static const String pleaseSelectGalleryImages =
+      "please_select_gallery_images";
+  static const String pleaseSelectAtLeastOneOpenDay =
+      "please_select_at_least_one_open_day";
+  static const String addressIsRequired = "address_is_required";
+  static const String phoneNumberIsRequired = "phone_number_is_required";
+  static const String enterAValidPhoneNumber = "enter_a_valid_phone_number";
+  static const String updatedSuccessfully = "updated_successfully";
+
+  static const String pleaseSelectACategory = "please_select_a_category";
+
+  static const String restaurantNameExample = "restaurant_name_example";
+  static const String reviewHint = "review_hint";
+
+  static const String rejectContent = "reject_content";
+  static const String pleaseProvideReasonForRejecting =
+      "please_provide_reason_for_rejecting";
+  static const String rejectionReason = "rejection_reason";
+  static const String rejectionReasonExample = "rejection_reason_example";
+  static const String rejectionReasonRequiredInfo =
+      "rejection_reason_required_info";
+  static const String reject = "reject";
+
+  static const String approve = "approve";
+
+  static const String contentCaption = "content_caption";
+
+  static const String noPublishedContentYet = "no_published_content_yet";
+
+  static const String campaignNameIsRequired = "campaign_name_is_required";
+
+  static const String pleaseSelectAnObjective = "please_select_an_objective";
+
+  static const String pleaseSelectContentType = "please_select_content_type";
+
+  static const String pleaseSelectAnOffer = "please_select_an_offer";
+
+  static const String pleaseSelectInfluencerCategory =
+      "please_select_influencer_category";
+
+  static const String enterValidCreatorNumber = "enter_valid_creator_number";
+
+  static const String startDateIsRequired = "start_date_is_required";
+
+  static const String endDateIsRequired = "end_date_is_required";
+
+  static const String contentRequirementsAreRequired =
+      "content_requirements_are_required";
+
+  static const String pleaseSelectPricingPackage =
+      "please_select_pricing_package";
+
+  static const String unableToIdentifyAssociatedBusiness =
+      "unable_to_identify_associated_business";
+
+  static const String campaignCreatedSuccessfully =
+      "campaign_created_successfully";
+
+  static const String secondsVideo = "seconds_video";
+
+  static const String shortVideo = "short_video";
+
+  static const String standardVideo = "standard_video";
+
+  static const String extendedVideo = "extended_video";
+
+  static const String longVideo = "long_video";
+
+  static const String littleMoreRoomToShowOffer =
+      "little_more_room_to_show_offer";
+
+  static const String mostPopularFormatForLocalCampaigns =
+      "most_popular_format_for_local_campaigns";
+
+  static const String greatForStorytelling = "great_for_storytelling";
+
+  static const String fullNarrativeMaximumDetail =
+      "full_narrative_maximum_detail";
+
+  static const String newCampaign = "new_campaign";
+  static const String campaignName = "campaign_name";
+  static const String campaignNameHint = "campaign_name_hint";
+  static const String objective = "objective";
+  static const String contentType = "content_type";
+  static const String selectOffer = "select_offer";
+  static const String influencerCategory = "influencer_category";
+  static const String selectCategory = "select_category";
+  static const String targetNumberOfInfluencers =
+      "target_number_of_influencers";
+  static const String enterNumberOfInfluencers = "enter_number_of_influencers";
+  static const String contentRequirements = "content_requirements";
+  static const String contentRequirementsHint = "content_requirements_hint";
+  static const String preparingCampaignForm = "preparing_campaign_form";
+
+  static const String previewCampaign = "preview_campaign";
+  static const String campaignOverview = "campaign_overview";
+  static const String name = "name";
+
+  static const String offer = "offer";
+  static const String videoLength = "video_length";
+
+  static const String influencerInfo = "influencer_info";
+  static const String targetInfluencers = "target_influencers";
+  static const String selectedPackage = "selected_package";
+  static const String packagePrice = "package_price";
+  static const String totalCampaignCost = "total_campaign_cost";
+
+  static const String backToEdit = "back_to_edit";
+  static const String submit = "submit";
+
+  static const String seconds = "seconds";
+
+  static const String pricingPackages = "pricing_packages";
+  static const String preview = "preview";
+  static const String days = "days";
+
+  static const String poor = "poor";
+  static const String fair = "fair";
+  static const String okay = "okay";
+  static const String good = "good";
+  static const String excellent = "excellent";
+  static const String thankYouForRatingSomSpot =
+      "thank_you_for_rating_som_spot";
+
+  static const String rateTheApp = "rate_the_app";
+
+  static const String emailUsOnline = "email_us_online";
+  static const String emailUs = "email_us";
+  static const String online = "online";
+
+  static const String dialerNotSupported = "dialer_not_supported";
+  static const String couldNotLaunchDialer = "could_not_launch_dialer";
+  static const String checkOutMerchantOnSomSpot =
+      "check_out_merchant_on_somspot";
+  static const String somspotMerchant = "somspot_merchant";
+  static const String couldNotShareMerchantDetails =
+      "could_not_share_merchant_details";
+  static const String whatsappCannotBeOpened = "whatsapp_cannot_be_opened";
+  static const String couldNotLaunchWhatsapp = "could_not_launch_whatsapp";
+
+  static const String claimCodeCopied = "claim_code_copied";
+  static const String galleryPermissionRequired = "gallery_permission_required";
+  static const String qrCodeSavedToGallery = "qr_code_saved_to_gallery";
+  static const String failedToSaveQrCode = "failed_to_save_qr_code";
+
+  static const String rateSomSpot = "rate_som_spot";
+  static const String enjoyingTheAppLetUsKnow = "enjoying_the_app_let_us_know";
+  static const String tapToRate = "tap_to_rate";
+  static const String submitRating = "submit_rating";
+
+  //OTHER Stuff
+
+  static const String seeLess = "see_less";
+  static const String seeMore = "see_more";
+  static const String unknownErrorMessage = "unknown_error_message";
+  static const String somethingWentWrongRetry = "something_went_wrong_retry";
+  static const String offlineMessage = "offline_message";
+
+  static const String unableToPlayVideo = "unable_to_play_video";
+  static const String videoUnavailableOrConnectionFailed =
+      "video_may_be_unavailable_or_connection_failed";
 }

@@ -1,5 +1,5 @@
 import 'package:som_spot/helper/text_utils/string_extension.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../shared/model/deal_model.dart';
 import 'merchant_offer_meta.dart';

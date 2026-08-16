@@ -1,5 +1,5 @@
 import '../../../../helper/qr_code/qr_code_helper.dart';
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 
 class OfferClaimController extends GetxController {
   final String claimCode;

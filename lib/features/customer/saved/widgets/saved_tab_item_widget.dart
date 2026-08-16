@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 // 3. Saved Tab Item Widget
 // -----------------------------------------------------------------------------
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class SavedTabItemWidget extends StatelessWidget {
   final String title;
@@ -19,6 +19,7 @@ class SavedTabItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(

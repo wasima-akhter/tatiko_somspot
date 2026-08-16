@@ -4,7 +4,7 @@ import 'package:som_spot/features/offers/offer_details/controller/offer_detail_c
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 
 class ClaimOfferNowButton extends StatelessWidget {
   const ClaimOfferNowButton({super.key});

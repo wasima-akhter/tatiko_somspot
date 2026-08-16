@@ -2,7 +2,7 @@ import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
 import '../../helper/text_utils/string_helper.dart';
-import '../../share/controller/screen_export.dart';
+import '../../share/export/screen_export.dart';
 import '../../share/widgets/network_image/custom_network_image.dart';
 
 class DashboardHeaderModel {
@@ -83,6 +83,7 @@ class DashboardCommonHeaderSec extends StatelessWidget {
             ),
 
             GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: () {
                 AppRouter.route.pushNamed(RoutePath.alertScreen);
               },

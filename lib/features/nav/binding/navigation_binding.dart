@@ -16,7 +16,7 @@ import '../../customer/customer_home/controller/home_controller.dart';
 import '../../customer/saved/controller/saved_controller.dart';
 import '../../customer/search/binding/search_binding.dart';
 import '../../influencer_all/influencer_dashboard/controller/influencer_dashboard_controller.dart';
-import '../../influencer_all/influencer_discover/controller/influencer_discover_controller.dart';
+import '../../influencer_all/discarded/influencer_discover/controller/influencer_discover_controller.dart';
 import '../../influencer_all/influencer_task_screen/controller/influencer_task_controller.dart';
 import '../../influencer_all/influencer_wallet/controller/influencer_wallet_controller.dart';
 import '../../influencer_all/influencer_wallet/service/influencer_wallet_service.dart';

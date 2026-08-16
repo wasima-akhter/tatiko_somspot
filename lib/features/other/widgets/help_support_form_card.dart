@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import 'help_support_form.dart';
 import 'help_support_online_status.dart';
@@ -28,7 +28,7 @@ class HelpSupportFormCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Email Us Online",
+            AppStrings.emailUsOnline.tr,
             style: context.titleMedium.copyWith(
               fontSize: 15.sp,
               color: AppColors.darkTextColor,

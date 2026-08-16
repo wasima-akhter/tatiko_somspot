@@ -1,6 +1,6 @@
 import 'package:som_spot/core/service/datasource/local/app_storage.dart';
 import 'package:som_spot/features/auth/intro/onboarding/widgets/onboarding_page_card.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../../utils/common_controller/common_controller.dart';
 import '../controller/onboarding_controller.dart';
@@ -36,6 +36,7 @@ class OnboardingScreen extends StatelessWidget {
                   ),
 
                   GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: _completeOnboarding,
                     child: Container(
                       padding: const EdgeInsets.symmetric(

@@ -588,5 +588,199 @@
   "published_and_verified": "Published & Verified",
   "pending_review": "Pending Review",
   "content_is_live_earned": "Your content is live. You earned $@amount.",
-  "content_submitted_waiting_approval": "Your content is submitted. Waiting for merchant approval."
+  "content_submitted_waiting_approval": "Your content is submitted. Waiting for merchant approval.",
+
+  "saving": "Saving...",
+  "download": "Download",
+  "present_qr_code_to_merchant": "Present this QR code to the merchant to redeem your offer.",
+
+  "get_directions": "Get Directions",
+  "choose_your_navigation_app": "Choose your navigation app",
+  "fastest_route": "Fastest route",
+  "google_maps": "Google Maps",
+  "apple_maps": "Apple Maps",
+
+  "closes_at": "Closes at",
+  "opens_at": "Opens at",
+
+  "no_more_offers": "No more offers",
+
+  "no_reviews_yet": "No reviews yet",
+  "be_the_first_to_review": "Be the first to review this business.",
+
+  "anonymous": "Anonymous",
+  "ago": "ago",
+
+  "no_businesses_found_under_category": "No businesses found under this category.",
+
+  "try_again": "Try Again",
+  "no_nearby_merchants_found": "No nearby merchants found",
+  "no_nearby_places_yet": "No Nearby Places Yet",
+  "no_nearby_places_message": "We couldn’t find any businesses nearby right now.\nTry again to discover places around you.",
+
+  "trending_influencer": "Trending Influencer",
+  "recommended_by_content": "Recommended by Content",
+
+  "no_content_yet": "No content yet",
+  "new_videos_will_appear_here": "New videos will appear here.",
+  "retry": "Retry",
+
+  "qr_code": "QR Code",
+  "show_this_code_to_merchant": "Show this code to the merchant to\nredeem your discount.",
+  "your_claim_code": "Your Claim Code",
+  "copy": "Copy",
+
+  "reset": "Reset",
+  "search_businesses_or_deals": "Search businesses or deals...",
+
+  "no_recent_searches": "No Recent Searches",
+  "your_recent_searches_will_appear_here": "Your recent searches will appear here",
+
+  "no_search_results": "We couldn't find anything matching your search.",
+  "reset_search": "Reset Search",
+
+  "apply_for_campaign": "Apply for Campaign",
+  "why_are_you_a_good_fit": "Why are you a good fit?",
+  "tell_merchant_why_audience_would_love_offer": "Tell the merchant why your audience would love this offer...",
+  "select_accounts_to_use": "Select Accounts to Use",
+  "submit_application": "Submit Application",
+
+  "please_enter_social_media_post_url": "Please enter your social media post URL.",
+  "please_enter_valid_post_url": "Please enter a valid post URL.",
+
+  "publish": "Publish",
+  "proof": "Proof",
+
+  "invalid_task_information": "Invalid task information. Please try again.",
+
+  "deliverable": "Deliverable",
+
+  "campaign_applicants_status": "@count new applicants · @reviewCount to review",
+
+  "business_name_is_required": "Business name is required",
+  "description_is_required": "Description is required",
+  "please_select_gallery_images": "Please select gallery images",
+  "please_select_at_least_one_open_day": "Please select at least one open day",
+  "address_is_required": "Address is required",
+  "phone_number_is_required": "Phone number is required",
+  "enter_a_valid_phone_number": "Enter a valid phone number",
+  "updated_successfully": "Updated successfully",
+
+  "please_select_a_category": "Please select a category",
+
+  "restaurant_name_example": "e.g. Hilib Macaan Restaurant",
+  "review_hint": "What did you like or dislike? How was the service?",
+
+  "reject_content": "Reject Content",
+  "please_provide_reason_for_rejecting": "Please provide a reason for rejecting this submission.",
+  "rejection_reason": "Rejection Reason",
+  "rejection_reason_example": "Example: Video quality is not clear",
+  "rejection_reason_required_info": "A rejection reason is required so the influencer knows what to improve.",
+  "reject": "Reject",
+
+  "approve": "Approve",
+
+  "content_caption": "Content Caption",
+
+  "no_published_content_yet": "No published content yet",
+
+  "campaign_name_is_required": "Campaign name is required",
+  "please_select_an_objective": "Please select an objective",
+  "please_select_content_type": "Please select content type",
+  "please_select_an_offer": "Please select an offer",
+  "please_select_influencer_category": "Please select influencer category",
+  "enter_valid_creator_number": "Enter valid creator number",
+  "start_date_is_required": "Start date is required",
+  "end_date_is_required": "End date is required",
+  "content_requirements_are_required": "Content requirements are required",
+  "please_select_pricing_package": "Please select a pricing package",
+  "unable_to_identify_associated_business": "Unable to identify the associated business.",
+  "campaign_created_successfully": "Campaign created successfully",
+
+  "seconds_video": "@seconds Seconds Video",
+
+  "short_video": "Short Video • @seconds",
+  "standard_video": "Standard Video • @seconds",
+  "extended_video": "Extended Video • @seconds",
+  "long_video": "Long Video • @seconds",
+
+  "little_more_room_to_show_offer": "A little more room to show the offer in action.",
+  "most_popular_format_for_local_campaigns": "The most popular format for local campaigns.",
+  "great_for_storytelling": "Great for storytelling and product walkthroughs.",
+  "full_narrative_maximum_detail": "Full narrative, maximum detail and reach.",
+
+  "new_campaign": "New Campaign",
+  "campaign_name": "Campaign Name",
+  "campaign_name_hint": "e.g Buy 1 Get 1 Free Promo",
+
+  "select_offer": "Select Offer",
+
+  "select_category": "Select Category",
+  "target_number_of_influencers": "Target Number of Influencers",
+  "enter_number_of_influencers": "Enter number of influencers",
+
+  "content_requirements_hint": "e.g 1 TikTok Video, 2 Instagram Stories",
+  "preparing_campaign_form": "Preparing campaign form...",
+
+  "preview_campaign": "Preview Campaign",
+  "campaign_overview": "Campaign Overview",
+  "name": "Name",
+  "objective": "Objective",
+  "content_type": "Content Type",
+  "offer": "Offer",
+  "video_length": "Video Length",
+  "influencer_info": "Influencer Info",
+  "influencer_category": "Influencer Category",
+  "target_influencers": "Target Influencers",
+  "selected_package": "Selected Package",
+  "package_price": "Package Price",
+  "total_campaign_cost": "Total Campaign Cost",
+  "content_requirements": "Content Requirements",
+  "back_to_edit": "Back to Edit",
+  "submit": "Submit",
+  "seconds": "seconds",
+
+  "pricing_packages": "Pricing Packages",
+  "preview": "Preview",
+  "days": "days",
+
+  "poor": "Poor",
+  "fair": "Fair",
+  "okay": "Okay",
+  "good": "Good",
+  "excellent": "Excellent",
+  "thank_you_for_rating_som_spot": "Thank you for rating SomSpot",
+
+  "rate_the_app": "Rate the App",
+
+  "email_us_online": "Email Us Online",
+  "email_us": "Email Us",
+  "online": "Online",
+
+  "dialer_not_supported": "Dialer not supported on this device.",
+  "could_not_launch_dialer": "Could not launch dialer",
+  "check_out_merchant_on_somspot": "Check out @title (@category) on SomSpot! Download the app now.",
+  "somspot_merchant": "SomSpot Merchant: @title",
+  "could_not_share_merchant_details": "Could not share merchant details",
+  "whatsapp_cannot_be_opened": "WhatsApp cannot be opened.",
+  "could_not_launch_whatsapp": "Could not launch WhatsApp",
+
+  "claim_code_copied": "Claim code copied",
+  "gallery_permission_required": "Gallery permission is required",
+  "qr_code_saved_to_gallery": "QR code saved to gallery",
+  "failed_to_save_qr_code": "Failed to save QR code",
+
+  "rate_som_spot": "Rate SomSpot",
+  "enjoying_the_app_let_us_know": "Enjoying the app? Let us know!",
+  "tap_to_rate": "Tap to rate",
+  "submit_rating": "Submit Rating",
+
+  "see_less": "See Less",
+  "see_more": "See More",
+  "unknown_error_message": "The application has encountered an unknown error.\nPlease try again later.",
+  "something_went_wrong_retry": "Something went wrong. Tap to try again",
+  "offline_message": "Oops, You're offline. Check your connection and give it another shot.",
+
+  "unable_to_play_video": "Unable to play video",
+  "video_may_be_unavailable_or_connection_failed": "The video may be unavailable or the connection failed."
 }

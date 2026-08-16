@@ -1,4 +1,4 @@
-import '../../../../../share/controller/screen_export.dart';
+import '../../../../../share/export/screen_export.dart';
 import '../../response/customer_search_response.dart';
 import 'search-result_rating.dart';
 

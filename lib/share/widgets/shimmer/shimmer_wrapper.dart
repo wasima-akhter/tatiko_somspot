@@ -1,6 +1,6 @@
 import 'package:shimmer/shimmer.dart';
 
-import '../../controller/screen_export.dart';
+import '../../export/screen_export.dart';
 
 class ShimmerWrapper extends StatelessWidget {
   final Widget child;

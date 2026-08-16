@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../../offers/offer_details/controller/offer_detail_controller.dart';
 import '../../../../../offers/offer_details/helper/offer_details_arg_model.dart';
@@ -14,6 +14,7 @@ class MerchantOfferCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: _handleOfferTap,
       child: Container(
         decoration: BoxDecoration(

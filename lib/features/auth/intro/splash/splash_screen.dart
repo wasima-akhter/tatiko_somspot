@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:som_spot/core/custom_assets/assets.gen.dart';
 import 'package:som_spot/core/service/datasource/local/app_storage.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../core/router/role_router.dart';
 

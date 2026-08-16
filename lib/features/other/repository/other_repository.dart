@@ -12,11 +12,14 @@ class OtherRepository {
   }
 
   Future<Response> getTermsConditions() {
-    return _apiClient.get(url: ApiUrls.getTermsConditions());
+    return _apiClient.get(
+      url: ApiUrls.getTermsConditions(),
+      showResponse: true,
+    );
   }
 
   Future<Response> getPrivacyPolicy() {
-    return _apiClient.get(url: ApiUrls.getPrivacyPolicy());
+    return _apiClient.get(url: ApiUrls.getPrivacyPolicy(), showResponse: true);
   }
 
   Future<Response> rateApp(RateAppRequest request) {

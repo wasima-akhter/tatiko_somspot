@@ -1,4 +1,4 @@
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 
 class SectionHeader extends StatelessWidget {
   const SectionHeader({super.key, required this.title, required this.onSeeAll});
@@ -20,9 +20,10 @@ class SectionHeader extends StatelessWidget {
         ),
 
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: onSeeAll,
           child: Text(
-            'See All',
+            AppStrings.seeAll.tr,
             style: context.bodyMedium.copyWith(
               color: AppColors.primaryColor,
               fontWeight: FontWeight.w500,

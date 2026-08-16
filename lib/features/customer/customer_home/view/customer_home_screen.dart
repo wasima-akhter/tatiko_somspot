@@ -1,10 +1,11 @@
+import 'package:som_spot/features/core/category/controller/category_controller.dart';
 import 'package:som_spot/features/customer/customer_home/controller/home_controller.dart';
 import 'package:som_spot/features/customer/customer_home/widgets/home_header_widget.dart';
 import 'package:som_spot/features/customer/customer_home/widgets/home_nearby_widget.dart';
 import 'package:som_spot/features/customer/customer_home/widgets/home_top_deals_widget.dart';
 import 'package:som_spot/features/customer/customer_home/widgets/home_trending_content_widget.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../widgets/home_categories_widget.dart';
 
 class CustomerHomeScreen extends GetView<HomeController> {
@@ -12,6 +13,9 @@ class CustomerHomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await CategoryController.to.loadInitialCategories();
+    });
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: RefreshIndicator(

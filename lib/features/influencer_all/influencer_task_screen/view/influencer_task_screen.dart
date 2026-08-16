@@ -1,4 +1,4 @@
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../core/influencer_tasks/response/influencer_tasks_response.dart';

@@ -1,6 +1,6 @@
 import 'package:som_spot/features/offers/offer_details/helper/offer_details_arg_model.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../share/widgets/network_image/custom_network_image.dart';
 import '../../offer_details/controller/offer_detail_controller.dart';
@@ -35,6 +35,7 @@ class OfferListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
         if (Get.isRegistered<OfferDetailController>()) {
           Get.delete<OfferDetailController>();
@@ -217,6 +218,7 @@ class OfferListCard extends StatelessWidget {
 
       case OfferActionType.edit:
         return GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             AppRouter.route.pushNamed(RoutePath.editOfferScreen, extra: offer);
           },

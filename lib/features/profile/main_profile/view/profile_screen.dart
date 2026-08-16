@@ -7,7 +7,7 @@ import 'package:som_spot/helper/toast/toast_helper.dart';
 import 'package:som_spot/share/widgets/dialog/custom_dialog.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/refresh_indicator/refresh_indicator.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../widgets/influencer_edit_option_bottom_sheet.dart';
@@ -66,7 +66,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
 
                               case UserRole.customer:
                                 AppRouter.route.pushNamed(
-                                  RoutePath.editProfileScreen,
+                                  RoutePath.editCustomerProfileScreen,
                                 );
 
                                 break;
@@ -212,6 +212,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
 
                     // Log Out Button
                     GestureDetector(
+                      behavior: HitTestBehavior.opaque,
                       onTap: () => _showLogoutDialog(context, controller),
                       child: Container(
                         height: 52.h,

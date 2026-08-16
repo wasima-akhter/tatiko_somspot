@@ -1,6 +1,6 @@
 import 'package:som_spot/features/influencer_all/influencer_wallet/helper/influencer_wallet_helper.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../controller/influencer_wallet_controller.dart';
 
 class WalletFilterTabs extends StatelessWidget {

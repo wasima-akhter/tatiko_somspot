@@ -1,6 +1,6 @@
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
-import '../../../share/controller/screen_export.dart';
+import '../../../share/export/screen_export.dart';
 
 class BusinessInfoScreen extends StatelessWidget {
   const BusinessInfoScreen({super.key});

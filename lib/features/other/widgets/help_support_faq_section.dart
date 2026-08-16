@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../controller/other_controller.dart';
 import 'help_support_faq_item.dart';
@@ -14,7 +14,7 @@ class HelpSupportFaqSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "FAQ",
+          AppStrings.faq.tr.toUpperCase(),
           style: context.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
             fontSize: 16.sp,

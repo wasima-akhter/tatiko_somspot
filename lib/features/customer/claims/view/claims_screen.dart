@@ -1,7 +1,7 @@
 import 'package:som_spot/features/customer/claims/controller/claims_controller.dart';
 import 'package:som_spot/features/customer/claims/widgets/active_claims_list_widget.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../shared/helper/claims_helper.dart';
 import '../widgets/claims_header_widget.dart';
 import '../widgets/expired_claims_list_widget.dart';

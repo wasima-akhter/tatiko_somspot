@@ -1,5 +1,5 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class LocationController extends GetxController {
   static LocationController get to => Get.find<LocationController>();

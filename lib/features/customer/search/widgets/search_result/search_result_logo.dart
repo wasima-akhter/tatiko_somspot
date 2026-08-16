@@ -1,4 +1,4 @@
-import '../../../../../share/controller/screen_export.dart';
+import '../../../../../share/export/screen_export.dart';
 import '../../../../../share/widgets/network_image/custom_network_image.dart';
 
 class SearchResultLogo extends StatelessWidget {

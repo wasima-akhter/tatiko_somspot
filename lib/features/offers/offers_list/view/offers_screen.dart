@@ -4,7 +4,7 @@ import 'package:som_spot/features/offers/offers_list/widgets/offers_header.dart'
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../shared/helper/offer_helper.dart';
 import '../../shared/response/offers_response.dart';

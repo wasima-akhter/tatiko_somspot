@@ -1,5 +1,4 @@
-import 'package:get/get.dart';
-
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/paginator/paginator.dart';
 import '../shared/helper/claims_helper.dart';
 import '../shared/response/claims_model.dart';
@@ -32,8 +31,7 @@ class ClaimsController extends GetxController {
 
   static ClaimsController get to => Get.find();
 
-  // Selected tab using enum instead of int
-  final rxSelectedTab = ClaimsTabType.active.obs;
+  final listScrollController = ScrollController();
 
   late final Paginator<ClaimWalletItemModel> activePaginator;
   late final Paginator<ClaimWalletItemModel> expiredPaginator;
@@ -41,6 +39,10 @@ class ClaimsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    // -------------------------------------------------------------------------
+    // Paginators
+    // -------------------------------------------------------------------------
 
     activePaginator = Paginator(
       fetchPage: (page, limit) async {
@@ -65,29 +67,112 @@ class ClaimsController extends GetxController {
         return response.data!;
       },
     );
+
+    // -------------------------------------------------------------------------
+    // Scroll
+    // -------------------------------------------------------------------------
+
+    listScrollController.addListener(() {
+      if (!listScrollController.hasClients) return;
+
+      if (listScrollController.position.pixels >=
+          listScrollController.position.maxScrollExtent - 200) {
+        loadMore();
+      }
+    });
+
+    loadActiveClaims();
   }
 
-  void changeTab(ClaimsTabType tab) {
+  final rxSelectedTab = ClaimsTabType.active.obs;
+
+  // ---------------------------------------------------------------------------
+  // Tab
+  // ---------------------------------------------------------------------------
+
+  Future<void> selectTab(ClaimsTabType tab) async {
     if (rxSelectedTab.value == tab) return;
 
     rxSelectedTab.value = tab;
 
     if (tab == ClaimsTabType.active) {
       if (activePaginator.items.isEmpty) {
-        activePaginator.refresh();
+        await loadActiveClaims();
       }
     } else {
       if (expiredPaginator.items.isEmpty) {
-        expiredPaginator.refresh();
+        await loadExpiredClaims();
       }
     }
   }
 
-  Future<void> refreshClaims() async {
+  // ---------------------------------------------------------------------------
+  // Active Claims
+  // ---------------------------------------------------------------------------
+
+  Future<void> loadActiveClaims() async {
+    debugPrint('Before Active Claims: ${activePaginator.items.length}');
+
+    await activePaginator.loadInitial();
+
+    debugPrint('After Active Claims: ${activePaginator.items.length}');
+  }
+
+  Future<void> refreshActiveClaims() {
+    return activePaginator.refresh();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Expired Claims
+  // ---------------------------------------------------------------------------
+
+  Future<void> loadExpiredClaims() async {
+    debugPrint('Before Expired Claims: ${expiredPaginator.items.length}');
+
+    await expiredPaginator.loadInitial();
+
+    debugPrint('After Expired Claims: ${expiredPaginator.items.length}');
+  }
+
+  Future<void> refreshExpiredClaims() {
+    return expiredPaginator.refresh();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Pagination
+  // ---------------------------------------------------------------------------
+
+  Future<void> loadMore() {
     if (rxSelectedTab.value == ClaimsTabType.active) {
-      await activePaginator.refresh();
-    } else {
-      await expiredPaginator.refresh();
+      return activePaginator.loadMore();
     }
+
+    return expiredPaginator.loadMore();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Refresh
+  // ---------------------------------------------------------------------------
+
+  Future<void> refreshClaims() {
+    if (rxSelectedTab.value == ClaimsTabType.active) {
+      return refreshActiveClaims();
+    }
+
+    return refreshExpiredClaims();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Dispose
+  // ---------------------------------------------------------------------------
+
+  @override
+  void onClose() {
+    listScrollController.dispose();
+
+    activePaginator.dispose();
+    expiredPaginator.dispose();
+
+    super.onClose();
   }
 }

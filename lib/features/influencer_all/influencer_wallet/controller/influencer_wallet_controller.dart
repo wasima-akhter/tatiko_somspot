@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../utils/enum/app_enum.dart';
 import '../helper/influencer_wallet_helper.dart';
@@ -69,7 +70,7 @@ class InfluencerWalletController extends GetxController {
 
       walletStatus.value = ApiStatus.completed;
     } catch (e) {
-      errorMessage.value = "Something went wrong";
+      errorMessage.value = AppStrings.somethingWentWrong.tr;
 
       walletStatus.value = ApiStatus.error;
     }

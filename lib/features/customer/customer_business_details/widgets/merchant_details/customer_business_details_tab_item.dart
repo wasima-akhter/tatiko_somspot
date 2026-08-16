@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../controller/customer_business_details_controller.dart';
 
@@ -21,6 +21,7 @@ class MerchantDetailsTabItem extends StatelessWidget {
 
       return Expanded(
         child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             controller.activeTabIndex.value = index;
           },

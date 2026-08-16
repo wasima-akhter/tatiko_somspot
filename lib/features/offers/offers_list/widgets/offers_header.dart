@@ -1,7 +1,7 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
-import '../controller/offer_controller.dart';
 import '../../shared/helper/offer_helper.dart';
+import '../controller/offer_controller.dart';
 
 class OffersHeader extends StatelessWidget {
   const OffersHeader({super.key});
@@ -109,6 +109,7 @@ class OffersHeader extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),

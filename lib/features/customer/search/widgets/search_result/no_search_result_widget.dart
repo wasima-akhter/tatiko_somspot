@@ -1,4 +1,4 @@
-import '../../../../../share/controller/screen_export.dart';
+import '../../../../../share/export/screen_export.dart';
 import '../../controller/search_controller.dart';
 
 class NoSearchResultWidget extends StatelessWidget {
@@ -30,7 +30,7 @@ class NoSearchResultWidget extends StatelessWidget {
             Gap(14.h),
 
             Text(
-              "No results found",
+              AppStrings.noItemsFound.tr,
               textAlign: TextAlign.center,
               style: context.titleMedium.copyWith(
                 color: AppColors.darkTextColor,
@@ -41,7 +41,7 @@ class NoSearchResultWidget extends StatelessWidget {
             Gap(6.h),
 
             Text(
-              "We couldn't find anything matching your search.",
+              AppStrings.noSearchResults.tr,
               textAlign: TextAlign.center,
               style: context.bodySmall.copyWith(
                 color: AppColors.subtitleTextColor,
@@ -65,7 +65,7 @@ class NoSearchResultWidget extends StatelessWidget {
                 ),
                 icon: Icon(Iconsax.refresh, size: 16.sp),
                 label: Text(
-                  "Reset Search",
+                  AppStrings.resetSearch.tr,
                   style: context.bodySmall.copyWith(
                     color: AppColors.primaryColor,
                     fontWeight: FontWeight.w700,

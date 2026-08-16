@@ -2,7 +2,7 @@ import 'package:som_spot/features/merchant/merchant_campaign_details/controller/
 import 'package:som_spot/helper/date_converter/date_converter.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../../share/widgets/video/video_overlay.dart';
 import '../widgets/merchant_campaign_content_preview_card.dart';

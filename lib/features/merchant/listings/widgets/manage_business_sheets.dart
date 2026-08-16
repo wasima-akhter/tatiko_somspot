@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:som_spot/helper/date_converter/date_converter.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
@@ -48,6 +48,7 @@ Widget _buildSheetHeader(
             ),
           ),
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () => Navigator.pop(context),
             child: Container(
               padding: EdgeInsets.all(6.w),
@@ -157,6 +158,7 @@ class _EditBusinessProfileSheet extends StatelessWidget {
                           // COVER IMAGE
                           Positioned.fill(
                             child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
                               onTap: controller.pickCoverImage,
                               child: controller.coverImage.value != null
                                   ? Image.file(
@@ -181,6 +183,7 @@ class _EditBusinessProfileSheet extends StatelessWidget {
                             top: 10.h,
                             right: 10.w,
                             child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
                               onTap: controller.pickCoverImage,
                               child: Container(
                                 padding: EdgeInsets.all(7.w),
@@ -201,6 +204,7 @@ class _EditBusinessProfileSheet extends StatelessWidget {
                           Stack(
                             children: [
                               GestureDetector(
+                                behavior: HitTestBehavior.opaque,
                                 onTap: controller.pickLogoImage,
                                 child: controller.logoImage.value != null
                                     ? ClipOval(
@@ -240,6 +244,7 @@ class _EditBusinessProfileSheet extends StatelessWidget {
                                 bottom: 0,
                                 right: 0,
                                 child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
                                   onTap: controller.pickLogoImage,
                                   child: Container(
                                     padding: EdgeInsets.all(6.w),
@@ -276,7 +281,7 @@ class _EditBusinessProfileSheet extends StatelessWidget {
 
               CustomTextField(
                 controller: controller.businessNameController,
-                hintText: 'e.g. Hilib Macaan Restaurant',
+                hintText: AppStrings.restaurantNameExample.tr,
                 fillColor: AppColors.white,
               ),
 
@@ -295,6 +300,7 @@ class _EditBusinessProfileSheet extends StatelessWidget {
                         controller.selectedCategoryId.value == category.id;
 
                     return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
                       onTap: () {
                         controller.selectedCategoryId.value = category.id;
                       },
@@ -341,7 +347,7 @@ class _EditBusinessProfileSheet extends StatelessWidget {
               CustomTextField(
                 controller: controller.descriptionController,
 
-                hintText: 'What did you like or dislike? How was the service?',
+                hintText: AppStrings.reviewHint.tr,
 
                 fillColor: AppColors.white,
 
@@ -458,6 +464,7 @@ class _ManageGallerySheetState extends State<_ManageGallerySheet> {
                   // Add button
                   if (index == totalCount) {
                     return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
                       onTap: _pickImages,
                       child: Container(
                         decoration: BoxDecoration(
@@ -521,6 +528,7 @@ class _ManageGallerySheetState extends State<_ManageGallerySheet> {
                         right: 6.w,
 
                         child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
                           onTap: () {
                             controller.galleryImages.removeAt(fileIndex);
                           },

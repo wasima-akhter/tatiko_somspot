@@ -1,6 +1,6 @@
 import 'package:som_spot/features/customer/customer_home/controller/home_controller.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 
 import '../../../../helper/text_utils/string_helper.dart';
@@ -74,6 +74,7 @@ class HomeHeaderWidget extends StatelessWidget {
               ),
               // Notification Bell
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () => AppRouter.route.pushNamed(RoutePath.alertScreen),
                 child: Container(
                   width: 44.w,
@@ -130,6 +131,7 @@ class HomeHeaderWidget extends StatelessWidget {
           Gap(16.h),
           // Search Row
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () => NavigationControllerMain.to.selectedNavIndex.value = 1,
             child: Container(
               height: 52.h,

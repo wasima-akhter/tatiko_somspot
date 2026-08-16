@@ -1,4 +1,4 @@
-import '../../../share/controller/screen_export.dart';
+import '../../../share/export/screen_export.dart';
 
 class SubscriptionUsageCard extends StatelessWidget {
   const SubscriptionUsageCard({super.key});

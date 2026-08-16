@@ -3,7 +3,7 @@ import 'package:som_spot/features/customer/search/widgets/recent_search/recent_s
 import 'package:som_spot/features/customer/search/widgets/search_result/no_search_result_widget.dart';
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../widgets/search_result/search_result_card.dart';
 import '../widgets/trending_search_section/trending_search_section.dart';
@@ -66,7 +66,7 @@ class SearchScreen extends GetView<SearchScreenController> {
             children: [
               Expanded(
                 child: Text(
-                  "Search",
+                  AppStrings.search.tr,
                   style: context.titleLarge.copyWith(
                     color: AppColors.darkTextColor,
                     fontWeight: FontWeight.bold,
@@ -81,6 +81,7 @@ class SearchScreen extends GetView<SearchScreenController> {
                 }
 
                 return GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   onTap: controller.resetSearch,
                   child: Container(
                     padding: EdgeInsets.symmetric(
@@ -101,7 +102,7 @@ class SearchScreen extends GetView<SearchScreenController> {
                         ),
                         Gap(5.w),
                         Text(
-                          "Reset",
+                          AppStrings.reset.tr,
                           style: context.bodySmall.copyWith(
                             color: AppColors.primaryColor,
                             fontWeight: FontWeight.w700,
@@ -154,7 +155,7 @@ class SearchScreen extends GetView<SearchScreenController> {
                 controller.search(value);
               },
               decoration: InputDecoration(
-                hintText: "Search businesses or deals...",
+                hintText: AppStrings.searchBusinessesOrDeals.tr,
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,
@@ -177,6 +178,7 @@ class SearchScreen extends GetView<SearchScreenController> {
             }
 
             return GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: controller.resetSearch,
               child: Icon(
                 Iconsax.close_circle,

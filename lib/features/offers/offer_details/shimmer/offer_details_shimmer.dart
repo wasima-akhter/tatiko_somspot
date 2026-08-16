@@ -1,6 +1,6 @@
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import 'offer_details_action_shimmer.dart';
 import 'offer_details_primary_shimmer.dart';
 import 'offer_details_terms_shimmer.dart';

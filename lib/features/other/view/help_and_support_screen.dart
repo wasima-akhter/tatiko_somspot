@@ -1,4 +1,4 @@
-import '../../../share/controller/screen_export.dart';
+import '../../../share/export/screen_export.dart';
 import '../widgets/help_support_faq_section.dart';
 import '../widgets/help_support_form_card.dart';
 

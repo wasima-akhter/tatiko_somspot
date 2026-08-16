@@ -1,5 +1,5 @@
 import 'package:som_spot/helper/date_converter/date_converter.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../shared/model/deal_model.dart';
 
@@ -75,7 +75,7 @@ class MerchantOfferClaimStatus extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Text(
-        deal.isClaimed == false ? AppStrings.claim.tr : 'Claimed',
+        deal.isClaimed == false ? AppStrings.claim.tr : AppStrings.claimed.tr,
         style: context.bodySmall.copyWith(
           color: AppColors.primaryColor,
           fontWeight: FontWeight.bold,

@@ -1,4 +1,4 @@
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import 'merchant_campaign_overview_card.dart';
 import 'merchant_campaign_timeline.dart';
 

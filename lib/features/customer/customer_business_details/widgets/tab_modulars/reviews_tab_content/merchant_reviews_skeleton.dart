@@ -1,5 +1,5 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class MerchantReviewsSkeleton extends StatelessWidget {
   const MerchantReviewsSkeleton({super.key});

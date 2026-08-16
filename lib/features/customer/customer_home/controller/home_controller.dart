@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/features/core/category/controller/category_controller.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../share/widgets/paginator/paginator.dart';
 import '../../../../utils/enum/app_enum.dart';
@@ -46,7 +47,11 @@ class HomeController extends GetxController {
   final double _nearbyRadiusKm = 10;
   String? _nearbyCategory;
 
-  List<BusinessModel> get nearbyBusinesses => nearbyBusinessesPaginator.items;
+  // List<BusinessModel> get nearbyBusinesses => nearbyBusinessesPaginator.items;
+  List<BusinessModel> get nearbyBusinesses {
+    final items = nearbyBusinessesPaginator.items;
+    return items.sublist(0, items.length < 3 ? items.length : 3);
+  }
 
   @override
   void onInit() {
@@ -132,7 +137,7 @@ class HomeController extends GetxController {
   RxString get userAddress => profileController.userLocationString;
 
   String get displayName {
-    return userName.value.isEmpty ? 'User' : userName.value;
+    return userName.value.isEmpty ? AppStrings.user.tr : userName.value;
   }
 
   String get displayAvatar {

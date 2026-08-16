@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/utils.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../utils/color/app_colors.dart';
 import '../../../../utils/extension/base_extension.dart';
@@ -30,7 +32,7 @@ class InfluencerDeliverableCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Deliverable",
+            AppStrings.deliverable.tr,
             style: context.titleSmall.copyWith(
               color: AppColors.blackMainTextColor,
             ),

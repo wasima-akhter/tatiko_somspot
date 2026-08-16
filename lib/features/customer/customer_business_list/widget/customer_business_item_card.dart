@@ -1,0 +1,164 @@
+import '../../../../share/export/screen_export.dart';
+import '../../../../share/widgets/network_image/custom_network_image.dart';
+import '../../../core/business/response/business-response.dart';
+
+class CustomerBusinessItemCard extends StatelessWidget {
+  final BusinessModel item;
+  const CustomerBusinessItemCard({super.key, required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => AppRouter.route.pushNamed(
+        RoutePath.customerBusinessDetailsScreen,
+        extra: item.id,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 12.r,
+              offset: Offset(0, 4.h),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image Part
+            SizedBox(
+              height: 180.h,
+              width: double.infinity,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16.r),
+                    ),
+                    child: CustomNetworkImage(
+                      imageUrl: item.logo ?? "",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  // Star Rating Badge
+                  // if (item.rating != null)
+                  Positioned(
+                    top: 12.h,
+                    right: 12.w,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 4.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.05),
+                            blurRadius: 4.r,
+                            offset: Offset(0, 2.h),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: AppColors.orangeSecondaryAccentColor,
+                            size: 14.sp,
+                          ),
+                          Gap(4.w),
+                          Text(
+                            item.ratingAvg.toString(),
+
+                            style: context.bodySmall.copyWith(
+                              color: AppColors.darkTextColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Information Part
+            Padding(
+              padding: EdgeInsets.all(16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.name ?? "",
+                    style: context.titleMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.darkTextColor,
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                  if ((item.category?.name ?? '').isNotEmpty) ...[
+                    Gap(4.h),
+                    Text(
+                      item.category?.name ?? "",
+                      style: context.bodyMedium.copyWith(
+                        color: AppColors.subtitleTextColor,
+                      ),
+                    ),
+                  ],
+                  Gap(12.h),
+                  Row(
+                    children: [
+                      // Distance
+                      Icon(
+                        Icons.location_on,
+                        color: AppColors.primaryColor,
+                        size: 16.sp,
+                      ),
+                      Gap(4.w),
+                      Text(
+                        "${item.distanceKm} km",
+                        style: context.bodySmall.copyWith(
+                          color: AppColors.subtitleTextColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Gap(16.w),
+                      // Open/Closed Status
+                      Icon(
+                        Icons.access_time,
+                        color: (item.isOpen == true)
+                            ? AppColors.subtitleTextColor
+                            : AppColors.error,
+                        size: 16.sp,
+                      ),
+                      Gap(4.w),
+                      Text(
+                        (item.isOpen == true)
+                            ? AppStrings.openNow.tr
+                            : AppStrings.closed.tr,
+                        style: context.bodySmall.copyWith(
+                          color: (item.isOpen == true)
+                              ? AppColors.subtitleTextColor
+                              : AppColors.error,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

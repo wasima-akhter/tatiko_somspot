@@ -1,4 +1,4 @@
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../controller/merchant_new_campaign_controller.dart';
 
 class MerchantPricingPackagesScreen extends StatelessWidget {
@@ -9,7 +9,7 @@ class MerchantPricingPackagesScreen extends StatelessWidget {
     final controller = MerchantNewCampaignController.to;
 
     return ScaffoldWrapper(
-      title: "Pricing Packages",
+      title: AppStrings.pricingPackages.tr,
 
       body: Column(
         children: [
@@ -113,7 +113,7 @@ class MerchantPricingPackagesScreen extends StatelessWidget {
             child: CustomButton(
               onTap: controller.onPricingNext,
 
-              text: "Preview",
+              text: AppStrings.preview.tr,
             ),
           ),
 

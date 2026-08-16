@@ -1,5 +1,5 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/share/widgets/ui_status_builder/api_status_builder.dart';
 

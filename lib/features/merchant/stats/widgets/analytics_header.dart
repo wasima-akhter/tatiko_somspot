@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class AnalyticsHeader extends StatefulWidget {
   const AnalyticsHeader({super.key});
@@ -86,6 +86,7 @@ class _AnalyticsHeaderState extends State<AnalyticsHeader> {
     required VoidCallback onTap,
   }) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),

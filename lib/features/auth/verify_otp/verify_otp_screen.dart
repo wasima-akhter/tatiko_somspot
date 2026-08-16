@@ -53,7 +53,7 @@
 //             crossAxisAlignment: CrossAxisAlignment.start,
 //             children: [
 //               // Back Button
-//               GestureDetector(
+//                     GestureDetector( behavior: HitTestBehavior.opaque,
 //                 onTap: () => Navigator.pop(context),
 //                 child: Container(
 //                   width: 48,

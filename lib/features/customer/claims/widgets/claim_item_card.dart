@@ -3,7 +3,7 @@
 // -----------------------------------------------------------------------------
 import 'package:som_spot/features/customer/claims/widgets/offer_claimed_dialog.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 
 import '../shared/response/claims_model.dart';

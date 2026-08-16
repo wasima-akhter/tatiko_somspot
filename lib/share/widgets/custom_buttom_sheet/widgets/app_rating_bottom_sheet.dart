@@ -1,13 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../features/other/controller/other_controller.dart';
-import '../../../../utils/color/app_colors.dart';
 import '../../../../utils/enum/app_enum.dart';
-import '../../../../utils/extension/base_extension.dart';
 
 class RatingBottomSheet extends StatelessWidget {
   const RatingBottomSheet({super.key});
@@ -46,7 +41,7 @@ class RatingBottomSheet extends StatelessWidget {
                     children: [
                       /// Title
                       Text(
-                        "Rate SomSpot",
+                        AppStrings.rateSomSpot.tr,
                         style: context.titleLarge.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.blackMainTextColor,
@@ -57,7 +52,7 @@ class RatingBottomSheet extends StatelessWidget {
 
                       /// Subtitle
                       Text(
-                        "Enjoying the app? Let us know!",
+                        AppStrings.enjoyingTheAppLetUsKnow.tr,
                         style: context.bodySmall.copyWith(
                           color: AppColors.grayTextSecondaryColor,
                           fontWeight: FontWeight.w400,
@@ -90,7 +85,7 @@ class RatingBottomSheet extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Tap to rate",
+                    AppStrings.tapToRate.tr,
                     style: context.bodyMedium.copyWith(
                       color: AppColors.grayTextSecondaryColor,
                       fontWeight: FontWeight.w500,
@@ -159,7 +154,7 @@ class RatingBottomSheet extends StatelessWidget {
                       : Icon(Icons.send, size: 20.sp),
 
                   label: Text(
-                    "Submit Rating",
+                    AppStrings.submitRating.tr,
                     style: context.bodyMedium.copyWith(
                       color: Colors.white,
                       fontSize: 14.sp,

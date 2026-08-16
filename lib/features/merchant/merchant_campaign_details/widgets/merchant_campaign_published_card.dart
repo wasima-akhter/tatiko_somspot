@@ -3,7 +3,7 @@ import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/utils/api_urls/api_urls.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../merchant_new_campaign/shared/response/merchant_campaign_model.dart';
 import '../controller/merchant_campaign_details_controller.dart';
 
@@ -64,6 +64,7 @@ class MerchantCampaignPublishedCard extends StatelessWidget {
           SizedBox(height: 10.h),
 
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () => _launchUrl(videoUrl),
             child: Container(
               width: double.infinity,
@@ -124,8 +125,8 @@ class MerchantCampaignPublishedCard extends StatelessWidget {
                       () =>
                           controller.publicationActionLoading.value == "reject"
                           ? LoadingWidget()
-                          : const Text(
-                              "Reject",
+                          : Text(
+                              AppStrings.reject.tr,
                               style: TextStyle(color: Colors.red),
                             ),
                     ),
@@ -154,8 +155,8 @@ class MerchantCampaignPublishedCard extends StatelessWidget {
                       () =>
                           controller.publicationActionLoading.value == "arrpove"
                           ? LoadingWidget()
-                          : const Text(
-                              "Approve",
+                          : Text(
+                              AppStrings.approve.tr,
                               style: TextStyle(color: Colors.white),
                             ),
                     ),

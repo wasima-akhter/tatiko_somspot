@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../controller/customer_business_details_controller.dart';
 import 'merchant_review_stars.dart';

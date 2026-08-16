@@ -1,5 +1,5 @@
 import 'package:som_spot/helper/toast/toast_helper.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/dialog/custom_dialog.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
@@ -35,6 +35,7 @@ class MerchantWriteReviewDialog {
                   final starVal = index + 1.0;
 
                   return GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
                       setState(() {
                         currentRating = starVal;

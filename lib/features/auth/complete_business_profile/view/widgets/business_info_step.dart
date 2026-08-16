@@ -1,5 +1,5 @@
 import 'package:som_spot/features/auth/complete_business_profile/controller/complete_business_profile_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
 import '../../../../../share/widgets/network_image/custom_network_image.dart';
@@ -91,6 +91,7 @@ class BusinessInfoStep extends StatelessWidget {
                     controller.selectedCategoryId.value == category.id;
 
                 return GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   onTap: () {
                     controller.selectedCategoryId.value = category.id;
                   },

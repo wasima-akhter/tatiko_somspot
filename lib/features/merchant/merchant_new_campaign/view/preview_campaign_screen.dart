@@ -1,4 +1,4 @@
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../controller/merchant_new_campaign_controller.dart';
 
@@ -25,7 +25,7 @@ class MerchantPreviewCampaignScreen extends StatelessWidget {
           },
         ),
 
-        title: const Text("Preview Campaign"),
+        title: Text(AppStrings.previewCampaign.tr),
       ),
 
       body: Obx(() {
@@ -42,25 +42,40 @@ class MerchantPreviewCampaignScreen extends StatelessWidget {
               _card(
                 context,
 
-                title: "Campaign Overview",
+                title: AppStrings.campaignOverview.tr,
 
                 children: [
-                  _row("Name", controller.campaignNameController.text),
-
-                  _row("About", controller.requirementsController.text),
-
-                  _row("Objective", controller.selectedObjective.value),
-
-                  _row("Content Type", controller.selectedContentType.value),
-
-                  _row("Offer", controller.selectedOfferName),
+                  _row(
+                    AppStrings.name.tr,
+                    controller.campaignNameController.text,
+                  ),
 
                   _row(
-                    "Duration",
+                    AppStrings.about.tr,
+                    controller.requirementsController.text,
+                  ),
+
+                  _row(
+                    AppStrings.objective.tr,
+                    controller.selectedObjective.value,
+                  ),
+
+                  _row(
+                    AppStrings.contentType.tr,
+                    controller.selectedContentType.value,
+                  ),
+
+                  _row(AppStrings.offer.tr, controller.selectedOfferName),
+
+                  _row(
+                    AppStrings.duration.tr,
                     "${controller.startDateController.text} - ${controller.endDateController.text}",
                   ),
 
-                  _row("Video Length", "${controller.selectedVideoLength}s"),
+                  _row(
+                    AppStrings.videoLength.tr,
+                    "${controller.selectedVideoLength}s",
+                  ),
                 ],
               ),
 
@@ -69,21 +84,33 @@ class MerchantPreviewCampaignScreen extends StatelessWidget {
               _card(
                 context,
 
-                title: "Influencer Info",
+                title: AppStrings.influencerInfo.tr,
 
                 children: [
-                  _row("Influencer Category", controller.selectedCategoryName),
+                  _row(
+                    AppStrings.influencerCategory.tr,
+                    controller.selectedCategoryName,
+                  ),
 
-                  _row("Target Creator", "$creatorCount Creators"),
+                  _row(
+                    AppStrings.targetInfluencers.tr,
+                    "$creatorCount ${AppStrings.influencer.tr}",
+                  ),
 
-                  _row("Selected Package", controller.selectedPackageName),
+                  _row(
+                    AppStrings.selectedPackage.tr,
+                    controller.selectedPackageName,
+                  ),
 
-                  _row("Package Price", controller.selectedPackagePrice),
+                  _row(
+                    AppStrings.packagePrice.tr,
+                    controller.selectedPackagePrice,
+                  ),
 
                   Divider(),
 
                   _row(
-                    "Total Campaign Cost",
+                    AppStrings.totalCampaignCost.tr,
 
                     _calculateTotal(
                       creatorCount,
@@ -100,7 +127,7 @@ class MerchantPreviewCampaignScreen extends StatelessWidget {
               _card(
                 context,
 
-                title: "Content Requirements",
+                title: AppStrings.contentRequirements.tr,
 
                 children: [
                   Text(
@@ -123,7 +150,7 @@ class MerchantPreviewCampaignScreen extends StatelessWidget {
                         AppRouter.route.pop();
                       },
 
-                      text: "Back to Edit",
+                      text: AppStrings.backToEdit.tr,
                     ),
                   ),
 
@@ -135,7 +162,7 @@ class MerchantPreviewCampaignScreen extends StatelessWidget {
                           controller.submitLoading.value == ApiStatus.loading,
                       onTap: controller.onSubmit,
 
-                      text: "Submit",
+                      text: AppStrings.submit.tr,
                     ),
                   ),
                 ],

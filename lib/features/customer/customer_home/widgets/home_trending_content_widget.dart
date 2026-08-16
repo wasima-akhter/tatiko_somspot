@@ -32,7 +32,7 @@ Success Response (200 OK):
 
 */
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../controller/home_controller.dart';
@@ -52,7 +52,7 @@ class HomeTrendingContentWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(
-          title: 'Trending Influencer',
+          title: AppStrings.trendingInfluencer.tr,
           onSeeAll: () {
             // Navigate to all influencers
           },
@@ -65,7 +65,7 @@ class HomeTrendingContentWidget extends StatelessWidget {
         Gap(22.h),
 
         SectionHeader(
-          title: 'Recommended by Content',
+          title: AppStrings.recommendedByContent.tr,
           onSeeAll: () {
             // Navigate to all recommended content
           },

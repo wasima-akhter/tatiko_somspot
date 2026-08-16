@@ -1,4 +1,4 @@
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/network_image/custom_network_image.dart';
 import '../../shared/response/offers_response.dart';
 import '../helper/offer_details_helper.dart';

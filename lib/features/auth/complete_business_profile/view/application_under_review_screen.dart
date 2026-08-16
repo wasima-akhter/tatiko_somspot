@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class ApplicationUnderReviewScreen extends StatelessWidget {
   const ApplicationUnderReviewScreen({super.key});
@@ -384,6 +384,7 @@ class ApplicationUnderReviewScreen extends StatelessWidget {
 
                   // 5. Log Out Button
                   GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
                       AppRouter.route.goNamed(RoutePath.welcomeScreen);
                     },

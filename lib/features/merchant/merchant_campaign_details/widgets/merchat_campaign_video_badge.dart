@@ -1,6 +1,6 @@
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 
 class MerchantCampaignVideoBadge extends StatelessWidget {
   const MerchantCampaignVideoBadge({super.key, required this.platform});

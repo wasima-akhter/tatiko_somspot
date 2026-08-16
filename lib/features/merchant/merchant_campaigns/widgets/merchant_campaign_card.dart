@@ -1,6 +1,6 @@
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
 import '../../merchant_new_campaign/shared/response/merchant_campaign_model.dart';
 import '../modules/merchant_campaign_tag.dart';
@@ -17,6 +17,7 @@ class MerchantCampaignCard extends StatelessWidget {
         : campaign.spentBudget / campaign.totalBudget;
 
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
         //
 

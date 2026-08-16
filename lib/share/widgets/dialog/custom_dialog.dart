@@ -1,4 +1,4 @@
-import '../../controller/screen_export.dart';
+import '../../export/screen_export.dart';
 
 enum AppDialogType { info, success, warning, error, custom }
 

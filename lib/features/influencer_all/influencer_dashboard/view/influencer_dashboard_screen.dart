@@ -2,7 +2,7 @@ import 'package:som_spot/features/influencer_all/influencer_dashboard/controller
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../common_components/dash_common_header.dart';
 import '../../../common_components/dash_common_header_cont.dart';
@@ -179,6 +179,7 @@ class InfluencerDashboardScreen extends StatelessWidget {
             ),
 
             GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: () {
                 NavigationControllerMain.to.goToTabTasks();
               },

@@ -1,4 +1,4 @@
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 
 class OfferDetailsExpiryBanner extends StatelessWidget {
   final DateTime endDate;
@@ -42,9 +42,9 @@ class OfferDetailsExpiryBanner extends StatelessWidget {
     final days = date.difference(DateTime.now()).inDays;
 
     if (days <= 0) {
-      return 'Expired';
+      return AppStrings.expired.tr;
     }
 
-    return '$days days';
+    return '$days ${AppStrings.days.tr}';
   }
 }

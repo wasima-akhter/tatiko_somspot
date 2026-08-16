@@ -1,5 +1,5 @@
 import 'package:som_spot/share/controller/language_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../splash/app_flow_router.dart';
 
@@ -124,6 +124,7 @@ class _LanguageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),

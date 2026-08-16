@@ -1,6 +1,6 @@
 import 'package:som_spot/features/customer/customer_home/controller/home_controller.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 
 class TopDealsScreen extends StatelessWidget {
   const TopDealsScreen({super.key});
@@ -74,7 +74,7 @@ class TopDealsScreen extends StatelessWidget {
                   padding: EdgeInsets.only(
                     bottom: index == controller.topDeals.length - 1 ? 0 : 16.h,
                   ),
-                  child: GestureDetector(
+                  child:       GestureDetector( behavior: HitTestBehavior.opaque,
                     onTap: () => AppRouter.route.pushNamed(
                       RoutePath.offerDetailsScreen,
                       extra: "offerId",

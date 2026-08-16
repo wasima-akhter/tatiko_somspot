@@ -21,7 +21,7 @@ import 'package:som_spot/features/customer/customer_business_list/binding/custom
 import 'package:som_spot/features/customer/customer_business_list/view/customer_business_list_screen.dart';
 import 'package:som_spot/features/customer/customer_home/view/top_deals_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_dashboard/view/influencer_dashboard_screen.dart';
-import 'package:som_spot/features/influencer_all/influencer_discover/view/influencer_discover_screen.dart';
+import 'package:som_spot/features/influencer_all/discarded/influencer_discover/view/influencer_discover_screen.dart';
 import 'package:som_spot/features/influencer_all/influencer_task_screen/view/influencer_task_screen.dart';
 import 'package:som_spot/features/merchant/edit_offer/view/edit_offer_screen.dart';
 import 'package:som_spot/features/merchant/merchant_campaign_details/view/merchant_campaign_details_screen.dart';
@@ -39,15 +39,15 @@ import 'package:som_spot/features/other/view/privacy_policy_screen.dart';
 import 'package:som_spot/features/other/view/terms_and_conditions_screen.dart';
 import 'package:som_spot/features/profile/edit_profile/view/edit_influencer_profile_screen.dart';
 // Feature screens imports
-import 'package:som_spot/features/profile/edit_profile/view/edit_profile_screen.dart';
+import 'package:som_spot/features/profile/edit_profile/view/edit_merchant_profile_screen.dart';
 import 'package:som_spot/features/profile/main_profile/view/profile_screen.dart';
 import 'package:som_spot/features/subscription/subscription_screen.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../features/auth/complete_business_profile/binding/complete_business_profile_binding.dart'
     show CompleteBusinessProfileBinding;
 import '../../features/auth/completed_profile_customer_merchandiser/binding/complete_profile_binding.dart';
-import '../../features/auth/completed_profile_customer_merchandiser/view/completed_profile_customer_args.dart';
+import '../../features/auth/completed_profile_customer_merchandiser/completed_profile_customer_args.dart';
 import '../../features/auth/completed_profile_customer_merchandiser/view/completed_profile_customer_screen.dart';
 import '../../features/auth/completed_profile_influencer/binding/influencer_complete_profile_binding.dart';
 import '../../features/auth/completed_profile_influencer/view/completed_profile_influencer_screen.dart';
@@ -63,12 +63,12 @@ import '../../features/customer/customer_offer_claim/helper/customer_offer_claim
 import '../../features/customer/customer_offer_claim/view/customer_offer_claim_screen.dart';
 import '../../features/influencer_all/binding/influencer_binding.dart';
 import '../../features/influencer_all/core/influencer_tasks/response/influencer_tasks_response.dart';
-import '../../features/influencer_all/influencer_apply_campaign/view/influencer_apply_campaign_screen.dart';
-import '../../features/influencer_all/influencer_campaign_details/view/influencer_campaign_details_screen.dart';
-import '../../features/influencer_all/influencer_my_campaigns/view/influencer_my_campaigns_screen.dart';
+import '../../features/influencer_all/discarded/influencer_apply_campaign/view/influencer_apply_campaign_screen.dart';
+import '../../features/influencer_all/discarded/influencer_campaign_details/view/influencer_campaign_details_screen.dart';
+import '../../features/influencer_all/discarded/influencer_my_campaigns/view/influencer_my_campaigns_screen.dart';
 import '../../features/influencer_all/influencer_publish_proof/binding/influencer_publush_proof_binding.dart';
 import '../../features/influencer_all/influencer_publish_proof/view/influencer_publish_proof_screen.dart';
-import '../../features/influencer_all/influencer_search/view/influencer_search_screen.dart';
+import '../../features/influencer_all/discarded/influencer_search/view/influencer_search_screen.dart';
 import '../../features/influencer_all/influencer_submit_content/args/submit_content_args.dart';
 import '../../features/influencer_all/influencer_submit_content/view/influencer_submit_content_screen.dart';
 import '../../features/influencer_all/influencer_wallet/view/influencer_wallet_screen.dart';
@@ -84,6 +84,7 @@ import '../../features/offers/shared/binding/edit_offer_binding.dart';
 import '../../features/offers/shared/binding/offer_details_binding.dart';
 import '../../features/other/controller/other_binding.dart';
 import '../../features/profile/binding/profile_binding.dart';
+import '../../features/profile/edit_profile/view/edit_customer_profile_screen.dart';
 import '../../features/subscription/binding/subscription_binding.dart';
 import '../../features/success/success_screen.dart';
 
@@ -289,13 +290,26 @@ class AppRouter {
       ),
       ////
       GoRoute(
+        name: RoutePath.editCustomerProfileScreen,
+        path: RoutePath.editCustomerProfileScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child: BindingWrapper(
+              binding: EditCustomerBinding(),
+              child: const EditCustomerProfileScreen(),
+            ),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
         name: RoutePath.editProfileScreen,
         path: RoutePath.editProfileScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
             child: BindingWrapper(
               binding: ProfileBinding(),
-              child: const EditProfileScreen(),
+              child: const EditMerchantProfileScreen(),
             ),
             state: state,
           );

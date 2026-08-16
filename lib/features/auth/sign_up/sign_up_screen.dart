@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:som_spot/features/auth/controller/auth_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
@@ -62,6 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const Gap(16),
               // ── Back Button ──
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () => AppRouter.route.pop(),
                 child: const Icon(
                   Icons.arrow_back_ios_new,

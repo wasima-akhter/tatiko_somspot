@@ -2,7 +2,7 @@ import 'package:som_spot/helper/validator/text_field_validator.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
-import '../../../share/controller/screen_export.dart';
+import '../../../share/export/screen_export.dart';
 import '../../auth/controller/auth_controller.dart';
 
 class ChangePasswordScreen extends StatefulWidget {

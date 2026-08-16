@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-
-import '../../../utils/color/app_colors.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class ErrorCard extends StatelessWidget {
   const ErrorCard({
@@ -53,7 +50,7 @@ class ErrorCard extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: (iconColor ?? AppColors.error).withOpacity(0.15),
+                  color: (iconColor ?? AppColors.error).withValues(alpha: 0.15),
                 ),
                 padding: const EdgeInsets.all(14),
                 child: Icon(
@@ -64,7 +61,7 @@ class ErrorCard extends StatelessWidget {
               ),
             const Gap(16),
             Text(
-              title ?? "Something went wrong",
+              title ?? AppStrings.somethingWentWrong.tr,
               textAlign: TextAlign.center,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
@@ -73,8 +70,7 @@ class ErrorCard extends StatelessWidget {
             ),
             const Gap(8),
             Text(
-              message ??
-                  "The application has encountered an unknown error.\nPlease try again later.",
+              message ?? AppStrings.unknownErrorMessage.tr,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: AppColors.tertiaryTextColor,
@@ -92,7 +88,7 @@ class ErrorCard extends StatelessWidget {
                 ),
               ),
               child: Text(
-                buttonText ?? "Try Again",
+                buttonText ?? AppStrings.tryAgain.tr,
                 style: theme.textTheme.labelLarge?.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,

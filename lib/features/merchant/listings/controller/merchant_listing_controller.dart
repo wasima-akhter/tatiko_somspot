@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../../helper/toast/toast_helper.dart';
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../core/business/controller/business-controller.dart';
 import '../../../core/business/response/business-response.dart';
 import '../../../core/location/controller/business_location_controller.dart';
@@ -149,17 +149,17 @@ class MerchantListingController extends GetxController {
 
   Future<void> updateBusinessProfile() async {
     if (businessNameController.text.trim().isEmpty) {
-      AppToast.error(message: "Business name is required");
+      AppToast.error(message: AppStrings.businessNameIsRequired.tr);
       return;
     }
 
     if (descriptionController.text.trim().isEmpty) {
-      AppToast.error(message: "Description is required");
+      AppToast.error(message: AppStrings.descriptionIsRequired.tr);
       return;
     }
 
     if (selectedCategoryId.value.isEmpty) {
-      AppToast.error(message: "Please select a category");
+      AppToast.error(message: AppStrings.pleaseSelectACategory.tr);
       return;
     }
 
@@ -179,7 +179,7 @@ class MerchantListingController extends GetxController {
 
   Future<void> updateGallery() async {
     if (galleryImages.isEmpty) {
-      AppToast.warning(message: "Please select gallery images");
+      AppToast.warning(message: AppStrings.pleaseSelectGalleryImages.tr);
       return;
     }
 
@@ -195,7 +195,7 @@ class MerchantListingController extends GetxController {
     );
 
     if (!hasOpenDay) {
-      AppToast.error(message: "Please select at least one open day");
+      AppToast.error(message: AppStrings.pleaseSelectAtLeastOneOpenDay.tr);
       return;
     }
 
@@ -222,7 +222,7 @@ class MerchantListingController extends GetxController {
 
   Future<void> updateLocation() async {
     if (locationController.addressController.text.trim().isEmpty) {
-      AppToast.error(message: "Address is required");
+      AppToast.error(message: AppStrings.addressIsRequired.tr);
       return;
     }
 
@@ -254,12 +254,12 @@ class MerchantListingController extends GetxController {
     final whatsapp = whatsappController.text.trim();
 
     if (phone.isEmpty) {
-      AppToast.error(message: "Phone number is required");
+      AppToast.error(message: AppStrings.phoneNumberIsRequired.tr);
       return;
     }
 
     if (phone.length < 8) {
-      AppToast.error(message: "Enter a valid phone number");
+      AppToast.error(message: AppStrings.validPhoneNumber.tr);
       return;
     }
 
@@ -289,7 +289,7 @@ class MerchantListingController extends GetxController {
       );
 
       if (response.success) {
-        AppToast.success(message: "Updated successfully");
+        AppToast.success(message: AppStrings.updatedSuccessfully.tr);
         resetTemporarySelections();
 
         await businessController.myBusinessesPaginator.refresh();
@@ -305,7 +305,7 @@ class MerchantListingController extends GetxController {
         AppToast.error(message: response.message);
       }
     } catch (e) {
-      AppToast.error(message: "Something went wrong");
+      AppToast.error(message: AppStrings.somethingWentWrong.tr);
     } finally {
       isLoading.value = false;
     }
@@ -349,10 +349,16 @@ class MerchantListingController extends GetxController {
 
     selectedCategoryId.value = business.category?.id ?? '';
 
-    locationController.reset(
+    // locationController.reset(
+    //   address: business.address,
+    //   city: business.city,
+    //   initialLatLng: LatLng(business.latitude, business.longitude),
+    // );
+
+    locationController.setLocationFromProfile(
+      latLng: LatLng(business.latitude, business.longitude),
       address: business.address,
       city: business.city,
-      initialLatLng: LatLng(business.latitude, business.longitude),
     );
 
     _loadOpeningHours(business.openingHours);

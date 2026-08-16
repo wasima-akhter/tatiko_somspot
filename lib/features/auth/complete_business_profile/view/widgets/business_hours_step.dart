@@ -1,5 +1,5 @@
 import 'package:som_spot/features/auth/complete_business_profile/controller/complete_business_profile_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class BusinessHoursStep extends StatelessWidget {
   const BusinessHoursStep({super.key});
@@ -262,6 +262,7 @@ class _TimeChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),

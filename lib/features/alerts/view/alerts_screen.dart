@@ -1,5 +1,5 @@
 import 'package:som_spot/features/alerts/controller/alerts_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/ui_status_builder/api_status_builder.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
@@ -21,6 +21,7 @@ class AlertsScreen extends GetView<AlertsScreenController> {
           padding: EdgeInsets.only(right: 16.w),
           child: Center(
             child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: controller.markAllAsRead,
               child: Obx(() {
                 return controller.markAllStatus.value == ApiStatus.loading
@@ -81,6 +82,7 @@ class AlertsScreen extends GetView<AlertsScreenController> {
                     final notification = notifications[index];
 
                     return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
                       onTap: () {
                         controller.toggleUnread(index);
                       },

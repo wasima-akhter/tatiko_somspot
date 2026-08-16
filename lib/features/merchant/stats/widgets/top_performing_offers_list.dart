@@ -1,5 +1,5 @@
 import 'package:som_spot/features/merchant/stats/controller/stats_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class TopPerformingOffersList extends GetView<StatsController> {
   const TopPerformingOffersList({super.key});

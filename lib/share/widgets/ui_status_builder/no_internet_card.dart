@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class NoInternetCard extends StatelessWidget {
   const NoInternetCard({
@@ -29,12 +28,14 @@ class NoInternetCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveTitle = title ?? "Oops,You re offline check your connection and give it another shot";
+    final effectiveTitle = title ?? AppStrings.offlineMessage.tr;
     final effectiveSubtitle = subtitle ?? '';
-    final effectiveButtonText = buttonText ?? "Try Again";
+    final effectiveButtonText = buttonText ?? AppStrings.tryAgain.tr;
 
     return Padding(
-      padding: padding ?? EdgeInsets.symmetric(horizontal: 16, vertical: isList ? 8 : 32),
+      padding:
+          padding ??
+          EdgeInsets.symmetric(horizontal: 16, vertical: isList ? 8 : 32),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

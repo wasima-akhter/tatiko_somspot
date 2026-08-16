@@ -113,7 +113,7 @@ class OtherController extends BaseFormController {
 
       termsLoadingMethod(ApiStatus.completed);
     } catch (_) {
-      errorMessage.value = "Something went wrong.";
+      errorMessage.value = AppStrings.somethingWentWrong.tr;
 
       termsLoadingMethod(ApiStatus.error);
     }
@@ -158,7 +158,7 @@ class OtherController extends BaseFormController {
 
       privacyLoadingMethod(ApiStatus.completed);
     } catch (_) {
-      errorMessage.value = "Something went wrong.";
+      errorMessage.value = AppStrings.somethingWentWrong.tr;
 
       privacyLoadingMethod(ApiStatus.error);
     }
@@ -188,12 +188,12 @@ class OtherController extends BaseFormController {
   final RxDouble rating = 3.0.obs;
 
   String get ratingText {
-    if (rating.value <= 1) return "Poor";
-    if (rating.value <= 2) return "Fair";
-    if (rating.value <= 3) return "Okay";
-    if (rating.value <= 4) return "Good";
+    if (rating.value <= 1) return AppStrings.poor.tr;
+    if (rating.value <= 2) return AppStrings.fair.tr;
+    if (rating.value <= 3) return AppStrings.okay.tr;
+    if (rating.value <= 4) return AppStrings.good.tr;
 
-    return "Excellent";
+    return AppStrings.excellent.tr;
   }
 
   void updateRating(double value) {
@@ -224,12 +224,11 @@ class OtherController extends BaseFormController {
 
       ratingLoadingMethod(ApiStatus.completed);
 
-      AppToast.success(message: "Thank you for rating SomSpot");
-      onSuccess?.call();
+      AppToast.success(message: AppStrings.thankYouForRatingSomSpot.tr);
     } catch (_) {
       ratingLoadingMethod(ApiStatus.error);
 
-      AppToast.error(message: "Something went wrong");
+      AppToast.error(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -271,7 +270,7 @@ class OtherController extends BaseFormController {
 
       aboutLoadingMethod(ApiStatus.completed);
     } catch (_) {
-      errorMessage.value = "Something went wrong.";
+      errorMessage.value = AppStrings.somethingWentWrong.tr;
 
       aboutLoadingMethod(ApiStatus.error);
     }

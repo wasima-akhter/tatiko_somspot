@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../utils/app_strings/app_strings.dart';
 
 class LauncherHelper {
   /// Launches the phone dialer with the specified [phoneNumber].
@@ -20,13 +23,17 @@ class LauncherHelper {
         if (context.mounted) {
           AppToast.info(
             context: context,
-            message: "Dialer not supported on this device.",
+            message: AppStrings.dialerNotSupported.tr,
           );
         }
       }
     } catch (e) {
       if (context.mounted) {
-        AppToast.info(context: context, message: "Could not launch dialer: $e");
+        AppToast.info(
+          context: context,
+          message: AppStrings.couldNotLaunchDialer.tr,
+        );
+        debugPrint("Could not launch dialer: $e");
       }
     }
   }
@@ -123,16 +130,23 @@ class LauncherHelper {
     required String category,
   }) async {
     try {
-      await Share.share(
-        'Check out $title ($category) on SomSpot! Download the app now.',
-        subject: 'SomSpot Merchant: $title',
+      await SharePlus.instance.share(
+        ShareParams(
+          title: AppStrings.checkOutMerchantOnSomSpot.trParams({
+            'title': title,
+            'category': category,
+          }),
+          subject: AppStrings.somspotMerchant.trParams({'title': title}),
+        ),
       );
     } catch (e) {
       if (context.mounted) {
         AppToast.info(
           context: context,
-          message: "Could not share merchant details: $e",
+          message: AppStrings.couldNotShareMerchantDetails.tr,
         );
+
+        debugPrint("Could not share merchant details: $e");
       }
     }
   }
@@ -155,7 +169,7 @@ class LauncherHelper {
         if (context.mounted) {
           AppToast.info(
             context: context,
-            message: "WhatsApp cannot be opened.",
+            message: AppStrings.whatsappCannotBeOpened.tr,
           );
         }
       }
@@ -163,8 +177,9 @@ class LauncherHelper {
       if (context.mounted) {
         AppToast.info(
           context: context,
-          message: "Could not launch WhatsApp: $e",
+          message: AppStrings.couldNotLaunchWhatsapp.tr,
         );
+        debugPrint("Could not launch WhatsApp: $e");
       }
     }
   }

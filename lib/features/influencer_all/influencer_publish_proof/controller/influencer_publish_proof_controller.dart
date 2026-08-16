@@ -1,6 +1,6 @@
 import 'package:som_spot/helper/snackbar/api_snackbar.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../nav/controller/navigation_controller.dart';
 import '../../../success/success_screen.dart';
@@ -26,13 +26,13 @@ class InfluencerPublishProofController extends GetxController {
     final url = postUrl.trim();
 
     if (url.isEmpty) {
-      ApiSnackbar.show("Please enter your social media post URL.");
+      ApiSnackbar.show(AppStrings.pleaseEnterSocialMediaPostUrl.tr);
       return;
     }
 
     final uri = Uri.tryParse(url);
     if (uri == null || !uri.hasScheme || !uri.hasAuthority) {
-      ApiSnackbar.show("Please enter a valid post URL.");
+      ApiSnackbar.show(AppStrings.pleaseEnterValidPostUrl.tr);
       return;
     }
 
@@ -57,9 +57,8 @@ class InfluencerPublishProofController extends GetxController {
     AppRouter.route.goNamed(
       RoutePath.successScreen,
       extra: SuccessScreenArgs(
-        title: "Publishing Confirmed!",
-        subtitle:
-            "Your campaign has been moved to Published. We'll verify your live post shortly.",
+        title: AppStrings.publishingConfirmed.tr,
+        subtitle: AppStrings.campaignMovedToPublished.tr,
         autoNavigateAfter: const Duration(seconds: 3),
         onAutoNavigate: () {
           AppRouter.route.goNamed(RoutePath.navigationPages);

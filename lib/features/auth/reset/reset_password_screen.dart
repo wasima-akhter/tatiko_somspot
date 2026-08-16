@@ -1,6 +1,6 @@
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
-import '../../../share/controller/screen_export.dart';
+import '../../../share/export/screen_export.dart';
 import '../../../share/widgets/loading/loading_widget.dart';
 import '../controller/auth_controller.dart';
 
@@ -38,6 +38,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               const Gap(16),
               // ── Back Button ──
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () => AppRouter.route.pop(),
                 child: const Icon(
                   Icons.arrow_back_ios_new,

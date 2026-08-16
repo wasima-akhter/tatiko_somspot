@@ -3,7 +3,7 @@ import 'package:som_spot/features/merchant/listings/widgets/listing_header.dart'
 import 'package:som_spot/features/merchant/listings/widgets/manage_business_menu.dart';
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../controller/merchant_listing_controller.dart';
 
 class ListingScreen extends StatelessWidget {

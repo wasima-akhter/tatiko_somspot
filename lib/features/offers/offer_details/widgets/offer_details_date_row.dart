@@ -1,5 +1,5 @@
 import '../../../../helper/date_converter/date_converter.dart';
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 
 class OfferDetailsDateRow extends StatelessWidget {
   final String title;

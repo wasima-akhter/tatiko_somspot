@@ -1,4 +1,4 @@
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 
 class RecommendedContentEmptyState extends StatelessWidget {
   const RecommendedContentEmptyState({super.key, required this.onRetry});
@@ -40,7 +40,7 @@ class RecommendedContentEmptyState extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'No content yet',
+                  AppStrings.noContentYet.tr,
                   style: context.bodyMedium.copyWith(
                     color: AppColors.darkTextColor,
                     fontWeight: FontWeight.w600,
@@ -50,7 +50,7 @@ class RecommendedContentEmptyState extends StatelessWidget {
                 Gap(2.h),
 
                 Text(
-                  'New creator videos will appear here.',
+                  AppStrings.newVideosWillAppearHere.tr,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: context.bodySmall.copyWith(
@@ -65,6 +65,7 @@ class RecommendedContentEmptyState extends StatelessWidget {
           Gap(8.w),
 
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: onRetry,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 7.h),
@@ -73,7 +74,7 @@ class RecommendedContentEmptyState extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.r),
               ),
               child: Text(
-                'Retry',
+                AppStrings.retry.tr,
                 style: context.bodySmall.copyWith(
                   color: Colors.white,
                   fontSize: 10.sp,

@@ -1,4 +1,4 @@
-import '../../../share/controller/screen_export.dart';
+import '../../../share/export/screen_export.dart';
 import '../controller/subscription_controller.dart';
 
 class SubscriptionTabSelector extends StatelessWidget {
@@ -22,6 +22,7 @@ class SubscriptionTabSelector extends StatelessWidget {
           children: [
             Expanded(
               child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () => controller.changeTab(0),
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 12.h),
@@ -46,6 +47,7 @@ class SubscriptionTabSelector extends StatelessWidget {
             ),
             Expanded(
               child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () => controller.changeTab(1),
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 12.h),

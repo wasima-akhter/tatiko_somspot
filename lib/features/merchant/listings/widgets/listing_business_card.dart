@@ -1,6 +1,6 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../share/widgets/network_image/custom_network_image.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
@@ -198,6 +198,7 @@ class ListingBusinessCard extends GetView<MerchantListingController> {
                         top: 12.h,
                         right: 12.w,
                         child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
                           onTap: () {
                             showEditBusinessProfileSheet(context);
                           },

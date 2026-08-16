@@ -1,7 +1,7 @@
 import 'package:som_spot/features/offers/offers_list/controller/offer_controller.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
@@ -34,7 +34,7 @@ class MerchantNewCampaignScreen extends StatelessWidget {
         ),
 
         title: Text(
-          "New Campaign",
+          AppStrings.newCampaign.tr,
           style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
         ),
 
@@ -66,15 +66,15 @@ class MerchantNewCampaignScreen extends StatelessWidget {
 
                         // Campaign Name
                         CustomTextField(
-                          title: "Campaign Name",
-                          hintText: "e.g Buy 1 Get 1 Free Promo",
+                          title: AppStrings.campaignName.tr,
+                          hintText: AppStrings.campaignNameHint.tr,
                           controller: controller.campaignNameController,
                         ),
 
                         SizedBox(height: 16.h),
 
                         // Objective
-                        CampaignSectionTitle(title: "Objective"),
+                        CampaignSectionTitle(title: AppStrings.objective.tr),
 
                         SizedBox(height: 8.h),
 
@@ -113,7 +113,7 @@ class MerchantNewCampaignScreen extends StatelessWidget {
                         SizedBox(height: 8.h),
 
                         // Content Type
-                        CampaignSectionTitle(title: "Content Type"),
+                        CampaignSectionTitle(title: AppStrings.contentType.tr),
 
                         SizedBox(height: 8.h),
 
@@ -153,13 +153,13 @@ class MerchantNewCampaignScreen extends StatelessWidget {
                         SizedBox(height: 8.h),
 
                         // Offer
-                        CampaignSectionTitle(title: "Select Offer"),
+                        CampaignSectionTitle(title: AppStrings.selectOffer.tr),
 
                         SizedBox(height: 8.h),
 
                         Obx(
                           () => CustomDropdownField<String>(
-                            hintText: "Select Offer",
+                            hintText: AppStrings.selectOffer.tr,
 
                             isRequired: true,
 
@@ -185,7 +185,9 @@ class MerchantNewCampaignScreen extends StatelessWidget {
                         SizedBox(height: 16.h),
 
                         // Category
-                        CampaignSectionTitle(title: "Influencer Category"),
+                        CampaignSectionTitle(
+                          title: AppStrings.influencerCategory.tr,
+                        ),
 
                         SizedBox(height: 8.h),
 
@@ -193,7 +195,7 @@ class MerchantNewCampaignScreen extends StatelessWidget {
                           final categories = controller.categories;
 
                           return CustomDropdownField<String>(
-                            hintText: "Select Category",
+                            hintText: AppStrings.selectCategory.tr,
 
                             isRequired: true,
 
@@ -218,9 +220,9 @@ class MerchantNewCampaignScreen extends StatelessWidget {
 
                         // Creator Count
                         CampaignNumberField(
-                          label: "Target Number of Creators",
+                          label: AppStrings.targetNumberOfInfluencers.tr,
 
-                          hint: "Enter number of creators",
+                          hint: AppStrings.enterNumberOfInfluencers.tr,
 
                           controller: controller.creatorCountController,
 
@@ -234,7 +236,7 @@ class MerchantNewCampaignScreen extends StatelessWidget {
                           children: [
                             Expanded(
                               child: CampaignDateField(
-                                label: "Start Date",
+                                label: AppStrings.startDate.tr,
 
                                 controller: controller.startDateController,
                               ),
@@ -244,7 +246,7 @@ class MerchantNewCampaignScreen extends StatelessWidget {
 
                             Expanded(
                               child: CampaignDateField(
-                                label: "End Date",
+                                label: AppStrings.endDate.tr,
 
                                 controller: controller.endDateController,
                               ),
@@ -256,9 +258,9 @@ class MerchantNewCampaignScreen extends StatelessWidget {
 
                         // Requirements
                         CustomTextField(
-                          title: "Content Requirements",
+                          title: AppStrings.contentRequirements.tr,
 
-                          hintText: "e.g 1 TikTok Video, 2 Instagram Stories",
+                          hintText: AppStrings.contentRequirementsHint.tr,
 
                           controller: controller.requirementsController,
 
@@ -296,7 +298,7 @@ class CampaignLoadingView extends StatelessWidget {
 
           SizedBox(height: 16.h),
 
-          Text("Preparing campaign form...", style: context.bodyMedium),
+          Text(AppStrings.preparingCampaignForm.tr, style: context.bodyMedium),
         ],
       ),
     );

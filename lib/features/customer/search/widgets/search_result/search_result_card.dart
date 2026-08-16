@@ -1,7 +1,7 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:som_spot/features/customer/customer_business_details/controller/customer_business_details_controller.dart';
 
-import '../../../../../share/controller/screen_export.dart';
+import '../../../../../share/export/screen_export.dart';
 import '../../response/customer_search_response.dart';
 import 'search_result_info.dart';
 import 'search_result_logo.dart';
@@ -12,6 +12,7 @@ class SearchResultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
         if (Get.isRegistered<CustomerBusinessDetailsController>()) {
           Get.delete<CustomerBusinessDetailsController>();

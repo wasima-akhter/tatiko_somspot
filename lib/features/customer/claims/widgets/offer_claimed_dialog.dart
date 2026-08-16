@@ -1,6 +1,6 @@
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:som_spot/helper/text_utils/string_extension.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../helper/qr_code/qr_code_helper.dart';
 
@@ -53,7 +53,7 @@ class _OfferClaimedDialogState extends State<OfferClaimedDialog> {
 
               // Title
               Text(
-                "Offer Claimed!",
+                "${AppStrings.offerClaimed.tr}!",
                 style: context.titleLarge.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 20.sp,
@@ -138,7 +138,7 @@ class _OfferClaimedDialogState extends State<OfferClaimedDialog> {
 
               // Claim Code Box Label
               Text(
-                "Claim Code",
+                AppStrings.claimCode.tr,
                 style: context.bodySmall.copyWith(
                   color: AppColors.hintTextColor,
                   fontSize: 11.sp,
@@ -221,7 +221,11 @@ class _OfferClaimedDialogState extends State<OfferClaimedDialog> {
                               ),
                             )
                           : Icon(Icons.download_rounded, size: 17.sp),
-                      label: Text(_isDownloading ? 'Saving...' : 'Download'),
+                      label: Text(
+                        _isDownloading
+                            ? AppStrings.saving.tr
+                            : AppStrings.download.tr,
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
                         foregroundColor: Colors.white,
@@ -239,7 +243,7 @@ class _OfferClaimedDialogState extends State<OfferClaimedDialog> {
 
               // Instruction Text
               Text(
-                "Present this QR code to the merchant to redeem your offer.",
+                AppStrings.presentQrCodeToMerchant.tr,
                 textAlign: TextAlign.center,
                 style: context.bodyMedium.copyWith(
                   color: AppColors.subtitleTextColor,
@@ -265,7 +269,7 @@ class _OfferClaimedDialogState extends State<OfferClaimedDialog> {
                     ),
                   ),
                   child: Text(
-                    "Done",
+                    AppStrings.done.tr,
                     style: context.bodyLarge.copyWith(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.w600,

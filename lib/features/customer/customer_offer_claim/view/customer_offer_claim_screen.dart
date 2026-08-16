@@ -1,7 +1,7 @@
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../../helper/qr_code/qr_code_helper.dart';
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../controller/customer_offer_claim_controller.dart';
 
 class OfferClaimScreen extends GetView<OfferClaimController> {
@@ -10,7 +10,8 @@ class OfferClaimScreen extends GetView<OfferClaimController> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
-      title: "QR Code",
+      title: AppStrings.qrCode.tr,
+
       onPressed: () => AppRouter.route.pop(),
       body: SafeArea(
         child: Column(
@@ -83,7 +84,7 @@ class OfferClaimScreen extends GetView<OfferClaimController> {
                     // Subtitle
                     // ======================================================
                     Text(
-                      'Show this code to the merchant to\nredeem your discount.',
+                      AppStrings.showThisCodeToMerchant.tr,
                       textAlign: TextAlign.center,
                       style: context.titleSmall.copyWith(
                         fontWeight: FontWeight.w500,
@@ -119,7 +120,7 @@ class OfferClaimScreen extends GetView<OfferClaimController> {
                           // Claim Code Label
                           // ==================================================
                           Text(
-                            'Your Claim Code',
+                            AppStrings.yourClaimCode.tr,
                             style: context.bodyMedium.copyWith(
                               color: const Color(0xFF71839C),
                               fontWeight: FontWeight.w500,
@@ -177,7 +178,7 @@ class OfferClaimScreen extends GetView<OfferClaimController> {
                                     );
                                   },
                                   icon: Icon(Icons.copy_rounded, size: 17.sp),
-                                  label: const Text('Copy'),
+                                  label: Text(AppStrings.copy.tr),
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: const Color(0xFF42A5FF),
                                     side: const BorderSide(
@@ -219,8 +220,8 @@ class OfferClaimScreen extends GetView<OfferClaimController> {
                                           ),
                                     label: Text(
                                       controller.isDownloading.value
-                                          ? 'Saving...'
-                                          : 'Download',
+                                          ? AppStrings.saving.tr
+                                          : AppStrings.download.tr,
                                     ),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF42A5FF),
@@ -260,7 +261,7 @@ class OfferClaimScreen extends GetView<OfferClaimController> {
                                 ),
                               ),
                               child: Text(
-                                'Done',
+                                AppStrings.done.tr,
                                 style: context.bodyLarge.copyWith(
                                   color: const Color(0xFF42A5FF),
                                   fontWeight: FontWeight.w600,

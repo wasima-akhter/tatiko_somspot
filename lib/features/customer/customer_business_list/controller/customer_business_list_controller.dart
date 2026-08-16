@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../share/widgets/paginator/paginator.dart';
 import '../../../../utils/enum/app_enum.dart';
@@ -65,7 +66,7 @@ class CustomerBusinessListController extends GetxController {
         if (categoryInfo == null || categoryInfo!.categoryId.isEmpty) {
           businessListPaginator.status.value = ApiStatus.noDataFound;
           businessListPaginator.errorMessage.value =
-              "No businesses found under this category.";
+              AppStrings.noBusinessesFoundUnderCategory.tr;
           return PaginatedResult<BusinessModel>(data: [], meta: null);
         }
         final response = await _service.getNearbyBusinesses(

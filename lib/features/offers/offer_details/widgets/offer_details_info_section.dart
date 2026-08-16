@@ -1,5 +1,5 @@
 import '../../../../helper/text_utils/string_extension.dart';
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../shared/response/offers_response.dart';
 import 'offer_details_date_row.dart';
 import 'offer_details_expiry_banner.dart';

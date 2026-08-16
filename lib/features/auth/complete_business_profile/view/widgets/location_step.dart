@@ -1,5 +1,5 @@
 import 'package:latlong2/latlong.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
 import '../../../../core/location/controller/business_location_controller.dart';

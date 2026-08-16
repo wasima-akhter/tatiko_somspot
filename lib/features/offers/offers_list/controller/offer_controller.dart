@@ -1,6 +1,6 @@
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../share/export/service_export.dart';
 import '../../../../share/widgets/paginator/paginator.dart';
@@ -37,7 +37,7 @@ class OffersController extends GetxController {
         imagePath.value = image.path;
       }
     } catch (e) {
-      AppToast.error(message: 'Failed to pick image');
+      AppToast.error(message: AppStrings.failedToPickImage.tr);
     }
   }
 

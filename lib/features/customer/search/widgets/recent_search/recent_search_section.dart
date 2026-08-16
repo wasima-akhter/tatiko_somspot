@@ -1,6 +1,6 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 
-import '../../../../../share/controller/screen_export.dart';
+import '../../../../../share/export/screen_export.dart';
 import '../../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../controller/search_controller.dart';
 import '../../response/customer_search_response.dart';
@@ -68,7 +68,7 @@ class RecentSearchHeader extends StatelessWidget {
             Icon(Iconsax.clock, color: AppColors.darkTextColor, size: 18.sp),
             Gap(8.w),
             Text(
-              "Recent Searches",
+              AppStrings.recentSearches.tr,
               style: context.titleMedium.copyWith(
                 color: AppColors.darkTextColor,
                 fontWeight: FontWeight.w600,
@@ -78,9 +78,10 @@ class RecentSearchHeader extends StatelessWidget {
           ],
         ),
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: onClear,
           child: Text(
-            "Clear",
+            AppStrings.clear.tr,
             style: context.bodyMedium.copyWith(
               color: AppColors.primaryColor,
               fontWeight: FontWeight.w600,
@@ -127,6 +128,7 @@ class RecentSearchItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
@@ -194,7 +196,7 @@ class NoRecentSearchWidget extends StatelessWidget {
             ),
             Gap(12.h),
             Text(
-              "No Recent Searches",
+              AppStrings.noRecentSearches.tr,
               style: context.titleMedium.copyWith(
                 color: AppColors.darkTextColor,
                 fontWeight: FontWeight.w600,
@@ -204,7 +206,7 @@ class NoRecentSearchWidget extends StatelessWidget {
             ),
             Gap(4.h),
             Text(
-              "Your recent searches will appear here",
+              AppStrings.yourRecentSearchesWillAppearHere.tr,
               style: context.bodyMedium.copyWith(
                 color: AppColors.hintTextColor,
                 fontSize: 12.sp,

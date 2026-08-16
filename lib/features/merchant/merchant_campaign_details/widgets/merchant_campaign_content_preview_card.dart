@@ -1,6 +1,6 @@
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/network_image/custom_network_image.dart';
 import 'merchat_campaign_video_badge.dart';
 
@@ -137,6 +137,7 @@ class MerchantCampaignContentPreviewCard extends StatelessWidget {
                 // Play button
                 Center(
                   child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: onPlay,
                     child: Container(
                       height: 64.w,
@@ -260,7 +261,7 @@ class MerchantCampaignContentPreviewCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Content Caption",
+                        AppStrings.contentCaption.tr,
                         style: context.bodyMedium.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -295,7 +296,7 @@ class MerchantCampaignContentPreviewCard extends StatelessWidget {
                     if (views != null)
                       _DetailChip(
                         icon: Icons.visibility_outlined,
-                        text: "$views views",
+                        text: "$views ${AppStrings.view.tr}",
                       ),
                   ],
                 ),

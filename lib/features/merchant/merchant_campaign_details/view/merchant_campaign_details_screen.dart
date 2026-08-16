@@ -1,6 +1,6 @@
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../merchant_campaigns/modules/merchant_campaign_tag.dart';
 import '../../merchant_new_campaign/shared/helper/campaign_helper.dart';
 import '../../merchant_new_campaign/shared/response/merchant_campaign_detail_model.dart';

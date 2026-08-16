@@ -1,6 +1,6 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../merchant_new_campaign/shared/response/merchant_campaign_detail_model.dart';
 import '../controller/merchant_campaign_details_controller.dart';

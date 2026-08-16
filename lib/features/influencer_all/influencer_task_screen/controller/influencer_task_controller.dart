@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../share/widgets/paginator/paginator.dart';
 import '../../../../utils/enum/app_enum.dart';
@@ -152,7 +151,7 @@ class InfluencerTaskController extends GetxController {
     if (!response.success) {
       taskDetailStatus.value = ApiStatus.error;
       // taskDetailError = response.message;
-      taskDetailError = "Invalid task information. Please try again.";
+      taskDetailError = AppStrings.invalidTaskInformation.tr;
       return;
     }
 

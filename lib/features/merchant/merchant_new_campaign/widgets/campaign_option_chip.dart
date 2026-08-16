@@ -1,4 +1,4 @@
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 
 class CampaignOptionChip extends StatelessWidget {
   final String title;
@@ -15,6 +15,7 @@ class CampaignOptionChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
 
       child: Container(

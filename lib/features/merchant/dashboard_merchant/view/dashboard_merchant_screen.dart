@@ -6,7 +6,7 @@ import 'package:som_spot/features/merchant/dashboard_merchant/widgets/recent_cla
 import 'package:som_spot/features/merchant/dashboard_merchant/widgets/top_deals_list.dart';
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../response/dashboard_merchant_response.dart';
 import '../widgets/campaign_card_navigator.dart';
@@ -279,18 +279,22 @@ class _DashboardMerchantScreenState extends State<DashboardMerchantScreen> {
         onRetry: controller.getDashboardOverview,
 
         loadingWidget: CampaignCardNavigator(
-          title: "Influencer Campaigns",
-          subtitle: "0 new applicants · 0 to review",
+          title: AppStrings.influencerCampaigns.tr,
+          subtitle: AppStrings.campaignApplicantsStatus.trParams({
+            'count': '0',
+            'reviewCount': '0',
+          }),
           isLoading: true,
           onTap: null,
         ),
 
         builder: (_) {
           return CampaignCardNavigator(
-            title: "Influencer Campaigns",
-            subtitle:
-                "${campaignStatus?.inReview ?? 0} new applicants · "
-                "${campaignStatus?.active ?? 0} to review",
+            title: AppStrings.influencerCampaigns.tr,
+            subtitle: AppStrings.campaignApplicantsStatus.trParams({
+              'count': '${campaignStatus?.inReview ?? 0}',
+              'reviewCount': '${campaignStatus?.active ?? 0}',
+            }),
             isLoading: false,
             onTap: () {
               AppRouter.route.pushNamed(RoutePath.merchantCampaignsScreen);

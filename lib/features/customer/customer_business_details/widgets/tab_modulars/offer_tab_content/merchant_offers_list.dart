@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 
 import '../../../../../../utils/enum/app_enum.dart';
@@ -63,7 +63,7 @@ class MerchantOffersList extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 20.h),
                 child: Center(
                   child: Text(
-                    "No more offers",
+                    AppStrings.noMoreOffers.tr,
                     style: context.bodySmall.copyWith(
                       color: AppColors.subtitleTextColor,
                     ),

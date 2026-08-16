@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../utils/enum/app_enum.dart';
 import '../../../profile/main_profile/controller/profile_controller.dart';
@@ -18,7 +19,8 @@ class InfluencerDashboardController extends GetxController {
   RxString get userProfileImage => profileController.userAvatar;
   RxString get userAddress => profileController.userLocationString;
 
-  String get displayName => userName.value.isEmpty ? "User" : userName.value;
+  String get displayName =>
+      userName.value.isEmpty ? AppStrings.user.tr : userName.value;
 
   String get displayAvatar => userProfileImage.value;
 

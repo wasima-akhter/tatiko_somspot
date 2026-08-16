@@ -1,6 +1,6 @@
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../utils/api_urls/api_urls.dart';
 
@@ -164,7 +164,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
       if (!mounted) return;
 
       setState(() {
-        videoError = "Unable to play this video";
+        videoError = AppStrings.unableToPlayVideo.tr;
       });
     }
   }
@@ -321,8 +321,8 @@ class _VideoErrorView extends StatelessWidget {
 
             const SizedBox(height: 12),
 
-            const Text(
-              "Unable to play video",
+            Text(
+              AppStrings.unableToPlayVideo.tr,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
@@ -332,8 +332,8 @@ class _VideoErrorView extends StatelessWidget {
 
             const SizedBox(height: 6),
 
-            const Text(
-              "The video may be unavailable or the connection failed.",
+            Text(
+              AppStrings.videoUnavailableOrConnectionFailed.tr,
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white70, fontSize: 13),
             ),
@@ -343,7 +343,7 @@ class _VideoErrorView extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text("Try again"),
+              label: Text(AppStrings.tryAgain.tr),
             ),
           ],
         ),

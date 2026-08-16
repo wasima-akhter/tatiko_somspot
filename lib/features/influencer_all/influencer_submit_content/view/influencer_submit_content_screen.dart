@@ -5,7 +5,7 @@ import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/helper/snackbar/api_snackbar.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 import '../../../success/success_screen.dart';
@@ -183,6 +183,7 @@ class _InfluencerSubmitContentScreenState
                 Gap(10.h),
 
                 GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   onTap: _pickThumbnail,
                   child: Container(
                     height: 120.h,
@@ -218,6 +219,7 @@ class _InfluencerSubmitContentScreenState
                                 top: 8,
                                 right: 8,
                                 child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
                                   onTap: _pickThumbnail,
                                   child: Container(
                                     padding: const EdgeInsets.all(6),
@@ -249,6 +251,7 @@ class _InfluencerSubmitContentScreenState
                 Gap(10.h),
 
                 GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   onTap: _pickVideo,
                   child: Container(
                     width: double.infinity,
@@ -378,7 +381,7 @@ class _InfluencerSubmitContentScreenState
           ? _videoUrlController.text.trim()
           : null,
       draftVideo: _draftVideo,
-      draftMediaType: _draftVideo != null ? "video" : null,
+      draftMediaType: _draftVideo != null ? AppStrings.video.tr : null,
       caption: _captionController.text.trim(),
       thumbnail: _thumbnail!,
       platform: _selectedPlatform ?? '',

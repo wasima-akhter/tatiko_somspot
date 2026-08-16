@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../review/response/review_response.dart';
 import 'merchant_review_stars.dart';
@@ -52,7 +52,7 @@ class MerchantReviewCard extends StatelessWidget {
                     Text(
                       review.user.name.isNotEmpty
                           ? review.user.name
-                          : 'Anonymous',
+                          : AppStrings.anonymous.tr,
                       style: context.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.darkTextColor,
@@ -116,19 +116,19 @@ class MerchantReviewCard extends StatelessWidget {
     final difference = now.difference(date);
 
     if (difference.inMinutes < 1) {
-      return 'Just now';
+      return AppStrings.justNow.tr;
     }
 
     if (difference.inMinutes < 60) {
-      return '${difference.inMinutes}m ago';
+      return '${difference.inMinutes}m ${AppStrings.ago.tr}';
     }
 
     if (difference.inHours < 24) {
-      return '${difference.inHours}h ago';
+      return '${difference.inHours}h ${AppStrings.ago.tr}';
     }
 
     if (difference.inDays < 7) {
-      return '${difference.inDays}d ago';
+      return '${difference.inDays}d ${AppStrings.ago.tr}';
     }
 
     return '${date.day}/${date.month}/${date.year}';

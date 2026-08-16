@@ -1,7 +1,7 @@
 import 'package:som_spot/features/customer/customer_business_details/widgets/merchant_details/merchant_about_tab.dart';
 import 'package:som_spot/features/customer/customer_business_details/widgets/merchant_details/merchant_offers_tab.dart';
 import 'package:som_spot/features/customer/customer_business_details/widgets/merchant_details/merchant_reviews_tab.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../controller/customer_business_details_controller.dart';
 import 'customer_business_details_tab_bar.dart';

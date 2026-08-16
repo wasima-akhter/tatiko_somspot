@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class MerchantEmptyReviews extends StatelessWidget {
   const MerchantEmptyReviews({super.key});
@@ -17,7 +17,7 @@ class MerchantEmptyReviews extends StatelessWidget {
           ),
           Gap(12.h),
           Text(
-            "No reviews yet",
+            AppStrings.noReviewsYet.tr,
             style: context.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
               color: AppColors.darkTextColor,
@@ -25,7 +25,7 @@ class MerchantEmptyReviews extends StatelessWidget {
           ),
           Gap(4.h),
           Text(
-            "Be the first to review this business.",
+            AppStrings.beTheFirstToReview.tr,
             textAlign: TextAlign.center,
             style: context.bodySmall.copyWith(
               color: AppColors.subtitleTextColor,

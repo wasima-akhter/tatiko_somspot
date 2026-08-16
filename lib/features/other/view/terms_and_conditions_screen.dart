@@ -1,6 +1,6 @@
 import 'package:flutter_html/flutter_html.dart';
 
-import '../../../share/controller/screen_export.dart';
+import '../../../share/export/screen_export.dart';
 import '../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../controller/other_controller.dart';
 
@@ -10,20 +10,12 @@ class TermsAndConditionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = OtherController.to;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await controller.getTermsConditions();
+    });
+
     return ScaffoldWrapper(
-      backgroundColor: AppColors.backgroundColorNew,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          AppStrings.termsConditions.tr,
-          style: context.titleMedium.copyWith(
-            fontWeight: FontWeight.bold,
-            fontSize: 18.sp,
-            color: AppColors.darkTextColor,
-          ),
-        ),
-      ),
+      title: AppStrings.termsConditions.tr,
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -103,7 +95,6 @@ class TermsAndConditionsScreen extends StatelessWidget {
                   );
                 }),
               ),
-              Gap(24.h),
             ],
           ),
         ),

@@ -4,7 +4,7 @@ import 'package:som_spot/features/merchant/stats/widgets/top_deals_analytics_lis
 import 'package:som_spot/features/merchant/stats/widgets/top_performing_offers_list.dart';
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../controller/stats_controller.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
 
@@ -124,6 +124,7 @@ class _EditOfferScreenState extends State<EditOfferScreen> {
             children: [
               /// IMAGE
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: controller.pickImage,
                 child: Obx(() {
                   final selectedImage = controller.imagePath.value;

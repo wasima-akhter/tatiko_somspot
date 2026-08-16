@@ -1,8 +1,9 @@
 import 'package:flutter/services.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
+import '../../../core/category/controller/category_controller.dart';
 import '../controller/edit_influencer_controller.dart';
 
 class EditInfluencerScreen extends StatelessWidget {
@@ -13,6 +14,10 @@ class EditInfluencerScreen extends StatelessWidget {
     final controller = EditInfluencerController.to;
 
     final formKey = GlobalKey<FormState>();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await CategoryController.to.refreshCategories();
+    });
 
     return ScaffoldWrapper(
       title: AppStrings.editInfluencerProfile.tr,

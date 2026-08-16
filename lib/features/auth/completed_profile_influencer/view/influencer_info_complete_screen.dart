@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 import '../controller/completed_profile_influencer_controller.dart';

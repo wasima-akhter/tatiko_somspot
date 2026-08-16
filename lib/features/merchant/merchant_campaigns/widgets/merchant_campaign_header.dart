@@ -2,7 +2,7 @@ import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:som_spot/features/merchant/merchant_campaigns/controller/merchant_campaigns_controller.dart';
 import 'package:som_spot/share/widgets/ui_status_builder/api_status_builder.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 
 class MerchantCampaignHeader extends StatelessWidget {
@@ -30,6 +30,7 @@ class MerchantCampaignHeader extends StatelessWidget {
           Row(
             children: [
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
                   //
                   AppRouter.route.goNamed(RoutePath.navigationPages);

@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class ApplicationSubmittedScreen extends StatelessWidget {
   const ApplicationSubmittedScreen({super.key});

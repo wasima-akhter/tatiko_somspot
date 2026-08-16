@@ -1,7 +1,10 @@
+import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:som_spot/core/custom_assets/assets.gen.dart';
 import 'package:som_spot/helper/launcher/launcher_helper.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
+import '../../../../../utils/enum/app_enum.dart';
+import '../../controller/customer_business_details_controller.dart';
 import 'customer_business_details_tab_item.dart';
 
 class MerchantDetailsTabBar extends StatelessWidget {
@@ -41,14 +44,107 @@ class MerchantDetailsTabBar extends StatelessWidget {
             ),
           ),
           Gap(12.w),
-          GestureDetector(
-            onTap: () {
-              LauncherHelper.launchWhatsApp(context, '+8801862110104');
-            },
-            child: Assets.icons.whatsapps.svg(height: 48.h, width: 48.w),
-          ),
+          _buildWhatsAppSection(context),
         ],
       ),
+    );
+  }
+
+  Widget _buildWhatsAppSection(BuildContext context) {
+    final controller = CustomerBusinessDetailsController.to;
+    return Obx(() {
+      final status = controller.businessStatus.value;
+
+      // Loading
+      if (status == ApiStatus.loading) {
+        return const _WhatsAppShimmer();
+      }
+
+      final business = controller.business.value;
+
+      if (business == null || business.whatsapp.trim().isEmpty) {
+        return const SizedBox.shrink();
+      }
+
+      final whatsapp = business.whatsapp.trim();
+
+      return Column(
+        children: [
+          Row(
+            children: [
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  LauncherHelper.launchWhatsApp(context, whatsapp);
+                },
+                child: Assets.icons.whatsapps.svg(height: 48.h, width: 48.w),
+              ),
+            ],
+          ),
+        ],
+      );
+    });
+  }
+}
+
+class _WhatsAppShimmer extends StatelessWidget {
+  const _WhatsAppShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Divider(height: 24, color: AppColors.backgroundsLinesColor),
+
+        Row(
+          children: [
+            // Icon shimmer
+            AutoShimmerAnimate(
+              isLoading: true,
+              child: Container(
+                width: 20.w,
+                height: 20.w,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
+
+            Gap(12.w),
+
+            // Number shimmer
+            Expanded(
+              child: AutoShimmerAnimate(
+                isLoading: true,
+                child: Container(
+                  height: 16.h,
+                  width: 140.w,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(6.r),
+                  ),
+                ),
+              ),
+            ),
+
+            Gap(12.w),
+
+            // WhatsApp button shimmer
+            AutoShimmerAnimate(
+              isLoading: true,
+              child: Container(
+                width: 48.w,
+                height: 48.w,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

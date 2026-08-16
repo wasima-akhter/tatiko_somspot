@@ -1,6 +1,6 @@
 import 'package:som_spot/helper/snackbar/api_snackbar.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../customer/saved/shared/service/saved_service.dart';
 import '../../shared/response/claimed_offer_model.dart';
@@ -105,7 +105,7 @@ class OfferDetailController extends GetxController {
       debugPrint("Toggle Offer Saved Error => $e");
       debugPrintStack(stackTrace: s);
 
-      ApiSnackbar.show("Something went wrong");
+      ApiSnackbar.show(AppStrings.somethingWentWrong.tr);
     }
   }
 

@@ -1,4 +1,4 @@
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../controller/merchant_campaign_details_controller.dart';
 import '../helper/merchant_campaign_detail_helper.dart';
 
@@ -20,6 +20,7 @@ class MerchantCampaignDetailsTabs
               .map(
                 (tab) => Expanded(
                   child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () => controller.changeTab(tab),
                     child: _tab(tab.title, controller.selectedTab.value == tab),
                   ),

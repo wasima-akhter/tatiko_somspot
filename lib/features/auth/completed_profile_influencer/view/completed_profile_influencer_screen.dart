@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
 import '../../../../helper/validator/text_field_validator.dart';
@@ -58,6 +58,7 @@ class CompletedProfileInfluencerScreen extends StatelessWidget {
                       final imagePath = controller.profileImagePath.value;
 
                       return GestureDetector(
+                        behavior: HitTestBehavior.opaque,
                         onTap: controller.pickProfileImage,
 
                         child: AnimatedContainer(

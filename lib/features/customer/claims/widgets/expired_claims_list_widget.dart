@@ -2,7 +2,7 @@
 // 4. Expired Claims List Widget (`expired_claims_list_widget.dart`)
 // -----------------------------------------------------------------------------
 import 'package:som_spot/features/customer/claims/controller/claims_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/ui_status_builder/api_status_builder.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
 
@@ -28,6 +28,7 @@ class ExpiredClaimsListWidget extends GetView<ClaimsController> {
             physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),
             ),
+            controller: controller.listScrollController,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             itemCount: controller.expiredPaginator.items.length,
             separatorBuilder: (_, index) => Gap(12.h),

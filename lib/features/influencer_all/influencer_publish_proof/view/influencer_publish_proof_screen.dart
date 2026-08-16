@@ -1,6 +1,6 @@
 import 'package:som_spot/features/influencer_all/influencer_publish_proof/controller/influencer_publish_proof_controller.dart';
 
-import '../../../../share/controller/screen_export.dart';
+import '../../../../share/export/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../nav/controller/navigation_controller.dart';
 import '../../../success/success_screen.dart';

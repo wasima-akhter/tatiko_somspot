@@ -1,4 +1,4 @@
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../helper/toast/toast_helper.dart';
 import '../../../auth/completed_profile_influencer/model/influencer_info_profile_request.dart';
@@ -64,9 +64,7 @@ class EditInfluencerController extends GetxController {
   void onInit() {
     super.onInit();
 
-    if (CategoryController.to.categories.isEmpty) {
-      CategoryController.to.loadInitialCategories();
-    }
+    CategoryController.to.refreshCategories();
 
     getCreatorProfile();
   }

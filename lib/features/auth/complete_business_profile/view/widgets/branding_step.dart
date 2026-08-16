@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:som_spot/features/auth/complete_business_profile/controller/complete_business_profile_controller.dart';
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 
 class BrandingStep extends StatelessWidget {
   const BrandingStep({super.key});
@@ -57,6 +57,7 @@ class BrandingStep extends StatelessWidget {
           Obx(() {
             final imagePath = controller.coverImagePath.value;
             return GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: () => controller.pickCoverImage(),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
@@ -155,6 +156,7 @@ class BrandingStep extends StatelessWidget {
             child: Obx(() {
               final imagePath = controller.logoImagePath.value;
               return GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () => controller.pickLogoImage(),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),

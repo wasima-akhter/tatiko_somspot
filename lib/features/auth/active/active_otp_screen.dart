@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:som_spot/share/controller/screen_export.dart';
+import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/text_field/otp_text_field.dart';
 
@@ -121,6 +121,7 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
               const Gap(16),
 
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () => AppRouter.route.pop(),
 
                 child: const Icon(
@@ -229,6 +230,7 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
                           }
 
                           return GestureDetector(
+                            behavior: HitTestBehavior.opaque,
                             onTap: _resendOtp,
                             child: Text(
                               "Resend Code"
