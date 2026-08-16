@@ -1,6 +1,9 @@
+import 'package:get/get.dart';
+
 import '../../../share/export/service_export.dart';
 import '../../../share/model/pagination_meta_model.dart';
 import '../../../share/widgets/paginator/paginator.dart';
+import '../../../utils/app_strings/app_strings.dart';
 import '../model/alerts_model.dart';
 import '../repository/alerts_repository.dart';
 
@@ -35,7 +38,7 @@ class AlertsService {
       debugPrint("Get Notifications Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -50,7 +53,7 @@ class AlertsService {
       debugPrint("Mark Notifications Read Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

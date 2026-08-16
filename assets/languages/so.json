@@ -770,5 +770,15 @@
   "offline_message": "Oops, internet-ka ma lihid. Hubi xiriirkaaga oo mar kale isku day.",
 
   "unable_to_play_video": "Fiidiyowga lama daabici karo",
-  "video_may_be_unavailable_or_connection_failed": "Fiidiyowga lama heli karo ama isku xirka ayaa fashilmay."
+  "video_may_be_unavailable_or_connection_failed": "Fiidiyowga lama heli karo ama isku xirka ayaa fashilmay.",
+
+  "location_permission_required": "Oggolaanshaha Goobta ayaa loo baahan yahay",
+  "location_permission_message": "Som Spot wuxuu u baahan yahay goobtaada si uu kuu tuso ganacsiyada kuu dhow iyo waxyaabaha ku saleysan goobta.",
+
+  "enable_location_permission": "Daar Oggolaanshaha Goobta",
+  "location_permission_disabled_message": "Oggolaanshaha goobta ayaa laga damiyay app-kan. Fadlan ka daar goobaha qalabkaaga.",
+  "open_settings": "Fur Settings",
+  "location_is_disabled": "Goobta waa dansan tahay",
+  "location_disabled_message": "Fadlan daar adeegyada goobta ee qalabkaaga si Som Spot uu u ogaado goobtaada hadda.",
+  "enable_location": "Daar Goobta"
 }

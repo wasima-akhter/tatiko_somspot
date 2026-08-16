@@ -767,5 +767,15 @@
   "offline_message": "عذرًا، أنت غير متصل بالإنترنت. تحقق من اتصالك وحاول مرة أخرى.",
 
   "unable_to_play_video": "تعذر تشغيل الفيديو",
-  "video_may_be_unavailable_or_connection_failed": "قد يكون الفيديو غير متاح أو فشل الاتصال."
+  "video_may_be_unavailable_or_connection_failed": "قد يكون الفيديو غير متاح أو فشل الاتصال.",
+
+  "location_permission_required": "إذن الموقع مطلوب",
+  "location_permission_message": "يحتاج Som Spot إلى موقعك لعرض الأنشطة التجارية القريبة والمحتوى المستند إلى الموقع.",
+
+  "enable_location_permission": "تفعيل إذن الموقع",
+  "location_permission_disabled_message": "تم تعطيل إذن الموقع لهذا التطبيق. يرجى تفعيله من إعدادات جهازك.",
+  "open_settings": "فتح الإعدادات",
+  "location_is_disabled": "الموقع معطل",
+  "location_disabled_message": "يرجى تفعيل خدمات الموقع على جهازك حتى يتمكن Som Spot من تحديد موقعك الحالي.",
+  "enable_location": "تفعيل الموقع"
 }

@@ -19,6 +19,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
@@ -26,6 +27,7 @@ import '../../../../core/service/datasource/local/app_storage.dart';
 import '../../../../core/service/datasource/remote/api_exception.dart';
 import '../../../../core/service/datasource/remote/api_parser.dart';
 import '../../../../core/service/datasource/remote/api_response.dart';
+import '../../../../utils/app_strings/app_strings.dart';
 import '../models/curr_user_response.dart';
 import '../models/login_model.dart';
 import '../models/register_response.dart';
@@ -65,7 +67,7 @@ class AuthService {
 
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -80,7 +82,7 @@ class AuthService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (_) {
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -148,7 +150,7 @@ class AuthService {
 
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -165,7 +167,7 @@ class AuthService {
       debugPrint("Resend OTP Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -184,7 +186,7 @@ class AuthService {
       debugPrint("Forgot Password Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -203,7 +205,7 @@ class AuthService {
       debugPrint("Verify Forgot OTP Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -220,7 +222,7 @@ class AuthService {
       debugPrint("Reset Password Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -239,7 +241,7 @@ class AuthService {
       debugPrint("Change Password Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

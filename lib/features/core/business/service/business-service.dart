@@ -1,5 +1,8 @@
+import 'package:get/get.dart';
+
 import '../../../../share/export/service_export.dart';
 import '../../../../share/widgets/paginator/paginator.dart';
+import '../../../../utils/app_strings/app_strings.dart';
 import '../repository/business-repository.dart';
 import '../request/business-request.dart';
 import '../response/business-response.dart';
@@ -47,7 +50,7 @@ class BusinessService {
       debugPrint("Update Business Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

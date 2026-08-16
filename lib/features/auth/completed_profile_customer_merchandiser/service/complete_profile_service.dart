@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:som_spot/features/auth/completed_profile_customer_merchandiser/repository/complete_profile_repository.dart';
 
 import '../../../../core/service/datasource/remote/api_exception.dart';
 import '../../../../core/service/datasource/remote/api_parser.dart';
 import '../../../../core/service/datasource/remote/api_response.dart';
+import '../../../../utils/app_strings/app_strings.dart';
 import 'complete_profile_request.dart';
 import 'complete_profile_response.dart';
 
@@ -28,7 +30,7 @@ class CompleteProfileService {
       debugPrint("$e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

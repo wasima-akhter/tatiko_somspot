@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:get/get.dart';
+
 import '../../../../../share/export/service_export.dart';
 import '../../../../../share/model/pagination_meta_model.dart';
+import '../../../../../utils/app_strings/app_strings.dart';
 import '../repository/influencer_tasks_repository.dart';
 import '../request/influencer_tasks_request.dart';
 import '../response/influencer_tasks_response.dart';
@@ -36,7 +39,7 @@ class InfluencerTasksService {
       debugPrint("Get Influencer Tasks Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -68,7 +71,7 @@ class InfluencerTasksService {
       debugPrint("Submit Draft Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -88,7 +91,7 @@ class InfluencerTasksService {
       debugPrint("Get Task Detail Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -110,7 +113,7 @@ class InfluencerTasksService {
       debugPrint("Submit Post Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

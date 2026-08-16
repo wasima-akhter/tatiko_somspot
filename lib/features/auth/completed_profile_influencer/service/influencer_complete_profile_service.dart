@@ -1,4 +1,7 @@
+import 'package:get/get.dart';
+
 import '../../../../share/export/service_export.dart';
+import '../../../../utils/app_strings/app_strings.dart';
 import '../model/influencer_complete_profile_request.dart';
 import '../model/influencer_info_profile_request.dart';
 import '../repository/influencer_complete_profile_repository.dart';
@@ -21,7 +24,7 @@ class InfluencerCompleteProfileService {
       debugPrint("$e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -38,7 +41,7 @@ class InfluencerCompleteProfileService {
       debugPrint("$e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

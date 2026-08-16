@@ -1,6 +1,9 @@
+import 'package:get/get.dart';
+
 import '../../../../../share/export/service_export.dart';
 import '../../../../../share/model/pagination_meta_model.dart';
 import '../../../../../share/widgets/paginator/paginator.dart';
+import '../../../../../utils/app_strings/app_strings.dart';
 import '../repository/saved_repository.dart';
 import '../response/saved_business_model.dart';
 import '../response/saved_offer_model.dart';
@@ -33,7 +36,7 @@ class SavedService {
       debugPrint("Toggle Saved Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -109,7 +112,7 @@ class SavedService {
       debugPrint("Get Saved $type Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

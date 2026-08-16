@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/service/datasource/remote/api_exception.dart';
 import '../../../../core/service/datasource/remote/api_response.dart';
 import '../../../../share/model/pagination_meta_model.dart';
 import '../../../../share/widgets/paginator/paginator.dart';
+import '../../../../utils/app_strings/app_strings.dart';
 import '../model/category_model.dart';
 import '../repository/category_repository.dart';
 
@@ -40,7 +42,7 @@ class CategoryService {
       debugPrint("$e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

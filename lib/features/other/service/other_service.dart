@@ -1,4 +1,7 @@
+import 'package:get/get.dart';
+
 import '../../../share/export/service_export.dart';
+import '../../../utils/app_strings/app_strings.dart';
 import '../model/feedback_model.dart';
 import '../model/rate-app_model.dart';
 import '../model/terms_conditions_model.dart';
@@ -27,7 +30,7 @@ class OtherService {
       debugPrint("Post Feedback Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -47,7 +50,7 @@ class OtherService {
       debugPrint("Get Terms Conditions Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -67,7 +70,7 @@ class OtherService {
       debugPrint("Get Privacy Policy Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -87,7 +90,7 @@ class OtherService {
       debugPrint("Rate App Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -107,7 +110,7 @@ class OtherService {
       debugPrint("Get About Us Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

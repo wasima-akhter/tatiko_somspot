@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 
 import '../../../core/service/datasource/remote/api_exception.dart';
 import '../../../core/service/datasource/remote/api_parser.dart';
 import '../../../core/service/datasource/remote/api_response.dart';
+import '../../../utils/app_strings/app_strings.dart';
 import '../models/edit_profile_response.dart';
 import '../models/get_profile_model.dart';
 import '../repository/profile_repository.dart';
@@ -31,11 +33,11 @@ class ProfileService {
       debugPrint("Edit Profile Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
-/*
+  /*
 
 import 'package:flutter/foundation.dart';
 
@@ -67,7 +69,7 @@ class CompleteBusinessProfileService {
       debugPrint("$e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }
@@ -95,7 +97,7 @@ class CompleteBusinessProfileService {
       debugPrint("Get Profile Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

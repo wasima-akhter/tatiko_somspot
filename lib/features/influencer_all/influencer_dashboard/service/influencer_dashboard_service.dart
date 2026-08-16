@@ -1,4 +1,7 @@
+import 'package:get/get.dart';
+
 import '../../../../share/export/service_export.dart';
+import '../../../../utils/app_strings/app_strings.dart';
 import '../repository/influencer_dashboard_repository.dart';
 import '../response/influencer_dashboard_response.dart';
 
@@ -23,7 +26,7 @@ class InfluencerDashboardService {
       debugPrint("Influencer Dashboard Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

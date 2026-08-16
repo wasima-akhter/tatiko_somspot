@@ -1,4 +1,7 @@
+import 'package:get/get.dart';
+
 import '../../../../share/export/service_export.dart';
+import '../../../../utils/app_strings/app_strings.dart';
 import '../repository/stats_repository.dart';
 import '../response/stats_response.dart';
 
@@ -20,7 +23,7 @@ class StatsService {
       debugPrint("Merchant Analytics Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

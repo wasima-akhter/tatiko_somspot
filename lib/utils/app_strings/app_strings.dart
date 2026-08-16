@@ -1003,4 +1003,22 @@ class AppStrings {
   static const String unableToPlayVideo = "unable_to_play_video";
   static const String videoUnavailableOrConnectionFailed =
       "video_may_be_unavailable_or_connection_failed";
+
+  static const String locationPermissionRequired =
+      "location_permission_required";
+
+  static const String locationPermissionMessage = "location_permission_message";
+
+  static const String enableLocationPermission = "enable_location_permission";
+
+  static const String locationPermissionDisabledMessage =
+      "location_permission_disabled_message";
+
+  static const String openSettings = "open_settings";
+
+  static const String locationIsDisabled = "location_is_disabled";
+
+  static const String locationDisabledMessage = "location_disabled_message";
+
+  static const String enableLocation = "enable_location";
 }

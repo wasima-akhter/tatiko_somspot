@@ -1,6 +1,9 @@
+import 'package:get/get.dart';
+
 import '../../../../share/export/service_export.dart';
 import '../../../../share/model/pagination_meta_model.dart';
 import '../../../../share/widgets/paginator/paginator.dart';
+import '../../../../utils/app_strings/app_strings.dart';
 import '../../../../utils/multipart/multipart_body.dart';
 import '../../../offers/shared/response/offers_response.dart';
 import '../repository/offers_repository.dart';
@@ -29,7 +32,7 @@ class OfferService {
 
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -62,7 +65,7 @@ class OfferService {
       debugPrint("Get Offers Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -80,7 +83,7 @@ class OfferService {
       debugPrint("Get Offer Details Error: $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -105,7 +108,7 @@ class OfferService {
 
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -126,7 +129,7 @@ class OfferService {
       debugPrint("Claim Offer Error => $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

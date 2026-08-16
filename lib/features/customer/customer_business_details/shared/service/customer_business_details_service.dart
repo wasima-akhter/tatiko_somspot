@@ -1,8 +1,11 @@
+import 'package:get/get.dart';
+
 import '../../../../../share/export/service_export.dart';
 import '../../../../../share/model/pagination_meta_model.dart';
 import '../../../../../share/widgets/paginator/paginator.dart';
-import '../model/deal_model.dart';
+import '../../../../../utils/app_strings/app_strings.dart';
 import '../model/customer_buiness_details_model.dart';
+import '../model/deal_model.dart';
 import '../repository/customer_business_details_repository.dart';
 
 class CustomerBusinessDetailsService {
@@ -27,7 +30,7 @@ class CustomerBusinessDetailsService {
 
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -68,7 +71,7 @@ class CustomerBusinessDetailsService {
       debugPrint("Get Offers Error => $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide Response;
 
 import '../../../../../share/export/service_export.dart';
 import '../../../../../share/model/pagination_meta_model.dart';
 import '../../../../../share/widgets/paginator/paginator.dart';
+import '../../../../../utils/app_strings/app_strings.dart';
 import '../repository/merchant_campaign_repository.dart';
 import '../request/new_campaign_request.dart';
 import '../response/merchant_campaign_detail_model.dart';
@@ -26,7 +28,7 @@ class MerchantCampaignService {
       debugPrint("Create Offer Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -62,7 +64,7 @@ class MerchantCampaignService {
       debugPrint("Get Campaigns Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -84,7 +86,7 @@ class MerchantCampaignService {
 
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -121,7 +123,7 @@ class MerchantCampaignService {
       debugPrint("Get Campaign Applications Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -141,7 +143,7 @@ class MerchantCampaignService {
       debugPrint("Get Creator Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -179,7 +181,7 @@ class MerchantCampaignService {
 
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -199,7 +201,7 @@ class MerchantCampaignService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e) {
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -223,7 +225,7 @@ class MerchantCampaignService {
 
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 
@@ -245,7 +247,7 @@ class MerchantCampaignService {
       debugPrint("Verify Publication Error $e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

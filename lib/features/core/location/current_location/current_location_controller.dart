@@ -49,9 +49,9 @@ class LocationController extends GetxController {
     try {
       isLoading.value = true;
 
-      // -------------------------
-      // 1. Check GPS/location service
-      // -------------------------
+      // --------------------------------------------------
+      // 1. Check if location service/GPS is enabled
+      // --------------------------------------------------
 
       isLocationServiceEnabled.value =
           await Geolocator.isLocationServiceEnabled();
@@ -66,47 +66,53 @@ class LocationController extends GetxController {
         return false;
       }
 
-      // -------------------------
-      // 2. Check permission
-      // -------------------------
+      // --------------------------------------------------
+      // 2. Check current permission
+      // --------------------------------------------------
 
       permission.value = await Geolocator.checkPermission();
 
-      // -------------------------
-      // 3. Request permission
-      // -------------------------
+      // --------------------------------------------------
+      // 3. Already have permission → don't request again
+      // --------------------------------------------------
 
-      if (permission.value == LocationPermission.denied) {
+      if (permission.value == LocationPermission.always ||
+          permission.value == LocationPermission.whileInUse) {
+        debugPrint('Location permission already granted.');
+      }
+      // --------------------------------------------------
+      // 4. Permission not granted → request it
+      // --------------------------------------------------
+      else if (permission.value == LocationPermission.denied) {
+        debugPrint('Requesting location permission...');
+
         permission.value = await Geolocator.requestPermission();
+
+        // User denied the request
+        if (permission.value == LocationPermission.denied) {
+          debugPrint('Location permission denied.');
+
+          await _showPermissionDeniedDialog();
+
+          return false;
+        }
       }
-
-      // -------------------------
-      // 4. Still denied
-      // -------------------------
-
-      if (permission.value == LocationPermission.denied) {
-        debugPrint('Location permission denied.');
-
-        await _showPermissionDeniedDialog();
-
-        return false;
-      }
-
-      // -------------------------
-      // 5. Permanently denied
-      // -------------------------
-
-      if (permission.value == LocationPermission.deniedForever) {
+      // --------------------------------------------------
+      // 5. Permission permanently denied
+      // --------------------------------------------------
+      else if (permission.value == LocationPermission.deniedForever) {
         debugPrint('Location permission permanently denied.');
 
-        await _showPermissionDeniedForeverDialog();
+        if (showSettingsOnFailure) {
+          await _showPermissionDeniedDialog();
+        }
 
         return false;
       }
 
-      // -------------------------
-      // 6. Permission granted
-      // -------------------------
+      // --------------------------------------------------
+      // 6. Get current location
+      // --------------------------------------------------
 
       final position = await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
@@ -126,7 +132,7 @@ class LocationController extends GetxController {
 
       return true;
     } catch (e, stackTrace) {
-      debugPrint('Get location error: $e');
+      debugPrint('Get current location error: $e');
       debugPrintStack(stackTrace: stackTrace);
 
       return false;
@@ -162,17 +168,14 @@ class LocationController extends GetxController {
   Future<void> _showPermissionDeniedDialog() async {
     await Get.dialog(
       AlertDialog(
-        title: const Text('Location Permission Required'),
-        content: const Text(
-          'Som Spot needs your location to show nearby '
-          'businesses and location-based content.',
-        ),
+        title: Text(AppStrings.locationPermissionRequired.tr),
+        content: Text(AppStrings.locationPermissionMessage.tr),
         actions: [
           TextButton(
             onPressed: () {
               Get.back();
             },
-            child: const Text('Cancel'),
+            child: Text(AppStrings.cancel.tr),
           ),
           TextButton(
             onPressed: () async {
@@ -181,7 +184,7 @@ class LocationController extends GetxController {
               // Try permission again.
               await getCurrentLocation();
             },
-            child: const Text('Try Again'),
+            child: Text(AppStrings.tryAgain.tr),
           ),
         ],
       ),
@@ -196,17 +199,14 @@ class LocationController extends GetxController {
   Future<void> _showPermissionDeniedForeverDialog() async {
     await Get.dialog(
       AlertDialog(
-        title: const Text('Enable Location Permission'),
-        content: const Text(
-          'Location permission has been disabled for this app. '
-          'Please enable it from your device settings.',
-        ),
+        title: Text(AppStrings.enableLocationPermission.tr),
+        content: Text(AppStrings.locationPermissionDisabledMessage.tr),
         actions: [
           TextButton(
             onPressed: () {
               Get.back();
             },
-            child: const Text('Cancel'),
+            child: Text(AppStrings.cancel.tr),
           ),
           TextButton(
             onPressed: () async {
@@ -214,7 +214,7 @@ class LocationController extends GetxController {
 
               await Geolocator.openAppSettings();
             },
-            child: const Text('Open Settings'),
+            child: Text(AppStrings.openSettings.tr),
           ),
         ],
       ),
@@ -229,11 +229,8 @@ class LocationController extends GetxController {
   Future<void> _showLocationServiceDialog() async {
     await Get.dialog(
       AlertDialog(
-        title: const Text('Location Is Disabled'),
-        content: const Text(
-          'Please enable location services on your device '
-          'so Som Spot can determine your current location.',
-        ),
+        title: Text(AppStrings.locationIsDisabled.tr),
+        content: Text(AppStrings.locationDisabledMessage.tr),
         actions: [
           TextButton(
             onPressed: () {
@@ -253,7 +250,7 @@ class LocationController extends GetxController {
 
               await getCurrentLocation();
             },
-            child: const Text('Enable Location'),
+            child: Text(AppStrings.enableLocation.tr),
           ),
         ],
       ),

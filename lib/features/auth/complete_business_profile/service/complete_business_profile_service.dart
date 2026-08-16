@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/service/datasource/remote/api_exception.dart';
 import '../../../../core/service/datasource/remote/api_parser.dart';
 import '../../../../core/service/datasource/remote/api_response.dart';
+import '../../../../utils/app_strings/app_strings.dart';
 import '../repository/complete_business_profile_repository.dart';
 import 'complete_business_profile_request.dart';
 import 'complete_business_profile_response.dart';
@@ -28,7 +30,7 @@ class CompleteBusinessProfileService {
       debugPrint("$e");
       debugPrintStack(stackTrace: s);
 
-      return ApiResponse.failure(message: "Something went wrong");
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
 }

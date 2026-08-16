@@ -23,7 +23,9 @@ class InfluencerDashboardScreen extends StatelessWidget {
         onRefresh: controller.refreshHomeData,
 
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
 
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

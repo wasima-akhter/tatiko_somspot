@@ -4,6 +4,7 @@ import 'package:som_spot/features/customer/customer_business_details/shared/mode
 
 import '../../../../helper/snackbar/api_snackbar.dart';
 import '../../../../share/widgets/paginator/paginator.dart';
+import '../../../../utils/app_strings/app_strings.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../review/response/review_response.dart';
 import '../../review/service/review_service.dart';
@@ -276,7 +277,7 @@ class CustomerBusinessDetailsController extends GetxController {
       debugPrint("Toggle Business Saved Error => $e");
       debugPrintStack(stackTrace: s);
 
-      ApiSnackbar.show("Something went wrong");
+      ApiSnackbar.show(AppStrings.somethingWentWrong.tr);
     }
   }
 
