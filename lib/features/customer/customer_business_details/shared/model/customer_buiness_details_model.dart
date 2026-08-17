@@ -22,6 +22,12 @@ class BusinessDetailsModel {
   final String? closesAt;
   final String? opensAt;
 
+  //  "distanceKm": null,
+  //       "distanceLabel": null,
+
+  final double distanceKm;
+  final String distanceLabel;
+
   final bool? isSaved;
 
   BusinessDetailsModel({
@@ -48,6 +54,8 @@ class BusinessDetailsModel {
     required this.closesAt,
     required this.opensAt,
     this.isSaved,
+    required this.distanceKm,
+    required this.distanceLabel,
   });
 
   factory BusinessDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -98,6 +106,9 @@ class BusinessDetailsModel {
 
       closesAt: json['closesAt']?.toString(),
       opensAt: json['opensAt']?.toString(),
+
+      distanceKm: (json["distanceKm"] ?? 0).toDouble(),
+      distanceLabel: json["distanceLabel"] ?? "",
 
       isSaved: json['isSaved'] as bool? ?? false,
     );
