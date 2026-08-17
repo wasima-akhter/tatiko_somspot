@@ -1,3 +1,4 @@
+import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -21,6 +22,7 @@ class ProfileUserInfo extends StatelessWidget {
       return ApiStatusBuilder(
         status: controller.profileLoading.value,
         errorMessage: controller.errorMessage.value,
+        loadingWidget: const ProfileUserInfoSkeleton(),
         onRetry: controller.getProfile,
         builder: (context) => Row(
           children: [
@@ -69,5 +71,60 @@ class ProfileUserInfo extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class ProfileUserInfoSkeleton extends StatelessWidget {
+  const ProfileUserInfoSkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AutoShimmerAnimate(
+      isLoading: true,
+      baseColor: Colors.white.withValues(alpha: .15),
+      highlightColor: Colors.white.withValues(alpha: .3),
+      child: Row(
+        children: [
+          Container(
+            width: 56.w,
+            height: 56.h,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 2.w),
+            ),
+          ),
+
+          Gap(12.w),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 130.w,
+                  height: 16.h,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5.r),
+                  ),
+                ),
+
+                Gap(7.h),
+
+                Container(
+                  width: 190.w,
+                  height: 13.h,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(4.r),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

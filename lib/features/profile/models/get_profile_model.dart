@@ -14,6 +14,9 @@ class GetProfileModel {
   final LocationCoordinates? locationCoordinates;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final int savedCount;
+  final int claimsCount;
+  final int reviewsCount;
 
   GetProfileModel({
     required this.id,
@@ -31,6 +34,9 @@ class GetProfileModel {
     this.locationCoordinates,
     this.createdAt,
     this.updatedAt,
+    this.savedCount = 0,
+    this.claimsCount = 0,
+    this.reviewsCount = 0,
   });
 
   factory GetProfileModel.fromJson(Map<String, dynamic> json) {
@@ -72,6 +78,10 @@ class GetProfileModel {
       updatedAt: json["updatedAt"] != null
           ? DateTime.tryParse(json["updatedAt"])
           : null,
+
+      savedCount: json["savedCount"] ?? 0,
+      claimsCount: json["claimsCount"] ?? 0,
+      reviewsCount: json["reviewsCount"] ?? 0,
     );
   }
 }

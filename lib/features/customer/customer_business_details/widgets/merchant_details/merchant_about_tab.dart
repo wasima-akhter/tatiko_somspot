@@ -1,4 +1,5 @@
 import 'package:som_spot/share/export/screen_export.dart';
+import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/refresh_indicator/refresh_indicator.dart';
 import 'package:som_spot/share/widgets/ui_status_builder/api_status_builder.dart';
 
@@ -6,7 +7,6 @@ import '../../controller/customer_business_details_controller.dart';
 import '../tab_modulars/about_tab_content/merchant_about_details_card.dart';
 import '../tab_modulars/about_tab_content/merchant_about_gallery.dart';
 import '../tab_modulars/about_tab_content/merchant_about_rating.dart';
-import '../tab_modulars/about_tab_content/merchant_about_skeleton.dart';
 
 class MerchantAboutTab extends GetView<CustomerBusinessDetailsController> {
   const MerchantAboutTab({super.key});
@@ -17,7 +17,7 @@ class MerchantAboutTab extends GetView<CustomerBusinessDetailsController> {
       () => ApiStatusBuilder(
         status: controller.businessStatus.value,
         errorMessage: controller.businessErrorMessage.value,
-        loadingWidget: const MerchantAboutSkeleton(),
+        loadingWidget: const LoadingWidget(),
         onRetry: controller.refreshBusinessDetails,
         builder: (_) {
           final business = controller.business.value!;

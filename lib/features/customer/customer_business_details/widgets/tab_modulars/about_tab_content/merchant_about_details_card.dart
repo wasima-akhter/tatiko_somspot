@@ -4,7 +4,6 @@ import '../../../controller/customer_business_details_controller.dart';
 import 'merchant_about_info_row.dart';
 import 'merchant_about_skeleton.dart';
 import 'merchant_opening_hours.dart';
-import 'merchant_whatsapp_section.dart';
 
 class MerchantAboutDetailsCard extends StatelessWidget {
   const MerchantAboutDetailsCard({super.key});
@@ -55,7 +54,7 @@ class MerchantAboutDetailsCard extends StatelessWidget {
               ),
             ],
 
-            MerchantAboutWhatsApp(),
+            // MerchantAboutWhatsApp(),
           ],
         ),
       );

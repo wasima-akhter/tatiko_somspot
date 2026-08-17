@@ -17,7 +17,7 @@ class CustomerHomeScreen extends GetView<HomeController> {
       await CategoryController.to.loadInitialCategories();
     });
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorNew,
       body: RefreshIndicator(
         color: AppColors.primaryColor,
         onRefresh: () => controller.refreshHomeData(),

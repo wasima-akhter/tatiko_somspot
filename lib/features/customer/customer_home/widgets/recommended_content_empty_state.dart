@@ -11,7 +11,8 @@ class RecommendedContentEmptyState extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
       decoration: BoxDecoration(
-        color: AppColors.primaryColor.withValues(alpha: 0.035),
+        // color: AppColors.primaryColor.withValues(alpha: 0.035),
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
           color: AppColors.primaryColor.withValues(alpha: 0.08),

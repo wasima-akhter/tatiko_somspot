@@ -27,18 +27,24 @@ class MerchantAboutWhatsApp extends StatelessWidget {
 
       final whatsapp = business.whatsapp.trim();
 
-      return Column(
+      debugPrint('whatsapp: $whatsapp');
+
+      return Row(
         children: [
-          Row(
-            children: [
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  LauncherHelper.launchWhatsApp(context, whatsapp);
-                },
-                child: Assets.icons.whatsapps.svg(height: 48.h, width: 48.w),
-              ),
-            ],
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              LauncherHelper.launchWhatsApp(context, whatsapp);
+            },
+            child: Assets.icons.whatsapps.svg(height: 35.w, width: 35.w),
+          ),
+          Gap(2.h),
+          Text(
+            whatsapp,
+            style: context.bodyMedium.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.darkTextColor,
+            ),
           ),
         ],
       );

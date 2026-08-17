@@ -110,11 +110,10 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
                     parent: AlwaysScrollableScrollPhysics(),
                   ),
                   controller: controller.nearbyBusinessesScrollController,
-                  itemCount: controller.nearbyBusinessesPaginator.items.length,
+                  itemCount: controller.nearbyBusinesses.length,
                   separatorBuilder: (context, index) => Gap(16.h),
                   itemBuilder: (context, index) {
-                    final item =
-                        controller.nearbyBusinessesPaginator.items[index];
+                    final item = controller.nearbyBusinesses[index];
 
                     return GestureDetector(
                       behavior: HitTestBehavior.opaque,
@@ -207,13 +206,17 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
                                       color: AppColors.darkTextColor,
                                     ),
                                   ),
-                                  Gap(4.h),
-                                  Text(
-                                    item.category?.name ?? '',
-                                    style: context.bodyMedium.copyWith(
-                                      color: AppColors.subtitleTextColor,
+
+                                  if ((item.category?.name ?? '')
+                                      .isNotEmpty) ...[
+                                    Gap(4.h),
+                                    Text(
+                                      item.category?.name ?? '',
+                                      style: context.bodyMedium.copyWith(
+                                        color: AppColors.subtitleTextColor,
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                   Gap(12.h),
                                   Row(
                                     children: [
@@ -224,13 +227,11 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
                                         size: 16.sp,
                                       ),
                                       Gap(4.w),
-                                      Expanded(
-                                        child: Text(
-                                          item.address,
-                                          style: context.bodySmall.copyWith(
-                                            color: AppColors.subtitleTextColor,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                      Text(
+                                        item.distanceLabel,
+                                        style: context.bodySmall.copyWith(
+                                          color: AppColors.subtitleTextColor,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                       Gap(16.w),

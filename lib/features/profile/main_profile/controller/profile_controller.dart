@@ -41,9 +41,9 @@ class ProfileScreenController extends GetxController {
   final userLocationString = "".obs;
 
   // Statistics
-  final savedCount = 12.obs;
-  final claimsCount = 8.obs;
-  final reviewsCount = 5.obs;
+  final savedCount = 0.obs;
+  final claimsCount = 0.obs;
+  final reviewsCount = 0.obs;
 
   Future<void> setProfileData(GetProfileModel data) async {
     print("PROFILE CONTROLLER: $hashCode");
@@ -65,6 +65,10 @@ class ProfileScreenController extends GetxController {
       userLocationString.value = LocationHelper.fallbackAddress;
     }
 
+    savedCount.value = data.savedCount;
+    claimsCount.value = data.claimsCount;
+    reviewsCount.value = data.reviewsCount;
+
     update();
   }
 
@@ -84,9 +88,18 @@ class ProfileScreenController extends GetxController {
     }
     if (CommonController.to.isCustomer) {
       return [
-        ProfileStatModel(title: AppStrings.saved.tr, value: "25"),
-        ProfileStatModel(title: AppStrings.claims.tr, value: "18"),
-        ProfileStatModel(title: AppStrings.reviews.tr, value: "12"),
+        ProfileStatModel(
+          title: AppStrings.saved.tr,
+          value: savedCount.value.toString(),
+        ),
+        ProfileStatModel(
+          title: AppStrings.claims.tr,
+          value: claimsCount.value.toString(),
+        ),
+        ProfileStatModel(
+          title: AppStrings.reviews.tr,
+          value: reviewsCount.value.toString(),
+        ),
       ];
     }
     return []; // merchandiser / fallback
@@ -107,6 +120,7 @@ class ProfileScreenController extends GetxController {
       final profile = result.data;
       if (profile == null) {
         profileLoadingMethod(ApiStatus.noDataFound);
+
         return;
       }
       await setProfileData(profile);

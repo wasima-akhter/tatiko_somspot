@@ -98,38 +98,6 @@ class _WhatsAppShimmer extends StatelessWidget {
 
         Row(
           children: [
-            // Icon shimmer
-            AutoShimmerAnimate(
-              isLoading: true,
-              child: Container(
-                width: 20.w,
-                height: 20.w,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-
-            Gap(12.w),
-
-            // Number shimmer
-            Expanded(
-              child: AutoShimmerAnimate(
-                isLoading: true,
-                child: Container(
-                  height: 16.h,
-                  width: 140.w,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(6.r),
-                  ),
-                ),
-              ),
-            ),
-
-            Gap(12.w),
-
             // WhatsApp button shimmer
             AutoShimmerAnimate(
               isLoading: true,
