@@ -49,7 +49,6 @@ class MerchantReviewsTabState extends State<MerchantReviewsTab> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 64.h),
                   child: Container(
-                    color: Colors.amber,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -68,33 +67,6 @@ class MerchantReviewsTabState extends State<MerchantReviewsTab> {
                               return MerchantReviewCard(review: reviews[index]);
                             },
                           ),
-
-                        Obx(() {
-                          final loading =
-                              controller
-                                  .reviewsPaginator
-                                  .loadMoreStatus
-                                  .value ==
-                              ApiStatus.loading;
-
-                          if (!loading) {
-                            return const SizedBox.shrink();
-                          }
-
-                          return Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20.h),
-                            child: Center(
-                              child: SizedBox(
-                                width: 24.w,
-                                height: 24.w,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.5,
-                                  color: AppColors.primaryColor,
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
 
                         Gap(64.h),
                       ],

@@ -1,10 +1,11 @@
 import 'package:som_spot/helper/date_converter/date_converter.dart';
 import 'package:som_spot/share/export/screen_export.dart';
+import 'package:som_spot/share/language/controller/language_controller.dart';
 
-import '../../../shared/model/deal_model.dart';
+import '../../../../../offers/shared/response/offers_response.dart';
 
 class MerchantOfferMeta extends StatelessWidget {
-  final DealModel deal;
+  final OfferModel deal;
 
   const MerchantOfferMeta({super.key, required this.deal});
 
@@ -21,13 +22,16 @@ class MerchantOfferMeta extends StatelessWidget {
 }
 
 class MerchantOfferExpiry extends StatelessWidget {
-  final DealModel deal;
+  final OfferModel deal;
 
   const MerchantOfferExpiry({super.key, required this.deal});
 
   @override
   Widget build(BuildContext context) {
-    final endAt = DateTime.parse(deal.endAt);
+    final endAt = DateTime.parse(deal.endAt.toIso8601String());
+
+    final isSomali =
+        LanguageController.to.selectedLanguage.value == AppLanguage.somali;
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
@@ -37,6 +41,7 @@ class MerchantOfferExpiry extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
+
         children: [
           Icon(
             Icons.event_busy_outlined,
@@ -48,6 +53,7 @@ class MerchantOfferExpiry extends StatelessWidget {
             DateConverter().remainingTime(endAt) ??
                 DateConverter.formatDateTime(
                   dateTime: endAt,
+                  inNextLine: isSomali ? true : false,
                   showExpired: true,
                 ),
             style: context.bodySmall.copyWith(
@@ -62,7 +68,7 @@ class MerchantOfferExpiry extends StatelessWidget {
 }
 
 class MerchantOfferClaimStatus extends StatelessWidget {
-  final DealModel deal;
+  final OfferModel deal;
 
   const MerchantOfferClaimStatus({super.key, required this.deal});
 

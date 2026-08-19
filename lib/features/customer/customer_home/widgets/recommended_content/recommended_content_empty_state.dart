@@ -1,4 +1,4 @@
-import '../../../../share/export/screen_export.dart';
+import '../../../../../share/export/screen_export.dart';
 
 class RecommendedContentEmptyState extends StatelessWidget {
   const RecommendedContentEmptyState({super.key, required this.onRetry});

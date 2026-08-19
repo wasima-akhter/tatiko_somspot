@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
 
 import '../../../share/export/service_export.dart';
+import '../../../share/model/pagination_meta_model.dart';
+import '../../../share/widgets/paginator/paginator.dart';
 import '../../../utils/app_strings/app_strings.dart';
+import '../model/faq_model.dart';
 import '../model/feedback_model.dart';
 import '../model/rate-app_model.dart';
 import '../model/terms_conditions_model.dart';
@@ -108,6 +111,34 @@ class OtherService {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
       debugPrint("Get About Us Error: $e");
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
+    }
+  }
+
+  //
+  Future<ApiResponse<PaginatedResult<FaqModel>>> getFaq({
+    int page = 1,
+    int limit = 10,
+  }) async {
+    try {
+      final response = await _repository.getFaq(page: page, limit: limit);
+
+      final data = response.data['data'];
+
+      return ApiResponse.success(
+        data: PaginatedResult<FaqModel>(
+          data: List<FaqModel>.from(
+            data['result'].map<FaqModel>((e) => FaqModel.fromJson(e)),
+          ),
+          meta: PaginationMeta.fromJson(data['meta']),
+        ),
+      );
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint('Get FAQ Error: $e');
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);

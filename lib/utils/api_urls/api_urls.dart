@@ -47,6 +47,9 @@ class ApiUrls {
 
   static String influencerProfile() => "$base/creator/profile";
 
+  // Language
+  static String changeLanguage() => '$base/user/change-language';
+
   // business profile
   static String createBusiness() => '$base/business/create';
   static String updateBusiness() => '$base/business/update';
@@ -74,6 +77,9 @@ class ApiUrls {
     return '$base/manage/get-about-us';
   }
 
+  static String getFaq() => '$base/manage/get-faq';
+
+  //
   //Business
 
   static String myBusinesses({required int page, required int limit}) {
@@ -172,6 +178,8 @@ class ApiUrls {
     return "$base/business/get-all";
   }
 
+  static String getTopDeals() => '$base/offer/top-deals';
+
   static String customerSearch() {
     return '$base/search';
   }
@@ -216,6 +224,10 @@ class ApiUrls {
   static String postReview() => '$base/review/post-review';
 
   static String getAllReviews() => '$base/review/get-all-reviews';
+
+  static String toggleReviewHelpful() {
+    return '$base/review/toggle-helpful';
+  }
 
   // Alerts
   static String getAllNotifications() {

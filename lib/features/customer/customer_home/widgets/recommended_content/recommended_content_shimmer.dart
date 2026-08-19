@@ -1,6 +1,6 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 
-import '../../../../share/export/screen_export.dart';
+import '../../../../../share/export/screen_export.dart';
 
 class RecommendedContentShimmer extends StatelessWidget {
   const RecommendedContentShimmer({super.key});

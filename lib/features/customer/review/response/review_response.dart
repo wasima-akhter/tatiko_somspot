@@ -3,6 +3,7 @@ class BusinessReviewModel {
   final ReviewUserModel user;
   final double rating;
   final String review;
+  final bool? isHelpful;
   final int helpfulCount;
   final DateTime? createdAt;
 
@@ -11,6 +12,7 @@ class BusinessReviewModel {
     required this.user,
     required this.rating,
     required this.review,
+    this.isHelpful,
     required this.helpfulCount,
     this.createdAt,
   });
@@ -25,6 +27,7 @@ class BusinessReviewModel {
       ),
       rating: _toDouble(data['rating']),
       review: data['review']?.toString() ?? '',
+      isHelpful: data['isHelpful'] == true,
       helpfulCount: _toInt(data['helpfulCount']),
       createdAt: _parseDate(data['createdAt']),
     );
@@ -133,4 +136,21 @@ DateTime? _parseDate(dynamic value) {
   if (value == null) return null;
 
   return DateTime.tryParse(value.toString());
+}
+
+class ReviewHelpfulModel {
+  final bool isHelpful;
+  final int helpfulCount;
+
+  const ReviewHelpfulModel({
+    required this.isHelpful,
+    required this.helpfulCount,
+  });
+
+  factory ReviewHelpfulModel.fromJson(Map<String, dynamic> json) {
+    return ReviewHelpfulModel(
+      isHelpful: json['isHelpful'] as bool? ?? false,
+      helpfulCount: (json['helpfulCount'] as num?)?.toInt() ?? 0,
+    );
+  }
 }

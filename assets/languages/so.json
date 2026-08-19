@@ -780,5 +780,17 @@
   "open_settings": "Fur Settings",
   "location_is_disabled": "Goobta waa dansan tahay",
   "location_disabled_message": "Fadlan daar adeegyada goobta ee qalabkaaga si Som Spot uu u ogaado goobtaada hadda.",
-  "enable_location": "Daar Goobta"
+  "enable_location": "Daar Goobta",
+
+  "no_top_deals_yet": "Weli ma jiraan dalabyo gaar ah",
+  "no_top_deals_message": "Hadda ma jiraan dalabyo gaar ah oo la heli karo. Fadlan mar kale dib u hubi.",
+  "no_faq_yet": "Weli ma jiraan su'aalo iyo jawaabo",
+  "no_faq_message": "Hadda ma jiraan su'aalo iyo jawaabo la heli karo.",
+
+  "km_away": "km ayaa u jirta",
+  "location_too_far_away": "Goobtu aad ayay u fog tahay",
+  "map_location_could_not_be_found": "Goobta khariidadda lama heli karin",
+  "location_not_available": "Goobta lama heli karo",
+  "to_address": "Ku socota",
+  "from_address": "Laga soo bilaabo"
 }

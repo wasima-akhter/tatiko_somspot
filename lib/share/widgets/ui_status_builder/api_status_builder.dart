@@ -66,7 +66,7 @@ class ApiStatusBuilder extends StatelessWidget {
               if (hasMore && isLoadingMore)
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(child: LoadingWidget()),
                 ),
             ],
           ),

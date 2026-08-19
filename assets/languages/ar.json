@@ -777,5 +777,17 @@
   "open_settings": "فتح الإعدادات",
   "location_is_disabled": "الموقع معطل",
   "location_disabled_message": "يرجى تفعيل خدمات الموقع على جهازك حتى يتمكن Som Spot من تحديد موقعك الحالي.",
-  "enable_location": "تفعيل الموقع"
+  "enable_location": "تفعيل الموقع",
+
+  "no_top_deals_yet": "لا توجد عروض مميزة بعد",
+  "no_top_deals_message": "لا توجد عروض مميزة متاحة حاليًا. يرجى التحقق مرة أخرى لاحقًا.",
+  "no_faq_yet": "لا توجد أسئلة شائعة بعد",
+  "no_faq_message": "لا توجد أسئلة شائعة متاحة حاليًا.",
+
+  "km_away": "كم بعيدًا",
+  "location_too_far_away": "الموقع بعيد جدًا",
+  "map_location_could_not_be_found": "تعذر العثور على موقع الخريطة",
+  "location_not_available": "الموقع غير متاح",
+  "to_address": "إلى",
+  "from_address": "من"
 }

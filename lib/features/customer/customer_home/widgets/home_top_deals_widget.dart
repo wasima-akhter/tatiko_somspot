@@ -1,15 +1,22 @@
+import 'package:som_spot/features/customer/customer_home/controller/home_controller.dart';
 import 'package:som_spot/share/export/screen_export.dart';
+
+import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
+import '../../customer_business_details/widgets/tab_modulars/offer_tab_content/merchant_offer_card.dart';
 
 class HomeTopDealsWidget extends StatelessWidget {
   const HomeTopDealsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final controller = HomeDealsController.to;
+    final controller = HomeController.to;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // ---------------------------------------------------------------------
+        // Header
+        // ---------------------------------------------------------------------
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -22,7 +29,9 @@ class HomeTopDealsWidget extends StatelessWidget {
             ),
             GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: () => AppRouter.route.pushNamed(RoutePath.topDealsScreen),
+              onTap: () {
+                AppRouter.route.pushNamed(RoutePath.topDealsScreen);
+              },
               child: Text(
                 AppStrings.seeAll.tr,
                 style: context.bodyMedium.copyWith(
@@ -33,194 +42,76 @@ class HomeTopDealsWidget extends StatelessWidget {
             ),
           ],
         ),
+
         Gap(16.h),
 
-        Text("top deal list (2)"),
-
-        /*
+        // ---------------------------------------------------------------------
+        // Top Deals
+        // ---------------------------------------------------------------------
         Obx(() {
-          if (controller.isLoading.value) {
-            return const TopDealShimmer();
-          }
+          final paginator = controller.topDealsPaginator;
 
-          if (controller.topDeals.isEmpty) {
-            return Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(24.w),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.02),
-                    blurRadius: 10.r,
-                    offset: Offset(0, 4.h),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Text(
-                  "No top deals available",
-                  style: context.bodyMedium.copyWith(
-                    color: AppColors.subtitleTextColor,
-                  ),
-                ),
-              ),
-            );
-          }
+          return ApiStatusBuilder(
+            status: paginator.status.value,
+            errorMessage: paginator.errorMessage.value,
+            onRetry: controller.loadTopDeals,
+            noDataWidget: _TopDealsEmpty(),
+            builder: (_) {
+              if (paginator.items.isEmpty) {
+                return _TopDealsEmpty();
+              }
 
-          return Column(
-            children: List.generate(controller.topDeals.length, (index) {
-              final deal = controller.topDeals[index];
-              return Padding(
-                padding: EdgeInsets.only(
-                  bottom: index == controller.topDeals.length - 1 ? 0 : 16.h,
-                ),
-                child:       GestureDetector( behavior: HitTestBehavior.opaque,
-                  onTap: () => AppRouter.route.pushNamed(
-                    RoutePath.offerDetailsScreen,
-                         extra: OfferDetailsArgs(offerId: offerId),
-                  ),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.03),
-                          blurRadius: 10.r,
-                          offset: Offset(0, 4.h),
-                        ),
-                      ],
+              // Only show first 2 on Home
+              final deals = paginator.items.take(2).toList();
+
+              return Column(
+                children: List.generate(deals.length, (index) {
+                  final deal = deals[index];
+
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      bottom: index == deals.length - 1 ? 0 : 16.h,
                     ),
-                    child: Row(
-                      children: [
-                        // Image with Discount Tag
-                        SizedBox(
-                          width: 110.w,
-                          height: 110.h,
-                          child: Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(16.r),
-                                  bottomLeft: Radius.circular(16.r),
-                                ),
-                                child: CustomNetworkImage(
-                                  imageUrl: deal.offerImage ?? '',
-                                  width: 110.w,
-                                  height: 110.h,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Positioned(
-                                top: 8.h,
-                                left: 8.w,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 6.w,
-                                    vertical: 2.h,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.orangeSecondaryAccentColor,
-                                    borderRadius: BorderRadius.circular(4.r),
-                                  ),
-                                  child: Text(
-                                    deal.discountLabel,
-                                    style: context.bodySmall.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 9.sp,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Gap(12.w),
-                        // Content Part
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.h),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  deal.business?.name ?? '',
-                                  style: context.bodyMedium.copyWith(
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Gap(4.h),
-                                Text(
-                                  deal.title,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: context.titleMedium.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.darkTextColor,
-                                  ),
-                                ),
-                                Gap(8.h),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.access_time,
-                                      color: AppColors.warning,
-                                      size: 14.sp,
-                                    ),
-                                    Gap(4.w),
-                                    Text(
-                                      deal.endAt,
-                                      style: context.bodySmall.copyWith(
-                                        color: AppColors.warning,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 12.w,
-                                        vertical: 6.h,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primaryColor
-                                            .withValues(alpha: 0.1),
-                                        borderRadius: BorderRadius.circular(
-                                          12.r,
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          AppStrings.claim.tr,
-                                          style: context.bodySmall.copyWith(
-                                            color: AppColors.primaryColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 11.sp,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Gap(8.w),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                    child: MerchantOfferCard(deal: deal),
+                  );
+                }),
               );
-            }),
+            },
           );
         }),
-     */
       ],
+    );
+  }
+}
+
+class _TopDealsEmpty extends StatelessWidget {
+  const _TopDealsEmpty();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(24.w),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 10.r,
+            offset: Offset(0, 4.h),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Text(
+          AppStrings.noTopDealsYet.tr,
+          textAlign: TextAlign.center,
+          style: context.bodyMedium.copyWith(
+            color: AppColors.subtitleTextColor,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:som_spot/share/controller/language_controller.dart';
+import 'package:som_spot/share/language/controller/language_controller.dart';
+import 'package:som_spot/share/language/service/language_service.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../features/auth/controller/auth_controller.dart';
@@ -14,7 +15,7 @@ import '../../features/other/controller/other_binding.dart';
 import 'repo_service_injection.dart';
 
 void initGlobalBinding() {
-  Get.put(LanguageController(), permanent: true);
+  Get.put(LanguageController(sl<LanguageService>()), permanent: true);
   Get.put(CommonController(), permanent: true);
   Get.put(NavigationControllerMain(), permanent: true);
 

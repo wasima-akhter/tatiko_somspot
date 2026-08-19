@@ -240,7 +240,7 @@ class AuthController extends GetxController {
 
       // ApiSnackbar.show(result.message, type: SnackbarType.success);
 
-      AppRouter.route.pop();
+      // AppRouter.route.pop();
     } finally {
       isLoading.value = false;
     }

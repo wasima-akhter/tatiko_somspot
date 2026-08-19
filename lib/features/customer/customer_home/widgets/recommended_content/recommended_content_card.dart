@@ -1,9 +1,9 @@
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../share/export/screen_export.dart';
-import '../../../../share/widgets/network_image/custom_network_image.dart';
-import '../model/home_content_creator_model.dart';
-import 'content_badge.dart';
+import '../../../../../share/export/screen_export.dart';
+import '../../../../../share/widgets/network_image/custom_network_image.dart';
+import '../../model/home_content_creator_model.dart';
+import '../content_badge.dart';
 
 class RecommendedContentCard extends StatelessWidget {
   const RecommendedContentCard({super.key, required this.content});

@@ -1,5 +1,5 @@
-import 'package:som_spot/share/controller/language_controller.dart';
 import 'package:som_spot/share/export/screen_export.dart';
+import 'package:som_spot/share/language/controller/language_controller.dart';
 
 class LanguageDialogContent extends StatelessWidget {
   const LanguageDialogContent({super.key});
@@ -21,11 +21,17 @@ class LanguageDialogContent extends StatelessWidget {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () async {
+              if (langController.isChangingLanguage.value) return;
+
               final language = langController.languageFromCode(
                 lang.languageCode,
               );
-              await langController.selectLanguage(language);
-              if (context.mounted) Navigator.pop(context);
+
+              final success = await langController.selectLanguage(language);
+
+              if (success && context.mounted) {
+                Navigator.pop(context);
+              }
             },
             child: Container(
               margin: EdgeInsets.only(bottom: 12.h),
@@ -88,36 +94,54 @@ class LanguageDialogContent extends StatelessWidget {
                   ),
 
                   // ── Selection Indicator ──
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 200),
-                    child: isSelected
-                        ? Container(
-                            key: const ValueKey('selected'),
-                            width: 24.w,
-                            height: 24.h,
-                            decoration: const BoxDecoration(
-                              color: AppColors.primaryColor,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              Icons.check,
-                              color: AppColors.white,
-                              size: 16.sp,
-                            ),
-                          )
-                        : Container(
-                            key: const ValueKey('unselected'),
-                            width: 24.w,
-                            height: 24.h,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppColors.linesDarkColor,
-                                width: 1.5.w,
+                  Obx(() {
+                    final isLoading = langController.isChangingLanguage.value;
+                    final isChangingThisLanguage =
+                        langController.changingLanguage.value ==
+                        langController.languageFromCode(lang.languageCode);
+
+                    if (isLoading && isChangingThisLanguage) {
+                      return SizedBox(
+                        width: 24.w,
+                        height: 24.h,
+                        child: const CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppColors.primaryColor,
+                        ),
+                      );
+                    }
+
+                    return AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: isSelected
+                          ? Container(
+                              key: const ValueKey('selected'),
+                              width: 24.w,
+                              height: 24.w,
+                              decoration: const BoxDecoration(
+                                color: AppColors.primaryColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.check,
+                                color: AppColors.white,
+                                size: 16.sp,
+                              ),
+                            )
+                          : Container(
+                              key: const ValueKey('unselected'),
+                              width: 24.w,
+                              height: 24.h,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppColors.linesDarkColor,
+                                  width: 1.5.w,
+                                ),
                               ),
                             ),
-                          ),
-                  ),
+                    );
+                  }),
                 ],
               ),
             ),

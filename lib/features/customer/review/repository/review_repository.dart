@@ -41,4 +41,14 @@ class ReviewRepository {
       queryParams: {'page': page, 'limit': limit},
     );
   }
+
+  //
+  /// Toggle current user's helpful status on a review.
+  Future<Response> toggleReviewHelpful({required String reviewId}) {
+    return _apiClient.post(
+      showResponse: true,
+      url: ApiUrls.toggleReviewHelpful(),
+      body: {'reviewId': reviewId},
+    );
+  }
 }

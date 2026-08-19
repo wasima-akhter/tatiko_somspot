@@ -4,8 +4,8 @@ import '../../../../../share/export/service_export.dart';
 import '../../../../../share/model/pagination_meta_model.dart';
 import '../../../../../share/widgets/paginator/paginator.dart';
 import '../../../../../utils/app_strings/app_strings.dart';
+import '../../../../offers/shared/response/offers_response.dart';
 import '../model/customer_buiness_details_model.dart';
-import '../model/deal_model.dart';
 import '../repository/customer_business_details_repository.dart';
 
 class CustomerBusinessDetailsService {
@@ -40,7 +40,7 @@ class CustomerBusinessDetailsService {
   // Offers
   // ============================================================
 
-  Future<ApiResponse<PaginatedResult<DealModel>>> getOffers({
+  Future<ApiResponse<PaginatedResult<OfferModel>>> getOffers({
     int page = 1,
     int limit = 10,
     String status = "",
@@ -55,9 +55,9 @@ class CustomerBusinessDetailsService {
       final data = response.data['data'];
 
       return ApiResponse.success(
-        data: PaginatedResult<DealModel>(
-          data: List<DealModel>.from(
-            (data['result'] as List).map((e) => DealModel.fromJson(e)),
+        data: PaginatedResult<OfferModel>(
+          data: List<OfferModel>.from(
+            (data['result'] as List).map((e) => OfferModel.fromJson(e)),
           ),
           meta: PaginationMeta.fromJson(data['meta']),
           summary: data['summary'] != null

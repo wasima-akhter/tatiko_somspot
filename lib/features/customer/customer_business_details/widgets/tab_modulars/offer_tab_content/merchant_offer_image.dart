@@ -1,10 +1,10 @@
 import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 
-import '../../../shared/model/deal_model.dart';
+import '../../../../../offers/shared/response/offers_response.dart';
 
 class MerchantOfferImage extends StatelessWidget {
-  final DealModel deal;
+  final OfferModel deal;
 
   const MerchantOfferImage({super.key, required this.deal});
 

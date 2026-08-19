@@ -1,11 +1,11 @@
 import 'package:som_spot/helper/text_utils/string_extension.dart';
 import 'package:som_spot/share/export/screen_export.dart';
 
-import '../../../shared/model/deal_model.dart';
+import '../../../../../offers/shared/response/offers_response.dart';
 import 'merchant_offer_meta.dart';
 
 class MerchantOfferInfo extends StatelessWidget {
-  final DealModel deal;
+  final OfferModel deal;
 
   const MerchantOfferInfo({super.key, required this.deal});
 

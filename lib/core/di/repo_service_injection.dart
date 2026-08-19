@@ -25,6 +25,7 @@ import 'package:som_spot/features/merchant/listings/service/manage_listing_servi
 import 'package:som_spot/features/merchant/merchant_new_campaign/shared/repository/merchant_campaign_repository.dart';
 import 'package:som_spot/features/merchant/stats/repository/stats_repository.dart';
 import 'package:som_spot/features/merchant/stats/service/stats_service.dart';
+import 'package:som_spot/share/language/repository/language_repository.dart';
 
 import '../../features/auth/complete_business_profile/repository/complete_business_profile_repository.dart';
 import '../../features/auth/complete_business_profile/service/complete_business_profile_service.dart';
@@ -51,6 +52,7 @@ import '../../features/profile/repository/influencer_profile_repository.dart';
 import '../../features/profile/repository/profile_repository.dart';
 import '../../features/profile/service/influencer_profile_service.dart';
 import '../../features/profile/service/profile_service.dart';
+import '../../share/language/service/language_service.dart';
 
 final sl = GetIt.instance;
 
@@ -81,6 +83,17 @@ Future<void> initDependencies() async {
     () => AuthService(sl<AuthRepository>()),
   );
 
+  // =====================
+  // Language
+  // =====================
+
+  sl.registerLazySingleton<LanguageRepository>(
+    () => LanguageRepository(sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<LanguageService>(
+    () => LanguageService(sl<LanguageRepository>()),
+  );
   // =====================
   // Profile
   // =====================

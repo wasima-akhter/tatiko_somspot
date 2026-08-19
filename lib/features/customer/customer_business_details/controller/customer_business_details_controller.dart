@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:som_spot/features/customer/customer_business_details/shared/model/deal_model.dart';
 
 import '../../../../helper/snackbar/api_snackbar.dart';
 import '../../../../share/widgets/paginator/paginator.dart';
 import '../../../../utils/app_strings/app_strings.dart';
 import '../../../../utils/enum/app_enum.dart';
+import '../../../offers/shared/response/offers_response.dart';
 import '../../review/response/review_response.dart';
 import '../../review/service/review_service.dart';
 import '../../saved/shared/service/saved_service.dart';
@@ -54,9 +54,9 @@ class CustomerBusinessDetailsController extends GetxController {
 
   final listScrollController = ScrollController();
 
-  late final Paginator<DealModel> offersPaginator;
+  late final Paginator<OfferModel> offersPaginator;
 
-  List<DealModel> get merchantOffers => offersPaginator.items;
+  List<OfferModel> get merchantOffers => offersPaginator.items;
 
   // ============================================================
   // Lifecycle
@@ -76,34 +76,7 @@ class CustomerBusinessDetailsController extends GetxController {
     // ------------------------------------------------------------
     // Reviews
     // ------------------------------------------------------------
-    // Keep these as mock data for now.
-    reviewsPaginator = Paginator<BusinessReviewModel>(
-      fetchPage: (page, limit) async {
-        try {
-          final response = await _reviewService.getBusinessReviews(
-            businessId: businessId,
-            page: page,
-            limit: limit,
-          );
-
-          if (!response.success || response.data == null) {
-            reviewsErrorMessage.value = response.message;
-            throw Exception(response.message);
-          }
-
-          reviewsErrorMessage.value = '';
-
-          return response.data!;
-        } catch (e, s) {
-          reviewsErrorMessage.value = e.toString();
-
-          debugPrint("Get Business Reviews Error => $e");
-          debugPrintStack(stackTrace: s);
-
-          rethrow;
-        }
-      },
-    );
+    _initReviewsPaginator();
 
     reviewListScrollController.addListener(() {
       if (reviewListScrollController.position.pixels >=
@@ -139,7 +112,7 @@ class CustomerBusinessDetailsController extends GetxController {
   // ============================================================
 
   void _initOffersPaginator() {
-    offersPaginator = Paginator<DealModel>(
+    offersPaginator = Paginator<OfferModel>(
       fetchPage: (page, limit) async {
         try {
           final response = await _service.getOffers(page: page, limit: limit);
@@ -287,17 +260,58 @@ class CustomerBusinessDetailsController extends GetxController {
   // Reviews
   // ============================================================
 
-  // Reviews
   final reviewListScrollController = ScrollController();
 
   late final Paginator<BusinessReviewModel> reviewsPaginator;
 
   final reviewsErrorMessage = ''.obs;
 
-  //
-
   final postReviewStatus = ApiStatus.completed.obs;
   final postReviewErrorMessage = ''.obs;
+
+  // Review helpful loading state.
+  // Only stores review IDs currently being toggled.
+  final RxSet<String> helpfulLoadingReviews = <String>{}.obs;
+
+  List<BusinessReviewModel> get reviews => reviewsPaginator.items;
+
+  // ------------------------------------------------------------
+  // Reviews Paginator
+  // ------------------------------------------------------------
+
+  void _initReviewsPaginator() {
+    reviewsPaginator = Paginator<BusinessReviewModel>(
+      fetchPage: (page, limit) async {
+        try {
+          final response = await _reviewService.getBusinessReviews(
+            businessId: businessId,
+            page: page,
+            limit: limit,
+          );
+
+          if (!response.success || response.data == null) {
+            reviewsErrorMessage.value = response.message;
+            throw Exception(response.message);
+          }
+
+          reviewsErrorMessage.value = '';
+
+          return response.data!;
+        } catch (e, s) {
+          reviewsErrorMessage.value = e.toString();
+
+          debugPrint("Get Business Reviews Error => $e");
+          debugPrintStack(stackTrace: s);
+
+          rethrow;
+        }
+      },
+    );
+  }
+
+  // ------------------------------------------------------------
+  // Reviews Actions
+  // ------------------------------------------------------------
 
   Future<void> loadBusinessReviews() {
     return reviewsPaginator.loadInitial();
@@ -311,9 +325,10 @@ class CustomerBusinessDetailsController extends GetxController {
     return reviewsPaginator.refresh();
   }
 
-  List<BusinessReviewModel> get reviews => reviewsPaginator.items;
+  // ------------------------------------------------------------
+  // Post Review
+  // ------------------------------------------------------------
 
-  // post a review
   Future<bool> postReview({
     required double rating,
     required String review,
@@ -335,30 +350,104 @@ class CustomerBusinessDetailsController extends GetxController {
       if (response.success) {
         postReviewStatus.value = ApiStatus.completed;
 
-        // Reload reviews so the newly posted review appears
+        // Reload reviews so the newly posted review appears.
         await refreshBusinessReviews();
 
         return true;
       }
 
-      ApiSnackbar.show(response.message);
-
       postReviewErrorMessage.value = response.message;
       postReviewStatus.value = ApiStatus.error;
 
+      ApiSnackbar.show(response.message);
+
       return false;
     } catch (e, s) {
-      postReviewErrorMessage.value = 'Something went wrong';
+      postReviewErrorMessage.value = AppStrings.somethingWentWrong.tr;
       postReviewStatus.value = ApiStatus.error;
 
       debugPrint("Post Review Error => $e");
       debugPrintStack(stackTrace: s);
 
+      ApiSnackbar.show(AppStrings.somethingWentWrong.tr);
+
       return false;
     }
   }
 
-  //
+  // ------------------------------------------------------------
+  // Helpful
+  // ------------------------------------------------------------
+
+  BusinessReviewModel? getReviewById(String reviewId) {
+    final index = reviewsPaginator.items.indexWhere(
+      (review) => review.id == reviewId,
+    );
+
+    if (index == -1) return null;
+
+    return reviewsPaginator.items[index];
+  }
+
+  bool isHelpfulLoading(String reviewId) {
+    return helpfulLoadingReviews.contains(reviewId);
+  }
+
+  Future<void> toggleReviewHelpful({required String reviewId}) async {
+    // Prevent multiple requests for the same review.
+    if (helpfulLoadingReviews.contains(reviewId)) {
+      return;
+    }
+
+    helpfulLoadingReviews.add(reviewId);
+
+    try {
+      final response = await _reviewService.toggleReviewHelpful(
+        reviewId: reviewId,
+      );
+
+      if (!response.success || response.data == null) {
+        ApiSnackbar.show(response.message);
+        return;
+      }
+
+      final result = response.data!;
+
+      final index = reviewsPaginator.items.indexWhere(
+        (review) => review.id == reviewId,
+      );
+
+      if (index == -1) {
+        return;
+      }
+
+      final oldReview = reviewsPaginator.items[index];
+
+      // Backend is the source of truth.
+      final updatedReview = BusinessReviewModel(
+        id: oldReview.id,
+        user: oldReview.user,
+        rating: oldReview.rating,
+        review: oldReview.review,
+        isHelpful: result.isHelpful,
+        helpfulCount: result.helpfulCount,
+        createdAt: oldReview.createdAt,
+      );
+
+      reviewsPaginator.items[index] = updatedReview;
+
+      // Make sure Obx widgets listening to the paginator's RxList rebuild.
+      reviewsPaginator.items.refresh();
+    } catch (e, s) {
+      debugPrint("Toggle Review Helpful Error => $e");
+      debugPrintStack(stackTrace: s);
+
+      ApiSnackbar.show(AppStrings.somethingWentWrong.tr);
+    } finally {
+      helpfulLoadingReviews.remove(reviewId);
+    }
+  }
+  ////------------------------------------
 
   @override
   void onClose() {
@@ -368,75 +457,3 @@ class CustomerBusinessDetailsController extends GetxController {
     super.onClose();
   }
 }
-
-final List<BusinessReviewModel> mockBusinessReviews = [
-  BusinessReviewModel(
-    id: 'review_001',
-    user: ReviewUserModel(
-      id: 'user_001',
-      name: 'Abdul Karim',
-      profileImage: 'https://i.pravatar.cc/150?img=12',
-    ),
-    rating: 5,
-    review:
-        'The hilib suqaar here is incredible! Best Somali food in Mogadishu. The service was also excellent.',
-    helpfulCount: 12,
-    createdAt: DateTime.now().subtract(const Duration(days: 2)),
-  ),
-
-  BusinessReviewModel(
-    id: 'review_002',
-    user: ReviewUserModel(
-      id: 'user_002',
-      name: 'Ayaan Hassan',
-      profileImage: 'https://i.pravatar.cc/150?img=32',
-    ),
-    rating: 4,
-    review:
-        'Really good food and a nice atmosphere. The portions are generous and everything tasted fresh.',
-    helpfulCount: 8,
-    createdAt: DateTime.now().subtract(const Duration(days: 5)),
-  ),
-
-  BusinessReviewModel(
-    id: 'review_003',
-    user: ReviewUserModel(
-      id: 'user_003',
-      name: 'Mohamed Ali',
-      profileImage: 'https://i.pravatar.cc/150?img=11',
-    ),
-    rating: 4.5,
-    review:
-        'Great place for family dinner. Staff were friendly and the food arrived quickly.',
-    helpfulCount: 5,
-    createdAt: DateTime.now().subtract(const Duration(days: 9)),
-  ),
-
-  BusinessReviewModel(
-    id: 'review_004',
-    user: ReviewUserModel(
-      id: 'user_004',
-      name: 'Hodan Ahmed',
-      profileImage: 'https://i.pravatar.cc/150?img=47',
-    ),
-    rating: 3,
-    review:
-        'The food was tasty but the waiting time was a little long during the evening.',
-    helpfulCount: 3,
-    createdAt: DateTime.now().subtract(const Duration(days: 14)),
-  ),
-
-  BusinessReviewModel(
-    id: 'review_005',
-    user: ReviewUserModel(
-      id: 'user_005',
-      name: 'Omar Yusuf',
-      profileImage: 'https://i.pravatar.cc/150?img=68',
-    ),
-    rating: 5,
-    review:
-        'Absolutely loved it! Everything was delicious. Definitely coming back again.',
-    helpfulCount: 18,
-    createdAt: DateTime.now().subtract(const Duration(days: 21)),
-  ),
-];

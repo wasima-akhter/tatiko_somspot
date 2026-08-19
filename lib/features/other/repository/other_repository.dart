@@ -29,4 +29,16 @@ class OtherRepository {
   Future<Response> getAboutUs() {
     return _apiClient.get(url: ApiUrls.getAboutUs());
   }
+
+  // ---------------------------------------------------------------------------
+  // FAQ
+  // ---------------------------------------------------------------------------
+
+  Future<Response> getFaq({int page = 1, int limit = 10}) {
+    return _apiClient.get(
+      url: ApiUrls.getFaq(),
+      showResponse: true,
+      queryParams: {'page': page, 'limit': limit},
+    );
+  }
 }

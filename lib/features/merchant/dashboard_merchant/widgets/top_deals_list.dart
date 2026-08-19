@@ -51,6 +51,7 @@ class TopDealsList extends StatelessWidget {
     final subtitle = businessName.isEmpty
         ? AppStrings.topDealsLoadingBusiness.tr
         : '$businessName • ${AppStrings.topDealsClaims.trParams({'count': totalClaims.toString()})}';
+
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(

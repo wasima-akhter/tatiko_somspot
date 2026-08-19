@@ -2,12 +2,12 @@ import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../../offers/offer_details/controller/offer_detail_controller.dart';
 import '../../../../../offers/offer_details/helper/offer_details_arg_model.dart';
-import '../../../shared/model/deal_model.dart';
+import '../../../../../offers/shared/response/offers_response.dart';
 import 'merchant_offer_image.dart';
 import 'merchant_offer_info.dart';
 
 class MerchantOfferCard extends StatelessWidget {
-  final DealModel deal;
+  final OfferModel deal;
 
   const MerchantOfferCard({super.key, required this.deal});
 

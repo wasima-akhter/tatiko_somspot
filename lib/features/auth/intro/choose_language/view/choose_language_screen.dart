@@ -1,5 +1,5 @@
-import 'package:som_spot/share/controller/language_controller.dart';
 import 'package:som_spot/share/export/screen_export.dart';
+import 'package:som_spot/share/language/controller/language_controller.dart';
 
 import '../../splash/app_flow_router.dart';
 
@@ -58,12 +58,12 @@ class ChooseLanguageScreen extends StatelessWidget {
                         name: lang.languageName,
                         nativeName: _getNativeLanguageName(lang.languageCode),
                         isSelected: isSelected,
-                        onTap: () {
+                        onTap: () async {
                           final language = _controller.languageFromCode(
                             lang.languageCode,
                           );
 
-                          _controller.selectLanguage(language);
+                          await _controller.selectLanguage(language);
                         },
                       );
                     });

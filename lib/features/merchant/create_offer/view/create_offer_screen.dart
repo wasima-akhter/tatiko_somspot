@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
-import '../../../../share/controller/language_controller.dart';
+import '../../../../share/language/controller/language_controller.dart';
 import '../../../../share/export/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/controller/business-controller.dart';

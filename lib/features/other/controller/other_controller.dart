@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 
 import '../../../helper/toast/toast_helper.dart';
 import '../../../share/base_controller/base_form_controller.dart';
+import '../../../share/widgets/paginator/paginator.dart';
 import '../../../utils/app_strings/app_strings.dart';
 import '../../../utils/enum/app_enum.dart';
+import '../model/faq_model.dart';
 import '../request/help_support-request.dart';
 import '../request/rate_app_request.dart';
 import '../service/other_service.dart';
@@ -21,28 +23,6 @@ class OtherController extends BaseFormController {
   final subjectController = TextEditingController();
   final messageController = TextEditingController();
 
-  final List<FaqModel> faqs = const [
-    FaqModel(
-      question: "How do I claim a deal on SomSpot?",
-      answer:
-          "Go to any active offer on the Home or Saved screen, tap on the 'Claim' button. The coupon will be added to your My Claims list where you can click 'View' to present the QR code to the merchant to redeem.",
-    ),
-    FaqModel(
-      question: "How long are deals valid?",
-      answer:
-          "Each deal has a specific expiry date indicated on its detail page and card. Make sure to redeem the deal before the timer or date runs out.",
-    ),
-    FaqModel(
-      question: "Is SomSpot free to use?",
-      answer:
-          "Yes, SomSpot is 100% free for customers to discover nearby businesses, browse promotional discounts, and claim deals.",
-    ),
-    FaqModel(
-      question: "Can I cancel a claimed deal?",
-      answer:
-          "Claimed deals will automatically expire if they are not used within their validity period. There is no need to manually cancel or remove them.",
-    ),
-  ];
   Future<void> submitMessage() async {
     if (!formKey.currentState!.validate()) return;
 
@@ -167,19 +147,96 @@ class OtherController extends BaseFormController {
   /// ---------------
   ///
 
+  // ---------------------------------------------------------------------------
+  // FAQ
+  // ---------------------------------------------------------------------------
+
+  late final Paginator<FaqModel> faqPaginator;
+
+  final faqScrollController = ScrollController();
+
+  final Rx<ApiStatus> faqStatus = ApiStatus.completed.obs;
+
+  String? faqError;
+
+  void _initFaqPaginator() {
+    faqPaginator = Paginator<FaqModel>(
+      fetchPage: (page, limit) async {
+        final response = await _service.getFaq(page: page, limit: limit);
+
+        if (!response.success || response.data == null) {
+          faqStatus.value = ApiStatus.error;
+          faqError = response.message;
+
+          throw Exception(response.message);
+        }
+
+        final result = response.data!;
+
+        faqStatus.value = result.data.isEmpty
+            ? ApiStatus.noDataFound
+            : ApiStatus.completed;
+
+        return result;
+      },
+    );
+  }
+
+  Future<void> loadFaq() async {
+    await faqPaginator.loadInitial();
+  }
+
+  Future<void> loadMoreFaq() async {
+    await faqPaginator.loadMore();
+  }
+
+  Future<void> refreshFaq() async {
+    await faqPaginator.refresh();
+  }
+
+  void _onFaqScroll() {
+    if (!faqScrollController.hasClients) return;
+
+    final position = faqScrollController.position;
+
+    if (position.pixels >= position.maxScrollExtent - 200) {
+      loadMoreFaq();
+    }
+  }
+
+  // Convenient getter for UI
+  List<FaqModel> get faqs => faqPaginator.items;
+
+  // ---------------------------------------------------------------------------
+  // INIT
+  // ---------------------------------------------------------------------------
+
   @override
   void onInit() {
     super.onInit();
 
+    _initFaqPaginator();
+
+    faqScrollController.addListener(_onFaqScroll);
+
     getTermsConditions();
     getPrivacyPolicy();
     getAboutUs();
+
+    // Load first FAQ page.
+    loadFaq();
   }
 
   @override
   void onClose() {
+    faqScrollController.removeListener(_onFaqScroll);
+    faqScrollController.dispose();
+
+    faqPaginator.dispose();
+
     subjectController.dispose();
     messageController.dispose();
+
     super.onClose();
   }
 
@@ -275,11 +332,4 @@ class OtherController extends BaseFormController {
       aboutLoadingMethod(ApiStatus.error);
     }
   }
-}
-
-class FaqModel {
-  final String question;
-  final String answer;
-
-  const FaqModel({required this.question, required this.answer});
 }

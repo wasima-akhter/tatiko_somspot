@@ -178,7 +178,7 @@ class _OfferClaimedDialogState extends State<OfferClaimedDialog> {
                               QrCodeHelper.copy(context, widget.claimCode);
                             },
                       icon: Icon(Icons.copy_rounded, size: 17.sp),
-                      label: const Text('Copy'),
+                      label: Text(AppStrings.copy.tr),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.primaryColor,
                         side: BorderSide(

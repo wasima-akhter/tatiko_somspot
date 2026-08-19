@@ -83,6 +83,7 @@ class DateConverter {
     DateTime? dateTime,
     String pattern = 'MMM dd, yyyy • hh:mm a',
     bool showExpired = false,
+    bool inNextLine = false,
   }) {
     final dt = dateTime ?? DateTime.now();
 
@@ -90,7 +91,9 @@ class DateConverter {
       return AppStrings.expired.tr;
     }
 
-    return DateFormat(pattern).format(dt);
+    final patternLine = inNextLine ? 'MMM dd, yyyy\nhh:mm a' : pattern;
+
+    return DateFormat(patternLine).format(dt);
   }
 
   /// Converts string → DateTime safely
@@ -249,13 +252,13 @@ class DateConverter {
       parts.add('${days}d');
     }
 
-    if (hours > 0) {
-      parts.add('${hours}h');
-    }
+    // if (hours > 0) {
+    //   parts.add('${hours}h');
+    // }
 
-    if (minutes > 0) {
-      parts.add('${minutes}m');
-    }
+    // if (minutes > 0) {
+    //   parts.add('${minutes}m');
+    // }
 
     return parts.isEmpty ? AppStrings.expired.tr : parts.join(' ');
   }

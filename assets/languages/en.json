@@ -782,5 +782,17 @@
   "offline_message": "Oops, You're offline. Check your connection and give it another shot.",
 
   "unable_to_play_video": "Unable to play video",
-  "video_may_be_unavailable_or_connection_failed": "The video may be unavailable or the connection failed."
+  "video_may_be_unavailable_or_connection_failed": "The video may be unavailable or the connection failed.",
+
+  "no_top_deals_yet": "No top deals yet",
+  "no_top_deals_message": "There are no top deals available right now. Please check back later.",
+  "no_faq_yet": "No FAQs yet",
+  "no_faq_message": "There are no frequently asked questions available right now.",
+
+  "km_away": "km away",
+  "location_too_far_away": "Location is too far away",
+  "map_location_could_not_be_found": "Map location could not be found",
+  "location_not_available": "Location not available",
+  "to_address": "To",
+  "from_address": "From"
 }

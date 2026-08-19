@@ -79,6 +79,6 @@ class AuthRepository {
   }
 
   Future<Response> logout() {
-    return _apiClient.post(url: ApiUrls.logout(), body: {});
+    return _apiClient.post(url: ApiUrls.logout(), showResponse: true, body: {});
   }
 }

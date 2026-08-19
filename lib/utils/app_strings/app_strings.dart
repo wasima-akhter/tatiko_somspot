@@ -1021,4 +1021,20 @@ class AppStrings {
   static const String locationDisabledMessage = "location_disabled_message";
 
   static const String enableLocation = "enable_location";
+
+  // other
+  static const String noTopDealsYet = "no_top_deals_yet";
+  static const String noTopDealsMessage = "no_top_deals_message";
+
+  static const String noFaqYet = "no_faq_yet";
+  static const String noFaqMessage = "no_faq_message";
+
+  //
+  static const String kmAway = "km_away";
+  static const String locationTooFarAway = "location_too_far_away";
+  static const String mapLocationCouldNotBeFound =
+      "map_location_could_not_be_found";
+  static const String locationNotAvailable = "location_not_available";
+  static const String toAddress = "to_address";
+  static const String fromAddress = "from_address";
 }

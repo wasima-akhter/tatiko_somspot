@@ -1,6 +1,6 @@
 import 'package:som_spot/share/export/screen_export.dart';
 
-import '../controller/other_controller.dart';
+import '../model/faq_model.dart';
 
 class HelpSupportFaqItem extends StatelessWidget {
   final FaqModel faq;
@@ -24,39 +24,56 @@ class HelpSupportFaqItem extends StatelessWidget {
           ),
         ],
       ),
-      child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: ExpansionTile(
-          iconColor: AppColors.primaryColor,
-          collapsedIconColor: AppColors.hintTextColor,
-
-          tilePadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
-
-          childrenPadding: EdgeInsets.only(
-            left: 16.w,
-            right: 16.w,
-            bottom: 16.h,
-          ),
-
-          title: Text(
-            faq.question,
-            style: context.titleSmall.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 13.sp,
-              color: AppColors.darkTextColor,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.r),
+        child: Material(
+          color: Colors.transparent,
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              dividerColor: Colors.transparent,
+              splashColor: AppColors.primaryColor.withValues(alpha: 0.05),
+              highlightColor: AppColors.primaryColor.withValues(alpha: 0.03),
             ),
-          ),
+            child: ExpansionTile(
+              iconColor: AppColors.primaryColor,
+              collapsedIconColor: AppColors.hintTextColor,
 
-          children: [
-            Text(
-              faq.answer,
-              style: context.bodyMedium.copyWith(
-                color: AppColors.subtitleTextColor,
-                fontSize: 12.sp,
-                height: 1.4,
+              tilePadding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 2.h,
               ),
+
+              childrenPadding: EdgeInsets.only(
+                left: 16.w,
+                right: 16.w,
+                bottom: 16.h,
+              ),
+
+              title: Text(
+                faq.question,
+                style: context.titleSmall.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13.sp,
+                  color: AppColors.darkTextColor,
+                ),
+              ),
+
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    faq.description,
+                    textAlign: TextAlign.left,
+                    style: context.bodyMedium.copyWith(
+                      color: AppColors.subtitleTextColor,
+                      fontSize: 12.sp,
+                      height: 1.4,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

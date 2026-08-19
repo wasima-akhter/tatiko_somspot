@@ -12,7 +12,7 @@ import 'core/router/routes.dart';
 import 'core/service/datasource/local/app_storage.dart';
 import 'core/theme/light_theme.dart';
 import 'helper/device_utils/device_utils.dart';
-import 'share/controller/language_controller.dart';
+import 'share/language/controller/language_controller.dart';
 import 'utils/app_keys/app_keys.dart';
 
 void main() async {

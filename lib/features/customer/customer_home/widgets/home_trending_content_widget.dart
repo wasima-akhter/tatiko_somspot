@@ -1,44 +1,10 @@
-/*
-
-3.2 Trending Influencers / Creators Carousel
-Route: GET {{baseUrl}}/creator/trending?limit=10
-Auth: Public
-Query Filters: limit=10
-Success Response (200 OK):
-{
-  "statusCode": 200,
-  "success": true,
-  "message": "Trending creators retrieved",
-  "data": [
-    {
-      "_id": "6a7965d5f792519d4eada805",
-      "user": {
-        "_id": "6a7965d5f792519d4eada804",
-        "name": "Ahmed Hassan",
-        "profile_image": "https://cdn.somspot.so/profiles/ahmed_hassan.png"
-      },
-      "bio": "Mogadishu's top food reviewer & creator",
-      "category": {
-        "_id": "6a7965d4f792519d4eada7fe",
-        "name": "Food Creator",
-        "slug": "food-creator",
-        "icon": "https://cdn.somspot.so/icons/food-creator.png"
-      },
-      "followerCount": 50000,
-      "engagementRate": 8.5
-    }
-  ]
-}
-
-*/
-
 import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../controller/home_controller.dart';
-import 'recommended_content_card.dart';
-import 'recommended_content_empty_state.dart';
-import 'recommended_content_shimmer.dart';
+import 'recommended_content/recommended_content_card.dart';
+import 'recommended_content/recommended_content_empty_state.dart';
+import 'recommended_content/recommended_content_shimmer.dart';
 import 'section_header.dart';
 import 'trending_influencer.dart';
 import 'trending_influencer_card.dart';
@@ -73,7 +39,7 @@ class HomeTrendingContentWidget extends StatelessWidget {
 
         Gap(12.h),
 
-        Obx(() => _buildRecommendedContent(context)),
+        _buildRecommendedContent(context),
       ],
     );
   }
@@ -81,27 +47,42 @@ class HomeTrendingContentWidget extends StatelessWidget {
   Widget _buildRecommendedContent(BuildContext context) {
     final controller = HomeController.to;
 
-    if (controller.contentStatus.value == ApiStatus.noDataFound) {
-      return RecommendedContentEmptyState(
-        onRetry: controller.fetchCreatorContent,
-      );
-    }
-
-    return ApiStatusBuilder(
-      status: controller.contentStatus.value,
-      errorMessage: controller.contentError,
-      onRetry: () => controller.fetchCreatorContent(),
-      loadingWidget: const RecommendedContentShimmer(),
-      builder: (context) {
-        return Column(
-          children: controller.contents.map((content) {
-            return Padding(
-              padding: EdgeInsets.only(bottom: 12.h),
-              child: RecommendedContentCard(content: content),
+    return Obx(
+      () => ApiStatusBuilder(
+        status: controller.creatorContentPaginator.status.value,
+        errorMessage: controller.creatorContentPaginator.errorMessage.value,
+        onRetry: controller.loadCreatorContent,
+        loadingWidget: const RecommendedContentShimmer(),
+        isLoadingMore:
+            controller.creatorContentPaginator.loadMoreStatus.value ==
+            ApiStatus.loading,
+        hasMore: controller.creatorContentPaginator.hasMore.value,
+        noDataWidget: RecommendedContentEmptyState(
+          onRetry: controller.loadCreatorContent,
+        ),
+        builder: (context) {
+          if (controller.contents.isEmpty) {
+            return RecommendedContentEmptyState(
+              onRetry: controller.loadCreatorContent,
             );
-          }).toList(),
-        );
-      },
+          }
+
+          final contentList = controller.contents.take(2).toList();
+
+          return ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: contentList.length,
+            separatorBuilder: (_, _) => SizedBox(height: 12.h),
+            itemBuilder: (context, index) {
+              final content = contentList[index];
+
+              return RecommendedContentCard(content: content);
+            },
+          );
+        },
+      ),
     );
   }
 

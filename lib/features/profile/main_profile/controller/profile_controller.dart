@@ -8,6 +8,7 @@ import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../helper/image/image_helper.dart';
 import '../../../../helper/location_converter/location-converter.dart';
+import '../../../../share/language/controller/language_controller.dart';
 import '../../../../utils/common_controller/common_controller.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../service/profile_service.dart';
@@ -68,6 +69,20 @@ class ProfileScreenController extends GetxController {
     savedCount.value = data.savedCount;
     claimsCount.value = data.claimsCount;
     reviewsCount.value = data.reviewsCount;
+
+    // ─────────────────────────────────────────────
+    // Sync language from backend
+    // ─────────────────────────────────────────────
+    if (data.language.isNotEmpty) {
+      final languageController = LanguageController.to;
+
+      final serverLanguage = languageController.languageFromCode(data.language);
+
+      // Only update if backend language differs from current app language.
+      if (languageController.selectedLanguageCode != data.language) {
+        await languageController.applyServerLanguage(serverLanguage);
+      }
+    }
 
     update();
   }

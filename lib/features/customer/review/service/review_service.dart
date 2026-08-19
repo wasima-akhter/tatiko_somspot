@@ -145,4 +145,35 @@ class ReviewService {
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
     }
   }
+
+  //
+  /// Toggle user's helpful vote on a review.
+  Future<ApiResponse<ReviewHelpfulModel>> toggleReviewHelpful({
+    required String reviewId,
+  }) async {
+    try {
+      final response = await _repository.toggleReviewHelpful(
+        reviewId: reviewId,
+      );
+
+      final responseData = response.data;
+
+      final data = responseData is Map ? responseData['data'] : null;
+
+      if (data is! Map) {
+        return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
+      }
+
+      return ApiResponse.success(
+        data: ReviewHelpfulModel.fromJson(Map<String, dynamic>.from(data)),
+      );
+    } on ApiException catch (e) {
+      return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
+    } catch (e, s) {
+      debugPrint("Toggle Review Helpful Error: $e");
+      debugPrintStack(stackTrace: s);
+
+      return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
+    }
+  }
 }

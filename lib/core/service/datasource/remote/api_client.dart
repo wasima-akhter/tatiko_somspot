@@ -9,8 +9,8 @@ import 'package:mime/mime.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/core/service/datasource/local/app_storage.dart';
-import 'package:som_spot/utils/multipart/multipart_body.dart';
 
+import '../../../../utils/multipart/multipart_body.dart';
 import '../../network/network_checker.dart';
 import '../local/token_manager.dart';
 import 'api_exception.dart';

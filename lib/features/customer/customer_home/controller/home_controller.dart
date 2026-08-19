@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/features/core/category/controller/category_controller.dart';
+import 'package:som_spot/features/offers/shared/response/offers_response.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../share/widgets/paginator/paginator.dart';
@@ -17,12 +18,6 @@ class HomeController extends GetxController {
   final CustromerHomeService _service;
 
   static HomeController get to => Get.find();
-
-  final RxList<CreatorContentModel> contents = <CreatorContentModel>[].obs;
-
-  final Rx<ApiStatus> contentStatus = ApiStatus.completed.obs;
-
-  String? contentError;
 
   ProfileScreenController get profileController => ProfileScreenController.to;
 
@@ -63,12 +58,88 @@ class HomeController extends GetxController {
     // _nearbyLat = profileController.userLocationCords.value.coordinates.first;
     // _nearbyLng = profileController.userLocationCords.value.coordinates.last;
 
+    //
     _initNearbyBusinessesPaginator();
 
     nearbyBusinessesScrollController.addListener(_onNearbyBusinessesScroll);
 
-    fetchCreatorContent();
+    _initTopDealsPaginator();
+    topDealsScrollController.addListener(_onTopDealsScroll);
+
+    //
+    _initCreatorContentPaginator();
+
+    creatorContentScrollController.addListener(_onCreatorContentScroll);
+
+    loadCreatorContent();
+
+    //
+    // Load first page of top deals.
+    loadTopDeals();
   }
+
+  // ---------------------------------------------------------------------------
+  // Top Deals
+  // ---------------------------------------------------------------------------
+
+  late final Paginator<OfferModel> topDealsPaginator;
+
+  final topDealsScrollController = ScrollController();
+
+  final Rx<ApiStatus> topDealsStatus = ApiStatus.loading.obs;
+
+  String? topDealsError;
+
+  List<OfferModel> get topDeals => topDealsPaginator.items;
+
+  void _initTopDealsPaginator() {
+    topDealsPaginator = Paginator<OfferModel>(
+      fetchPage: (page, limit) async {
+        final response = await _service.getTopDeals(page: page, limit: limit);
+
+        if (!response.success || response.data == null) {
+          topDealsStatus.value = ApiStatus.error;
+          topDealsError = response.message;
+
+          throw Exception(response.message);
+        }
+
+        final result = response.data!;
+
+        topDealsStatus.value = result.data.isEmpty
+            ? ApiStatus.noDataFound
+            : ApiStatus.completed;
+
+        return result;
+      },
+    );
+  }
+
+  Future<void> loadTopDeals() {
+    return topDealsPaginator.loadInitial();
+  }
+
+  void _onTopDealsScroll() {
+    if (!topDealsScrollController.hasClients) return;
+
+    final position = topDealsScrollController.position;
+
+    if (position.pixels >= position.maxScrollExtent - 200) {
+      loadMoreTopDeals();
+    }
+  }
+
+  Future<void> loadMoreTopDeals() {
+    return topDealsPaginator.loadMore();
+  }
+
+  Future<void> refreshTopDeals() {
+    return topDealsPaginator.refresh();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Nearby Businesses
+  // ---------------------------------------------------------------------------
 
   Future<void> loadNearbyBusinesses() async {
     debugPrint('Before: ${nearbyBusinessesPaginator.items.length}');
@@ -122,6 +193,10 @@ class HomeController extends GetxController {
     nearbyBusinessesScrollController.dispose();
     nearbyBusinessesPaginator.dispose();
 
+    topDealsScrollController.removeListener(_onTopDealsScroll);
+    topDealsScrollController.dispose();
+    topDealsPaginator.dispose();
+
     super.onClose();
   }
 
@@ -155,10 +230,12 @@ class HomeController extends GetxController {
       final nearbyController = Get.find<CustomerBusinessListController>();
 
       await Future.wait([
-        Future(() => fetchCreatorContent()),
+        Future(() => refreshCreatorContent()),
         Future(() => profileController.getProfile()),
         Future(() => categoryController.refreshCategories()),
         Future(() => nearbyController.refreshBusinesses(isRefresh: true)),
+
+        Future(() => refreshTopDeals()),
       ]);
     } catch (e) {
       // handle error if required
@@ -167,31 +244,74 @@ class HomeController extends GetxController {
     }
   }
 
+  // ---------------------------------------------------------------------------
+  // Creator Content
+  // ---------------------------------------------------------------------------
+
+  late final Paginator<CreatorContentModel> creatorContentPaginator;
+
+  final creatorContentScrollController = ScrollController();
+
+  final Rx<ApiStatus> creatorContentStatus = ApiStatus.loading.obs;
+
+  String? creatorContentError;
+
+  List<CreatorContentModel> get contents => creatorContentPaginator.items;
+
+  void _initCreatorContentPaginator() {
+    creatorContentPaginator = Paginator<CreatorContentModel>(
+      fetchPage: (page, limit) async {
+        final response = await _service.getCreatorContent(
+          page: page,
+          limit: limit,
+        );
+
+        if (!response.success || response.data == null) {
+          creatorContentStatus.value = ApiStatus.error;
+          creatorContentError = response.message;
+
+          throw Exception(response.message);
+        }
+
+        final result = response.data!;
+
+        creatorContentStatus.value = result.data.isEmpty
+            ? ApiStatus.noDataFound
+            : ApiStatus.completed;
+
+        return result;
+      },
+    );
+  }
+
   Future<void> fetchCreatorContent({bool isRefresh = false}) async {
-    if (!isRefresh && contents.isEmpty) {
-      contentStatus.value = ApiStatus.loading;
+    if (isRefresh) {
+      await creatorContentPaginator.refresh();
+    } else {
+      await creatorContentPaginator.loadInitial();
     }
+  }
 
-    contentError = null;
+  Future<void> loadCreatorContent() async {
+    await creatorContentPaginator.loadInitial();
+  }
 
-    final response = await _service.getCreatorContent();
+  Future<void> loadMoreCreatorContent() async {
+    await creatorContentPaginator.loadMore();
+  }
 
-    if (!response.success) {
-      contentStatus.value = ApiStatus.error;
-      contentError = response.message;
-      return;
+  Future<void> refreshCreatorContent() async {
+    await creatorContentPaginator.refresh();
+  }
+
+  void _onCreatorContentScroll() {
+    if (!creatorContentScrollController.hasClients) return;
+
+    final position = creatorContentScrollController.position;
+
+    if (position.pixels >= position.maxScrollExtent - 200) {
+      loadMoreCreatorContent();
     }
-
-    final data = response.data ?? [];
-
-    contents.assignAll(data);
-
-    if (contents.isEmpty) {
-      contentStatus.value = ApiStatus.noDataFound;
-      return;
-    }
-
-    contentStatus.value = ApiStatus.completed;
   }
 
   ///

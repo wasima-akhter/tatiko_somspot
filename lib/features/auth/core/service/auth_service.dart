@@ -21,6 +21,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:som_spot/share/language/controller/language_controller.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../../../core/service/datasource/local/app_storage.dart';
@@ -57,7 +58,10 @@ class AuthService {
         );
       }
 
-      await _saveLoginSession(result.data!);
+      await _saveLoginSession(
+        result.data!,
+      ); // Sync locally selected language AFTER authentication.
+      await LanguageController.to.syncLanguageWithServer();
 
       return result;
     } on ApiException catch (e) {
@@ -139,6 +143,8 @@ class AuthService {
       // Save tokens after OTP verification
       await _saveLoginSession(result.data!);
 
+      // Sync locally selected language AFTER authentication.
+      await LanguageController.to.syncLanguageWithServer();
       // OTP completed, remove pending data
       await storage.clearPendingRegister();
 

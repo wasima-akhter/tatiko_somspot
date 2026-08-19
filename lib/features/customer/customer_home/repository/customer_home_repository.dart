@@ -4,12 +4,12 @@ class HomeContentRepository {
   final ApiClient _apiClient;
 
   HomeContentRepository(this._apiClient);
-
-  Future<Response> getCreatorContent() {
+  Future<Response> getCreatorContent({int page = 1, int limit = 10}) {
     return _apiClient.get(
       showResponse: true,
       skipAuth: true,
       url: ApiUrls.getCreatorContent(),
+      queryParams: {'page': page, 'limit': limit},
     );
   }
 
@@ -33,6 +33,14 @@ class HomeContentRepository {
         'limit': limit,
         if (category != null && category.isNotEmpty) 'category': category,
       },
+    );
+  }
+
+  Future<Response> getTopDeals({int page = 1, int limit = 10}) async {
+    return await _apiClient.get(
+      showResponse: true,
+      url: ApiUrls.getTopDeals(),
+      queryParams: {'page': page, 'limit': limit},
     );
   }
 }
