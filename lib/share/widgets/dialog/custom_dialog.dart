@@ -29,92 +29,26 @@ class AppDialog {
       vertical: 16,
     ),
     double? maxWidth,
+
+    // Optional API loading state.
+    // If null, no Obx is used for the actions.
+    RxBool? isLoading,
   }) {
-    IconData defaultIcon;
-    Color typeColor;
+    final (defaultIcon, typeColor) = _getDialogStyle(type);
 
-    switch (type) {
-      case AppDialogType.success:
-        defaultIcon = Icons.check_circle;
-        typeColor = Colors.green.shade600;
-        break;
-      case AppDialogType.error:
-        defaultIcon = Icons.error;
-        typeColor = Colors.red.shade600;
-        break;
-      case AppDialogType.warning:
-        defaultIcon = Icons.warning_amber_rounded;
-        typeColor = Colors.orange.shade700;
-        break;
-      case AppDialogType.info:
-        defaultIcon = Icons.info_outline;
-        typeColor = Colors.blue.shade600;
-        break;
-      case AppDialogType.custom:
-        defaultIcon = Icons.circle;
-        typeColor = AppColors.primaryColor;
-        break;
-    }
+    final defaultButtons = _buildDefaultButtons(
+      context: context,
+      typeColor: typeColor,
+      confirmText: confirmText,
+      cancelText: cancelText,
+      onConfirm: onConfirm,
+      onCancel: onCancel,
+      isLoading: isLoading,
+    );
 
-    List<Widget> defaultButtons = [];
-
-    if (showDefaultButtons) {
-      if (onCancel != null) {
-        defaultButtons.add(
-          Expanded(
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.grayTextSecondaryColor,
-                side: BorderSide(
-                  color: AppColors.grayTextSecondaryColor.withValues(alpha: .3),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 12),
-              ),
-              onPressed: () {
-                Navigator.pop(context, false);
-                onCancel();
-              },
-              child: Text(
-                cancelText,
-                style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-            ),
-          ),
-        );
-
-        defaultButtons.add(const SizedBox(width: 12));
-      }
-
-      defaultButtons.add(
-        Expanded(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: typeColor,
-              foregroundColor: Colors.white,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 12),
-            ),
-            onPressed: () {
-              Navigator.pop(context, true);
-              if (onConfirm != null) onConfirm();
-            },
-            child: Text(
-              confirmText,
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
-          ),
-        ),
-      );
-    }
     return showGeneralDialog(
       context: context,
-      barrierDismissible: dismissible,
+      barrierDismissible: dismissible && !(isLoading?.value ?? false),
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       transitionDuration: transitionDuration,
       pageBuilder: (context, animation, secondaryAnimation) =>
@@ -148,18 +82,15 @@ class AppDialog {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        // ── Icon ──
                         if (icon != null || type != AppDialogType.custom)
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 12),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: typeColor.withValues(alpha: 0.15),
-                            ),
-                            padding: const EdgeInsets.all(12),
-                            child:
-                                icon ??
-                                Icon(defaultIcon, color: typeColor, size: 38),
+                          _buildIcon(
+                            icon: icon,
+                            defaultIcon: defaultIcon,
+                            typeColor: typeColor,
                           ),
+
+                        // ── Title ──
                         if (title?.isNotEmpty ?? false)
                           Text(
                             title!,
@@ -170,6 +101,8 @@ class AppDialog {
                                   color: titleColor ?? AppColors.black,
                                 ),
                           ),
+
+                        // ── Subtitle ──
                         if (subtitle?.isNotEmpty ?? false)
                           Padding(
                             padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -182,16 +115,22 @@ class AppDialog {
                                   ),
                             ),
                           ),
+
+                        // ── Content ──
                         if (content != null)
                           Padding(
                             padding: const EdgeInsets.only(top: 8, bottom: 16),
                             child: content,
                           ),
+
+                        // ── Actions ──
                         if ((actions?.isNotEmpty ?? false) ||
                             showDefaultButtons)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: actions ?? defaultButtons,
+                          _buildActionSection(
+                            isLoading: isLoading,
+                            actions: actions,
+                            defaultButtons: defaultButtons,
+                            loadingColor: typeColor,
                           ),
                       ],
                     ),
@@ -203,5 +142,161 @@ class AppDialog {
         );
       },
     );
+  }
+
+  // ─────────────────────────────────────────────
+  // Dialog Style
+  // ─────────────────────────────────────────────
+
+  static (IconData, Color) _getDialogStyle(AppDialogType type) {
+    switch (type) {
+      case AppDialogType.success:
+        return (Icons.check_circle, Colors.green.shade600);
+
+      case AppDialogType.error:
+        return (Icons.error, Colors.red.shade600);
+
+      case AppDialogType.warning:
+        return (Icons.warning_amber_rounded, Colors.orange.shade700);
+
+      case AppDialogType.info:
+        return (Icons.info_outline, Colors.blue.shade600);
+
+      case AppDialogType.custom:
+        return (Icons.circle, AppColors.primaryColor);
+    }
+  }
+
+  // ─────────────────────────────────────────────
+  // Icon
+  // ─────────────────────────────────────────────
+
+  static Widget _buildIcon({
+    required Widget? icon,
+    required IconData defaultIcon,
+    required Color typeColor,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: typeColor.withValues(alpha: 0.15),
+      ),
+      padding: const EdgeInsets.all(12),
+      child: icon ?? Icon(defaultIcon, color: typeColor, size: 38),
+    );
+  }
+
+  // ─────────────────────────────────────────────
+  // Default Buttons
+  // ─────────────────────────────────────────────
+
+  static List<Widget> _buildDefaultButtons({
+    required BuildContext context,
+    required Color typeColor,
+    required String confirmText,
+    required String cancelText,
+    required VoidCallback? onConfirm,
+    required VoidCallback? onCancel,
+    required RxBool? isLoading,
+  }) {
+    final buttons = <Widget>[];
+
+    if (onCancel != null) {
+      buttons.add(
+        Expanded(
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              foregroundColor: AppColors.grayTextSecondaryColor,
+              side: BorderSide(
+                color: AppColors.grayTextSecondaryColor.withValues(alpha: .3),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+            ),
+            onPressed: () {
+              if (isLoading?.value == true) return;
+
+              Navigator.pop(context, false);
+              onCancel();
+            },
+            child: Text(
+              cancelText,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+      );
+
+      buttons.add(const SizedBox(width: 12));
+    }
+
+    buttons.add(
+      Expanded(
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: typeColor,
+            foregroundColor: Colors.white,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+          ),
+          onPressed: () {
+            if (isLoading?.value == true) return;
+
+            if (onConfirm != null) {
+              onConfirm();
+            } else {
+              Navigator.pop(context, true);
+            }
+          },
+          child: Text(
+            confirmText,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+        ),
+      ),
+    );
+
+    return buttons;
+  }
+
+  // ─────────────────────────────────────────────
+  // Action Section
+  // ─────────────────────────────────────────────
+
+  static Widget _buildActionSection({
+    required RxBool? isLoading,
+    required List<Widget>? actions,
+    required List<Widget> defaultButtons,
+    required Color loadingColor,
+  }) {
+    // No RxBool supplied.
+    // Do NOT create/use Obx.
+    if (isLoading == null) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: actions ?? defaultButtons,
+      );
+    }
+
+    // RxBool supplied.
+    return Obx(() {
+      if (isLoading.value) {
+        return SizedBox(
+          height: 46,
+          child: Center(child: CircularProgressIndicator(color: loadingColor)),
+        );
+      }
+
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: actions ?? defaultButtons,
+      );
+    });
   }
 }

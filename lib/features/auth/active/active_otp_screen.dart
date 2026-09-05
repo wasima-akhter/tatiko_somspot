@@ -199,7 +199,7 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
                       // ── Resend row: countdown OR tappable resend ──
                       Center(
                         child: Obx(() {
-                          if (controller.isResending.value) {
+                          if (controller.isResendingOtp.value) {
                             return const SizedBox(
                               height: 18,
                               width: 18,
@@ -251,7 +251,8 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
                         return CustomButton(
                           text: AppStrings.verifyAndContinue.tr,
 
-                          isLoading: controller.isLoading.value,
+                          isLoading:
+                              controller.isVerifyRegisterOtpLoading.value,
 
                           onTap: _verifyOtp,
                         );

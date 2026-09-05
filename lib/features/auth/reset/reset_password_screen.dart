@@ -104,7 +104,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
                         // ── Save Password Button ──
                         Obx(
-                          () => AuthController.to.isLoading.value
+                          () => AuthController.to.isResetPasswordLoading.value
                               ? LoadingWidget()
                               : CustomButton(
                                   text: AppStrings.savePassword.tr,

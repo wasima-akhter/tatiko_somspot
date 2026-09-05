@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import '../../../core/router/route_path.dart';
 import '../../../core/router/routes.dart';
 import '../../../helper/snackbar/api_snackbar.dart';
+import '../../../helper/toast/toast_helper.dart';
+import '../../../utils/app_strings/app_strings.dart';
 import '../../../utils/common_controller/common_controller.dart';
 import '../completed_profile_customer_merchandiser/completed_profile_customer_args.dart';
 import '../core/requests/auth_request.dart';
@@ -17,13 +19,23 @@ class AuthController extends GetxController {
 
   static AuthController get to => Get.find();
 
-  final isLoading = false.obs;
-
   final errorMessage = ''.obs;
+
+  final isLoginLoading = false.obs;
+  final isRegisterLoading = false.obs;
+  final isVerifyRegisterOtpLoading = false.obs;
+  final isResendingOtp = false.obs;
+  final isForgotPasswordLoading = false.obs;
+  final isVerifyForgotPasswordOtpLoading = false.obs;
+  final isResetPasswordLoading = false.obs;
+  final isChangePasswordLoading = false.obs;
+  final isLogoutLoading = false.obs;
+
+  //
 
   Future<void> login({required LoginRequest request}) async {
     try {
-      isLoading.value = true;
+      isLoginLoading.value = true;
       errorMessage.value = '';
 
       final result = await _service.login(request);
@@ -43,7 +55,7 @@ class AuthController extends GetxController {
 
       await _handlePostLogin();
     } finally {
-      isLoading.value = false;
+      isLoginLoading.value = false;
     }
   }
 
@@ -52,14 +64,15 @@ class AuthController extends GetxController {
     required String email,
     required String password,
     required String confirmPassword,
+    required String role,
   }) async {
     try {
-      isLoading.value = true;
-      final selectedRole = CommonController.to.role.value;
+      isRegisterLoading.value = true;
+      final selectedRole = role;
 
       final result = await _service.register(
         RegisterRequest(
-          role: selectedRole.value,
+          role: selectedRole,
           name: name,
           email: email,
           password: password,
@@ -71,7 +84,7 @@ class AuthController extends GetxController {
 
       ApiSnackbar.show(result.message);
     } finally {
-      isLoading.value = false;
+      isRegisterLoading.value = false;
     }
   }
 
@@ -80,7 +93,7 @@ class AuthController extends GetxController {
     required String otp,
   }) async {
     try {
-      isLoading.value = true;
+      isVerifyRegisterOtpLoading.value = true;
 
       final response = await _service.verifyRegisterOtp(
         VerifyOtpRequest(email: email, activationCode: otp),
@@ -93,23 +106,21 @@ class AuthController extends GetxController {
 
       await _handlePostLogin();
     } finally {
-      isLoading.value = false;
+      isVerifyRegisterOtpLoading.value = false;
     }
   }
 
-  final RxBool isResending = false.obs;
-
   Future<void> resendOtp({required String email}) async {
-    if (isResending.value) return; // guard against double-taps
+    if (isResendingOtp.value) return; // guard against double-taps
 
-    isResending.value = true;
+    isResendingOtp.value = true;
 
     final request = ResendOtpRequest(
       email: email,
     ); // adjust field name if different
     final result = await _service.resendOtp(request);
 
-    isResending.value = false;
+    isResendingOtp.value = false;
 
     if (result.success) {
       ApiSnackbar.show(
@@ -125,7 +136,7 @@ class AuthController extends GetxController {
   ///
   Future<void> forgotPassword({required String email}) async {
     try {
-      isLoading.value = true;
+      isForgotPasswordLoading.value = true;
 
       final result = await _service.forgotPassword(
         ForgotPasswordRequest(email: email),
@@ -138,7 +149,7 @@ class AuthController extends GetxController {
 
       AppRouter.route.pushNamed(RoutePath.forgetOtpScreen, extra: email);
     } finally {
-      isLoading.value = false;
+      isForgotPasswordLoading.value = false;
     }
   }
 
@@ -147,7 +158,7 @@ class AuthController extends GetxController {
     required String code,
   }) async {
     try {
-      isLoading.value = true;
+      isVerifyForgotPasswordOtpLoading.value = true;
 
       final result = await _service.verifyForgotPasswordOtp(
         VerifyForgotPasswordOtpRequest(email: email, code: code),
@@ -160,7 +171,7 @@ class AuthController extends GetxController {
 
       AppRouter.route.pushNamed(RoutePath.resetPasswordScreen, extra: email);
     } finally {
-      isLoading.value = false;
+      isVerifyForgotPasswordOtpLoading.value = false;
     }
   }
 
@@ -170,7 +181,7 @@ class AuthController extends GetxController {
     required String confirmPassword,
   }) async {
     try {
-      isLoading.value = true;
+      isResetPasswordLoading.value = true;
 
       final result = await _service.resetPassword(
         ResetPasswordRequest(
@@ -190,7 +201,7 @@ class AuthController extends GetxController {
 
       AppRouter.route.goNamed(RoutePath.loginScreen);
     } finally {
-      isLoading.value = false;
+      isResetPasswordLoading.value = false;
     }
   }
 
@@ -200,7 +211,7 @@ class AuthController extends GetxController {
     required String confirmPassword,
   }) async {
     try {
-      isLoading.value = true;
+      isChangePasswordLoading.value = true;
 
       final result = await _service.changePassword(
         ChangePasswordRequest(
@@ -220,7 +231,7 @@ class AuthController extends GetxController {
 
       AppRouter.route.pop();
     } finally {
-      isLoading.value = false;
+      isChangePasswordLoading.value = false;
     }
   }
 
@@ -228,7 +239,7 @@ class AuthController extends GetxController {
 
   Future<void> logout() async {
     try {
-      isLoading.value = true;
+      isLogoutLoading.value = true;
 
       final result = await _service.logout();
 
@@ -238,11 +249,10 @@ class AuthController extends GetxController {
       //   return;
       // }
 
-      // ApiSnackbar.show(result.message, type: SnackbarType.success);
-
-      // AppRouter.route.pop();
+      AppToast.success(message: AppStrings.successfullyLoggedOut.tr);
+      AppRouter.route.goNamed(RoutePath.loginScreen);
     } finally {
-      isLoading.value = false;
+      isLogoutLoading.value = false;
     }
   }
 

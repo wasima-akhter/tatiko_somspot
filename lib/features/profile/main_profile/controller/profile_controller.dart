@@ -1,9 +1,6 @@
 import 'package:get/get.dart';
-import 'package:som_spot/core/router/route_path.dart';
-import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/features/auth/controller/auth_controller.dart';
 import 'package:som_spot/features/profile/models/get_profile_model.dart';
-import 'package:som_spot/helper/toast/toast_helper.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../helper/image/image_helper.dart';
@@ -87,10 +84,8 @@ class ProfileScreenController extends GetxController {
     update();
   }
 
-  void logout() {
-    AuthController.to.logout();
-    AppToast.success(message: AppStrings.successfullyLoggedOut.tr);
-    AppRouter.route.goNamed(RoutePath.loginScreen);
+  void logout() async {
+    await AuthController.to.logout();
   }
 
   List<ProfileStatModel> get profileStats {

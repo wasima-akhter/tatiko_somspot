@@ -128,8 +128,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Obx(
                           () => CustomButton(
                             text: AppStrings.logIn.tr,
-                            isLoading: controller.isLoading.value,
-                            onTap: controller.isLoading.value
+                            isLoading: controller.isLoginLoading.value,
+                            onTap: controller.isLoginLoading.value
                                 ? null
                                 : () {
                                     if (_formKey.currentState!.validate()) {

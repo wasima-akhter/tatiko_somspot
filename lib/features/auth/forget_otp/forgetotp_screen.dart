@@ -157,7 +157,11 @@ class _ForgetOtpScreenState extends State<ForgetOtpScreen> {
 
                       // ── Verify & Continue Button ──
                       Obx(
-                        () => AuthController.to.isLoading.value
+                        () =>
+                            AuthController
+                                .to
+                                .isVerifyForgotPasswordOtpLoading
+                                .value
                             ? LoadingWidget()
                             : CustomButton(
                                 text: AppStrings.verifyAndContinue.tr,

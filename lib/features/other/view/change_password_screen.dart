@@ -127,7 +127,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
                 // ── Action Button ──
                 Obx(
-                  () => AuthController.to.isLoading.value
+                  () => AuthController.to.isChangePasswordLoading.value
                       ? LoadingWidget()
                       : CustomButton(
                           text: AppStrings.saveChanges.tr,

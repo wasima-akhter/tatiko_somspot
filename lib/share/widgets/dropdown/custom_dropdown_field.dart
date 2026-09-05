@@ -108,6 +108,7 @@ class CustomDropdownField<T> extends StatelessWidget {
             child: Text(
               labelBuilder?.call(item) ?? item.toString(),
               style: context.bodyMedium.copyWith(
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.darkTextColor,
                 letterSpacing: 0.2,
@@ -131,8 +132,8 @@ class CustomDropdownField<T> extends StatelessWidget {
           ],
         ),
       ),
-      menuItemStyleData: const MenuItemStyleData(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      menuItemStyleData: MenuItemStyleData(
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10),
       ),
     );
   }

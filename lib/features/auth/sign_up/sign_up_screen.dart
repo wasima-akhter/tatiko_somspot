@@ -2,10 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:som_spot/features/auth/controller/auth_controller.dart';
 import 'package:som_spot/share/export/screen_export.dart';
+import 'package:som_spot/share/widgets/dropdown/custom_dropdown_field.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
 import '../../../helper/snackbar/app_snackbar.dart';
+import '../../../utils/common_controller/common_controller.dart';
+import '../../../utils/enum/app_enum.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -27,7 +30,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     super.initState();
-    // Initialize common controller state
 
     if (kDebugMode) {
       _nameController.text = "abc";
@@ -51,26 +53,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = AuthController.to;
-    return Scaffold(
+    final commonController = CommonController.to;
+
+    return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
+      onPressed: () => AppRouter.route.pop(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Gap(16),
-              // ── Back Button ──
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => AppRouter.route.pop(),
-                child: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: AppColors.darkTextColor,
-                  size: 20,
-                ),
-              ),
-              const Gap(24),
+              // const Gap(16),
+
+              // // ── Back Button ──
+              // GestureDetector(
+              //   behavior: HitTestBehavior.opaque,
+              //   onTap: () => AppRouter.route.pop(),
+              //   child: const Icon(
+              //     Icons.arrow_back_ios_new,
+              //     color: AppColors.darkTextColor,
+              //     size: 20,
+              //   ),
+              // ),
+
+              // const Gap(24),
 
               // ── Title ──
               Text(
@@ -80,6 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   color: AppColors.darkTextColor,
                 ),
               ),
+
               const Gap(8),
 
               // ── Subtitle ──
@@ -90,6 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 1.5,
                 ),
               ),
+
               const Gap(24),
 
               // ── Form ──
@@ -100,6 +109,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // ── Role ──
+                        Text(
+                          'Role',
+                          style: context.bodyMedium.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.darkTextColor,
+                          ),
+                        ),
+                        const Gap(8),
+
+                        Obx(
+                          () => CustomDropdownField<UserRole>(
+                            hintText: 'Select your role',
+                            items: commonController.roles,
+                            value: commonController.role.value,
+                            isRequired: true,
+                            labelBuilder: (role) {
+                              switch (role) {
+                                case UserRole.customer:
+                                  return AppStrings.customer.tr;
+                                case UserRole.merchandiser:
+                                  return AppStrings.merchant.tr;
+                                case UserRole.influencer:
+                                  return AppStrings.influencer.tr;
+                              }
+                            },
+                            onChanged: commonController.setRole,
+                          ),
+                        ),
+
+                        const Gap(16),
+
+                        // ── Full Name ──
                         CustomTextField(
                           controller: _nameController,
                           title: AppStrings.fullName.tr,
@@ -110,8 +152,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: AppColors.hintTextColor,
                           ),
                         ),
+
                         const Gap(16),
 
+                        // ── Phone ──
                         CustomTextField(
                           controller: _phoneController,
                           title: AppStrings.phoneNumber.tr,
@@ -123,8 +167,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: AppColors.hintTextColor,
                           ),
                         ),
+
                         const Gap(16),
 
+                        // ── Email ──
                         CustomTextField(
                           controller: _emailController,
                           title: AppStrings.email.tr,
@@ -136,8 +182,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: AppColors.hintTextColor,
                           ),
                         ),
+
                         const Gap(16),
 
+                        // ── Password ──
                         CustomTextField(
                           controller: _passwordController,
                           title: AppStrings.password.tr,
@@ -149,8 +197,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: AppColors.hintTextColor,
                           ),
                         ),
+
                         const Gap(16),
 
+                        // ── Confirm Password ──
                         CustomTextField(
                           controller: _confirmPasswordController,
                           title: AppStrings.confirmPassword.tr,
@@ -162,6 +212,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: AppColors.hintTextColor,
                           ),
                         ),
+
                         const Gap(24),
 
                         // ── Terms & Privacy ──
@@ -219,40 +270,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ],
                         ),
+
                         const Gap(32),
 
                         // ── Create Account Button ──
                         Obx(
-                          () => controller.isLoading.value
+                          () => controller.isRegisterLoading.value
                               ? LoadingWidget()
                               : CustomButton(
                                   text: AppStrings.createAccount.tr,
-                                  onTap: () {
-                                    if (!_formKey.currentState!.validate()) {
-                                      return;
-                                    }
-
-                                    if (!_agreedToTerms) {
-                                      UiSnackbar.show(
-                                        context,
-                                        title: "Terms Required",
-                                        message:
-                                            "Please accept terms and privacy policy",
-                                      );
-
-                                      return;
-                                    }
-
-                                    controller.register(
-                                      name: _nameController.text.trim(),
-                                      email: _emailController.text.trim(),
-                                      password: _passwordController.text,
-                                      confirmPassword:
-                                          _confirmPasswordController.text,
-                                    );
-                                  },
+                                  onTap: _validateAndRegister,
                                 ),
                         ),
+
                         const Gap(24),
 
                         // ── Already have an account? Log In ──
@@ -283,6 +313,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                         ),
+
                         const Gap(40),
                       ],
                     ),
@@ -296,5 +327,143 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  //
+  void _validateAndRegister() {
+    final commonController = CommonController.to;
+    final controller = AuthController.to;
+
+    // ── Full Name ──
+    final name = _nameController.text.trim();
+
+    if (name.isEmpty) {
+      UiSnackbar.show(
+        context,
+        title: 'Name Required',
+        message: 'Please enter your full name',
+        type: UiSnackbarType.warning,
+      );
+      return;
+    }
+
+    if (name.length < 2) {
+      UiSnackbar.show(
+        context,
+        title: 'Invalid Name',
+        message: 'Please enter a valid full name',
+        type: UiSnackbarType.warning,
+      );
+      return;
+    }
+
+    // ── Phone ──
+    final phone = _phoneController.text.trim();
+
+    if (phone.isEmpty) {
+      UiSnackbar.show(
+        context,
+        title: 'Phone Required',
+        message: 'Please enter your phone number',
+        type: UiSnackbarType.warning,
+      );
+      return;
+    }
+
+    if (!RegExp(r'^\+?[0-9]{7,15}$').hasMatch(phone)) {
+      UiSnackbar.show(
+        context,
+        title: 'Invalid Phone',
+        message: 'Please enter a valid phone number',
+        type: UiSnackbarType.warning,
+      );
+      return;
+    }
+
+    // ── Email ──
+    final email = _emailController.text.trim();
+
+    if (email.isEmpty) {
+      UiSnackbar.show(
+        context,
+        title: 'Email Required',
+        message: 'Please enter your email address',
+        type: UiSnackbarType.warning,
+      );
+      return;
+    }
+
+    if (!RegExp(r'^[\w\-.]+@([\w\-]+\.)+[\w\-]{2,4}$').hasMatch(email)) {
+      UiSnackbar.show(
+        context,
+        title: 'Invalid Email',
+        message: 'Please enter a valid email address',
+        type: UiSnackbarType.warning,
+      );
+      return;
+    }
+
+    // ── Password ──
+    final password = _passwordController.text;
+
+    if (password.isEmpty) {
+      UiSnackbar.show(
+        context,
+        title: 'Password Required',
+        message: 'Please enter a password',
+        type: UiSnackbarType.warning,
+      );
+      return;
+    }
+
+    if (password.length < 6) {
+      UiSnackbar.show(
+        context,
+        title: 'Invalid Password',
+        message: 'Password must be at least 6 characters',
+        type: UiSnackbarType.warning,
+      );
+      return;
+    }
+
+    // ── Confirm Password ──
+    final confirmPassword = _confirmPasswordController.text;
+
+    if (confirmPassword.isEmpty) {
+      UiSnackbar.show(
+        context,
+        title: 'Confirm Password',
+        message: 'Please confirm your password',
+        type: UiSnackbarType.warning,
+      );
+      return;
+    }
+
+    if (password != confirmPassword) {
+      UiSnackbar.show(
+        context,
+        title: 'Password Mismatch',
+        message: 'Passwords do not match',
+        type: UiSnackbarType.warning,
+      );
+      return;
+    }
+
+    // ── Terms & Privacy ──
+    if (!_agreedToTerms) {
+      UiSnackbar.show(
+        context,
+        title: 'Terms Required',
+        message: 'Please accept terms and privacy policy',
+        type: UiSnackbarType.warning,
+      );
+      return;
+    }
+
+    // ── API ──
+    controller.register(
+      name: name,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+      role: commonController.role.value.value,
+    );
+  }
 }

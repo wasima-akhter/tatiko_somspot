@@ -1,3 +1,4 @@
+import 'package:som_spot/features/auth/controller/auth_controller.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
 import 'package:som_spot/features/profile/main_profile/widgets/language_dialog_content.dart';
 import 'package:som_spot/features/profile/main_profile/widgets/profile_menu_card.dart';
@@ -294,6 +295,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
       showDefaultButtons: true,
       confirmText: AppStrings.yes.tr,
       cancelText: AppStrings.cancel.tr,
+      isLoading: AuthController.to.isLogoutLoading,
       onConfirm: () => controller.logout(),
       onCancel: () {},
     );

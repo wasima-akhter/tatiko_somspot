@@ -88,7 +88,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
                         // ── Send Code Button ──
                         Obx(
-                          () => AuthController.to.isLoading.value
+                          () => AuthController.to.isForgotPasswordLoading.value
                               ? LoadingWidget()
                               : CustomButton(
                                   text: AppStrings.sendVerificationCode.tr,
