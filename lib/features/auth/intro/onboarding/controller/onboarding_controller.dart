@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:som_spot/core/custom_assets/assets.gen.dart';
 import 'package:som_spot/features/auth/intro/onboarding/model/onboarding_model.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 
@@ -20,17 +21,17 @@ class OnboardingController extends GetxController {
 
   static final List<OnboardingModel> _defaultOnboarding = [
     OnboardingModel(
-      image: "assets/images/onboardone.png",
+      image: Assets.images.onboardone.path,
       title: AppStrings.onboardingOne,
       details: AppStrings.onboardingSubtitleOne,
     ),
     OnboardingModel(
-      image: "assets/images/onboardtwo.png",
+      image: Assets.images.onboardtwo.path,
       title: AppStrings.onboardingTwo,
       details: AppStrings.onboardingSubtitleTwo,
     ),
     OnboardingModel(
-      image: "assets/images/onboardthree.png",
+      image: Assets.images.onboardthree.path,
       title: AppStrings.onboardingThree,
       details: AppStrings.onboardingSubtitleThree,
     ),
@@ -38,17 +39,17 @@ class OnboardingController extends GetxController {
 
   static final List<OnboardingModel> _influencerOnboarding = [
     OnboardingModel(
-      image: "assets/images/influencer_onboard_one.png",
+      image: Assets.images.influencerOnboardOne.path,
       title: AppStrings.monetizeYourAudience,
       details: AppStrings.partnerDescription,
     ),
     OnboardingModel(
-      image: "assets/images/influencer_onboard_two.png",
+      image: Assets.images.influencerOnboardTwo.path,
       title: AppStrings.createAndShare,
       details: AppStrings.campaignsDescription,
     ),
     OnboardingModel(
-      image: "assets/images/influencer_onboard_three.png",
+      image: Assets.images.influencerOnboardThree.path,
       title: AppStrings.trackEarnings,
       details: AppStrings.commissionsDescription,
     ),

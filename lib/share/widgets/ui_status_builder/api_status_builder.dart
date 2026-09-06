@@ -15,11 +15,15 @@ class ApiStatusBuilder extends StatelessWidget {
   /// Custom loading widget
   final Widget? loadingWidget;
 
+  /// Custom error widget
+  final Widget? errorWidget;
+
+  /// Custom no-data widget
+  final Widget? noDataWidget;
+
   /// Pagination
   final bool isLoadingMore;
   final bool hasMore;
-
-  final Widget? noDataWidget;
 
   const ApiStatusBuilder({
     super.key,
@@ -28,9 +32,10 @@ class ApiStatusBuilder extends StatelessWidget {
     required this.builder,
     this.errorMessage,
     this.loadingWidget,
+    this.errorWidget,
+    this.noDataWidget,
     this.isLoadingMore = false,
     this.hasMore = false,
-    this.noDataWidget,
   });
 
   @override
@@ -43,19 +48,10 @@ class ApiStatusBuilder extends StatelessWidget {
         return NoInternetCard(onTap: onRetry);
 
       case ApiStatus.error:
-        return ErrorCard(onTap: onRetry, message: errorMessage);
+        return errorWidget ?? ErrorCard(onTap: onRetry, message: errorMessage);
 
       case ApiStatus.noDataFound:
-        return
-        // HomeEmptyState(
-        //       icon: Icons.location_off_outlined,
-        //       title: 'No Nearby Places Yet',
-        //       message:
-        //           'We couldn’t find any businesses nearby right now.\n'
-        //           'Try again to discover places around you.',
-        //       onRetry: onRetry,
-        //     )
-        noDataWidget ?? NoDataCard(onTap: onRetry, buttonText: "Retry");
+        return noDataWidget ?? NoDataCard(onTap: onRetry, buttonText: 'Retry');
 
       case ApiStatus.completed:
         return SingleChildScrollView(
@@ -66,7 +62,6 @@ class ApiStatusBuilder extends StatelessWidget {
               if (hasMore && isLoadingMore)
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
-                  
                   child: Center(child: LoadingWidget()),
                 ),
             ],

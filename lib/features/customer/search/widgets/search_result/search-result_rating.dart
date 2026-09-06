@@ -20,7 +20,7 @@ class SearchResultRating extends StatelessWidget {
         Gap(4.w),
         Text(
           rating.toStringAsFixed(1),
-          style: context.bodySmall.copyWith(
+          style: context.bodyMedium.copyWith(
             color: AppColors.darkTextColor,
             fontWeight: FontWeight.w600,
           ),
@@ -28,7 +28,7 @@ class SearchResultRating extends StatelessWidget {
         Gap(5.w),
         Text(
           "($ratingCount)",
-          style: context.bodySmall.copyWith(color: AppColors.hintTextColor),
+          style: context.bodyMedium.copyWith(color: AppColors.hintTextColor),
         ),
       ],
     );

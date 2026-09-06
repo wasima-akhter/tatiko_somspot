@@ -479,7 +479,7 @@ class _ManageGallerySheetState extends State<_ManageGallerySheet> {
                           children: [
                             Icon(Icons.add, color: AppColors.blueAccentColor),
                             Gap(4.h),
-                            Text(AppStrings.add.tr),
+                            Text(AppStrings.changePhoto.tr),
                           ],
                         ),
                       ),

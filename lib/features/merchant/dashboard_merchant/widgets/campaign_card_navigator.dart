@@ -80,7 +80,7 @@ class CampaignCardNavigator extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: context.bodySmall.copyWith(
                           color: Colors.white.withValues(alpha: .9),
-                          fontSize: 11.sp,
+                          fontSize: 13.sp,
                         ),
                       ),
                     ),

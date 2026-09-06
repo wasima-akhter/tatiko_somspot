@@ -15,7 +15,7 @@ class DashboardSectionTitle extends StatelessWidget {
       children: [
         Text(
           title.tr,
-          style: context.titleMedium.copyWith(
+          style: context.titleLarge.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.darkTextColor,
           ),

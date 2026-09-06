@@ -14,18 +14,22 @@ class SearchResultInfo extends StatelessWidget {
           item.name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: context.titleMedium.copyWith(
+          style: context.titleLarge.copyWith(
             color: AppColors.darkTextColor,
             fontWeight: FontWeight.w700,
           ),
         ),
         Gap(4.h),
-        Text(
-          item.category?.name ?? "",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: context.bodySmall.copyWith(color: AppColors.subtitleTextColor),
-        ),
+
+        if ((item.category?.name ?? '').isNotEmpty)
+          Text(
+            item.category?.name ?? "",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: context.bodyMedium.copyWith(
+              color: AppColors.subtitleTextColor,
+            ),
+          ),
         Gap(6.h),
         SearchResultRating(
           rating: item.ratingAvg,
@@ -36,7 +40,9 @@ class SearchResultInfo extends StatelessWidget {
           item.address,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: context.bodySmall.copyWith(color: AppColors.subtitleTextColor),
+          style: context.bodyMedium.copyWith(
+            color: AppColors.subtitleTextColor,
+          ),
         ),
       ],
     );

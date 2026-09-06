@@ -58,6 +58,7 @@ class DashboardCommonHeaderSec extends StatelessWidget {
                         Text(
                           getGreeting(),
                           style: context.bodySmall.copyWith(
+                            fontSize: 14.sp,
                             color: Colors.white.withValues(alpha: 0.9),
                           ),
                         ),
@@ -71,6 +72,7 @@ class DashboardCommonHeaderSec extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: context.titleLarge.copyWith(
                               fontWeight: FontWeight.bold,
+                              fontSize: 18.sp,
                               color: Colors.white,
                             ),
                           ),
@@ -126,6 +128,7 @@ class DashboardCommonHeaderSec extends StatelessWidget {
                       ? AppStrings.loadingLocation.tr
                       : data.userAddress.value,
                   style: context.bodyMedium.copyWith(
+                    fontSize: 13.sp,
                     color: Colors.white.withValues(alpha: 0.9),
                   ),
                   maxLines: 1,

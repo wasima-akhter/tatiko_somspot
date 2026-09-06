@@ -262,7 +262,8 @@ class ListingBusinessCard extends GetView<MerchantListingController> {
                       children: [
                         Text(
                           business.name.capitalizeWords(),
-                          style: context.titleMedium.copyWith(
+                          style: context.labelLarge.copyWith(
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
                             color: AppColors.darkTextColor,
                           ),
@@ -273,6 +274,7 @@ class ListingBusinessCard extends GetView<MerchantListingController> {
                         Text(
                           business.description.capitalizeFirst ?? '',
                           style: context.bodyMedium.copyWith(
+                            fontSize: 14.sp,
                             color: AppColors.subtitleTextColor,
                           ),
                         ),

@@ -70,29 +70,44 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/foodimge.png
+  /// File path: assets/images/foodimge.webp
   AssetGenImage get foodimge =>
-      const AssetGenImage('assets/images/foodimge.png');
+      const AssetGenImage('assets/images/foodimge.webp');
 
-  /// File path: assets/images/onboardone.png
+  /// File path: assets/images/influencer_onboard_one.webp
+  AssetGenImage get influencerOnboardOne =>
+      const AssetGenImage('assets/images/influencer_onboard_one.webp');
+
+  /// File path: assets/images/influencer_onboard_three.webp
+  AssetGenImage get influencerOnboardThree =>
+      const AssetGenImage('assets/images/influencer_onboard_three.webp');
+
+  /// File path: assets/images/influencer_onboard_two.webp
+  AssetGenImage get influencerOnboardTwo =>
+      const AssetGenImage('assets/images/influencer_onboard_two.webp');
+
+  /// File path: assets/images/onboardone.webp
   AssetGenImage get onboardone =>
-      const AssetGenImage('assets/images/onboardone.png');
+      const AssetGenImage('assets/images/onboardone.webp');
 
-  /// File path: assets/images/onboardthree.png
+  /// File path: assets/images/onboardthree.webp
   AssetGenImage get onboardthree =>
-      const AssetGenImage('assets/images/onboardthree.png');
+      const AssetGenImage('assets/images/onboardthree.webp');
 
-  /// File path: assets/images/onboardtwo.png
+  /// File path: assets/images/onboardtwo.webp
   AssetGenImage get onboardtwo =>
-      const AssetGenImage('assets/images/onboardtwo.png');
+      const AssetGenImage('assets/images/onboardtwo.webp');
 
-  /// File path: assets/images/splashlogo.png
+  /// File path: assets/images/splashlogo.webp
   AssetGenImage get splashlogo =>
-      const AssetGenImage('assets/images/splashlogo.png');
+      const AssetGenImage('assets/images/splashlogo.webp');
 
   /// List of all assets
   List<AssetGenImage> get values => [
     foodimge,
+    influencerOnboardOne,
+    influencerOnboardThree,
+    influencerOnboardTwo,
     onboardone,
     onboardthree,
     onboardtwo,
@@ -102,6 +117,9 @@ class $AssetsImagesGen {
 
 class $AssetsLanguagesGen {
   const $AssetsLanguagesGen();
+
+  /// File path: assets/languages/ar.json
+  String get ar => 'assets/languages/ar.json';
 
   /// File path: assets/languages/de.json
   String get de => 'assets/languages/de.json';
@@ -121,11 +139,14 @@ class $AssetsLanguagesGen {
   /// File path: assets/languages/ja.json
   String get ja => 'assets/languages/ja.json';
 
+  /// File path: assets/languages/so.json
+  String get so => 'assets/languages/so.json';
+
   /// File path: assets/languages/zh.json
   String get zh => 'assets/languages/zh.json';
 
   /// List of all assets
-  List<String> get values => [de, en, es, fr, it, ja, zh];
+  List<String> get values => [ar, de, en, es, fr, it, ja, so, zh];
 }
 
 class Assets {

@@ -122,6 +122,7 @@ class ManageBusinessMenu extends StatelessWidget {
               child: Text(
                 title,
                 style: context.bodyMedium.copyWith(
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.darkTextColor,
                 ),

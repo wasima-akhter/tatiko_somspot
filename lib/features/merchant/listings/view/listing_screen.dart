@@ -41,6 +41,7 @@ class ListingScreen extends StatelessWidget {
                       AppStrings.manageBusiness.tr,
                       style: context.titleMedium.copyWith(
                         fontWeight: FontWeight.bold,
+                        fontSize: 15.sp,
                         color: AppColors.darkTextColor,
                       ),
                     ),

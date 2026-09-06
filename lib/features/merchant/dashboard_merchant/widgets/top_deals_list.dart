@@ -95,7 +95,9 @@ class TopDealsList extends StatelessWidget {
                     title.isEmpty
                         ? AppStrings.topDealsLoadingTitle.tr
                         : title.capitalizeWords(),
-                    style: context.bodyMedium.copyWith(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.bodyLarge.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.darkTextColor,
                     ),
@@ -111,9 +113,10 @@ class TopDealsList extends StatelessWidget {
                         ? '${AppStrings.topDealsLoadingBusiness.tr} • '
                               '${AppStrings.topDealsClaims.trParams({'count': '0'})}'
                         : subtitle.capitalizeWords(),
-                    style: context.bodySmall.copyWith(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.bodyMedium.copyWith(
                       color: AppColors.subtitleTextColor,
-                      fontSize: 11.sp,
                     ),
                   ),
                 ),

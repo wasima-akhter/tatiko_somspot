@@ -69,10 +69,9 @@ class NearbyBusinessCard extends StatelessWidget {
                           Gap(4.w),
                           Text(
                             item.ratingAvg.toString(),
-                            style: context.bodySmall.copyWith(
+                            style: context.bodyMedium.copyWith(
                               color: AppColors.darkTextColor,
                               fontWeight: FontWeight.bold,
-                              fontSize: 11.sp,
                             ),
                           ),
                         ],
@@ -118,7 +117,7 @@ class NearbyBusinessCard extends StatelessWidget {
                       Gap(4.w),
                       Text(
                         item.distanceLabel,
-                        style: context.bodySmall.copyWith(
+                        style: context.bodyMedium.copyWith(
                           color: AppColors.subtitleTextColor,
                           fontWeight: FontWeight.w500,
                         ),
@@ -138,7 +137,7 @@ class NearbyBusinessCard extends StatelessWidget {
                         item.isOpen
                             ? AppStrings.openNow.tr
                             : AppStrings.closed.tr,
-                        style: context.bodySmall.copyWith(
+                        style: context.bodyMedium.copyWith(
                           color: item.isOpen
                               ? AppColors.success
                               : AppColors.error,

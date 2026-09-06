@@ -64,10 +64,9 @@ class ClaimItemCard extends StatelessWidget {
                     (claim.business?.name ?? "").capitalizeWords(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: context.bodySmall.copyWith(
+                    style: context.bodyMedium.copyWith(
                       color: AppColors.subtitleTextColor,
                       fontWeight: FontWeight.w500,
-                      fontSize: 12.sp,
                     ),
                   ),
                   Gap(4.h),
@@ -75,10 +74,9 @@ class ClaimItemCard extends StatelessWidget {
                     (claim.offer?.title ?? "").capitalizeWords(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: context.titleSmall.copyWith(
+                    style: context.titleMedium.copyWith(
                       color: AppColors.darkTextColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 13.sp,
                     ),
                   ),
                   Gap(6.h),
@@ -98,7 +96,6 @@ class ClaimItemCard extends StatelessWidget {
                           color: isActive
                               ? Colors.red.shade400
                               : AppColors.hintTextColor,
-                          fontSize: 11.sp,
                         ),
                       ),
                     ],

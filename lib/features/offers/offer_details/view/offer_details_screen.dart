@@ -25,12 +25,9 @@ class OfferDetailsScreen extends GetView<OfferDetailController> {
       // Sticky Claim Button
       // Only shown when coming from claim flow
       // ============================================================
-      bottomWidget: Obx(() {
-        return (controller.isFromClaim &&
-                controller.offer.value?.isClaimed == false)
-            ? ClaimOfferNowButton()
-            : const SizedBox.shrink();
-      }),
+      bottomWidget: controller.isFromClaim
+          ? const ClaimOfferNowButton()
+          : const SizedBox.shrink(),
       body: Obx(
         () => ApiStatusBuilder(
           status: controller.status.value,
@@ -88,10 +85,20 @@ class OfferDetailsScreen extends GetView<OfferDetailController> {
                                       return ApiStatusBuilder(
                                         errorMessage:
                                             controller.saveErrorMessage.value,
-                                        onRetry: () {},
+                                        onRetry: controller.toggleOfferSaved,
                                         status: controller.saveStatus.value,
                                         loadingWidget: LoadingWidget(),
-
+                                        errorWidget: const SizedBox(
+                                          width: 40,
+                                          height: 40,
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.bookmark_border_rounded,
+                                              color: AppColors.hintTextColor,
+                                              size: 22,
+                                            ),
+                                          ),
+                                        ),
                                         builder: (context) => _buildActionButton(
                                           icon: controller.isOfferSaved.value
                                               ? Icons.bookmark_rounded

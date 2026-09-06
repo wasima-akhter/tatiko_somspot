@@ -8,6 +8,19 @@ class AppStrings {
   static const String selectLanguage = "select_language";
   static const String continueText = "continue_text";
 
+  // choose role
+  static const shopRoleDescription =
+      'Discover products, brands and things you’ll love.';
+
+  static const influencerRoleDescription =
+      'Create content, collaborate with brands and grow your audience.';
+
+  static const merchandiserRoleDescription =
+      'Showcase your products and connect with new customers.';
+
+  static const customerRoleDescription =
+      'Discover products, brands and things you’ll love.';
+
   // Onboarding
   static const String onboardingOne = "onboarding_one";
   static const String onboardingSubtitleOne = "onboarding_subtitle_one";

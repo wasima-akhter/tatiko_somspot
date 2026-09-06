@@ -53,7 +53,7 @@ class DashboardStatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: context.bodySmall.copyWith(
               color: AppColors.subtitleTextColor,
-              fontSize: 10.sp,
+              fontSize: 12.sp,
             ),
           ),
 
@@ -65,6 +65,7 @@ class DashboardStatCard extends StatelessWidget {
               value,
               style: context.titleMedium.copyWith(
                 fontWeight: FontWeight.bold,
+                fontSize: 15.sp,
                 color: AppColors.darkTextColor,
               ),
             ),

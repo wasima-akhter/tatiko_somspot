@@ -73,7 +73,7 @@ class _CreateOfferSection extends StatelessWidget {
             Gap(8.w),
             Text(
               AppStrings.createOffer.tr,
-              style: context.bodyMedium.copyWith(
+              style: context.bodyLarge.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
               ),

@@ -38,9 +38,15 @@ class AlertsScreenController extends GetxController {
     );
 
     listScrollController.addListener(() {
-      if (listScrollController.position.pixels >=
-          listScrollController.position.maxScrollExtent - 200) {
-        loadMore();
+      if (!listScrollController.hasClients) return;
+
+      final position = listScrollController.position;
+
+      if (position.pixels >= position.maxScrollExtent - 200) {
+        if (paginator.hasMore.value &&
+            paginator.loadMoreStatus.value != ApiStatus.loading) {
+          loadMore();
+        }
       }
     });
 

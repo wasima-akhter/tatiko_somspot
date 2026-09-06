@@ -94,7 +94,9 @@ class RecentClaimsList extends StatelessWidget {
                     title.isEmpty
                         ? AppStrings.recentClaimsLoadingTitle.tr
                         : title.capitalizeWords(),
-                    style: context.bodyMedium.copyWith(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.bodyLarge.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.darkTextColor,
                     ),
@@ -109,9 +111,10 @@ class RecentClaimsList extends StatelessWidget {
                     subtitle.isEmpty
                         ? AppStrings.recentClaimsCustomer.tr
                         : subtitle.capitalizeWords(),
-                    style: context.bodySmall.copyWith(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.bodyMedium.copyWith(
                       color: AppColors.subtitleTextColor,
-                      fontSize: 11.sp,
                     ),
                   ),
                 ),

@@ -97,7 +97,7 @@ class TopPerformingOffersList extends GetView<StatsController> {
                   title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: context.bodyMedium.copyWith(
+                  style: context.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.darkTextColor,
                   ),
@@ -109,7 +109,7 @@ class TopPerformingOffersList extends GetView<StatsController> {
                   "$business • $discount",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: context.bodySmall.copyWith(
+                  style: context.bodyMedium.copyWith(
                     color: AppColors.subtitleTextColor,
                   ),
                 ),
