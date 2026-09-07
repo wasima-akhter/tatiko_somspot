@@ -18,6 +18,7 @@ import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/controller/business-controller.dart';
 import '../../../core/category/controller/category_controller.dart';
 import '../../../offers/offers_list/controller/offer_controller.dart';
+import '../shared/helper/campaign_helper.dart';
 import '../shared/request/new_campaign_request.dart';
 import '../shared/service/merchant_campaign_service.dart';
 
@@ -48,17 +49,17 @@ class MerchantNewCampaignController extends BaseFormController {
   // Static Options
   // ============================================================
 
-  final objectives = const ["Awareness", "Traffic", "Offer", "Lead Generation"];
+  final objectives = CampaignObjective.values;
 
-  final contentTypes = const ["Video Ad", "Product Review", "Reel", "Story"];
+  final contentTypes = CampaignContentType.values;
 
   // ============================================================
   // Selected Values
   // ============================================================
 
-  final selectedObjective = "".obs;
+  final selectedObjective = Rxn<CampaignObjective>();
 
-  final selectedContentType = "".obs;
+  final selectedContentType = Rxn<CampaignContentType>();
 
   /// Category ID
   final selectedCategory = "".obs;
@@ -114,11 +115,11 @@ class MerchantNewCampaignController extends BaseFormController {
   // Selection Methods
   // ============================================================
 
-  void selectObjective(String value) {
+  void selectObjective(CampaignObjective value) {
     selectedObjective.value = value;
   }
 
-  void selectContentType(String value) {
+  void selectContentType(CampaignContentType value) {
     selectedContentType.value = value;
   }
 
@@ -142,17 +143,61 @@ class MerchantNewCampaignController extends BaseFormController {
   // ============================================================
 
   bool validateCampaignDetails() {
+    debugPrint(
+      ' selectedContentType.value?.apiValue  ${selectedContentType.value?.apiValue ?? ''}',
+    );
     if (campaignNameController.text.trim().isEmpty) {
       return _showError(AppStrings.campaignNameIsRequired.tr);
     }
 
-    if (selectedObjective.value.isEmpty) {
+    if (selectedObjective.value == null) {
       return _showError(AppStrings.pleaseSelectAnObjective.tr);
     }
 
-    if (selectedContentType.value.isEmpty) {
+    if (selectedContentType.value == null) {
       return _showError(AppStrings.pleaseSelectContentType.tr);
     }
+    //
+
+    final selectedOffer = offers.firstWhereOrNull(
+      (offer) => offer.id == selectedOfferId.value,
+    );
+
+    if (selectedOffer == null) {
+      return _showError(AppStrings.pleaseSelectAnOffer.tr);
+    }
+
+    final campaignEndDate = DateFormat(
+      "MMM d, yyyy",
+    ).parse(endDateController.text.trim());
+
+    final offerEndDate = selectedOffer.endAt;
+
+    final campaignEndDay = DateTime(
+      campaignEndDate.year,
+      campaignEndDate.month,
+      campaignEndDate.day,
+    );
+
+    final offerEndDay = DateTime(
+      offerEndDate.year,
+      offerEndDate.month,
+      offerEndDate.day,
+    );
+
+    if (campaignEndDay.isAfter(offerEndDay)) {
+      final offerEndDateText = DateConverter.formatDate(
+        dateTime: selectedOffer.endAt,
+        format: 'MMM d, yyyy',
+      );
+
+      return _showError(
+        AppStrings.campaignEndDateAfterOfferEndDate.trParams({
+          'date': offerEndDateText,
+        }),
+      );
+    }
+    //
 
     if (selectedOfferId.value.isEmpty) {
       return _showError(AppStrings.pleaseSelectAnOffer.tr);
@@ -242,6 +287,10 @@ class MerchantNewCampaignController extends BaseFormController {
       debugPrint(
         'startDateController: ${DateConverter().formatMdY_to_DateTime(startDateController.text)}',
       );
+      debugPrint(
+        ' selectedContentType.value?.apiValue ?? '
+        ',: ${selectedContentType.value?.apiValue ?? ''}',
+      );
 
       final request = CreateCampaignRequest(
         business: business!.id,
@@ -250,9 +299,9 @@ class MerchantNewCampaignController extends BaseFormController {
 
         about: requirementsController.text.trim(),
 
-        objective: selectedObjective.value.toLowerCase(),
+        objective: selectedObjective.value?.apiValue ?? '',
 
-        contentType: selectedContentType.value.toLowerCase(),
+        contentType: selectedContentType.value?.apiValue ?? '',
 
         influencerCategory: selectedCategory.value,
 
@@ -366,8 +415,8 @@ class MerchantNewCampaignController extends BaseFormController {
       "MMM d, yyyy",
     ).format(DateTime.now().add(const Duration(days: 30)));
     requirementsController.text = "Create 1 short video promoting our product.";
-    selectedObjective.value = "Awareness";
-    selectedContentType.value = "Reel";
+    selectedObjective.value = null;
+    selectedContentType.value = CampaignContentType.reel;
   }
 
   void clearCampaignForm() {
@@ -381,8 +430,8 @@ class MerchantNewCampaignController extends BaseFormController {
         endDateController,
       ],
       extraReset: [
-        () => selectedObjective.value = "",
-        () => selectedContentType.value = "",
+        () => selectedObjective.value = null,
+        () => selectedContentType.value = null,
         () => selectedCategory.value = "",
         () => selectedOfferId.value = "",
         () => selectedPackage.value = null,

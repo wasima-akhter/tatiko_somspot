@@ -176,6 +176,8 @@ class MerchantCampaignContentCard extends StatelessWidget {
                     ],
                   ),
 
+                  Text(data.status),
+
                   Gap(14.h),
                   if ((data.status == "draft_submitted" &&
                       data.draftApproved == false))
@@ -379,6 +381,8 @@ class MerchantCampaignContentCard extends StatelessWidget {
                               );
                               return;
                             }
+
+                            Navigator.pop(context, value);
                           },
 
                           style: ElevatedButton.styleFrom(

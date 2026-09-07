@@ -253,6 +253,8 @@
   "dashboard": "Dashboard",
   "listings": "Listings",
   "stats": "Stats",
+
+  "campaign_end_date_after_offer_end_date": "Campaign end date cannot be after the offer end date (@date).",
   "my_listings": "My Listings",
   "manage_your_business_profile": "Manage your business profile",
   "manage_business": "Manage Business",

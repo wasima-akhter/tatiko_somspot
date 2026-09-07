@@ -253,6 +253,8 @@
   "dashboard": "Dashboard-ka",
   "listings": "Liisaska",
   "stats": "Tirokoobyada",
+
+  "campaign_end_date_after_offer_end_date": "Taariikhda dhammaadka ololaha kama dambayn karto taariikhda dhammaadka dalabka (@date).",
   "my_listings": "Liisaskayga",
   "manage_your_business_profile": "Maamul astaanta ganacsigaaga",
   "manage_business": "Maamul Ganacsiga",

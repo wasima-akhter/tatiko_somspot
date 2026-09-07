@@ -253,6 +253,8 @@
   "dashboard": "لوحة القيادة",
   "listings": "القوائم",
   "stats": "الإحصائيات",
+
+  "campaign_end_date_after_offer_end_date": "لا يمكن أن يكون تاريخ انتهاء الحملة بعد تاريخ انتهاء العرض (@date).",
   "my_listings": "قوائمي",
   "manage_your_business_profile": "إدارة الملف الشخصي لعملك",
   "manage_business": "إدارة العمل",

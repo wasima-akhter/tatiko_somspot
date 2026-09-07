@@ -1,10 +1,13 @@
+import 'package:som_spot/features/merchant/merchant_new_campaign/shared/helper/campaign_helper.dart';
 import 'package:som_spot/features/offers/offers_list/controller/offer_controller.dart';
+import 'package:som_spot/helper/text_utils/string_extension.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 
 import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
+import '../../../core/business/controller/business-controller.dart';
 import '../../../core/category/controller/category_controller.dart';
 import '../controller/merchant_new_campaign_controller.dart';
 import '../widgets/campaign_bottom_buttons.dart';
@@ -28,6 +31,8 @@ class _MerchantNewCampaignScreenState extends State<MerchantNewCampaignScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await CategoryController.to.loadInitialCategories();
+      await OffersController.to.loadOffers();
+      BusinessController.to.refreshBusinesses();
     });
   }
 
@@ -37,25 +42,7 @@ class _MerchantNewCampaignScreenState extends State<MerchantNewCampaignScreen> {
 
     return ScaffoldWrapper(
       backgroundColor: const Color(0xffF5FAFF),
-
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-
-        leading: IconButton(
-          icon: Icon(Iconsax.arrow_left_2, size: 18.sp),
-          onPressed: () {
-            AppRouter.route.goNamed(RoutePath.navigationPages);
-          },
-        ),
-
-        title: Text(
-          AppStrings.newCampaign.tr,
-          style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
-        ),
-
-        centerTitle: false,
-      ),
+      title: AppStrings.newCampaign.tr,
       body: Obx(
         () => ApiStatusBuilder(
           status: controller.pageStatus.value,
@@ -113,7 +100,7 @@ class _MerchantNewCampaignScreenState extends State<MerchantNewCampaignScreen> {
 
                             return Obx(
                               () => CampaignOptionChip(
-                                title: item,
+                                title: item.displayName.capitalizeWords(),
 
                                 selected:
                                     controller.selectedObjective.value == item,
@@ -152,7 +139,7 @@ class _MerchantNewCampaignScreenState extends State<MerchantNewCampaignScreen> {
 
                             return Obx(
                               () => CampaignOptionChip(
-                                title: item,
+                                title: item.displayName.capitalizeWords(),
 
                                 selected:
                                     controller.selectedContentType.value ==

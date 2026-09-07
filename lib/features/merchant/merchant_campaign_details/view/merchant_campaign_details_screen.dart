@@ -94,7 +94,7 @@ class _CampaignHeader extends GetView<MerchantCampaignDetailsController> {
           Text(
             _subtitle(campaign),
 
-            style: context.bodySmall.copyWith(
+            style: context.bodyMedium.copyWith(
               color: AppColors.subtitleTextColor,
             ),
           ),

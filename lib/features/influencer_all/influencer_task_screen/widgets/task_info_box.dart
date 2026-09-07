@@ -42,8 +42,8 @@ class InfoBox extends StatelessWidget {
 
           SizedBox(height: 6.h),
 
-          Row(
-            // crossAxisAlignment: CrossAxisAlignment.end,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 value,
@@ -51,15 +51,29 @@ class InfoBox extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: context.bodyMedium.copyWith(fontWeight: FontWeight.w600),
               ),
-              Text(
-                (time ?? '').isNotEmpty ? ' ($time)' : '',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: context.bodySmall.copyWith(
-                  fontSize: 8.sp,
-                  fontWeight: FontWeight.w600,
+              if ((time ?? '').isNotEmpty)
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.access_time, size: 14),
+                    const SizedBox(width: 4),
+                    Text(
+                      time!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.bodySmall.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                )
+              else
+                Text(
+                  '',
+                  style: context.bodySmall.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
             ],
           ),
         ],

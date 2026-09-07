@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:gal/gal.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:som_spot/helper/snackbar/api_snackbar.dart';
 import 'package:som_spot/share/export/screen_export.dart';
 
 class QrCodeHelper {
@@ -21,12 +22,7 @@ class QrCodeHelper {
 
     if (!context.mounted) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(AppStrings.claimCodeCopied.tr),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+    ApiSnackbar.show(AppStrings.claimCodeCopied.tr, type: SnackbarType.success);
   }
 
   // ============================================================
@@ -86,7 +82,10 @@ class QrCodeHelper {
 
         if (!granted) {
           if (context.mounted) {
-            _showMessage(context, AppStrings.galleryPermissionRequired.tr);
+            ApiSnackbar.show(
+              AppStrings.galleryPermissionRequired.tr,
+              type: SnackbarType.success,
+            );
           }
 
           return false;
@@ -96,7 +95,10 @@ class QrCodeHelper {
       await Gal.putImageBytes(bytes, name: fileName);
 
       if (context.mounted) {
-        _showMessage(context, AppStrings.qrCodeSavedToGallery.tr);
+        ApiSnackbar.show(
+          AppStrings.qrCodeSavedToGallery.tr,
+          type: SnackbarType.success,
+        );
       }
 
       return true;
@@ -105,7 +107,7 @@ class QrCodeHelper {
 
       if (context.mounted) {
         // Keep plugin-specific error if available.
-        _showMessage(context, e.type.message);
+        debugPrint(e.type.message);
       }
 
       return false;
@@ -114,7 +116,7 @@ class QrCodeHelper {
       debugPrintStack(stackTrace: s);
 
       if (context.mounted) {
-        _showMessage(context, AppStrings.failedToSaveQrCode.tr);
+        ApiSnackbar.show(AppStrings.failedToSaveQrCode.tr);
       }
 
       return false;
@@ -125,9 +127,5 @@ class QrCodeHelper {
   // Snackbar
   // ============================================================
 
-  static void _showMessage(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), behavior: SnackBarBehavior.floating),
-    );
-  }
+  static void _showMessage(BuildContext context, String message) {}
 }

@@ -43,7 +43,7 @@ class MerchantCampaignDetailsTabs
         child: Text(
           title,
           style: TextStyle(
-            fontSize: 11.sp,
+            fontSize: 13.sp,
             fontWeight: active ? FontWeight.w600 : FontWeight.w400,
             color: active
                 ? AppColors.primaryColor

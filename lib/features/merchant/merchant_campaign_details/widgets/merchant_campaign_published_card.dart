@@ -101,7 +101,10 @@ class MerchantCampaignPublishedCard extends StatelessWidget {
           ),
           SizedBox(height: 10.h),
 
-          if (status == "approved")
+          Text(status),
+
+          if (status == "draft_approved")
+            // if (status == "approved")
             Row(
               children: [
                 Expanded(

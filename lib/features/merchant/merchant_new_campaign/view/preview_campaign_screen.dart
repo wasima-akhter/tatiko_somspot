@@ -1,3 +1,5 @@
+import 'package:som_spot/features/merchant/merchant_new_campaign/shared/helper/campaign_helper.dart';
+
 import '../../../../share/export/screen_export.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../controller/merchant_new_campaign_controller.dart';
@@ -58,11 +60,13 @@ class MerchantPreviewCampaignScreen extends StatelessWidget {
                           ),
                           _overviewRow(
                             AppStrings.objective.tr,
-                            controller.selectedObjective.value,
+                            controller.selectedObjective.value?.displayName ??
+                                '',
                           ),
                           _overviewRow(
                             AppStrings.contentType.tr,
-                            controller.selectedContentType.value,
+                            controller.selectedContentType.value?.displayName ??
+                                '',
                           ),
                           _overviewRow(
                             AppStrings.offer.tr,

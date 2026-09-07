@@ -47,3 +47,65 @@ extension MerchantCampaignStatusExtension on MerchantCampaignStatus {
     }
   }
 }
+
+//
+enum CampaignContentType { videoAd, productReview, reel, story }
+
+extension CampaignContentTypeExtension on CampaignContentType {
+  String get apiValue {
+    switch (this) {
+      case CampaignContentType.videoAd:
+        return 'video_ad';
+      case CampaignContentType.productReview:
+        return 'product_review';
+      case CampaignContentType.reel:
+        return 'reel';
+      case CampaignContentType.story:
+        return 'story';
+    }
+  }
+
+  String get displayName {
+    switch (this) {
+      case CampaignContentType.videoAd:
+        return 'Video Ad';
+      case CampaignContentType.productReview:
+        return 'Product Review';
+      case CampaignContentType.reel:
+        return 'Reel';
+      case CampaignContentType.story:
+        return 'Story';
+    }
+  }
+}
+
+//
+enum CampaignObjective { awareness, traffic, offer, leadGeneration }
+
+extension CampaignObjectiveExtension on CampaignObjective {
+  String get apiValue {
+    switch (this) {
+      case CampaignObjective.awareness:
+        return 'awareness';
+      case CampaignObjective.traffic:
+        return 'traffic';
+      case CampaignObjective.offer:
+        return 'offer';
+      case CampaignObjective.leadGeneration:
+        return 'lead_generation';
+    }
+  }
+
+  String get displayName {
+    switch (this) {
+      case CampaignObjective.awareness:
+        return 'Awareness';
+      case CampaignObjective.traffic:
+        return 'Traffic';
+      case CampaignObjective.offer:
+        return 'Offer';
+      case CampaignObjective.leadGeneration:
+        return 'Lead Generation';
+    }
+  }
+}

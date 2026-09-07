@@ -321,6 +321,9 @@ class AppStrings {
   static const String listings = "listings";
   static const String stats = "stats";
 
+  static const String campaignEndDateAfterOfferEndDate =
+      'campaign_end_date_after_offer_end_date';
+
   // ─── Listings ───
   static const String myListings = "my_listings";
   static const String manageYourBusinessProfile =

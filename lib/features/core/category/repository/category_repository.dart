@@ -17,7 +17,9 @@ class CategoryRepository {
       queryParams: {
         "page": page,
         "limit": limit,
-        ...(CommonController.to.isCustomer || CommonController.to.isMerchandiser
+        ...(CommonController.to.isCustomer
+            ? {"type": "merchant"}
+            : CommonController.to.isMerchandiser
             ? {"type": "creator"}
             : {"type": "creator"}),
       },
