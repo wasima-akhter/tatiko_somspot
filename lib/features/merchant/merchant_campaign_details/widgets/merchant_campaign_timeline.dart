@@ -31,6 +31,11 @@ class MerchantCampaignTimeline
             return const SizedBox();
           }
 
+          for (var i = 0; i < timeline.length; i++) {
+            debugPrint(
+              'timeline stage- ${timeline[i].stage}:  ${timeline[i].done}',
+            );
+          }
           return _timelineCard(context, timeline);
         },
       ),

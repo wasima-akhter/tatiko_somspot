@@ -18,6 +18,8 @@ class MerchantCampaignPublishedCard extends StatelessWidget {
 
     final videoUrl = getVideoUrl(data.draftVideoUrl, ApiUrls.base);
 
+    final publishUrl = data.postUrl ?? '';
+
     debugPrint('videoUrl: $videoUrl');
     final status = data.status;
 
@@ -65,7 +67,7 @@ class MerchantCampaignPublishedCard extends StatelessWidget {
 
           GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTap: () => _launchUrl(videoUrl),
+            onTap: () => _launchUrl(publishUrl),
             child: Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
@@ -79,7 +81,7 @@ class MerchantCampaignPublishedCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      videoUrl,
+                      publishUrl,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
 
@@ -103,7 +105,7 @@ class MerchantCampaignPublishedCard extends StatelessWidget {
 
           Text(status),
 
-          if (status == "draft_approved")
+          if (status == "verifying")
             // if (status == "approved")
             Row(
               children: [

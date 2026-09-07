@@ -133,11 +133,15 @@ class CampaignContentModel {
 
   final String? thumbnail;
 
+  final String? postUrl;
+
   final DateTime? approvedAt;
 
   final DateTime? appliedAt;
 
   final DateTime? submittedAt;
+
+  final DateTime? publishedAt;
 
   final DateTime? createdAt;
 
@@ -155,9 +159,11 @@ class CampaignContentModel {
     this.caption,
     this.platform,
     this.thumbnail,
+    this.postUrl,
     this.approvedAt,
     this.appliedAt,
     this.submittedAt,
+    this.publishedAt,
     this.createdAt,
     this.updatedAt,
   });
@@ -196,11 +202,15 @@ class CampaignContentModel {
 
       thumbnail: json["thumbnail"]?.toString(),
 
+      postUrl: json["postUrl"]?.toString(),
+
       approvedAt: _parseDate(json["approvedAt"]),
 
       appliedAt: _parseDate(json["appliedAt"]),
 
       submittedAt: _parseDate(json["submittedAt"]),
+
+      publishedAt: _parseDate(json["publishedAt"]),
 
       createdAt: _parseDate(json["createdAt"]),
 

@@ -101,7 +101,10 @@ class _InfluencerTaskScreenState extends State<InfluencerTaskScreen>
                               return InfluencerTaskCompletedCard(task: task);
 
                             case InfluencerTaskTab.published:
-                              return InfluencerTaskPublishedCard(task: task);
+                              return InfluencerTaskPublishedCard(
+                                task: task,
+                                onViewPost: () {},
+                              );
                           }
                         },
                       );

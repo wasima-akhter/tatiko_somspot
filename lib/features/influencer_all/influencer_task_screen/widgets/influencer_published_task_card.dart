@@ -89,27 +89,27 @@ class InfluencerTaskPublishedCard extends StatelessWidget {
           SizedBox(height: 18.h),
 
           /// View Original Post Button
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              onPressed: onViewPost,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue.shade400,
-                foregroundColor: Colors.white,
-                disabledBackgroundColor: Colors.blue.shade400,
-                disabledForegroundColor: Colors.white,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-              ),
-              icon: const Icon(Icons.open_in_new, size: 18),
-              label: Text(
-                AppStrings.viewOriginalPost.tr,
-                style: context.titleMedium.copyWith(color: Colors.white),
-              ),
-            ),
-          ),
+          // SizedBox(
+          //   width: double.infinity,
+          //   child: ElevatedButton.icon(
+          //     onPressed: onViewPost,
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: Colors.blue.shade400,
+          //       foregroundColor: Colors.white,
+          //       disabledBackgroundColor: Colors.blue.shade400,
+          //       disabledForegroundColor: Colors.white,
+          //       elevation: 0,
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(12.r),
+          //       ),
+          //     ),
+          //     icon: const Icon(Icons.open_in_new, size: 18),
+          //     label: Text(
+          //       AppStrings.viewOriginalPost.tr,
+          //       style: context.titleMedium.copyWith(color: Colors.white),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
