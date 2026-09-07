@@ -9,6 +9,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
+      onPressed: () => AppRouter.route.pop(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),

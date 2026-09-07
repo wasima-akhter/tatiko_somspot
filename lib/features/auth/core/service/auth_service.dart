@@ -97,7 +97,7 @@ class AuthService {
       throw Exception('A role must be selected before registration.');
     }
 
-    final registerRequest = request.copyWith(role: selectedRole.name);
+    final registerRequest = request;
 
     final response = await _repository.register(registerRequest);
 

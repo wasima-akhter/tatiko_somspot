@@ -1,5 +1,8 @@
 import 'package:som_spot/features/merchant/stats/controller/stats_controller.dart';
+import 'package:som_spot/features/offers/offer_details/controller/offer_detail_controller.dart';
 import 'package:som_spot/share/export/screen_export.dart';
+
+import '../../../offers/offer_details/helper/offer_details_arg_model.dart';
 
 class TopPerformingOffersList extends GetView<StatsController> {
   const TopPerformingOffersList({super.key});
@@ -37,12 +40,26 @@ class TopPerformingOffersList extends GetView<StatsController> {
           Gap(16.h),
 
           ...offers.map(
-            (offer) => _buildItem(
-              context: context,
-              title: offer.title,
-              business: offer.business?.name ?? "",
-              discount: offer.discountLabel,
-              claims: offer.totalClaims,
+            (offer) => GestureDetector(
+              onTap: () {
+                final offerId = offer.id;
+                if (offerId.isEmpty) return;
+                if (Get.isRegistered<OfferDetailController>()) {
+                  Get.delete<OfferDetailController>();
+                }
+
+                AppRouter.route.pushNamed(
+                  RoutePath.offerDetailsScreen,
+                  extra: OfferDetailsArgs(offerId: offerId),
+                );
+              },
+              child: _buildItem(
+                context: context,
+                title: offer.title,
+                business: offer.business?.name ?? "",
+                discount: offer.discountLabel,
+                claims: offer.totalClaims,
+              ),
             ),
           ),
         ],

@@ -162,6 +162,7 @@ class ChooseRoleScreen extends GetView<ChooseRoleController> {
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColorNew,
+
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),

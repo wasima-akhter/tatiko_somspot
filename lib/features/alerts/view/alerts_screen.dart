@@ -14,7 +14,7 @@ class AlertsScreen extends GetView<AlertsScreenController> {
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
-
+      onPressed: () => AppRouter.route.pop(),
       title: AppStrings.notifications.tr,
 
       actions: [

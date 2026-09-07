@@ -13,7 +13,7 @@ class CompleteProfileRepository {
     return _apiClient.uploadMultipart(
       url: ApiUrls.editProfile(),
       method: "PATCH",
-      fields: {"name": request.name},
+      fields: {"name": request.name, "phoneNumber": request.phoneNumber},
       files: [
         MultipartBody(fieldKey: "profile_image", file: request.profileImage),
       ],

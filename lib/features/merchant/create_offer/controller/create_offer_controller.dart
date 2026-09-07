@@ -1,11 +1,14 @@
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:som_spot/features/nav/controller/navigation_controller.dart';
 import 'package:som_spot/features/offers/offers_list/controller/offer_controller.dart';
 import 'package:som_spot/helper/date_converter/date_converter.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
 import 'package:som_spot/share/export/screen_export.dart';
 
+import '../../../../helper/snackbar/api_snackbar.dart';
 import '../../../../share/base_controller/base_form_controller.dart';
+import '../../../../share/widgets/dialog/custom_dialog.dart';
 import '../../../core/business/controller/business-controller.dart';
 import '../../../offers/shared/request/offers_request.dart';
 import '../../../offers/shared/service/offers_service.dart';
@@ -71,31 +74,86 @@ class CreateOfferController extends BaseFormController {
     return false;
   }
 
-  // -----------------------------------------------------------------------------
-  // Form Validation
-  // -----------------------------------------------------------------------------
+  // ============================================================
+  // Validation
+  // ============================================================
 
-  bool _validateCreateOffer({
+  bool validateOfferDetails({
+    required String title,
+    required String discount,
     required String startDate,
     required String endDate,
+    required String description,
   }) {
-    if (!formKey.currentState!.validate()) {
-      return false;
+    if (title.trim().isEmpty) {
+      return _showError(AppStrings.offerTitleRequired.tr);
     }
 
-    if (startDate.isEmpty || endDate.isEmpty) {
-      AppToast.error(message: AppStrings.pleaseSelectOfferDates.tr);
-      return false;
+    if (title.trim().length < 3) {
+      return _showError(AppStrings.offerTitleTooShort.tr);
     }
 
-    if (imagePath.isEmpty) {
-      AppToast.error(message: AppStrings.pleaseSelectAnImage.tr);
-      return false;
+    if (discount.trim().isEmpty) {
+      return _showError(AppStrings.offerDiscountRequired.tr);
+    }
+
+    final discountValue = int.tryParse(discount.trim());
+
+    if (discountValue == null) {
+      return _showError(AppStrings.offerDiscountInvalid.tr);
+    }
+
+    if (discountValue <= 0 || discountValue > 100) {
+      return _showError(AppStrings.offerDiscountRangeError.tr);
+    }
+
+    if (startDate.trim().isEmpty) {
+      return _showError(AppStrings.startDateIsRequired.tr);
+    }
+
+    if (endDate.trim().isEmpty) {
+      return _showError(AppStrings.endDateIsRequired.tr);
+    }
+
+    final parsedStartDate = _parseOfferDate(startDate);
+    final parsedEndDate = _parseOfferDate(endDate);
+
+    if (parsedStartDate == null) {
+      return _showError(AppStrings.invalidStartDate.tr);
+    }
+
+    if (parsedEndDate == null) {
+      return _showError(AppStrings.invalidEndDate.tr);
+    }
+
+    if (parsedEndDate.isBefore(parsedStartDate)) {
+      return _showError(AppStrings.endDateMustBeAfterStartDate.tr);
+    }
+
+    if (description.trim().isEmpty) {
+      return _showError(AppStrings.descriptionRequired.tr);
+    }
+
+    if (description.trim().length < 10) {
+      return _showError(AppStrings.descriptionMinLength.tr);
     }
 
     return true;
   }
 
+  DateTime? _parseOfferDate(String value) {
+    try {
+      return DateFormat('MMM d, yyyy').parseStrict(value.trim());
+    } catch (_) {
+      return null;
+    }
+  }
+
+  bool _showError(String message) {
+    ApiSnackbar.show(type: SnackbarType.error, message);
+
+    return false;
+  }
   // -----------------------------------------------------------------------------
   // Create Offer
   // -----------------------------------------------------------------------------
@@ -106,9 +164,14 @@ class CreateOfferController extends BaseFormController {
     required String description,
     required String startDate,
     required String endDate,
+    required BuildContext context,
   }) async {
-    // Validate offer form data.
-    final isValid = _validateCreateOffer(
+    //
+    // Validate offer details.
+    final isValid = validateOfferDetails(
+      title: title,
+      discount: discount,
+      description: description,
       startDate: startDate,
       endDate: endDate,
     );
@@ -117,7 +180,6 @@ class CreateOfferController extends BaseFormController {
       return;
     }
 
-    //
     // Resolve and validate the associated business.
     final businessResolved = await _resolveBusiness();
 
@@ -150,6 +212,24 @@ class CreateOfferController extends BaseFormController {
 
       submitSuccess();
 
+      await AppDialog.show(
+        context: context,
+        title: "Offer Submitted",
+        subtitle:
+            "Your offer has been created successfully and submitted for admin review. "
+            "It will become active once it has been approved by the admin.",
+        type: AppDialogType.success,
+        confirmText: "Done",
+
+        showDefaultButtons: true,
+
+        subtitleColor: AppColors.black,
+        dismissible: false,
+        onConfirm: () {
+          AppRouter.route.pop();
+        },
+      );
+
       showSuccess(AppStrings.offerCreatedSuccessfully.tr);
 
       resetForm(
@@ -164,7 +244,8 @@ class CreateOfferController extends BaseFormController {
       AppRouter.route.goNamed(RoutePath.navigationPages);
 
       NavigationControllerMain.to.goToTabOffers();
-    } catch (e) {
+    } catch (e, stackrace) {
+      debugPrint('error: $stackrace');
       submitFailure(AppStrings.somethingWentWrong.tr);
 
       AppToast.error(message: AppStrings.somethingWentWrong.tr);

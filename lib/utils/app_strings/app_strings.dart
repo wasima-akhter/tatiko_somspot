@@ -122,6 +122,11 @@ class AppStrings {
   static const String profile = "profile";
 
   // New Screens Static Strings
+
+  static const String invalidStartDate = 'invalid_start_date';
+  static const String invalidEndDate = 'invalid_end_date';
+  static const String endDateMustBeAfterStartDate =
+      'end_date_must_be_after_start_date';
   static const String searchBusinessesDeals = "search_businesses_deals";
   static const String recentSearches = "recent_searches";
   static const String clear = "clear";

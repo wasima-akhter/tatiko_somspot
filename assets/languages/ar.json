@@ -45,7 +45,7 @@
   "already_have_account": "هل لديك حساب بالفعل؟",
   "verify_your_phone": "تحقق من هاتفك",
   "verify_your_email": "تحقق من بريدك الإلكتروني",
-  "we_sent_code": "أرسلنا رمزًا مكونًا من 4 أرقام إلى",
+  "we_sent_code": "أرسلنا رمزًا مكونًا من 6 أرقام إلى",
   "enter_verification_code": "أدخل رمز التحقق",
   "resend_code_in": "إعادة إرسال الرمز خلال",
   "verify_and_continue": "التحقق والمتابعة",
@@ -492,6 +492,10 @@
   "x_post": "منشور X",
   "social_media_post": "منشور على وسائل التواصل الاجتماعي",
   "my_campaigns": "حملاتي",
+
+  "invalid_start_date": "تاريخ البدء غير صالح.",
+  "invalid_end_date": "تاريخ الانتهاء غير صالح.",
+  "end_date_must_be_after_start_date": "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء.",
 
   "offer_title_hint": "أدخل عنوان العرض",
   "offer_title_required": "عنوان العرض مطلوب",

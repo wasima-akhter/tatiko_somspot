@@ -63,18 +63,6 @@ class BusinessInfoStep extends StatelessWidget {
 
           Gap(24.h),
 
-          Text(
-            AppStrings.category.tr,
-
-            style: context.bodyLarge.copyWith(
-              fontWeight: FontWeight.w600,
-              color: AppColors.darkTextColor,
-            ),
-          ),
-
-          Gap(12.h),
-
-          // Category Selector
           // Category Selector
           Obx(() {
             if (categoryController.categoryPaginator.status.value ==
@@ -83,71 +71,87 @@ class BusinessInfoStep extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
 
-            return Wrap(
-              spacing: 12.w,
-              runSpacing: 12.h,
-              children: categoryController.categories.map((category) {
-                final isSelected =
-                    controller.selectedCategoryId.value == category.id;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppStrings.category.tr,
 
-                return GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    controller.selectedCategoryId.value = category.id;
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: 74.w,
-                    padding: EdgeInsets.symmetric(
-                      vertical: 12.h,
-                      horizontal: 4.w,
-                    ),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? AppColors.primaryColor.withValues(alpha: 0.05)
-                          : AppColors.white,
-                      borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(
-                        color: isSelected
-                            ? AppColors.primaryColor
-                            : AppColors.backgroundsLinesColor,
-                        width: isSelected ? 1.5 : 1.0,
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          width: 24.w,
-                          height: 24.w,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4.r),
-                            child: CustomNetworkImage(
-                              imageUrl: category.icon,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                  style: context.bodyLarge.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.darkTextColor,
+                  ),
+                ),
+
+                Gap(12.h),
+
+                Wrap(
+                  spacing: 12.w,
+                  runSpacing: 12.h,
+                  children: categoryController.categories.map((category) {
+                    final isSelected =
+                        controller.selectedCategoryId.value == category.id;
+
+                    return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        controller.selectedCategoryId.value = category.id;
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        width: 74.w,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 12.h,
+                          horizontal: 4.w,
                         ),
-                        Gap(8.h),
-                        Text(
-                          category.name,
-                          textAlign: TextAlign.center,
-                          style: context.labelSmall.copyWith(
-                            fontWeight: isSelected
-                                ? FontWeight.w600
-                                : FontWeight.normal,
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? AppColors.primaryColor.withValues(alpha: 0.05)
+                              : AppColors.white,
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(
                             color: isSelected
                                 ? AppColors.primaryColor
-                                : AppColors.darkTextColor,
+                                : AppColors.backgroundsLinesColor,
+                            width: isSelected ? 1.5 : 1.0,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
-                      ],
-                    ),
-                  ),
-                );
-              }).toList(),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              width: 24.w,
+                              height: 24.w,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(4.r),
+                                child: CustomNetworkImage(
+                                  imageUrl: category.icon,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Gap(8.h),
+                            Text(
+                              category.name,
+                              textAlign: TextAlign.center,
+                              style: context.labelSmall.copyWith(
+                                fontWeight: isSelected
+                                    ? FontWeight.w600
+                                    : FontWeight.normal,
+                                color: isSelected
+                                    ? AppColors.primaryColor
+                                    : AppColors.darkTextColor,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
             );
           }),
           Gap(24.h),

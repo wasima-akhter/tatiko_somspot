@@ -18,7 +18,7 @@ class CategoryRepository {
         "page": page,
         "limit": limit,
         ...(CommonController.to.isCustomer || CommonController.to.isMerchandiser
-            ? {"type": "merchant"}
+            ? {"type": "creator"}
             : {"type": "creator"}),
       },
     );

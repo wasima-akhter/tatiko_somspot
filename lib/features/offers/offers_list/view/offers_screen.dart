@@ -146,6 +146,16 @@ class _OffersScreenState extends State<OffersScreen> {
           actionType: OfferActionType.claims,
         );
 
+      case "pending":
+        return OfferDisplayData(
+          timeText: AppStrings.pending.tr,
+          isEndingSoon: false,
+          actionText: AppStrings.offerClaims.trParams({
+            'count': offer.totalClaims.toString(),
+          }),
+          actionType: OfferActionType.claims,
+        );
+
       default:
         return OfferDisplayData(
           timeText: "",

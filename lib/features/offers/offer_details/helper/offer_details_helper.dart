@@ -11,11 +11,14 @@ class OfferDetailsHelper {
       case 'scheduled':
         return AppColors.amberYellowColor;
 
+      case 'pending':
+        return AppColors.orangeColor;
+
       case 'expired':
         return AppColors.grayTertiaryTextColor;
 
       default:
-        return AppColors.grayTabBgColor;
+        return AppColors.grayTextSecondaryColor;
     }
   }
 }

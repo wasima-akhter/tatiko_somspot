@@ -457,13 +457,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return;
     }
 
+    final selectedRole = commonController.role.value;
+
+    debugPrint('Selected role: $selectedRole');
+    debugPrint('API role: ${selectedRole.value}');
+
     // ── API ──
     controller.register(
       name: name,
       email: email,
       password: password,
       confirmPassword: confirmPassword,
-      role: commonController.role.value.value,
+      role: selectedRole.value,
     );
   }
 }

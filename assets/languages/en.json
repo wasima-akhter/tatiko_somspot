@@ -45,7 +45,7 @@
   "already_have_account": "Already have an account?",
   "verify_your_phone": "Verify your phone",
   "verify_your_email": "Verify your email",
-  "we_sent_code": "We sent a 4-digit code to",
+  "we_sent_code": "We sent a 6-digit code to",
   "enter_verification_code": "Enter verification code",
   "resend_code_in": "Resend code in",
   "verify_and_continue": "Verify & Continue",
@@ -500,6 +500,10 @@
   "x_post": "X Post",
   "social_media_post": "Social Media Post",
   "my_campaigns": "My Campaigns",
+
+  "invalid_start_date": "Invalid start date.",
+  "invalid_end_date": "Invalid end date.",
+  "end_date_must_be_after_start_date": "End date must be after start date.",
 
   "offer_title_hint": "Enter offer title",
   "offer_title_required": "Offer title is required",

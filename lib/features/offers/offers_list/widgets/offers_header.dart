@@ -124,7 +124,7 @@ class OffersHeader extends StatelessWidget {
           children: [
             Text(
               title,
-              style: context.bodyMedium.copyWith(
+              style: context.bodyLarge.copyWith(
                 color: isActive ? AppColors.white : AppColors.darkTextColor,
                 fontWeight: FontWeight.w600,
               ),

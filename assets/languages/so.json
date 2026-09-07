@@ -45,7 +45,7 @@
   "already_have_account": "Miyaad hore u leedahay koonto?",
   "verify_your_phone": "Xaqiiji taleefankaaga",
   "verify_your_email": "Xaqiiji iimaylkaaga",
-  "we_sent_code": "Waxaan u dirnay koodh 4-lambar ah",
+  "we_sent_code": "Waxaan u dirnay koodh 6-lambar ah",
   "enter_verification_code": "Geli koodhka xaqiijinta",
   "resend_code_in": "Koodhka dib u dir",
   "verify_and_continue": "Xaqiiji oo Sii wad",
@@ -491,6 +491,10 @@
   "x_post": "Qoraal X",
   "social_media_post": "Qoraal Baraha Bulshada",
   "my_campaigns": "Ololahayga",
+
+  "invalid_start_date": "Taariikhda bilowga ma saxna.",
+  "invalid_end_date": "Taariikhda dhammaadka ma saxna.",
+  "end_date_must_be_after_start_date": "Taariikhda dhammaadku waa inay ka dambaysaa taariikhda bilowga.",
 
   "offer_title_hint": "Geli cinwaanka dalabka",
   "offer_title_required": "Cinwaanka dalabka waa loo baahan yahay",

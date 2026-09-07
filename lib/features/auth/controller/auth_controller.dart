@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 
 import '../../../core/router/route_path.dart';
@@ -40,19 +38,38 @@ class AuthController extends GetxController {
 
       final result = await _service.login(request);
 
+      // Inactive account
+      if (result.statusCode == 400 &&
+          result.message.toLowerCase().contains('activate your account')) {
+        final resendResult = await _service.resendOtp(
+          ResendOtpRequest(email: request.email),
+        );
+
+        if (!resendResult.success) {
+          ApiSnackbar.show(resendResult.message, type: SnackbarType.error);
+          return;
+        }
+
+        AppRouter.route.goNamed(
+          RoutePath.activeOtpScreen,
+          extra: request.email,
+        );
+
+        return;
+      }
+
+      // Other login errors
       if (!result.success || result.data == null) {
         errorMessage.value = result.message.isNotEmpty
             ? result.message
             : "Login failed";
 
-        Future.delayed(const Duration(milliseconds: 300), () {
-          log("something went wrong snack");
-          ApiSnackbar.show(errorMessage.value, type: SnackbarType.error);
-        });
+        ApiSnackbar.show(errorMessage.value, type: SnackbarType.error);
 
         return;
       }
 
+      // Successful login
       await _handlePostLogin();
     } finally {
       isLoginLoading.value = false;
@@ -68,11 +85,10 @@ class AuthController extends GetxController {
   }) async {
     try {
       isRegisterLoading.value = true;
-      final selectedRole = role;
 
       final result = await _service.register(
         RegisterRequest(
-          role: selectedRole,
+          role: role,
           name: name,
           email: email,
           password: password,

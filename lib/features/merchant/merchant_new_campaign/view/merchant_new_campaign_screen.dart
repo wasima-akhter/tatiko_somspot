@@ -5,6 +5,7 @@ import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
+import '../../../core/category/controller/category_controller.dart';
 import '../controller/merchant_new_campaign_controller.dart';
 import '../widgets/campaign_bottom_buttons.dart';
 import '../widgets/campaign_date_field.dart';
@@ -12,8 +13,23 @@ import '../widgets/campaign_option_chip.dart';
 import '../widgets/campaign_section_title.dart';
 import '../widgets/campaign_text_field.dart';
 
-class MerchantNewCampaignScreen extends StatelessWidget {
+class MerchantNewCampaignScreen extends StatefulWidget {
   const MerchantNewCampaignScreen({super.key});
+
+  @override
+  State<MerchantNewCampaignScreen> createState() =>
+      _MerchantNewCampaignScreenState();
+}
+
+class _MerchantNewCampaignScreenState extends State<MerchantNewCampaignScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await CategoryController.to.loadInitialCategories();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

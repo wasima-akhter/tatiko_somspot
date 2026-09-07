@@ -25,6 +25,8 @@ class _CompleteBusinessProfileScreenState
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
+      onPressed: () => AppRouter.route.pop(),
+      title: AppStrings.businessProfile.tr,
       body: SafeArea(
         child: Column(
           children: [

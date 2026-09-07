@@ -11,6 +11,8 @@ class MerchantPricingPackagesScreen extends StatelessWidget {
     return ScaffoldWrapper(
       title: AppStrings.pricingPackages.tr,
 
+      onPressed: () => AppRouter.route.pop(),
+
       body: Column(
         children: [
           Expanded(

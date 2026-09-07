@@ -291,4 +291,27 @@ class AppStorage extends GetxService {
     // theme
     // rememberedEmail
   }
+
+  //
+
+  // -----------------------
+  // clear authentication
+  // -----------------------
+
+  Future<void> clearAuth() async {
+    await _storage.remove(accessTokenKey);
+    await _storage.remove(refreshTokenKey);
+
+    await _storage.remove(tokenExpiryKey);
+    await _storage.remove(refreshTokenExpiryKey);
+
+    await _storage.remove(authIdKey);
+    await _storage.remove(userIdKey);
+    await _storage.remove(emailKey);
+
+    await _storage.remove(profileKey);
+    await _storage.remove(roleKey);
+
+    await _storage.remove(isLoggedInKey);
+  }
 }

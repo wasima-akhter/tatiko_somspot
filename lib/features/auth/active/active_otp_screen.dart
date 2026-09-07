@@ -109,7 +109,7 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
       backgroundColor: AppColors.backgroundColorNew,
-
+      onPressed: () => AppRouter.route.pop(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -119,19 +119,6 @@ class _ActiveOtpScreenState extends State<ActiveOtpScreen> {
 
             children: [
               const Gap(16),
-
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => AppRouter.route.pop(),
-
-                child: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: AppColors.darkTextColor,
-                  size: 20,
-                ),
-              ),
-
-              const Gap(24),
 
               Text(
                 AppStrings.verifyYourEmail.tr,

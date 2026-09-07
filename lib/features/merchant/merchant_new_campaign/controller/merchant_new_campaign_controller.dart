@@ -306,9 +306,9 @@ class MerchantNewCampaignController extends BaseFormController {
   void onInit() async {
     super.onInit();
 
-    if (CategoryController.to.categories.isEmpty) {
-      CategoryController.to.loadInitialCategories();
-    }
+    // if (CategoryController.to.categories.isEmpty) {
+    CategoryController.to.loadInitialCategories();
+    // }
     if (BusinessController.to.myBusinessesPaginator.items.isEmpty) {
       BusinessController.to.refreshBusinesses();
     }

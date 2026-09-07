@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
-import '../../../../share/language/controller/language_controller.dart';
 import '../../../../share/export/screen_export.dart';
+import '../../../../share/language/controller/language_controller.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/controller/business-controller.dart';
 import '../../merchant_new_campaign/widgets/campaign_date_field.dart';
@@ -52,7 +52,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
       print('Language: $language');
 
       translations.forEach((key, value) {
-        print('  $key: $value');
+        // print('  $key: $value');
       });
     });
   }
@@ -91,17 +91,6 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
               CustomTextField(
                 controller: titleController,
                 hintText: AppStrings.offerTitleHint.tr,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return AppStrings.offerTitleRequired.tr;
-                  }
-
-                  if (value.length < 3) {
-                    return AppStrings.offerTitleTooShort.tr;
-                  }
-
-                  return null;
-                },
               ),
 
               Gap(20.h),
@@ -113,24 +102,6 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                 hintText: AppStrings.offerDiscountHint.tr,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return AppStrings.offerDiscountRequired.tr;
-                  }
-
-                  final discount = int.tryParse(value);
-
-                  if (discount == null) {
-                    return AppStrings.offerDiscountInvalid.tr;
-                  }
-
-                  if (discount <= 0 || discount > 100) {
-                    return AppStrings.offerDiscountRangeError.tr;
-                  }
-
-                  return null;
-                },
               ),
 
               Gap(20.h),
@@ -165,17 +136,6 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                 fillColor: AppColors.white,
                 maxLines: 5,
                 minLines: 2,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return AppStrings.descriptionRequired.tr;
-                  }
-
-                  if (value.length < 10) {
-                    return AppStrings.descriptionMinLength.tr;
-                  }
-
-                  return null;
-                },
               ),
 
               Gap(24.h),
@@ -212,6 +172,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
       description: descriptionController.text,
       startDate: startDateController.text,
       endDate: endDateController.text,
+      context: context,
     );
   }
 

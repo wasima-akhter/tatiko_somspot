@@ -1,4 +1,5 @@
 // somewhere shared, e.g. core/router/role_router.dart
+import 'package:flutter/material.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 
@@ -8,91 +9,94 @@ import '../../features/auth/core/service/auth_service.dart';
 import '../../helper/snackbar/api_snackbar.dart';
 import '../../utils/common_controller/common_controller.dart';
 import '../di/repo_service_injection.dart';
+import '../service/datasource/local/app_storage.dart';
 
 class RoleRouter {
   static Future<void> navigateByRole() async {
     final service = sl<AuthService>();
 
-    final response = await service.me();
+    try {
+      final response = await service.me();
 
-    if (!response.success || response.data == null) {
-      ApiSnackbar.show(response.message, type: SnackbarType.error);
-      return;
-    }
+      if (!response.success || response.data == null) {
+        // ApiSnackbar.show(response.message, type: SnackbarType.error);
 
-    final user = response.data!;
+        // Clear stale authentication state.
+        await AppStorage.to.clearAuth();
 
-    //  // Save role globally
-    // CommonController.to.setRole(UserRoleExtension.fromString(user.role));
-    if (!CommonController.to.setRole(UserRoleExtension.fromString(user.role))) {
-      return;
-    }
-
-    if (!user.isActive) {
-      final resend = await service.resendOtp(
-        ResendOtpRequest(email: user.email),
-      );
-
-      if (!resend.success) {
-        ApiSnackbar.show(resend.message, type: SnackbarType.error);
+        AppRouter.route.goNamed(RoutePath.chooseLanguageScreen);
         return;
       }
 
-      AppRouter.route.goNamed(RoutePath.activeOtpScreen, extra: user.email);
+      final user = response.data!;
 
-      return;
-    }
-
-    // Personal profile not completed
-    if (!user.isProfileComplete) {
-      switch (user.role) {
-        case "MERCHANT":
-          AppRouter.route.goNamed(
-            RoutePath.completedProfileCustomerScreen,
-            extra: CompletedProfileCustomerArgs(
-              email: user.email,
-              role: user.role,
-            ),
-          );
-          return;
-
-        case "CREATOR":
-          AppRouter.route.goNamed(RoutePath.completedProfileInfluencerScreen);
-          return;
-
-        case "USER":
-          AppRouter.route.goNamed(
-            RoutePath.completedProfileCustomerScreen,
-            extra: CompletedProfileCustomerArgs(
-              email: user.email,
-              role: user.role,
-            ),
-          );
-          return;
-
-        default:
-          ApiSnackbar.show(
-            "Unknown role ${user.role}",
-            type: SnackbarType.error,
-          );
-          return;
+      if (!CommonController.to.setRole(
+        UserRoleExtension.fromString(user.role),
+      )) {
+        return;
       }
+
+      if (!user.isActive) {
+        final resend = await service.resendOtp(
+          ResendOtpRequest(email: user.email),
+        );
+
+        if (!resend.success) {
+          ApiSnackbar.show(resend.message, type: SnackbarType.error);
+
+          return;
+        }
+
+        AppRouter.route.goNamed(RoutePath.activeOtpScreen, extra: user.email);
+
+        return;
+      }
+
+      if (!user.isProfileComplete) {
+        // Merchant still needs to complete business profile.
+        if (user.role == "MERCHANT" && !user.sections.business.complete) {
+          AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
+          return;
+        }
+
+        switch (user.role) {
+          case "MERCHANT":
+          case "USER":
+            AppRouter.route.goNamed(
+              RoutePath.completedProfileCustomerScreen,
+              extra: CompletedProfileCustomerArgs(
+                email: user.email,
+                role: user.role,
+              ),
+            );
+            return;
+
+          case "CREATOR":
+            AppRouter.route.goNamed(RoutePath.completedProfileInfluencerScreen);
+            return;
+
+          default:
+            ApiSnackbar.show(
+              "Unknown role ${user.role}",
+              type: SnackbarType.error,
+            );
+            return;
+        }
+      }
+
+      if (user.role == "MERCHANT" && !user.sections.business.complete) {
+        AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
+        return;
+      }
+
+      AppRouter.route.goNamed(RoutePath.navigationPages);
+    } catch (e, s) {
+      debugPrint('RoleRouter Error: $e');
+      debugPrintStack(stackTrace: s);
+
+      await AppStorage.to.clearAuth();
+
+      AppRouter.route.goNamed(RoutePath.chooseLanguageScreen);
     }
-
-    // Personal profile completed.
-    // Merchant may still need to complete business profile.
-    // if (user.role == "MERCHANT" && user.missing.contains("business.business")) {
-    //   AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
-    //   return;
-    // }
-
-    // Business profile incomplete
-    if (user.role == "MERCHANT" && !user.sections.business.complete) {
-      AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
-      return;
-    }
-
-    // Everything completed
-    AppRouter.route.goNamed(RoutePath.navigationPages);
   }
 }
