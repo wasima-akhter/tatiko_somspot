@@ -1,6 +1,7 @@
 import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/network_image/custom_network_image.dart';
 import '../../../core/business/response/business-response.dart';
+import '../../customer_business_details/controller/customer_business_details_controller.dart';
 
 class CustomerBusinessItemCard extends StatelessWidget {
   final BusinessModel item;
@@ -10,10 +11,16 @@ class CustomerBusinessItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => AppRouter.route.pushNamed(
-        RoutePath.customerBusinessDetailsScreen,
-        extra: item.id,
-      ),
+
+      onTap: () {
+        if (Get.isRegistered<CustomerBusinessDetailsController>()) {
+          Get.delete<CustomerBusinessDetailsController>();
+        }
+        AppRouter.route.pushNamed(
+          RoutePath.customerBusinessDetailsScreen,
+          extra: item.id,
+        );
+      },
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,

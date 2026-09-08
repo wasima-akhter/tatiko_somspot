@@ -15,8 +15,9 @@ class HomeContentRepository {
 
   //
   Future<Response> getNearbyBusinesses({
-    required double lat,
-    required double lng,
+    required BusinessLocationMode locationMode,
+    double? lat,
+    double? lng,
     int page = 1,
     int limit = 10,
     double radiusKm = 10,
@@ -26,13 +27,19 @@ class HomeContentRepository {
       showResponse: true,
       url: ApiUrls.getNearbyBusinesses(),
       queryParams: {
-        'lat': lat,
-        'lng': lng,
-        'radiusKm': radiusKm,
         'page': page,
         'limit': limit,
+
+        if (locationMode == BusinessLocationMode.nearby) ...{
+          'lat': lat,
+          'lng': lng,
+          'radiusKm': radiusKm,
+        },
+
         if (category != null && category.isNotEmpty) 'category': category,
       },
+
+      skipAuth: locationMode == BusinessLocationMode.all ? true : true,
     );
   }
 
@@ -44,3 +51,5 @@ class HomeContentRepository {
     );
   }
 }
+
+enum BusinessLocationMode { nearby, all }

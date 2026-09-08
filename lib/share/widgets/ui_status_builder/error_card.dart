@@ -101,3 +101,31 @@ class ErrorCard extends StatelessWidget {
     );
   }
 }
+
+class RetryButton extends StatelessWidget {
+  final VoidCallback? onTap;
+  const RetryButton({super.key, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 7.h),
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(8.r),
+        ),
+        child: Text(
+          AppStrings.retry.tr,
+          style: context.bodySmall.copyWith(
+            color: Colors.white,
+            fontSize: 13.sp,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
+}

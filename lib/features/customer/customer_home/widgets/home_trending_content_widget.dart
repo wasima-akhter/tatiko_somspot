@@ -17,17 +17,16 @@ class HomeTrendingContentWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionHeader(
-          title: AppStrings.trendingInfluencer.tr,
-          onSeeAll: () {
-            // Navigate to all influencers
-          },
-        ),
+        // SectionHeader(
+        //   title: AppStrings.trendingInfluencer.tr,
+        //   onSeeAll: () {
+        //     // Navigate to all influencers
+        //   },
+        // ),
 
-        Gap(12.h),
+        // Gap(12.h),
 
-        _buildTrendingInfluencers(context),
-
+        // _buildTrendingInfluencers(context),
         Gap(22.h),
 
         SectionHeader(

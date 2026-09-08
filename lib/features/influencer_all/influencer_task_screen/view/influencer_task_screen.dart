@@ -34,7 +34,7 @@ class _InfluencerTaskScreenState extends State<InfluencerTaskScreen>
 
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
-        controller.changeTab(_tabController.index);
+        controller.changeTab(InfluencerTaskTab.values[_tabController.index]);
       }
     });
 
@@ -131,7 +131,7 @@ final mockInfluencerTask = InfluencerTaskModel(
 
   commissionAmount: 150,
 
-  stage: "content_review",
+  stage: InfluencerTaskTab.completed,
 
   approvedAt: null,
 
@@ -192,7 +192,7 @@ final List<InfluencerTaskModel> mockInfluencerTasks = [
     status: "active",
     draftApproved: false,
     commissionAmount: 150,
-    stage: "active",
+    stage: InfluencerTaskTab.active,
     createdAt: DateTime.now(),
     campaign: CampaignModel(
       id: "campaign_active",
@@ -215,7 +215,7 @@ final List<InfluencerTaskModel> mockInfluencerTasks = [
     status: "pending",
     draftApproved: false,
     commissionAmount: 200,
-    stage: "pending",
+    stage: InfluencerTaskTab.pending,
     createdAt: DateTime.now(),
     campaign: CampaignModel(
       id: "campaign_pending",
@@ -238,7 +238,7 @@ final List<InfluencerTaskModel> mockInfluencerTasks = [
     status: "completed",
     draftApproved: true,
     commissionAmount: 250,
-    stage: "completed",
+    stage: InfluencerTaskTab.completed,
     approvedAt: DateTime.now().subtract(const Duration(days: 1)),
     createdAt: DateTime.now().subtract(const Duration(days: 5)),
     submittedAt: DateTime.now().subtract(const Duration(days: 2)),
@@ -266,7 +266,7 @@ final List<InfluencerTaskModel> mockInfluencerTasks = [
     status: "published",
     draftApproved: true,
     commissionAmount: 300,
-    stage: "published",
+    stage: InfluencerTaskTab.published,
     approvedAt: DateTime.now().subtract(const Duration(days: 4)),
     createdAt: DateTime.now().subtract(const Duration(days: 10)),
     submittedAt: DateTime.now().subtract(const Duration(days: 6)),

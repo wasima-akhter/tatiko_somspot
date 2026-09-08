@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:som_spot/features/customer/customer_home/repository/customer_home_repository.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../share/widgets/paginator/paginator.dart';
@@ -76,6 +77,7 @@ class CustomerBusinessListController extends GetxController {
           lng: businessLng.value,
           radiusKm: _businessRadiusKm,
           category: categoryInfo?.categoryId ?? '',
+          locationMode: BusinessLocationMode.all,
         );
 
         return response.data!;

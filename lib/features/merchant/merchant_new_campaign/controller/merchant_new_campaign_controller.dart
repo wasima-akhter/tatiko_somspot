@@ -16,7 +16,7 @@ import '../../../../helper/date_converter/date_converter.dart';
 import '../../../../share/base_controller/base_form_controller.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/controller/business-controller.dart';
-import '../../../core/category/controller/category_controller.dart';
+import '../../../core/category/binding/category_binding_helper.dart';
 import '../../../offers/offers_list/controller/offer_controller.dart';
 import '../shared/helper/campaign_helper.dart';
 import '../shared/request/new_campaign_request.dart';
@@ -75,7 +75,7 @@ class MerchantNewCampaignController extends BaseFormController {
   // ============================================================
 
   RxList<CategoryModel> get categories =>
-      CategoryController.to.categoryPaginator.items;
+      categoryController.categoryPaginator.items;
 
   RxList<OfferModel> get offers => OffersController.to.paginator.items;
 
@@ -334,6 +334,8 @@ class MerchantNewCampaignController extends BaseFormController {
 
       showSuccess(AppStrings.campaignCreatedSuccessfully.tr);
 
+      clearCampaignForm();
+
       await MerchantCampaignsController.to.refreshCampaigns();
 
       AppRouter.route.goNamed(RoutePath.merchantCampaignsScreen);
@@ -351,12 +353,15 @@ class MerchantNewCampaignController extends BaseFormController {
   // Lifecycle
   // ============================================================
 
+  final categoryController = CategoryBindings.campaignController;
+
+  /*
   @override
   void onInit() async {
     super.onInit();
 
     // if (CategoryController.to.categories.isEmpty) {
-    CategoryController.to.loadInitialCategories();
+    categoryController.loadInitialCategories();
     // }
     if (BusinessController.to.myBusinessesPaginator.items.isEmpty) {
       BusinessController.to.refreshBusinesses();
@@ -379,13 +384,13 @@ class MerchantNewCampaignController extends BaseFormController {
     }
   }
 
-  final pageStatus = ApiStatus.loading.obs;
+  final pageStatus = ApiStatus.completed.obs;
   Future<void> loadInitialData() async {
     try {
       pageStatus.value = ApiStatus.loading;
 
-      if (CategoryController.to.categories.isEmpty) {
-        await CategoryController.to.loadInitialCategories();
+      if (categoryController.categories.isEmpty) {
+        await categoryController.loadInitialCategories();
       }
 
       if (BusinessController.to.myBusinessesPaginator.items.isEmpty) {
@@ -404,11 +409,84 @@ class MerchantNewCampaignController extends BaseFormController {
       errorMessage.value = e.toString();
     }
   }
+*/
+
+  @override
+  void onInit() async {
+    super.onInit();
+
+    await loadInitialData();
+
+    if (kDebugMode) {
+      _loadDummyData();
+    }
+  }
+
+  final pageStatus = ApiStatus.completed.obs;
+
+  Future<void> loadInitialData() async {
+    pageStatus.value = ApiStatus.loading;
+
+    // Fetch each dependency independently.
+    await Future.wait([_loadCategories(), _loadBusinesses(), _loadOffers()]);
+
+    // Never block the form because one of the supporting
+    // lists failed to load.
+    pageStatus.value = ApiStatus.completed;
+  }
+
+  Future<void> _loadCategories() async {
+    try {
+      await categoryController.loadInitialCategories();
+
+      debugPrint(
+        '📂 [MerchantNewCampaign] Categories loaded: '
+        '${categoryController.categories.length}',
+      );
+    } catch (e, stack) {
+      debugPrint('❌ [MerchantNewCampaign] Failed to load categories: $e');
+      debugPrint(stack.toString());
+    }
+  }
+
+  Future<void> _loadBusinesses() async {
+    try {
+      if (BusinessController.to.myBusinessesPaginator.items.isEmpty) {
+        await BusinessController.to.refreshBusinesses();
+      }
+
+      debugPrint(
+        '🏢 [MerchantNewCampaign] Businesses loaded: '
+        '${BusinessController.to.myBusinessesPaginator.items.length}',
+      );
+    } catch (e, stack) {
+      debugPrint('❌ [MerchantNewCampaign] Failed to load businesses: $e');
+      debugPrint(stack.toString());
+    }
+  }
+
+  Future<void> _loadOffers() async {
+    try {
+      if (!Get.isRegistered<OffersController>()) {
+        OffersBinding().dependencies();
+      }
+
+      await OffersController.to.loadOffers();
+
+      debugPrint(
+        '🎁 [MerchantNewCampaign] Offers loaded: '
+        '${OffersController.to.paginator.items.length}',
+      );
+    } catch (e, stack) {
+      debugPrint('❌ [MerchantNewCampaign] Failed to load offers: $e');
+      debugPrint(stack.toString());
+    }
+  }
 
   void _loadDummyData() {
     campaignNameController.text = "Summer Influencer Campaign";
     requirementsController.text = "Increase brand awareness and drive sales.";
-    creatorCountController.text = "5";
+    creatorCountController.text = "1";
     startDateController.text = DateFormat("MMM d, yyyy").format(DateTime.now());
 
     endDateController.text = DateFormat(
@@ -437,6 +515,8 @@ class MerchantNewCampaignController extends BaseFormController {
         () => selectedPackage.value = null,
       ],
     );
+
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   @override
@@ -446,8 +526,6 @@ class MerchantNewCampaignController extends BaseFormController {
     requirementsController.dispose();
 
     creatorCountController.dispose();
-
-    requirementsController.dispose();
 
     startDateController.dispose();
 

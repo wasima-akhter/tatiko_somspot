@@ -313,7 +313,11 @@ class CompleteBusinessProfileController extends GetxController {
 
     if (shortDescriptionController.text.trim().isEmpty) {
       AppToast.error(message: "Please enter business description");
+      return false;
+    }
 
+    if (selectedCategoryId.value.isEmpty) {
+      AppToast.error(message: "Please select a business category");
       return false;
     }
 

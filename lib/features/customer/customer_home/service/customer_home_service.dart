@@ -51,6 +51,7 @@ class CustromerHomeService {
     int limit = 10,
     double radiusKm = 10,
     String? category,
+    required BusinessLocationMode locationMode,
   }) async {
     try {
       final response = await _repository.getNearbyBusinesses(
@@ -60,6 +61,7 @@ class CustromerHomeService {
         limit: limit,
         radiusKm: radiusKm,
         category: category,
+        locationMode: locationMode,
       );
 
       final data = response.data['data'];

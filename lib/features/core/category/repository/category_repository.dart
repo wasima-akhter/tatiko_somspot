@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../../../core/service/datasource/remote/api_client.dart';
@@ -9,7 +10,11 @@ class CategoryRepository {
 
   CategoryRepository(this._apiClient);
 
-  Future<Response> getAllCategories({int page = 1, int limit = 10}) {
+  Future<Response> getAllCategories({
+    int page = 1,
+    int limit = 10,
+    required CategoryUsage usage,
+  }) {
     return _apiClient.get(
       url: ApiUrls.getCategories(),
       skipAuth: true,
@@ -17,12 +22,58 @@ class CategoryRepository {
       queryParams: {
         "page": page,
         "limit": limit,
-        ...(CommonController.to.isCustomer
-            ? {"type": "merchant"}
-            : CommonController.to.isMerchandiser
-            ? {"type": "creator"}
-            : {"type": "creator"}),
+        "type": _getCategoryType(usage),
       },
     );
   }
+
+  String _getCategoryType(CategoryUsage usage) {
+    debugPrint(
+      '📂 [CategoryRepository] Resolving category type | '
+      'usage: $usage | '
+      'isCustomer: ${CommonController.to.isCustomer} | '
+      'isMerchandiser: ${CommonController.to.isMerchandiser} | '
+      'isInfluencer: ${CommonController.to.isInfluencer}',
+    );
+
+    if (CommonController.to.isCustomer) {
+      debugPrint('📂 [CategoryRepository] User is CUSTOMER → type: merchant');
+      return "merchant";
+    }
+
+    if (CommonController.to.isMerchandiser) {
+      switch (usage) {
+        case CategoryUsage.businessProfile:
+          debugPrint(
+            '📂 [CategoryRepository] Merchandiser + businessProfile → type: merchant',
+          );
+          return "merchant";
+
+        case CategoryUsage.campaign:
+          debugPrint(
+            '📂 [CategoryRepository] Merchandiser + campaign → type: creator',
+          );
+          return "creator";
+
+        case CategoryUsage.none:
+          debugPrint(
+            '📂 [CategoryRepository] Merchandiser + none → type: merchant',
+          );
+          return "merchant";
+      }
+    }
+
+    if (CommonController.to.isInfluencer) {
+      debugPrint('📂 [CategoryRepository] User is INFLUENCER → type: creator');
+      return "creator";
+    }
+
+    debugPrint(
+      '📂 [CategoryRepository] No matching role → type: creator (fallback)',
+    );
+
+    return "creator";
+  }
 }
+
+enum CategoryUsage { businessProfile, campaign, none }

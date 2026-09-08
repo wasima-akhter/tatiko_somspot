@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 
 import '../../../../share/widgets/paginator/paginator.dart';
 import '../model/category_model.dart';
+import '../repository/category_repository.dart';
 import '../service/category_service.dart';
 
 class CategoryController extends GetxController {
-  CategoryController(this._service);
+  CategoryController(this._service, {required this.categoryUsageType});
 
   final CategoryService _service;
-
-  static CategoryController get to => Get.find();
+  final CategoryUsage categoryUsageType;
 
   // ---------------------------------------------------------------------------
   // Category Paginator & Scroll
@@ -36,7 +36,11 @@ class CategoryController extends GetxController {
   void _initCategoryPaginator() {
     categoryPaginator = Paginator<CategoryModel>(
       fetchPage: (page, limit) async {
-        final response = await _service.getCategories(page: page, limit: limit);
+        final response = await _service.getCategories(
+          page: page,
+          limit: limit,
+          type: categoryUsageType,
+        );
         return response.data!;
       },
     );

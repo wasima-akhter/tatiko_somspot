@@ -3,6 +3,7 @@ import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
 import '../../../../../share/widgets/network_image/custom_network_image.dart';
+import '../../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../../../utils/enum/app_enum.dart';
 import '../../../../core/category/controller/category_controller.dart';
 
@@ -20,7 +21,9 @@ class BusinessInfoStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = CompleteBusinessProfileController.to;
 
-    final categoryController = CategoryController.to;
+    final categoryController = Get.find<CategoryController>(
+      tag: 'businessProfileCategory',
+    );
 
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -64,96 +67,127 @@ class BusinessInfoStep extends StatelessWidget {
           Gap(24.h),
 
           // Category Selector
-          Obx(() {
-            if (categoryController.categoryPaginator.status.value ==
-                    ApiStatus.loading &&
-                categoryController.categories.isEmpty) {
-              return const Center(child: CircularProgressIndicator());
-            }
+          Obx(
+            () => ApiStatusBuilder(
+              status: categoryController.categoryPaginator.status.value,
+              errorMessage:
+                  categoryController.categoryPaginator.errorMessage.value,
+              onRetry: categoryController.refreshCategories,
+              isLoadingMore:
+                  categoryController.categoryPaginator.loadMoreStatus.value ==
+                  ApiStatus.loading,
+              hasMore: categoryController.categoryPaginator.hasMore.value,
+              builder: (_) {
+                final categories = categoryController.categories;
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppStrings.category.tr,
+                if (categories.isEmpty) {
+                  return _noCategoriesPlaceholder(context);
+                }
 
-                  style: context.bodyLarge.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.darkTextColor,
-                  ),
-                ),
-
-                Gap(12.h),
-
-                Wrap(
-                  spacing: 12.w,
-                  runSpacing: 12.h,
-                  children: categoryController.categories.map((category) {
-                    final isSelected =
-                        controller.selectedCategoryId.value == category.id;
-
-                    return GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        controller.selectedCategoryId.value = category.id;
-                      },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        width: 74.w,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 12.h,
-                          horizontal: 4.w,
-                        ),
-                        decoration: BoxDecoration(
-                          color: isSelected
-                              ? AppColors.primaryColor.withValues(alpha: 0.05)
-                              : AppColors.white,
-                          borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(
-                            color: isSelected
-                                ? AppColors.primaryColor
-                                : AppColors.backgroundsLinesColor,
-                            width: isSelected ? 1.5 : 1.0,
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(
-                              width: 24.w,
-                              height: 24.w,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(4.r),
-                                child: CustomNetworkImage(
-                                  imageUrl: category.icon,
-                                  fit: BoxFit.cover,
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppStrings.category.tr,
+                      style: context.bodyLarge.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.darkTextColor,
+                      ),
+                    ),
+                    Gap(12.h),
+                    Wrap(
+                      spacing: 12.w,
+                      runSpacing: 12.h,
+                      children: categories.map((category) {
+                        return Obx(() {
+                          final isSelected =
+                              controller.selectedCategoryId.value ==
+                              category.id;
+                          return GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              controller.selectedCategoryId.value = category.id;
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              width: 74.w,
+                              padding: EdgeInsets.symmetric(
+                                vertical: 12.h,
+                                horizontal: 4.w,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? AppColors.primaryColor.withValues(
+                                        alpha: 0.05,
+                                      )
+                                    : AppColors.white,
+                                borderRadius: BorderRadius.circular(12.r),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? AppColors.primaryColor
+                                      : AppColors.backgroundsLinesColor,
+                                  width: isSelected ? 1.5 : 1.0,
                                 ),
                               ),
-                            ),
-                            Gap(8.h),
-                            Text(
-                              category.name,
-                              textAlign: TextAlign.center,
-                              style: context.labelSmall.copyWith(
-                                fontWeight: isSelected
-                                    ? FontWeight.w600
-                                    : FontWeight.normal,
-                                color: isSelected
-                                    ? AppColors.primaryColor
-                                    : AppColors.darkTextColor,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                    width: 28.w,
+                                    height: 28.w,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          4.r,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withValues(
+                                              alpha: 0.12,
+                                            ),
+                                            blurRadius: 6,
+                                            offset: const Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                          3.r,
+                                        ),
+                                        child: CustomNetworkImage(
+                                          imageUrl: category.icon,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Gap(8.h),
+                                  Text(
+                                    category.name,
+                                    textAlign: TextAlign.center,
+                                    style: context.labelMedium.copyWith(
+                                      fontWeight: isSelected
+                                          ? FontWeight.w600
+                                          : FontWeight.normal,
+                                      color: isSelected
+                                          ? AppColors.primaryColor
+                                          : AppColors.darkTextColor,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
                               ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
-            );
-          }),
+                          );
+                        });
+                      }).toList(),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
           Gap(24.h),
 
           CustomTextField(
@@ -176,28 +210,48 @@ class BusinessInfoStep extends StatelessWidget {
     );
   }
 
-  IconData _getCategoryIcon(String icon) {
-    switch (icon) {
-      case "restaurant":
-        return Icons.restaurant_outlined;
-
-      case "grocery":
-        return Icons.shopping_basket_outlined;
-
-      case "pharmacy":
-        return Icons.local_pharmacy_outlined;
-
-      case "supermarket":
-        return Icons.shopping_cart_outlined;
-
-      case "cafe":
-        return Icons.local_cafe_outlined;
-
-      case "electronics":
-        return Icons.phone_android_outlined;
-
-      default:
-        return Icons.store_outlined;
-    }
+  Widget _noCategoriesPlaceholder(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppStrings.category.tr,
+          style: context.bodyLarge.copyWith(
+            fontWeight: FontWeight.w600,
+            color: AppColors.darkTextColor,
+          ),
+        ),
+        Gap(12.h),
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12.r),
+            border: Border.all(color: Colors.grey.shade200),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.info_outline_rounded,
+                size: 20.sp,
+                color: AppColors.subtitleTextColor,
+              ),
+              SizedBox(width: 10.w),
+              Expanded(
+                child: Text(
+                  "aidg8uyas gdgasduy gasuidg aus diasdgh iuasd",
+                  style: context.bodyMedium.copyWith(
+                    color: AppColors.subtitleTextColor,
+                    height: 1.45,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

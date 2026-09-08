@@ -78,7 +78,7 @@ class RecommendedContentEmptyState extends StatelessWidget {
                 AppStrings.retry.tr,
                 style: context.bodySmall.copyWith(
                   color: Colors.white,
-                  fontSize: 10.sp,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),

@@ -45,7 +45,6 @@ class AlertsScreen extends GetView<AlertsScreenController> {
         child: RefreshIndicator(
           onRefresh: controller.refreshNotifications,
           child: CustomScrollView(
-            controller: controller.listScrollController,
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
               SliverPadding(

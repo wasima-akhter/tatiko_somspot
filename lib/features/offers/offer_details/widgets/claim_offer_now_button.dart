@@ -47,20 +47,30 @@ class ClaimOfferNowButton extends StatelessWidget {
                     final claim = await controller.claimOffer();
 
                     if (claim == null) {
+                      debugPrint('parsed claim is null');
                       return;
                     }
 
-                    controller.offer.update((offer) {
-                      if (offer == null) return;
+                    debugPrint('========== CLAIM BODY ==========');
+                    debugPrint('id: ${claim.id}');
+                    debugPrint('user: ${claim.user}');
+                    debugPrint('offer: ${claim.offer}');
+                    debugPrint('business: ${claim.business}');
+                    debugPrint('code: ${claim.code}');
+                    debugPrint('status: ${claim.status}');
+                    debugPrint('claimedAt: ${claim.claimedAt}');
+                    debugPrint('expiresAt: ${claim.expiresAt}');
+                    debugPrint('================================');
 
-                      offer.isClaimed = true;
+                    controller.offer.update((offer) {
+                      if (offer != null) offer.isClaimed = true;
+
+                      debugPrint('offer is null');
                     });
 
                     AppRouter.route.pushNamed(
                       RoutePath.offerClaimScreen,
-                      extra: OfferClaimArgs(
-                        claimCode: controller.offer.value?.claimCode ?? '',
-                      ),
+                      extra: OfferClaimArgs(claimCode: claim.code),
                     );
 
                     if (Get.isRegistered<CustomerBusinessDetailsController>()) {

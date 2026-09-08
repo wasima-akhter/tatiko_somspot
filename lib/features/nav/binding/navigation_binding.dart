@@ -11,12 +11,13 @@ import 'package:som_spot/features/profile/main_profile/controller/profile_contro
 
 import '../../../core/di/repo_service_injection.dart';
 import '../../alerts/controller/alerts_controller.dart';
+import '../../core/category/binding/category_binding_helper.dart';
 import '../../customer/customer_home/binding/home_binding.dart';
 import '../../customer/customer_home/controller/home_controller.dart';
 import '../../customer/saved/controller/saved_controller.dart';
 import '../../customer/search/binding/search_binding.dart';
-import '../../influencer_all/influencer_dashboard/controller/influencer_dashboard_controller.dart';
 import '../../influencer_all/discarded/influencer_discover/controller/influencer_discover_controller.dart';
+import '../../influencer_all/influencer_dashboard/controller/influencer_dashboard_controller.dart';
 import '../../influencer_all/influencer_task_screen/controller/influencer_task_controller.dart';
 import '../../influencer_all/influencer_wallet/controller/influencer_wallet_controller.dart';
 import '../../influencer_all/influencer_wallet/service/influencer_wallet_service.dart';
@@ -76,7 +77,7 @@ class NavigationBinding extends Bindings {
       fenix: true,
     );
     // customer
-
+    CategoryBindings.customerBinding.dependencies();
     Get.lazyPut<HomeController>(
       () => HomeController(sl<CustromerHomeService>()),
       fenix: true,

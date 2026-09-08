@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:som_spot/features/core/category/controller/category_controller.dart';
 import 'package:som_spot/features/offers/shared/response/offers_response.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../share/widgets/paginator/paginator.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/response/business-response.dart';
+import '../../../core/category/binding/category_binding_helper.dart';
 import '../../../profile/main_profile/controller/profile_controller.dart';
 import '../../customer_business_list/controller/customer_business_list_controller.dart';
 import '../model/home_content_creator_model.dart';
+import '../repository/customer_home_repository.dart';
 import '../service/customer_home_service.dart';
 
 class HomeController extends GetxController {
@@ -159,6 +160,7 @@ class HomeController extends GetxController {
           lng: nearbyLng.value,
           radiusKm: _nearbyRadiusKm,
           category: _nearbyCategory,
+          locationMode: BusinessLocationMode.nearby,
         );
 
         return response.data!;
@@ -221,12 +223,11 @@ class HomeController extends GetxController {
 
   final RxBool isRefreshing = false.obs;
 
+  final categoryController = CategoryBindings.customerController;
   Future<void> refreshHomeData() async {
     isRefreshing.value = true;
 
     try {
-      final categoryController = CategoryController.to;
-
       final nearbyController = Get.find<CustomerBusinessListController>();
 
       await Future.wait([

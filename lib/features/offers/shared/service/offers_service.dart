@@ -121,8 +121,14 @@ class OfferService {
       final response = await _repository.claimOffer(offerId);
 
       final data = response.data['data'];
+      final model = ClaimOfferModel.fromJson(Map<String, dynamic>.from(data));
 
-      return ApiResponse.success(data: ClaimOfferModel.fromJson(data));
+      debugPrint('CLAIM MODEL CODE: ${model.code}');
+      return ApiResponse.success(
+        data: model,
+        message: response.data['message'] ?? '',
+        statusCode: response.data['statusCode'],
+      );
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {

@@ -3,6 +3,8 @@ import 'package:som_spot/features/profile/edit_profile/controller/edit_customer_
 import 'package:som_spot/features/profile/service/influencer_profile_service.dart';
 
 import '../../../core/di/repo_service_injection.dart';
+import '../../core/category/binding/category_binding.dart';
+import '../../core/category/repository/category_repository.dart';
 import '../edit_profile/controller/edit_influencer_controller.dart';
 import '../edit_profile/controller/edit_merchant_profile_controller.dart';
 import '../service/profile_service.dart';
@@ -21,6 +23,10 @@ class ProfileBinding extends Bindings {
 class EditInfluencerBinding extends Bindings {
   @override
   void dependencies() {
+    CategoryBinding(
+      categoryUsage: CategoryUsage.none,
+      tag: 'influencerCategory',
+    ).dependencies();
     Get.lazyPut<EditInfluencerController>(
       () => EditInfluencerController(sl<InfluencerProfileService>()),
     );

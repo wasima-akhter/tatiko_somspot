@@ -14,7 +14,6 @@ import 'package:som_spot/features/auth/login/login_screen.dart';
 import 'package:som_spot/features/auth/reset/reset_password_screen.dart';
 import 'package:som_spot/features/auth/sign_up/sign_up_screen.dart';
 import 'package:som_spot/features/business_info/view/business_info_screen.dart';
-import 'package:som_spot/features/core/category/category_binding.dart';
 import 'package:som_spot/features/core/category/view/category_list_screen.dart';
 import 'package:som_spot/features/customer/claims/view/claims_screen.dart';
 import 'package:som_spot/features/customer/customer_business_list/binding/customer_business_list_binding.dart';
@@ -54,6 +53,7 @@ import '../../features/auth/completed_profile_influencer/view/completed_profile_
 import '../../features/auth/core/binding/auth_binding.dart';
 import '../../features/auth/intro/choose_role/view/choose_role_screen.dart';
 import '../../features/auth/intro/onboarding/binding/onboard_binding.dart';
+import '../../features/core/category/binding/category_binding_helper.dart';
 import '../../features/customer/customer_business_details/shared/binding/customer_business_details_binding.dart';
 import '../../features/customer/customer_business_details/view/customer_business_details_screen.dart';
 import '../../features/customer/customer_business_list/arg/customer_business_list_arg_model.dart';
@@ -519,7 +519,7 @@ class AppRouter {
           return _buildPageWithAnimation(
             state: state,
             child: BindingWrapper(
-              binding: CategoryBinding(),
+              binding: CategoryBindings.customerBinding,
               child: const CategoryListScreen(),
             ),
           );

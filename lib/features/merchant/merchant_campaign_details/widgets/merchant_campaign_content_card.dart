@@ -176,7 +176,18 @@ class MerchantCampaignContentCard extends StatelessWidget {
                     ],
                   ),
 
-                  Text(data.status),
+                  Text(
+                    data.status
+                        .replaceAll('_', ' ')
+                        .split(' ')
+                        .map(
+                          (word) => word.isEmpty
+                              ? ''
+                              : '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}',
+                        )
+                        .join(' '),
+                  ),
+                  Gap(6.h),
 
                   Gap(14.h),
                   if ((data.status == "draft_submitted" &&

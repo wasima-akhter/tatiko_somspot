@@ -27,8 +27,6 @@ class InfluencerTaskController extends GetxController {
   List<InfluencerTaskModel> get publishedTasks =>
       mockInfluencerTasks.where((e) => e.stage == "published").toList();
 
-  final selectedTab = InfluencerTaskTab.active.obs;
-
   final listScrollController = ScrollController();
 
   late final Paginator<InfluencerTaskModel> paginator;
@@ -45,7 +43,7 @@ class InfluencerTaskController extends GetxController {
           InfluencerTasksRequest(
             page: page,
             limit: limit,
-            stage: selectedTab.value.name,
+            stage: selectedTab.value.apiValue,
           ),
         );
 
@@ -75,9 +73,9 @@ class InfluencerTaskController extends GetxController {
     return paginator.refresh();
   }
 
-  Future<void> changeTab(int index) async {
-    final tab = InfluencerTaskTab.values[index];
+  final selectedTab = InfluencerTaskTab.active.obs;
 
+  Future<void> changeTab(InfluencerTaskTab tab) async {
     if (selectedTab.value == tab) return;
 
     selectedTab.value = tab;
@@ -186,7 +184,7 @@ final mockInfluencerTasks = [
     status: "accepted",
     draftApproved: true,
     commissionAmount: 500,
-    stage: "active",
+    stage: InfluencerTaskTab.active,
     approvedAt: DateTime.now().subtract(const Duration(days: 2)),
     appliedAt: DateTime.now().subtract(const Duration(days: 5)),
     createdAt: DateTime.now().subtract(const Duration(days: 6)),
@@ -215,7 +213,7 @@ final mockInfluencerTasks = [
     status: "pending",
     draftApproved: false,
     commissionAmount: 350,
-    stage: "pending",
+    stage: InfluencerTaskTab.pending,
     approvedAt: null,
     appliedAt: DateTime.now().subtract(const Duration(days: 1)),
     createdAt: DateTime.now().subtract(const Duration(days: 1)),
@@ -244,7 +242,7 @@ final mockInfluencerTasks = [
     status: "completed",
     draftApproved: true,
     commissionAmount: 700,
-    stage: "completed",
+    stage: InfluencerTaskTab.pending,
     approvedAt: DateTime.now().subtract(const Duration(days: 7)),
     appliedAt: DateTime.now().subtract(const Duration(days: 10)),
     createdAt: DateTime.now().subtract(const Duration(days: 12)),
@@ -273,7 +271,7 @@ final mockInfluencerTasks = [
     status: "published",
     draftApproved: true,
     commissionAmount: 1500,
-    stage: "published",
+    stage: InfluencerTaskTab.published,
     approvedAt: DateTime.now().subtract(const Duration(days: 20)),
     appliedAt: DateTime.now().subtract(const Duration(days: 25)),
     createdAt: DateTime.now().subtract(const Duration(days: 26)),

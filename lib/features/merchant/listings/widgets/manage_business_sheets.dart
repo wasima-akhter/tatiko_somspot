@@ -98,7 +98,9 @@ class _EditBusinessProfileSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = MerchantListingController.to;
-    final categoryController = CategoryController.to;
+    final categoryController = Get.find<CategoryController>(
+      tag: 'businessProfileCategory',
+    );
 
     categoryController.loadInitialCategories();
     controller.loadBusiness();

@@ -248,52 +248,52 @@ class _InfluencerSubmitContentScreenState
                   ),
                 ),
 
-                Gap(10.h),
+                // Gap(10.h),
 
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: _pickVideo,
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 18.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(14.r),
-                      border: Border.all(
-                        color: AppColors.backgroundsLinesColor,
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.video_library_outlined),
+                // GestureDetector(
+                //   behavior: HitTestBehavior.opaque,
+                //   onTap: _pickVideo,
+                //   child: Container(
+                //     width: double.infinity,
+                //     padding: EdgeInsets.symmetric(
+                //       horizontal: 16.w,
+                //       vertical: 18.h,
+                //     ),
+                //     decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.circular(14.r),
+                //       border: Border.all(
+                //         color: AppColors.backgroundsLinesColor,
+                //       ),
+                //     ),
+                //     child: Row(
+                //       children: [
+                //         const Icon(Icons.video_library_outlined),
 
-                        Gap(12.w),
+                //         Gap(12.w),
 
-                        Expanded(
-                          child: Text(
-                            _draftVideo == null
-                                ? AppStrings.chooseVideo.tr
-                                : _draftVideo!.path.split('/').last,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
+                //         Expanded(
+                //           child: Text(
+                //             _draftVideo == null
+                //                 ? AppStrings.chooseVideo.tr
+                //                 : _draftVideo!.path.split('/').last,
+                //             overflow: TextOverflow.ellipsis,
+                //           ),
+                //         ),
 
-                        if (_draftVideo != null)
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _draftVideo = null;
-                              });
-                            },
-                            icon: const Icon(Icons.close),
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
+                //         if (_draftVideo != null)
+                //           IconButton(
+                //             onPressed: () {
+                //               setState(() {
+                //                 _draftVideo = null;
+                //               });
+                //             },
+                //             icon: const Icon(Icons.close),
+                //           ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 Gap(14.h),
 
                 /// Video URL

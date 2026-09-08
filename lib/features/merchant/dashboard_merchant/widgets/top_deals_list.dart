@@ -22,14 +22,18 @@ class TopDealsList extends StatelessWidget {
 
         return Column(
           children: [
-            _buildTopDealItem(
-              context: context,
-              title: deal.title,
-              businessName: deal.businessName,
-              totalClaims: deal.totalClaims,
-              percentage: deal.discountLabel,
-              percentageColor: AppColors.emeraldGreenColor,
-              isLoading: isLoading,
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {},
+              child: _buildTopDealItem(
+                context: context,
+                title: deal.title,
+                businessName: deal.businessName,
+                totalClaims: deal.totalClaims,
+                percentage: deal.discountLabel,
+                percentageColor: AppColors.emeraldGreenColor,
+                isLoading: isLoading,
+              ),
             ),
 
             if (index != deals.length - 1) Gap(12.h),

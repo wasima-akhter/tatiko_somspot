@@ -1,4 +1,5 @@
 import '../../../../../share/model/pagination_meta_model.dart';
+import '../../../influencer_task_screen/helper/influencer_task_helper.dart';
 
 class InfluencerTasksResponse {
   final PaginationMeta meta;
@@ -19,7 +20,7 @@ class InfluencerTaskModel {
   final String status;
   final bool draftApproved;
   final int commissionAmount;
-  final String stage;
+  final InfluencerTaskTab? stage;
 
   final DateTime? approvedAt;
   final DateTime? appliedAt;
@@ -44,7 +45,7 @@ class InfluencerTaskModel {
     required this.status,
     required this.draftApproved,
     required this.commissionAmount,
-    required this.stage,
+    this.stage,
 
     this.approvedAt,
     this.appliedAt,
@@ -77,7 +78,10 @@ class InfluencerTaskModel {
 
       commissionAmount: (json["commissionAmount"] as num?)?.toInt() ?? 0,
 
-      stage: json["stage"]?.toString() ?? "",
+      stage: InfluencerTaskTab.values.firstWhere(
+        (e) => e.name == json['stage'],
+        orElse: () => InfluencerTaskTab.active,
+      ),
 
       approvedAt: DateTime.tryParse(json["approvedAt"]?.toString() ?? ""),
 

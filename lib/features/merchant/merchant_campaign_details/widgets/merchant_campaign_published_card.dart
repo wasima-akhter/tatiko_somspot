@@ -103,7 +103,18 @@ class MerchantCampaignPublishedCard extends StatelessWidget {
           ),
           SizedBox(height: 10.h),
 
-          Text(status),
+          Text(
+            status
+                .replaceAll('_', ' ')
+                .split(' ')
+                .map(
+                  (word) => word.isEmpty
+                      ? ''
+                      : '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}',
+                )
+                .join(' '),
+          ),
+          Gap(6.h),
 
           if (status == "verifying")
             // if (status == "approved")

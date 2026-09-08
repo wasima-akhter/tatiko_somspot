@@ -753,6 +753,14 @@ class AppStrings {
   static const String budget = "budget";
   static const String campaignDetails = "campaign_details";
 
+  static const String noCampaignContentYet = "no_campaign_content_yet";
+
+  static const String noCampaignContentDescription =
+      "no_campaign_content_description";
+
+  static const String noPublishedContentDescription =
+      "no_published_content_description";
+
   static const String influencers = "influencers";
 
   static const String creators = "creators";
@@ -761,6 +769,14 @@ class AppStrings {
   static const String campaignTimeline = "campaign_timeline";
   static const String adminAssignsCreatorsDescription =
       "admin_assigns_creators_description";
+
+  static const String noInfluencersYet = "no_influencers_yet";
+
+  static const String noInfluencersAssignedDescription =
+      "no_influencers_assigned_description";
+
+  static const String adminAssignsInfluencersDescription =
+      "admin_assigns_influencers_description";
 
   //
   static const String campaignSubmitted = "campaign_submitted";

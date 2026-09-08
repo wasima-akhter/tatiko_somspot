@@ -561,6 +561,18 @@
   "budget": "الميزانية",
   "campaign_details": "تفاصيل الحملة",
 
+  "no_published_content_description": "سيظهر هنا المحتوى المنشور من المؤثرين المعينين.",
+
+  "no_campaign_content_yet": "لم يتم إرسال أي محتوى بعد",
+
+  "no_campaign_content_description": "لم يقم المؤثرون المعينون بإرسال أي محتوى حتى الآن.",
+
+  "no_influencers_yet": "لا يوجد مؤثرون بعد",
+
+  "no_influencers_assigned_description": "لا يوجد مؤثرون معينون لهذه الحملة حتى الآن.",
+
+  "admin_assigns_influencers_description": "سيقوم أحد المسؤولين بتعيين المؤثرين لهذه الحملة. بمجرد تعيينهم، سيظهرون هنا.",
+
   "influencers": "المؤثرون",
   "creators": "منشئو المحتوى",
   "package": "الباقة",

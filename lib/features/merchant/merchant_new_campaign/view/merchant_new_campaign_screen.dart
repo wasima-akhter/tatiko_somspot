@@ -8,13 +8,14 @@ import '../../../../share/widgets/dropdown/custom_dropdown_field.dart';
 import '../../../../share/widgets/text_field/custom_text_field.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../core/business/controller/business-controller.dart';
-import '../../../core/category/controller/category_controller.dart';
+import '../../../core/category/binding/category_binding_helper.dart';
 import '../controller/merchant_new_campaign_controller.dart';
 import '../widgets/campaign_bottom_buttons.dart';
 import '../widgets/campaign_date_field.dart';
 import '../widgets/campaign_option_chip.dart';
 import '../widgets/campaign_section_title.dart';
 import '../widgets/campaign_text_field.dart';
+import '../widgets/empty_states.dart';
 
 class MerchantNewCampaignScreen extends StatefulWidget {
   const MerchantNewCampaignScreen({super.key});
@@ -25,12 +26,13 @@ class MerchantNewCampaignScreen extends StatefulWidget {
 }
 
 class _MerchantNewCampaignScreenState extends State<MerchantNewCampaignScreen> {
+  final categoryController = CategoryBindings.campaignController;
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await CategoryController.to.loadInitialCategories();
+      await categoryController.loadInitialCategories();
       await OffersController.to.loadOffers();
       BusinessController.to.refreshBusinesses();
     });
@@ -81,38 +83,39 @@ class _MerchantNewCampaignScreenState extends State<MerchantNewCampaignScreen> {
 
                         SizedBox(height: 8.h),
 
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+                        if (controller.objectives.isEmpty)
+                          CampaignEmptyState(
+                            message:
+                                'No campaign objectives are available right now.',
+                          )
+                        else
+                          GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller.objectives.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 8.w,
+                                  mainAxisSpacing: 8.h,
+                                  childAspectRatio: 3.5,
+                                ),
+                            itemBuilder: (context, index) {
+                              final item = controller.objectives[index];
 
-                          itemCount: controller.objectives.length,
-
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 8.w,
-                                mainAxisSpacing: 8.h,
-                                childAspectRatio: 3.5,
-                              ),
-
-                          itemBuilder: (context, index) {
-                            final item = controller.objectives[index];
-
-                            return Obx(
-                              () => CampaignOptionChip(
-                                title: item.displayName.capitalizeWords(),
-
-                                selected:
-                                    controller.selectedObjective.value == item,
-
-                                onTap: () {
-                                  controller.selectObjective(item);
-                                },
-                              ),
-                            );
-                          },
-                        ),
-
+                              return Obx(
+                                () => CampaignOptionChip(
+                                  title: item.displayName.capitalizeWords(),
+                                  selected:
+                                      controller.selectedObjective.value ==
+                                      item,
+                                  onTap: () {
+                                    controller.selectObjective(item);
+                                  },
+                                ),
+                              );
+                            },
+                          ),
                         SizedBox(height: 8.h),
 
                         // Content Type
@@ -160,30 +163,32 @@ class _MerchantNewCampaignScreenState extends State<MerchantNewCampaignScreen> {
 
                         SizedBox(height: 8.h),
 
-                        Obx(
-                          () => CustomDropdownField<String>(
+                        Obx(() {
+                          final offers = OffersController.to.paginator.items;
+
+                          if (offers.isEmpty) {
+                            return const CampaignEmptyState(
+                              message:
+                                  'No offers are available. Please create an offer first.',
+                            );
+                          }
+
+                          return CustomDropdownField<String>(
                             hintText: AppStrings.selectOffer.tr,
-
                             isRequired: true,
-
                             value: controller.selectedOfferId.value.isEmpty
                                 ? null
                                 : controller.selectedOfferId.value,
-
-                            items: OffersController.to.paginator.items
-                                .map((e) => e.id)
-                                .toList(),
-
+                            items: offers.map((e) => e.id).toList(),
                             labelBuilder: (id) {
-                              return OffersController.to.paginator.items
+                              return offers
                                       .firstWhereOrNull((e) => e.id == id)
                                       ?.title ??
                                   "";
                             },
-
                             onChanged: controller.selectOffer,
-                          ),
-                        ),
+                          );
+                        }),
 
                         SizedBox(height: 16.h),
 
@@ -193,28 +198,29 @@ class _MerchantNewCampaignScreenState extends State<MerchantNewCampaignScreen> {
                         ),
 
                         SizedBox(height: 8.h),
-
                         Obx(() {
                           final categories = controller.categories;
 
+                          if (categories.isEmpty) {
+                            return const CampaignEmptyState(
+                              message:
+                                  'No influencer categories are available right now.',
+                            );
+                          }
+
                           return CustomDropdownField<String>(
                             hintText: AppStrings.selectCategory.tr,
-
                             isRequired: true,
-
                             value: controller.selectedCategory.value.isEmpty
                                 ? null
                                 : controller.selectedCategory.value,
-
                             items: categories.map((e) => e.id).toList(),
-
                             labelBuilder: (id) {
                               return categories
                                       .firstWhereOrNull((e) => e.id == id)
                                       ?.name ??
                                   "";
                             },
-
                             onChanged: controller.selectCategory,
                           );
                         }),

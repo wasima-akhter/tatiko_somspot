@@ -51,6 +51,17 @@ class _DashboardMerchantScreenState extends State<DashboardMerchantScreen> {
 
               Gap(20.h),
 
+              // if (kDebugMode) ...[
+              //   ElevatedButton(
+              //     onPressed: () {
+              //       AppRouter.route.pushNamed(
+              //         RoutePath.completeBusinessProfileScreen,
+              //       );
+              //     },
+              //     child: Text("CompleteBusinessProfileScreen"),
+              //   ),
+              //   const Gap(40),
+              // ],
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Column(

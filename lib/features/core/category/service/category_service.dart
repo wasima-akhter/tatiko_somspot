@@ -17,11 +17,13 @@ class CategoryService {
   Future<ApiResponse<PaginatedResult<CategoryModel>>> getCategories({
     int page = 1,
     int limit = 10,
+    required CategoryUsage type,
   }) async {
     try {
       final response = await _repository.getAllCategories(
         page: page,
         limit: limit,
+        usage: type,
       );
 
       final responseData = response.data;

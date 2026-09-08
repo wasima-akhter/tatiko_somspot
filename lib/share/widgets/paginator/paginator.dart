@@ -23,6 +23,7 @@ class Paginator<T> {
 
   int get currentPage => _page;
 
+  /*
   Future<void> loadInitial() async {
     _page = 1;
     hasMore.value = true;
@@ -49,6 +50,47 @@ class Paginator<T> {
 
       status.value = ApiStatus.completed;
     } catch (e) {
+      errorMessage.value = e.toString();
+      status.value = ApiStatus.error;
+    }
+  }
+*/
+
+  int _requestId = 0;
+
+  Future<void> loadInitial() async {
+    final requestId = ++_requestId;
+
+    _page = 1;
+    hasMore.value = true;
+
+    status.value = ApiStatus.loading;
+    errorMessage.value = '';
+
+    try {
+      final result = await fetchPage(_page, limit);
+
+      // Ignore an older request if another request started after it.
+      if (requestId != _requestId) {
+        return;
+      }
+
+      items.assignAll(result.data);
+
+      hasMore.value = result.meta?.hasNextPage ?? false;
+
+      if (hasMore.value) {
+        _page++;
+      }
+
+      status.value = result.data.isEmpty
+          ? ApiStatus.noDataFound
+          : ApiStatus.completed;
+    } catch (e) {
+      if (requestId != _requestId) {
+        return;
+      }
+
       errorMessage.value = e.toString();
       status.value = ApiStatus.error;
     }

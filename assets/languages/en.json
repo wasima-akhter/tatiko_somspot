@@ -570,7 +570,19 @@
 
   "budget": "Budget",
   "campaign_details": "Campaign Details",
+
+  "no_published_content_description": "Published content from the assigned influencers will appear here.",
+
+  "no_campaign_content_yet": "No Content Submitted Yet",
+
+  "no_campaign_content_description": "No content has been submitted yet by the assigned influencers.",
   "influencers": "Influencers",
+
+  "no_influencers_yet": "No Influencers Yet",
+
+  "no_influencers_assigned_description": "There are no influencers assigned to this campaign yet.",
+
+  "admin_assigns_influencers_description": "An admin will assign influencers to this campaign. Once assigned, they will appear here.",
 
   "creators": "Creators",
   "package": "Package",

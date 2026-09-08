@@ -60,7 +60,7 @@ class _NavigationPageState extends State<NavigationPage> {
         top: false,
         child: Container(
           // height: 64.h, // fixed height keeps every tab item the same size
-          padding: EdgeInsets.only(left: 15, right: 10),
+          padding: EdgeInsets.only(left: 15, right: 10, bottom: 6.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(

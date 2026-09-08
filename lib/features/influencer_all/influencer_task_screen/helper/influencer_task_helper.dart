@@ -5,6 +5,22 @@ import '../../../../utils/app_strings/app_strings.dart';
 enum InfluencerTaskTab { active, pending, completed, published }
 
 extension InfluencerTaskTabX on InfluencerTaskTab {
+  String get apiValue {
+    switch (this) {
+      case InfluencerTaskTab.active:
+        return 'active';
+
+      case InfluencerTaskTab.pending:
+        return 'pending';
+
+      case InfluencerTaskTab.completed:
+        return 'completed';
+
+      case InfluencerTaskTab.published:
+        return 'published';
+    }
+  }
+
   String get title {
     switch (this) {
       case InfluencerTaskTab.active:

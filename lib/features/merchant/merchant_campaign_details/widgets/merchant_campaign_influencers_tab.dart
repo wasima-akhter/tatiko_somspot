@@ -1,5 +1,6 @@
 import 'package:auto_shimmer_animate/auto_shimmer_animate.dart';
 import 'package:som_spot/share/widgets/loading/loading_widget.dart';
+import 'package:som_spot/share/widgets/ui_status_builder/error_card.dart';
 
 import '../../../../share/export/screen_export.dart';
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
@@ -30,6 +31,7 @@ class MerchantCampaignInfluencersTab
         hasMore: controller.applicationsPaginator.hasMore.value,
 
         loadingWidget: _loading(),
+        noDataWidget: _noInfluencersPlaceholder(context),
 
         builder: (context) {
           final applications = controller.applications;
@@ -151,7 +153,7 @@ class MerchantCampaignInfluencersTab
           Expanded(
             child: Text(
               AppStrings.influencersAssignedByAdmin.tr,
-              style: context.bodySmall,
+              style: context.bodyMedium,
             ),
           ),
         ],
@@ -172,6 +174,123 @@ class MerchantCampaignInfluencersTab
           color: Colors.white,
 
           borderRadius: BorderRadius.circular(10.r),
+        ),
+      ),
+    );
+  }
+
+  Widget _noInfluencersPlaceholder(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18.r),
+            border: Border.all(color: Colors.grey.shade200),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.04),
+                blurRadius: 18,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 76.w,
+                height: 76.w,
+                decoration: BoxDecoration(
+                  color: AppColors.blueAccentColor.withValues(alpha: 0.08),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.groups_rounded,
+                  size: 38.sp,
+                  color: AppColors.blueAccentColor,
+                ),
+              ),
+
+              SizedBox(height: 18.h),
+
+              Text(
+                AppStrings.noInfluencersYet.tr,
+                textAlign: TextAlign.center,
+                style: context.titleMedium.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+
+              SizedBox(height: 7.h),
+
+              Text(
+                AppStrings.noInfluencersAssignedDescription.tr,
+                textAlign: TextAlign.center,
+                style: context.bodyMedium.copyWith(
+                  color: AppColors.subtitleTextColor,
+                  height: 1.5,
+                ),
+              ),
+
+              SizedBox(height: 18.h),
+
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 13.h),
+                decoration: BoxDecoration(
+                  color: AppColors.blueAccentColor.withValues(alpha: 0.05),
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(
+                    color: AppColors.blueAccentColor.withValues(alpha: 0.10),
+                  ),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 28.w,
+                      height: 28.w,
+                      decoration: BoxDecoration(
+                        color: AppColors.blueAccentColor.withValues(
+                          alpha: 0.10,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.info_outline_rounded,
+                        size: 17.sp,
+                        color: AppColors.blueAccentColor,
+                      ),
+                    ),
+
+                    SizedBox(width: 10.w),
+
+                    Expanded(
+                      child: Text(
+                        AppStrings.adminAssignsInfluencersDescription.tr,
+                        style: context.bodyMedium.copyWith(
+                          color: AppColors.subtitleTextColor,
+                          height: 1.45,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Gap(10.h),
+
+              RetryButton(
+                onTap: () {
+                  controller.refreshApplications();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

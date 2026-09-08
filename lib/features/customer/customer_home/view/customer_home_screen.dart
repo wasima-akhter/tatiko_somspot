@@ -1,19 +1,21 @@
-import 'package:som_spot/features/core/category/controller/category_controller.dart';
 import 'package:som_spot/features/customer/customer_home/controller/home_controller.dart';
 import 'package:som_spot/features/customer/customer_home/widgets/home_header_widget.dart';
 import 'package:som_spot/features/customer/customer_home/widgets/home_top_deals_widget.dart';
 import 'package:som_spot/features/customer/customer_home/widgets/nearby/home_nearby_widget.dart';
 
 import '../../../../share/export/screen_export.dart';
+import '../../../core/category/binding/category_binding_helper.dart';
 import '../widgets/category/home_categories_widget.dart';
+import '../widgets/home_trending_content_widget.dart';
 
 class CustomerHomeScreen extends GetView<HomeController> {
   const CustomerHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final categoryController = CategoryBindings.customerController;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await CategoryController.to.loadInitialCategories();
+      await categoryController.loadInitialCategories();
     });
     return Scaffold(
       backgroundColor: AppColors.backgroundColorNew,
@@ -33,7 +35,7 @@ class CustomerHomeScreen extends GetView<HomeController> {
                 delegate: SliverChildListDelegate([
                   const HomeCategoriesWidget(),
                   // Gap(24.h),
-                  // HomeTrendingContentWidget(),
+                  HomeTrendingContentWidget(),
                   Gap(24.h),
                   const HomeTopDealsWidget(),
                   Gap(24.h),

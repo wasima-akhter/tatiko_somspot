@@ -561,6 +561,18 @@
   "budget": "Miisaaniyadda",
   "campaign_details": "Faahfaahinta Ololaha",
 
+  "no_published_content_description": "Waxyaabaha ay soo gudbiyaan saameeyayaasha loo xilsaaray marka la daabaco, halkan ayay kasoo muuqan doonaan.",
+
+  "no_campaign_content_yet": "Wali Wax Mawduuc ah Lama Soo Gudbin",
+
+  "no_campaign_content_description": "Wali ma jiraan waxyaabo ay soo gudbiyeen saameeyayaasha loo xilsaaray.",
+
+  "no_influencers_yet": "Wali Ma Jiraan Saameeyayaal",
+
+  "no_influencers_assigned_description": "Wali ma jiraan saameeyayaal loo xilsaaray ololahan.",
+
+  "admin_assigns_influencers_description": "Maamule ayaa saameeyayaal u xilsaaraya ololahan. Marka la xilsaaro, halkan ayay kasoo muuqan doonaan.",
+
   "influencers": "Saameeyayaasha",
   "creators": "Abuurayaasha",
   "package": "Xirmada",

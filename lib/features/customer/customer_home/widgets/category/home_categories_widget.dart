@@ -1,8 +1,7 @@
-import 'package:som_spot/features/core/category/controller/category_controller.dart';
-
 import '../../../../../share/export/screen_export.dart';
 import '../../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../../../utils/enum/app_enum.dart';
+import '../../../../core/category/binding/category_binding_helper.dart';
 import 'home_category_item_card.dart';
 
 class HomeCategoriesWidget extends StatelessWidget {
@@ -10,7 +9,7 @@ class HomeCategoriesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = CategoryController.to;
+    final controller = CategoryBindings.customerController;
 
     return Obx(() {
       return ApiStatusBuilder(

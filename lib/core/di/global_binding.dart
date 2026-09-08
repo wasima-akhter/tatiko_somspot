@@ -7,7 +7,6 @@ import 'package:som_spot/utils/common_controller/common_controller.dart';
 import '../../features/auth/controller/auth_controller.dart';
 import '../../features/auth/core/service/auth_service.dart';
 import '../../features/core/business/binding/business_binding.dart';
-import '../../features/core/category/category_binding.dart';
 import '../../features/core/location/controller/business_location_controller.dart';
 import '../../features/core/location/current_location/current_location_controller.dart';
 import '../../features/nav/controller/navigation_controller.dart';
@@ -25,8 +24,6 @@ void initGlobalBinding() {
   debugPrint('🔧 [main] registering AuthController...');
   Get.put<AuthController>(AuthController(sl<AuthService>()), permanent: true);
   debugPrint('✅ [main] AuthController registered');
-
-  CategoryBinding().dependencies();
 
   OtherBinding().dependencies();
 

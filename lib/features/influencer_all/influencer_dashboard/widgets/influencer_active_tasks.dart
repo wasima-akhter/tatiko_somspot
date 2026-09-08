@@ -200,7 +200,7 @@ class InfluencerActiveTasks extends StatelessWidget {
           Gap(12.h),
 
           Text(
-            AppStrings.noActiveTasks.tr,
+            AppStrings.noActiveTasks.tr.capitalizeWords(),
             style: context.bodyMedium.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.darkTextColor,

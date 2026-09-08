@@ -19,17 +19,17 @@ class SectionHeader extends StatelessWidget {
           ),
         ),
 
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onSeeAll,
-          child: Text(
-            AppStrings.seeAll.tr,
-            style: context.bodyMedium.copyWith(
-              color: AppColors.primaryColor,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
+        // GestureDetector(
+        //   behavior: HitTestBehavior.opaque,
+        //   onTap: onSeeAll,
+        //   child: Text(
+        //     AppStrings.seeAll.tr,
+        //     style: context.bodyMedium.copyWith(
+        //       color: AppColors.primaryColor,
+        //       fontWeight: FontWeight.w500,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
