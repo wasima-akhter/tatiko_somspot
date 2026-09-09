@@ -28,7 +28,7 @@ class BusinessService {
 
       return PaginatedResult(data: data.businesses, meta: data.meta);
     } catch (e, s) {
-      debugPrint("Get My Business Error: $e");
+      print("Get My Business Error: $e");
 
       debugPrintStack(stackTrace: s);
 
@@ -47,7 +47,7 @@ class BusinessService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Update Business Error $e");
+      print("Update Business Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);

@@ -36,7 +36,7 @@ class InfluencerTasksService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Influencer Tasks Error $e");
+      print("Get Influencer Tasks Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -68,7 +68,7 @@ class InfluencerTasksService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Submit Draft Error $e");
+      print("Submit Draft Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -88,7 +88,7 @@ class InfluencerTasksService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Task Detail Error $e");
+      print("Get Task Detail Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -110,7 +110,7 @@ class InfluencerTasksService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Submit Post Error $e");
+      print("Submit Post Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);

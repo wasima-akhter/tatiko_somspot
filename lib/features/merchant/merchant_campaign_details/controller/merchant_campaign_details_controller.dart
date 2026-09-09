@@ -15,7 +15,7 @@ class MerchantCampaignDetailsController extends GetxController {
   final String campaignId;
 
   MerchantCampaignDetailsController(this._service, this.campaignId) {
-    debugPrint("MerchantCampaignDetailsController CREATED => $campaignId");
+    print("MerchantCampaignDetailsController CREATED => $campaignId");
   }
 
   static MerchantCampaignDetailsController get to => Get.find();
@@ -101,7 +101,7 @@ class MerchantCampaignDetailsController extends GetxController {
   void onInit() {
     super.onInit();
 
-    debugPrint("onInit campaignId => $campaignId");
+    print("onInit campaignId => $campaignId");
 
     applicationsPaginator = Paginator<CampaignApplicationModel>(
       fetchPage: (page, limit) async {
@@ -313,7 +313,7 @@ class MerchantCampaignDetailsController extends GetxController {
   final contentDetail = Rxn<CampaignContentModel>();
 
   Future<void> loadContentDetails(String contentId) async {
-    debugPrint('loadContentDetails--> called');
+    print('loadContentDetails--> called');
     try {
       contentDetailStatus.value = ApiStatus.loading;
 
@@ -322,7 +322,7 @@ class MerchantCampaignDetailsController extends GetxController {
       );
 
       if (response.success) {
-        debugPrint('loadContentDetails--> response.success');
+        print('loadContentDetails--> response.success');
         contentDetail.value = response.data;
 
         contentDetailStatus.value = ApiStatus.completed;

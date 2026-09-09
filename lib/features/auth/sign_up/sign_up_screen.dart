@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:som_spot/features/auth/controller/auth_controller.dart';
 import 'package:som_spot/share/export/screen_export.dart';
 import 'package:som_spot/share/widgets/dropdown/custom_dropdown_field.dart';
-import 'package:som_spot/share/widgets/loading/loading_widget.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
 import '../../../helper/snackbar/app_snackbar.dart';
@@ -275,12 +274,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                         // ── Create Account Button ──
                         Obx(
-                          () => controller.isRegisterLoading.value
-                              ? LoadingWidget()
-                              : CustomButton(
-                                  text: AppStrings.createAccount.tr,
-                                  onTap: _validateAndRegister,
-                                ),
+                          () => CustomButton(
+                            isLoading: controller.isRegisterLoading.value,
+                            text: AppStrings.createAccount.tr,
+                            onTap: _validateAndRegister,
+                          ),
                         ),
 
                         const Gap(24),
@@ -459,8 +457,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     final selectedRole = commonController.role.value;
 
-    debugPrint('Selected role: $selectedRole');
-    debugPrint('API role: ${selectedRole.value}');
+    print('Selected role: $selectedRole');
+    print('API role: ${selectedRole.value}');
 
     // ── API ──
     controller.register(

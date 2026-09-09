@@ -57,7 +57,7 @@ class LocationController extends GetxController {
           await Geolocator.isLocationServiceEnabled();
 
       if (!isLocationServiceEnabled.value) {
-        debugPrint('Location service is disabled.');
+        print('Location service is disabled.');
 
         if (showSettingsOnFailure) {
           await _showLocationServiceDialog();
@@ -78,19 +78,19 @@ class LocationController extends GetxController {
 
       if (permission.value == LocationPermission.always ||
           permission.value == LocationPermission.whileInUse) {
-        debugPrint('Location permission already granted.');
+        print('Location permission already granted.');
       }
       // --------------------------------------------------
       // 4. Permission not granted → request it
       // --------------------------------------------------
       else if (permission.value == LocationPermission.denied) {
-        debugPrint('Requesting location permission...');
+        print('Requesting location permission...');
 
         permission.value = await Geolocator.requestPermission();
 
         // User denied the request
         if (permission.value == LocationPermission.denied) {
-          debugPrint('Location permission denied.');
+          print('Location permission denied.');
 
           await _showPermissionDeniedDialog();
 
@@ -101,7 +101,7 @@ class LocationController extends GetxController {
       // 5. Permission permanently denied
       // --------------------------------------------------
       else if (permission.value == LocationPermission.deniedForever) {
-        debugPrint('Location permission permanently denied.');
+        print('Location permission permanently denied.');
 
         if (showSettingsOnFailure) {
           await _showPermissionDeniedDialog();
@@ -125,14 +125,14 @@ class LocationController extends GetxController {
 
       hasLocation.value = true;
 
-      debugPrint(
+      print(
         'User location: '
         '${position.latitude}, ${position.longitude}',
       );
 
       return true;
     } catch (e, stackTrace) {
-      debugPrint('Get current location error: $e');
+      print('Get current location error: $e');
       debugPrintStack(stackTrace: stackTrace);
 
       return false;

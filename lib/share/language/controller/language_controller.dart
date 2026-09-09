@@ -179,7 +179,7 @@ class LanguageController extends GetxController implements GetxService {
 
       return true;
     } catch (e, s) {
-      debugPrint('Sync Language Error: $e');
+      print('Sync Language Error: $e');
       debugPrintStack(stackTrace: s);
 
       return false;

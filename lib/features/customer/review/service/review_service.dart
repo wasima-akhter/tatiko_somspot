@@ -64,7 +64,7 @@ class ReviewService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Business Reviews Error: $e");
+      print("Get Business Reviews Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -88,7 +88,7 @@ class ReviewService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Post Review Error: $e");
+      print("Post Review Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -139,7 +139,7 @@ class ReviewService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get My Reviews Error: $e");
+      print("Get My Reviews Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -170,7 +170,7 @@ class ReviewService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Toggle Review Helpful Error: $e");
+      print("Toggle Review Helpful Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);

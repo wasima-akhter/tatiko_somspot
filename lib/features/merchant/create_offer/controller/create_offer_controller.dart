@@ -48,7 +48,7 @@ class CreateOfferController extends BaseFormController {
   // -----------------------------------------------------------------------------
 
   Future<bool> _resolveBusiness() async {
-    debugPrint('business resolve method');
+    print('business resolve method');
     businessError.value = null;
 
     await BusinessController.to.myBusinessesPaginator.refresh();
@@ -245,7 +245,7 @@ class CreateOfferController extends BaseFormController {
 
       NavigationControllerMain.to.goToTabOffers();
     } catch (e, stackrace) {
-      debugPrint('error: $stackrace');
+      print('error: $stackrace');
       submitFailure(AppStrings.somethingWentWrong.tr);
 
       AppToast.error(message: AppStrings.somethingWentWrong.tr);

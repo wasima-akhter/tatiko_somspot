@@ -30,7 +30,7 @@ class OtherService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Post Feedback Error: $e");
+      print("Post Feedback Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -50,7 +50,7 @@ class OtherService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Terms Conditions Error: $e");
+      print("Get Terms Conditions Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -70,7 +70,7 @@ class OtherService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Privacy Policy Error: $e");
+      print("Get Privacy Policy Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -90,7 +90,7 @@ class OtherService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Rate App Error: $e");
+      print("Rate App Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -110,7 +110,7 @@ class OtherService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get About Us Error: $e");
+      print("Get About Us Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -138,7 +138,7 @@ class OtherService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint('Get FAQ Error: $e');
+      print('Get FAQ Error: $e');
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);

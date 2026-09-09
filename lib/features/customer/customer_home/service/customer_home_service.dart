@@ -36,7 +36,7 @@ class CustromerHomeService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint('Get Creator Content Error: $e');
+      print('Get Creator Content Error: $e');
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: 'Something went wrong');
@@ -77,7 +77,7 @@ class CustromerHomeService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint('Get Nearby Businesses Error $e');
+      print('Get Nearby Businesses Error $e');
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: 'Something went wrong');
@@ -104,7 +104,7 @@ class CustromerHomeService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint('Get Top Deals Error: $e');
+      print('Get Top Deals Error: $e');
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: 'Something went wrong');

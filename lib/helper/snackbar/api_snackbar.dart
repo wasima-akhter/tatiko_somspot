@@ -13,7 +13,7 @@ class ApiSnackbar {
     final messenger = AppKeys.scaffoldMessengerKey.currentState;
 
     if (messenger == null) {
-      debugPrint("Snackbar unavailable: $message");
+      print("Snackbar unavailable: $message");
       return;
     }
 
@@ -38,12 +38,8 @@ class ApiSnackbar {
                     fontSize: 16,
                   ),
                 ),
-              if (title != null && title.isNotEmpty)
-                const SizedBox(height: 4),
-              Text(
-                message,
-                style: const TextStyle(color: Colors.white),
-              ),
+              if (title != null && title.isNotEmpty) const SizedBox(height: 4),
+              Text(message, style: const TextStyle(color: Colors.white)),
             ],
           ),
         ),

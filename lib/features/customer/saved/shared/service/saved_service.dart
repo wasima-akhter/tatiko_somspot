@@ -33,7 +33,7 @@ class SavedService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Toggle Saved Error: $e");
+      print("Toggle Saved Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -109,7 +109,7 @@ class SavedService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Saved $type Error: $e");
+      print("Get Saved $type Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);

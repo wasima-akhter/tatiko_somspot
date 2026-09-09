@@ -99,9 +99,9 @@ class RecommendedContentCard extends StatelessWidget {
 
         Text(
           '@${content.creator.name}',
-          style: context.bodySmall.copyWith(
+          style: context.bodyMedium.copyWith(
             color: Colors.white,
-            fontSize: 10.sp,
+
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -116,12 +116,11 @@ class RecommendedContentCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            content.caption,
+            content.caption.capitalizeFirst ?? '',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: context.bodySmall.copyWith(
+            style: context.bodyMedium.copyWith(
               color: AppColors.subtitleTextColor,
-              fontSize: 12.sp,
             ),
           ),
 
@@ -131,9 +130,9 @@ class RecommendedContentCard extends StatelessWidget {
             content.campaign.business.name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: context.bodySmall.copyWith(
+            style: context.bodyLarge.copyWith(
               color: AppColors.primaryColor,
-              fontSize: 10.sp,
+
               fontWeight: FontWeight.w500,
             ),
           ),

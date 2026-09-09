@@ -102,7 +102,7 @@ class OfferDetailController extends GetxController {
 
       saveStatus.value = ApiStatus.error;
 
-      debugPrint("Toggle Offer Saved Error => $e");
+      print("Toggle Offer Saved Error => $e");
       debugPrintStack(stackTrace: s);
 
       ApiSnackbar.show(AppStrings.somethingWentWrong.tr);
@@ -129,7 +129,7 @@ class OfferDetailController extends GetxController {
         claimedOffer.value = response.data;
         claimStatus.value = ApiStatus.completed;
 
-        debugPrint("Offer Claimed Successfully => ${response.data!.code}");
+        print("Offer Claimed Successfully => ${response.data!.code}");
 
         ApiSnackbar.show(response.message, type: SnackbarType.success);
 
@@ -144,7 +144,7 @@ class OfferDetailController extends GetxController {
       claimStatus.value = ApiStatus.error;
       claimErrorMessage.value = e.toString();
 
-      debugPrint("Claim Offer Exception => $e");
+      print("Claim Offer Exception => $e");
       debugPrintStack(stackTrace: s);
 
       return null;

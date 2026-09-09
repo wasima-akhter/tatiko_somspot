@@ -23,7 +23,7 @@ class InfluencerWalletService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Influencer Wallet Error $e");
+      print("Influencer Wallet Error $e");
 
       debugPrintStack(stackTrace: s);
 

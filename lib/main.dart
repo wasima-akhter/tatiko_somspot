@@ -24,7 +24,7 @@ void main() async {
     MediaKit.ensureInitialized();
   } catch (e, st) {
     print("  MediaKit.ensureInitialized() failed");
-    debugPrint('MediaKit.ensureInitialized() failed: $e\n$st');
+    print('MediaKit.ensureInitialized() failed: $e\n$st');
   }
 
   await initAppStorage();

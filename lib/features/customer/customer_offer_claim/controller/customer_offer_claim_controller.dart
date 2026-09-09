@@ -16,7 +16,7 @@ class OfferClaimController extends GetxController {
   final isDownloading = false.obs;
 
   Future<void> downloadQrCode(BuildContext context) async {
-    debugPrint('claim: $claimCode');
+    print('claim: $claimCode');
     isDownloading.value = true;
     try {
       await QrCodeHelper.download(

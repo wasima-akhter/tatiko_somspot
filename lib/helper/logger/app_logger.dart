@@ -1,10 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:som_spot/helper/date_converter/date_converter.dart';
 import 'package:som_spot/utils/enum/app_enum.dart';
+
 class AppLogger {
   AppLogger._();
 
-  static void log(dynamic message, {dynamic stack, AppLogType type = AppLogType.defaultLog}) {
+  static void log(
+    dynamic message, {
+    dynamic stack,
+    AppLogType type = AppLogType.defaultLog,
+  }) {
     final String prefix;
 
     switch (type) {
@@ -24,6 +28,6 @@ class AppLogger {
     final format = 'yyyy-MM-dd HH:MM:ss';
     final formattedTime = DateConverter.formatDate(format: format);
 
-    debugPrint('$prefix [$formattedTime] -> $message -> ${stack.toString()}');
+    print('$prefix [$formattedTime] -> $message -> ${stack.toString()}');
   }
 }

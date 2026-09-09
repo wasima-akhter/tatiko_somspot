@@ -162,7 +162,7 @@ class EditOfferController extends BaseFormController {
 
       AppRouter.route.pop(true);
     } catch (e, s) {
-      debugPrint(e.toString());
+      print(e.toString());
       debugPrintStack(stackTrace: s);
 
       submitFailure(AppStrings.somethingWentWrong.tr);

@@ -99,7 +99,7 @@ class BusinessLocationController extends GetxController {
         });
       }
     } catch (e) {
-      debugPrint("Reverse geocode error $e");
+      print("Reverse geocode error $e");
     } finally {
       isMapSearching.value = false;
     }
@@ -260,7 +260,7 @@ class BusinessLocationController extends GetxController {
       try {
         mapController.move(latLng, 15);
       } catch (e) {
-        debugPrint('Could not move map: $e');
+        print('Could not move map: $e');
       }
     });
   }

@@ -26,7 +26,7 @@ class CustomerBusinessDetailsService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Business Details Error => $e");
+      print("Get Business Details Error => $e");
 
       debugPrintStack(stackTrace: s);
 
@@ -68,7 +68,7 @@ class CustomerBusinessDetailsService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Offers Error => $e");
+      print("Get Offers Error => $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);

@@ -20,7 +20,7 @@ class MerchantCampaignPublishedCard extends StatelessWidget {
 
     final publishUrl = data.postUrl ?? '';
 
-    debugPrint('videoUrl: $videoUrl');
+    print('videoUrl: $videoUrl');
     final status = data.status;
 
     return Container(

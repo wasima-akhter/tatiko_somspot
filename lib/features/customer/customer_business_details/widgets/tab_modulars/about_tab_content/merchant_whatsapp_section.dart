@@ -27,7 +27,7 @@ class MerchantAboutWhatsApp extends StatelessWidget {
 
       final whatsapp = business.whatsapp.trim();
 
-      debugPrint('whatsapp: $whatsapp');
+      print('whatsapp: $whatsapp');
 
       return Row(
         children: [

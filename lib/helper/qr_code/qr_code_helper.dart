@@ -103,16 +103,16 @@ class QrCodeHelper {
 
       return true;
     } on GalException catch (e) {
-      debugPrint('QR Download Error => ${e.type.message}');
+      print('QR Download Error => ${e.type.message}');
 
       if (context.mounted) {
         // Keep plugin-specific error if available.
-        debugPrint(e.type.message);
+        print(e.type.message);
       }
 
       return false;
     } catch (e, s) {
-      debugPrint('QR Download Error => $e');
+      print('QR Download Error => $e');
       debugPrintStack(stackTrace: s);
 
       if (context.mounted) {

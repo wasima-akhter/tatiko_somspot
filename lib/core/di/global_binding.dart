@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/share/language/controller/language_controller.dart';
 import 'package:som_spot/share/language/service/language_service.dart';
@@ -21,9 +20,9 @@ void initGlobalBinding() {
   // main.dart
 
   // ── after AppStorage, before runApp ──
-  debugPrint('🔧 [main] registering AuthController...');
+  print('🔧 [main] registering AuthController...');
   Get.put<AuthController>(AuthController(sl<AuthService>()), permanent: true);
-  debugPrint('✅ [main] AuthController registered');
+  print('✅ [main] AuthController registered');
 
   OtherBinding().dependencies();
 

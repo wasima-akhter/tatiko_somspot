@@ -104,7 +104,7 @@ class AlertsScreenController extends GetxController {
       markAllStatus.value = ApiStatus.error;
       markAllErrorMessage.value = 'Something went wrong';
 
-      debugPrint('Mark All Notifications As Read Error => $e');
+      print('Mark All Notifications As Read Error => $e');
       debugPrintStack(stackTrace: s);
 
       ApiSnackbar.show('Something went wrong');

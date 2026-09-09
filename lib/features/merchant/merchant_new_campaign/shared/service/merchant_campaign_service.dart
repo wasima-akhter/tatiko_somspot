@@ -25,7 +25,7 @@ class MerchantCampaignService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Create Offer Error $e");
+      print("Create Offer Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -61,7 +61,7 @@ class MerchantCampaignService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Campaigns Error $e");
+      print("Get Campaigns Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -82,7 +82,7 @@ class MerchantCampaignService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Campaign Details Error $e");
+      print("Get Campaign Details Error $e");
 
       debugPrintStack(stackTrace: s);
 
@@ -120,7 +120,7 @@ class MerchantCampaignService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Campaign Applications Error $e");
+      print("Get Campaign Applications Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -140,7 +140,7 @@ class MerchantCampaignService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Creator Error $e");
+      print("Get Creator Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -177,7 +177,7 @@ class MerchantCampaignService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Campaign Contents Error $e");
+      print("Get Campaign Contents Error $e");
 
       debugPrintStack(stackTrace: s);
 
@@ -209,7 +209,7 @@ class MerchantCampaignService {
   Future<ApiResponse<CampaignContentModel>> getCampaignContentDetails({
     required String applicationId,
   }) async {
-    debugPrint('loadContentDetails--> service: getCampaignContentDetails');
+    print('loadContentDetails--> service: getCampaignContentDetails');
     try {
       final response = await _repository.getCampaignContentDetails(
         applicationId: applicationId,
@@ -221,7 +221,7 @@ class MerchantCampaignService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Campaign Content Details Error $e");
+      print("Get Campaign Content Details Error $e");
 
       debugPrintStack(stackTrace: s);
 
@@ -244,7 +244,7 @@ class MerchantCampaignService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Verify Publication Error $e");
+      print("Verify Publication Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);

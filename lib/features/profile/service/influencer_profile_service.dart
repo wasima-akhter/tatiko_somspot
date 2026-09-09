@@ -25,7 +25,7 @@ class InfluencerProfileService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Creator Profile Error: $e");
+      print("Get Creator Profile Error: $e");
 
       debugPrintStack(stackTrace: s);
 
@@ -43,7 +43,7 @@ class InfluencerProfileService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Update Creator Profile Error: $e");
+      print("Update Creator Profile Error: $e");
 
       debugPrintStack(stackTrace: s);
 

@@ -14,7 +14,7 @@ class LauncherHelper {
   ) async {
     final Uri dialUri = Uri(scheme: 'tel', path: phoneNumber);
 
-    debugPrint('"phoneNumber  : $phoneNumber');
+    print('"phoneNumber  : $phoneNumber');
 
     try {
       if (await canLaunchUrl(dialUri)) {
@@ -33,7 +33,7 @@ class LauncherHelper {
           context: context,
           message: AppStrings.couldNotLaunchDialer.tr,
         );
-        debugPrint("Could not launch dialer: $e");
+        print("Could not launch dialer: $e");
       }
     }
   }
@@ -47,7 +47,7 @@ class LauncherHelper {
     try {
       await launchUrl(googleMapsUrl, mode: LaunchMode.externalApplication);
     } catch (e) {
-      debugPrint("Could not launch Google Maps: $e");
+      print("Could not launch Google Maps: $e");
     }
   }
 
@@ -76,7 +76,7 @@ class LauncherHelper {
     try {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } catch (e) {
-      debugPrint('Could not launch Google Maps: $e');
+      print('Could not launch Google Maps: $e');
     }
   }
 
@@ -108,7 +108,7 @@ class LauncherHelper {
     try {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } catch (e) {
-      debugPrint('Could not launch Apple Maps: $e');
+      print('Could not launch Apple Maps: $e');
     }
   }
 
@@ -119,7 +119,7 @@ class LauncherHelper {
     try {
       await launchUrl(appleMapsUrl, mode: LaunchMode.externalApplication);
     } catch (e) {
-      debugPrint("Could not launch Apple Maps: $e");
+      print("Could not launch Apple Maps: $e");
     }
   }
 
@@ -146,7 +146,7 @@ class LauncherHelper {
           message: AppStrings.couldNotShareMerchantDetails.tr,
         );
 
-        debugPrint("Could not share merchant details: $e");
+        print("Could not share merchant details: $e");
       }
     }
   }
@@ -179,7 +179,7 @@ class LauncherHelper {
           context: context,
           message: AppStrings.couldNotLaunchWhatsapp.tr,
         );
-        debugPrint("Could not launch WhatsApp: $e");
+        print("Could not launch WhatsApp: $e");
       }
     }
   }

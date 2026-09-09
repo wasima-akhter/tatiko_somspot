@@ -98,7 +98,7 @@ class AuthController extends GetxController {
 
       AppRouter.route.pushNamed(RoutePath.activeOtpScreen, extra: email);
 
-      ApiSnackbar.show(result.message);
+      ApiSnackbar.show("Registration completed successfully");
     } finally {
       isRegisterLoading.value = false;
     }

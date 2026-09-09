@@ -111,11 +111,11 @@ class ClaimsController extends GetxController {
   // ---------------------------------------------------------------------------
 
   Future<void> loadActiveClaims() async {
-    debugPrint('Before Active Claims: ${activePaginator.items.length}');
+    print('Before Active Claims: ${activePaginator.items.length}');
 
     await activePaginator.loadInitial();
 
-    debugPrint('After Active Claims: ${activePaginator.items.length}');
+    print('After Active Claims: ${activePaginator.items.length}');
   }
 
   Future<void> refreshActiveClaims() {
@@ -127,11 +127,11 @@ class ClaimsController extends GetxController {
   // ---------------------------------------------------------------------------
 
   Future<void> loadExpiredClaims() async {
-    debugPrint('Before Expired Claims: ${expiredPaginator.items.length}');
+    print('Before Expired Claims: ${expiredPaginator.items.length}');
 
     await expiredPaginator.loadInitial();
 
-    debugPrint('After Expired Claims: ${expiredPaginator.items.length}');
+    print('After Expired Claims: ${expiredPaginator.items.length}');
   }
 
   Future<void> refreshExpiredClaims() {

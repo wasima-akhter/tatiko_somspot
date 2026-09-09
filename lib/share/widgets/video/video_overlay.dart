@@ -84,41 +84,41 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
       ),
     );
 
-    debugPrint("🎬 VIDEO URL: ${widget.url}");
+    print("🎬 VIDEO URL: ${widget.url}");
 
     player.stream.playing.listen((playing) {
-      debugPrint("▶️ Playing: $playing");
+      print("▶️ Playing: $playing");
     });
 
     player.stream.position.listen((position) {
-      debugPrint("⏱ Position: $position");
+      print("⏱ Position: $position");
     });
 
     player.stream.duration.listen((duration) {
-      debugPrint("⌛ Duration: $duration");
+      print("⌛ Duration: $duration");
     });
 
     player.stream.buffer.listen((buffer) {
-      debugPrint("📦 Buffer: $buffer");
+      print("📦 Buffer: $buffer");
     });
 
     player.stream.width.listen((width) {
-      debugPrint("📐 Video Width: $width");
+      print("📐 Video Width: $width");
     });
 
     player.stream.height.listen((height) {
-      debugPrint("📏 Video Height: $height");
+      print("📏 Video Height: $height");
     });
 
     player.stream.completed.listen((value) {
-      debugPrint("COMPLETED: $value");
+      print("COMPLETED: $value");
     });
     videoController.player.stream.videoParams.listen((params) {
-      debugPrint("VIDEO PARAMS: $params");
+      print("VIDEO PARAMS: $params");
     });
 
     player.stream.error.listen((error) {
-      debugPrint("""
+      print("""
   ❌ MEDIA KIT ERROR
 
   URL:
@@ -144,13 +144,13 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
 
   Future<void> _openVideo() async {
     try {
-      debugPrint("🚀 Opening video...");
+      print("🚀 Opening video...");
 
       await player.open(Media(widget.url), play: true);
 
-      debugPrint("✅ Video opened");
+      print("✅ Video opened");
 
-      debugPrint("""
+      print("""
       PLAYER STATE:
       Playing: ${player.state.playing}
       Position: ${player.state.position}
@@ -158,8 +158,8 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
       Volume: ${player.state.volume}
       """);
     } catch (e, stack) {
-      debugPrint("🔥 OPEN VIDEO ERROR: $e");
-      debugPrint(stack.toString());
+      print("🔥 OPEN VIDEO ERROR: $e");
+      print(stack.toString());
 
       if (!mounted) return;
 

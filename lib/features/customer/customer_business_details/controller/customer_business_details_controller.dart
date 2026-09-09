@@ -29,7 +29,7 @@ class CustomerBusinessDetailsController extends GetxController {
     required SavedService savedService,
   }) : _savedService = savedService,
        _reviewService = reviewService {
-    debugPrint("CustomerBusinessDetailsController CREATED => $businessId");
+    print("CustomerBusinessDetailsController CREATED => $businessId");
   }
 
   // ============================================================
@@ -66,7 +66,7 @@ class CustomerBusinessDetailsController extends GetxController {
   void onInit() {
     super.onInit();
 
-    debugPrint("CustomerBusinessDetailsController onInit => $businessId");
+    print("CustomerBusinessDetailsController onInit => $businessId");
 
     // ------------------------------------------------------------
     // Business
@@ -125,7 +125,7 @@ class CustomerBusinessDetailsController extends GetxController {
 
           return data;
         } catch (e, s) {
-          debugPrint("Get Business Offers Error => $e");
+          print("Get Business Offers Error => $e");
           debugPrintStack(stackTrace: s);
 
           rethrow;
@@ -169,20 +169,20 @@ class CustomerBusinessDetailsController extends GetxController {
 
         businessStatus.value = ApiStatus.completed;
 
-        debugPrint("Business Details Loaded => ${business.value?.name}");
+        print("Business Details Loaded => ${business.value?.name}");
       } else {
         businessStatus.value = ApiStatus.error;
 
         businessErrorMessage.value = response.message;
 
-        debugPrint("Business Details Error => ${response.message}");
+        print("Business Details Error => ${response.message}");
       }
     } catch (e, s) {
       businessStatus.value = ApiStatus.error;
 
       businessErrorMessage.value = e.toString();
 
-      debugPrint("Load Business Details Exception => $e");
+      print("Load Business Details Exception => $e");
 
       debugPrintStack(stackTrace: s);
     }
@@ -247,7 +247,7 @@ class CustomerBusinessDetailsController extends GetxController {
       saveErrorMessage.value = "Something went wrong";
       saveStatus.value = ApiStatus.error;
 
-      debugPrint("Toggle Business Saved Error => $e");
+      print("Toggle Business Saved Error => $e");
       debugPrintStack(stackTrace: s);
 
       ApiSnackbar.show(AppStrings.somethingWentWrong.tr);
@@ -300,7 +300,7 @@ class CustomerBusinessDetailsController extends GetxController {
         } catch (e, s) {
           reviewsErrorMessage.value = e.toString();
 
-          debugPrint("Get Business Reviews Error => $e");
+          print("Get Business Reviews Error => $e");
           debugPrintStack(stackTrace: s);
 
           rethrow;
@@ -366,7 +366,7 @@ class CustomerBusinessDetailsController extends GetxController {
       postReviewErrorMessage.value = AppStrings.somethingWentWrong.tr;
       postReviewStatus.value = ApiStatus.error;
 
-      debugPrint("Post Review Error => $e");
+      print("Post Review Error => $e");
       debugPrintStack(stackTrace: s);
 
       ApiSnackbar.show(AppStrings.somethingWentWrong.tr);
@@ -439,7 +439,7 @@ class CustomerBusinessDetailsController extends GetxController {
       // Make sure Obx widgets listening to the paginator's RxList rebuild.
       reviewsPaginator.items.refresh();
     } catch (e, s) {
-      debugPrint("Toggle Review Helpful Error => $e");
+      print("Toggle Review Helpful Error => $e");
       debugPrintStack(stackTrace: s);
 
       ApiSnackbar.show(AppStrings.somethingWentWrong.tr);

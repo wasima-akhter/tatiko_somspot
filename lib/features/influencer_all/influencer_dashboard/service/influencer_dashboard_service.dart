@@ -23,7 +23,7 @@ class InfluencerDashboardService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Influencer Dashboard Error: $e");
+      print("Influencer Dashboard Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);

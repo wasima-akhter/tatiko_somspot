@@ -47,25 +47,25 @@ class ClaimOfferNowButton extends StatelessWidget {
                     final claim = await controller.claimOffer();
 
                     if (claim == null) {
-                      debugPrint('parsed claim is null');
+                      print('parsed claim is null');
                       return;
                     }
 
-                    debugPrint('========== CLAIM BODY ==========');
-                    debugPrint('id: ${claim.id}');
-                    debugPrint('user: ${claim.user}');
-                    debugPrint('offer: ${claim.offer}');
-                    debugPrint('business: ${claim.business}');
-                    debugPrint('code: ${claim.code}');
-                    debugPrint('status: ${claim.status}');
-                    debugPrint('claimedAt: ${claim.claimedAt}');
-                    debugPrint('expiresAt: ${claim.expiresAt}');
-                    debugPrint('================================');
+                    print('========== CLAIM BODY ==========');
+                    print('id: ${claim.id}');
+                    print('user: ${claim.user}');
+                    print('offer: ${claim.offer}');
+                    print('business: ${claim.business}');
+                    print('code: ${claim.code}');
+                    print('status: ${claim.status}');
+                    print('claimedAt: ${claim.claimedAt}');
+                    print('expiresAt: ${claim.expiresAt}');
+                    print('================================');
 
                     controller.offer.update((offer) {
                       if (offer != null) offer.isClaimed = true;
 
-                      debugPrint('offer is null');
+                      print('offer is null');
                     });
 
                     AppRouter.route.pushNamed(

@@ -28,7 +28,7 @@ class OfferService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Create Offer Error $e");
+      print("Create Offer Error $e");
 
       debugPrintStack(stackTrace: s);
 
@@ -62,7 +62,7 @@ class OfferService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Offers Error $e");
+      print("Get Offers Error $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -80,7 +80,7 @@ class OfferService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Get Offer Details Error: $e");
+      print("Get Offer Details Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -104,7 +104,7 @@ class OfferService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Update Offer Error: $e");
+      print("Update Offer Error: $e");
 
       debugPrintStack(stackTrace: s);
 
@@ -123,7 +123,7 @@ class OfferService {
       final data = response.data['data'];
       final model = ClaimOfferModel.fromJson(Map<String, dynamic>.from(data));
 
-      debugPrint('CLAIM MODEL CODE: ${model.code}');
+      print('CLAIM MODEL CODE: ${model.code}');
       return ApiResponse.success(
         data: model,
         message: response.data['message'] ?? '',
@@ -132,7 +132,7 @@ class OfferService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Claim Offer Error => $e");
+      print("Claim Offer Error => $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);

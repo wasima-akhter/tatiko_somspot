@@ -72,7 +72,7 @@ class MerchantStickyFooter extends GetView<CustomerBusinessDetailsController> {
                                 "${AppStrings.calling.tr} ${business.name}...",
                           );
 
-                          debugPrint('"phoneNumber  : ${business.phone}');
+                          print('"phoneNumber  : ${business.phone}');
 
                           await LauncherHelper.launchPhoneDialer(
                             context,

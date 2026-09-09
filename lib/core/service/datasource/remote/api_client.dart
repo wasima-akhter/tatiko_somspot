@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:mime/mime.dart';
@@ -97,8 +97,8 @@ class ApiClient {
     await checkConnection();
 
     try {
-      debugPrint("DIO GET START --> $url");
-      debugPrint("QUERY --> $queryParams");
+      print("DIO GET START --> $url");
+      print("QUERY --> $queryParams");
 
       final response = await dio.get(
         url,
@@ -109,9 +109,9 @@ class ApiClient {
         ),
       );
 
-      debugPrint("DIO GET SUCCESS --> ${response.statusCode}");
+      print("DIO GET SUCCESS --> ${response.statusCode}");
 
-      debugPrint("DIO DATA --> ${response.data}");
+      print("DIO DATA --> ${response.data}");
 
       log(
         url,
@@ -123,7 +123,7 @@ class ApiClient {
 
       return response;
     } catch (e, s) {
-      debugPrint("DIO GET ERROR --> $e");
+      print("DIO GET ERROR --> $e");
       debugPrintStack(stackTrace: s);
       throw handleError(
         e,
@@ -145,8 +145,8 @@ class ApiClient {
     await checkConnection();
 
     try {
-      debugPrint("POST URL: $url");
-      debugPrint("POST BODY: $body");
+      print("POST URL: $url");
+      print("POST BODY: $body");
 
       final response = await dio.post(
         url,
@@ -161,7 +161,7 @@ class ApiClient {
 
       return response;
     } catch (e, stack) {
-      debugPrint("POST ERROR: $e");
+      print("POST ERROR: $e");
       debugPrintStack(stackTrace: stack);
 
       throw handleError(
@@ -216,20 +216,20 @@ class ApiClient {
 
       return response;
     } on DioException catch (e, stackTrace) {
-      debugPrint("❌ DIO PATCH ERROR");
-      debugPrint("URL: $url");
-      debugPrint("METHOD: PATCH");
-      debugPrint("BODY: $body");
+      print("❌ DIO PATCH ERROR");
+      print("URL: $url");
+      print("METHOD: PATCH");
+      print("BODY: $body");
 
-      debugPrint("STATUS CODE: ${e.response?.statusCode}");
-      debugPrint("RESPONSE DATA: ${e.response?.data}");
-      debugPrint("RESPONSE HEADERS: ${e.response?.headers}");
+      print("STATUS CODE: ${e.response?.statusCode}");
+      print("RESPONSE DATA: ${e.response?.data}");
+      print("RESPONSE HEADERS: ${e.response?.headers}");
 
-      debugPrint("DIO MESSAGE: ${e.message}");
-      debugPrint("TYPE: ${e.type}");
+      print("DIO MESSAGE: ${e.message}");
+      print("TYPE: ${e.type}");
 
-      debugPrint("STACK TRACE:");
-      debugPrint(stackTrace.toString());
+      print("STACK TRACE:");
+      print(stackTrace.toString());
 
       throw handleError(
         e,
@@ -239,10 +239,10 @@ class ApiClient {
         stackTrace: stackTrace,
       );
     } catch (e, stackTrace) {
-      debugPrint("❌ UNKNOWN PATCH ERROR");
-      debugPrint("ERROR: $e");
-      debugPrint("STACK TRACE:");
-      debugPrint(stackTrace.toString());
+      print("❌ UNKNOWN PATCH ERROR");
+      print("ERROR: $e");
+      print("STACK TRACE:");
+      print(stackTrace.toString());
 
       throw handleError(
         e,
@@ -318,28 +318,28 @@ class ApiClient {
       // ─────────────────────────────────────────────
       // REQUEST LOG
       // ─────────────────────────────────────────────
-      debugPrint("");
-      debugPrint("━━━━━━━━━━ MULTIPART REQUEST ━━━━━━━━━━");
-      debugPrint("URL     : $url");
-      debugPrint("METHOD  : $method");
+      print("");
+      print("━━━━━━━━━━ MULTIPART REQUEST ━━━━━━━━━━");
+      print("URL     : $url");
+      print("METHOD  : $method");
 
-      debugPrint("FIELDS:");
+      print("FIELDS:");
       if (fields == null || fields.isEmpty) {
-        debugPrint("  (none)");
+        print("  (none)");
       } else {
         fields.forEach((key, value) {
-          debugPrint("  • $key : $value");
+          print("  • $key : $value");
         });
       }
 
-      debugPrint("FILES:");
+      print("FILES:");
       if (files.isEmpty) {
-        debugPrint("  (none)");
+        print("  (none)");
       } else {
         for (final file in files) {
           final length = await file.file.length();
 
-          debugPrint('''
+          print('''
   • field    : ${file.fieldKey}
     name     : ${file.file.uri.pathSegments.last}
     path     : ${file.file.path}
@@ -348,7 +348,7 @@ class ApiClient {
         }
       }
 
-      debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+      print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
       final response = await dio.request(
         url,
@@ -359,35 +359,35 @@ class ApiClient {
       // ─────────────────────────────────────────────
       // RESPONSE LOG
       // ─────────────────────────────────────────────
-      debugPrint("");
-      debugPrint("━━━━━━━━━━ MULTIPART RESPONSE ━━━━━━━━━━");
-      debugPrint(
+      print("");
+      print("━━━━━━━━━━ MULTIPART RESPONSE ━━━━━━━━━━");
+      print(
         response.statusCode.toString().startsWith("2")
             ? "✅ SUCCESS"
             : "❌ FAILED",
       );
-      debugPrint("STATUS : ${response.statusCode}");
-      debugPrint("URL    : $url");
-      debugPrint("BODY:");
-      debugPrint(response.data.toString());
-      debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+      print("STATUS : ${response.statusCode}");
+      print("URL    : $url");
+      print("BODY:");
+      print(response.data.toString());
+      print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
       log(url, response, showResponse: showResponse);
 
       return response;
     } on DioException catch (e, s) {
-      debugPrint("");
-      debugPrint("━━━━━━━━━━ MULTIPART ERROR ━━━━━━━━━━");
-      debugPrint("URL : $url");
+      print("");
+      print("━━━━━━━━━━ MULTIPART ERROR ━━━━━━━━━━");
+      print("URL : $url");
 
       if (e.response != null) {
-        debugPrint("STATUS : ${e.response?.statusCode}");
-        debugPrint("BODY:");
-        debugPrint(jsonEncode(e.response?.data));
+        print("STATUS : ${e.response?.statusCode}");
+        print("BODY:");
+        print(jsonEncode(e.response?.data));
       }
 
-      debugPrint("MESSAGE : ${e.message}");
-      debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+      print("MESSAGE : ${e.message}");
+      print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
       throw handleError(
         e,
         method: method,
@@ -396,11 +396,11 @@ class ApiClient {
         stackTrace: s,
       );
     } catch (e, s) {
-      debugPrint("");
-      debugPrint("━━━━━━━━━━ MULTIPART ERROR ━━━━━━━━━━");
-      debugPrint("URL : $url");
-      debugPrint("ERROR : $e");
-      debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+      print("");
+      print("━━━━━━━━━━ MULTIPART ERROR ━━━━━━━━━━");
+      print("URL : $url");
+      print("ERROR : $e");
+      print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
       throw handleError(
         e,
@@ -425,32 +425,32 @@ class ApiClient {
     }
 
     if (error is DioException) {
-      debugPrint("");
-      debugPrint("━━━━━━━━━━━━ API ERROR ━━━━━━━━━━━━");
-      debugPrint("❌ DIO $method ERROR");
-      debugPrint("URL: $url");
+      print("");
+      print("━━━━━━━━━━━━ API ERROR ━━━━━━━━━━━━");
+      print("❌ DIO $method ERROR");
+      print("URL: $url");
 
       if (queryParams != null && queryParams.isNotEmpty) {
-        debugPrint("QUERY: $queryParams");
+        print("QUERY: $queryParams");
       }
 
       if (body != null) {
-        debugPrint("BODY: $body");
+        print("BODY: $body");
       }
 
-      debugPrint("STATUS CODE: ${error.response?.statusCode}");
-      debugPrint("RESPONSE DATA: ${error.response?.data}");
-      debugPrint("RESPONSE HEADERS: ${error.response?.headers}");
+      print("STATUS CODE: ${error.response?.statusCode}");
+      print("RESPONSE DATA: ${error.response?.data}");
+      print("RESPONSE HEADERS: ${error.response?.headers}");
 
-      debugPrint("DIO MESSAGE: ${error.message}");
-      debugPrint("TYPE: ${error.type}");
+      print("DIO MESSAGE: ${error.message}");
+      print("TYPE: ${error.type}");
 
       if (stackTrace != null) {
-        debugPrint("STACK TRACE:");
-        debugPrint(stackTrace.toString());
+        print("STACK TRACE:");
+        print(stackTrace.toString());
       }
 
-      debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+      print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
       final response = error.response;
 
@@ -481,27 +481,27 @@ class ApiClient {
       );
     }
 
-    debugPrint("");
-    debugPrint("━━━━━━━━━━━━ API ERROR ━━━━━━━━━━━━");
-    debugPrint("❌ UNKNOWN $method ERROR");
-    debugPrint("URL: $url");
+    print("");
+    print("━━━━━━━━━━━━ API ERROR ━━━━━━━━━━━━");
+    print("❌ UNKNOWN $method ERROR");
+    print("URL: $url");
 
     if (queryParams != null && queryParams.isNotEmpty) {
-      debugPrint("QUERY: $queryParams");
+      print("QUERY: $queryParams");
     }
 
     if (body != null) {
-      debugPrint("BODY: $body");
+      print("BODY: $body");
     }
 
-    debugPrint("ERROR: $error");
+    print("ERROR: $error");
 
     if (stackTrace != null) {
-      debugPrint("STACK TRACE:");
-      debugPrint(stackTrace.toString());
+      print("STACK TRACE:");
+      print(stackTrace.toString());
     }
 
-    debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
     return ApiException(message: error.toString(), statusCode: 500);
   }
@@ -554,7 +554,6 @@ class ApiClient {
 
   //
 }
-
 
 // 401 --> add separately.
 // You are not authorized

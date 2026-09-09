@@ -67,7 +67,7 @@ class _OffersScreenState extends State<OffersScreen> {
                       itemBuilder: (_, index) {
                         final offer = controller.paginator.items[index];
 
-                        debugPrint('offer id----> ${offer.id}');
+                        print('offer id----> ${offer.id}');
 
                         final offerStatus = _getOfferDisplayData(offer);
 
@@ -98,13 +98,13 @@ class _OffersScreenState extends State<OffersScreen> {
   }
 
   OfferDisplayData _getOfferDisplayData(OfferModel offer) {
-    debugPrint("STATUS => ${offer.status}");
-    debugPrint("START => ${offer.startAt}");
-    debugPrint("END => ${offer.endAt}");
+    print("STATUS => ${offer.status}");
+    print("START => ${offer.startAt}");
+    print("END => ${offer.endAt}");
 
     final now = DateTime.now();
 
-    debugPrint("NOW => $now");
+    print("NOW => $now");
 
     if (offer.status.toLowerCase() == "expired" || offer.endAt.isBefore(now)) {
       return OfferDisplayData(

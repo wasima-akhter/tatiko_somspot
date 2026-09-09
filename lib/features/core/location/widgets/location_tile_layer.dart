@@ -24,7 +24,7 @@ class LocationTileLayer extends StatelessWidget {
       panBuffer: 2,
 
       errorTileCallback: (tile, error, stackTrace) {
-        debugPrint('Tile failed: ${tile.coordinates} - $error');
+        print('Tile failed: ${tile.coordinates} - $error');
       },
 
       tileBuilder: (context, child, tile) {

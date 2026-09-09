@@ -18,7 +18,7 @@
 
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:som_spot/share/language/controller/language_controller.dart';
@@ -67,7 +67,7 @@ class AuthService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Login Error: $e");
+      print("Login Error: $e");
 
       debugPrintStack(stackTrace: s);
 
@@ -91,12 +91,6 @@ class AuthService {
   }
 
   Future<RegisterResponse> register(RegisterRequest request) async {
-    final selectedRole = storage.selectedRole;
-
-    if (selectedRole == null) {
-      throw Exception('A role must be selected before registration.');
-    }
-
     final registerRequest = request;
 
     final response = await _repository.register(registerRequest);
@@ -152,7 +146,7 @@ class AuthService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Verify OTP Error: $e");
+      print("Verify OTP Error: $e");
 
       debugPrintStack(stackTrace: s);
 
@@ -170,7 +164,7 @@ class AuthService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Resend OTP Error: $e");
+      print("Resend OTP Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -189,7 +183,7 @@ class AuthService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Forgot Password Error: $e");
+      print("Forgot Password Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -208,7 +202,7 @@ class AuthService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Verify Forgot OTP Error: $e");
+      print("Verify Forgot OTP Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -225,7 +219,7 @@ class AuthService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Reset Password Error: $e");
+      print("Reset Password Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -244,7 +238,7 @@ class AuthService {
     } on ApiException catch (e) {
       return ApiResponse.failure(message: e.message, statusCode: e.statusCode);
     } catch (e, s) {
-      debugPrint("Change Password Error: $e");
+      print("Change Password Error: $e");
       debugPrintStack(stackTrace: s);
 
       return ApiResponse.failure(message: AppStrings.somethingWentWrong.tr);
@@ -273,10 +267,10 @@ Future<void> _saveLoginSession(LoginResponse login) async {
 
   final role = accessPayload['role']?.toString();
 
-  debugPrint("🔍 [JWT] raw role claim: $role");
-  debugPrint("🔍 [JWT] full payload:  ");
+  print("🔍 [JWT] raw role claim: $role");
+  print("🔍 [JWT] full payload:  ");
 
-  debugPrint(const JsonEncoder.withIndent('  ').convert(accessPayload));
+  print(const JsonEncoder.withIndent('  ').convert(accessPayload));
 
   await storage.saveSession(
     accessToken: accessToken,

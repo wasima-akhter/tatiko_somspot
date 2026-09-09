@@ -143,7 +143,7 @@ class MerchantNewCampaignController extends BaseFormController {
   // ============================================================
 
   bool validateCampaignDetails() {
-    debugPrint(
+    print(
       ' selectedContentType.value?.apiValue  ${selectedContentType.value?.apiValue ?? ''}',
     );
     if (campaignNameController.text.trim().isEmpty) {
@@ -284,10 +284,10 @@ class MerchantNewCampaignController extends BaseFormController {
     try {
       beginSubmit();
 
-      debugPrint(
+      print(
         'startDateController: ${DateConverter().formatMdY_to_DateTime(startDateController.text)}',
       );
-      debugPrint(
+      print(
         ' selectedContentType.value?.apiValue ?? '
         ',: ${selectedContentType.value?.apiValue ?? ''}',
       );
@@ -341,7 +341,7 @@ class MerchantNewCampaignController extends BaseFormController {
       AppRouter.route.goNamed(RoutePath.merchantCampaignsScreen);
     } catch (e, stack) {
       submitFailure(e.toString());
-      debugPrint(stack.toString());
+      print(stack.toString());
 
       ApiSnackbar.show(
         type: SnackbarType.error,
@@ -373,7 +373,7 @@ class MerchantNewCampaignController extends BaseFormController {
 
     await OffersController.to.loadOffers();
 
-    debugPrint(
+    print(
       '  OffersController.to.paginator.items.length ${OffersController.to.paginator.items.length}',
     );
 
@@ -439,13 +439,13 @@ class MerchantNewCampaignController extends BaseFormController {
     try {
       await categoryController.loadInitialCategories();
 
-      debugPrint(
+      print(
         '📂 [MerchantNewCampaign] Categories loaded: '
         '${categoryController.categories.length}',
       );
     } catch (e, stack) {
-      debugPrint('❌ [MerchantNewCampaign] Failed to load categories: $e');
-      debugPrint(stack.toString());
+      print('❌ [MerchantNewCampaign] Failed to load categories: $e');
+      print(stack.toString());
     }
   }
 
@@ -455,13 +455,13 @@ class MerchantNewCampaignController extends BaseFormController {
         await BusinessController.to.refreshBusinesses();
       }
 
-      debugPrint(
+      print(
         '🏢 [MerchantNewCampaign] Businesses loaded: '
         '${BusinessController.to.myBusinessesPaginator.items.length}',
       );
     } catch (e, stack) {
-      debugPrint('❌ [MerchantNewCampaign] Failed to load businesses: $e');
-      debugPrint(stack.toString());
+      print('❌ [MerchantNewCampaign] Failed to load businesses: $e');
+      print(stack.toString());
     }
   }
 
@@ -473,13 +473,13 @@ class MerchantNewCampaignController extends BaseFormController {
 
       await OffersController.to.loadOffers();
 
-      debugPrint(
+      print(
         '🎁 [MerchantNewCampaign] Offers loaded: '
         '${OffersController.to.paginator.items.length}',
       );
     } catch (e, stack) {
-      debugPrint('❌ [MerchantNewCampaign] Failed to load offers: $e');
-      debugPrint(stack.toString());
+      print('❌ [MerchantNewCampaign] Failed to load offers: $e');
+      print(stack.toString());
     }
   }
 

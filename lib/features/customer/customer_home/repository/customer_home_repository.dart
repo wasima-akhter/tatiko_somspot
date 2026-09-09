@@ -39,7 +39,7 @@ class HomeContentRepository {
         if (category != null && category.isNotEmpty) 'category': category,
       },
 
-      skipAuth: locationMode == BusinessLocationMode.all ? true : true,
+      // skipAuth: locationMode == BusinessLocationMode.all ? true : true,
     );
   }
 

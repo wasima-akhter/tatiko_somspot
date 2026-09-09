@@ -86,11 +86,11 @@ class SavedScreenController extends GetxController {
   // ---------------------------------------------------------------------------
 
   Future<void> loadBusinesses() async {
-    debugPrint('Before Businesses: ${businessPaginator.items.length}');
+    print('Before Businesses: ${businessPaginator.items.length}');
 
     await businessPaginator.loadInitial();
 
-    debugPrint('After Businesses: ${businessPaginator.items.length}');
+    print('After Businesses: ${businessPaginator.items.length}');
   }
 
   Future<void> refreshBusinesses() {
@@ -102,11 +102,11 @@ class SavedScreenController extends GetxController {
   // ---------------------------------------------------------------------------
 
   Future<void> loadOffers() async {
-    debugPrint('Before Offers: ${offerPaginator.items.length}');
+    print('Before Offers: ${offerPaginator.items.length}');
 
     await offerPaginator.loadInitial();
 
-    debugPrint('After Offers: ${offerPaginator.items.length}');
+    print('After Offers: ${offerPaginator.items.length}');
   }
 
   Future<void> refreshOffers() {

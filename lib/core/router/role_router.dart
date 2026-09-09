@@ -91,7 +91,7 @@ class RoleRouter {
 
       AppRouter.route.goNamed(RoutePath.navigationPages);
     } catch (e, s) {
-      debugPrint('RoleRouter Error: $e');
+      print('RoleRouter Error: $e');
       debugPrintStack(stackTrace: s);
 
       await AppStorage.to.clearAuth();

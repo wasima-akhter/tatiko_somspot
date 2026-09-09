@@ -76,15 +76,15 @@ class MerchantListingController extends GetxController {
 
     _initHours();
 
-    debugPrint("MerchantListingController onInit");
-    debugPrint(
+    print("MerchantListingController onInit");
+    print(
       "Business items: ${businessController.myBusinessesPaginator.items.length}",
     );
 
     ever<List<BusinessModel>>(businessController.myBusinessesPaginator.items, (
       _,
     ) {
-      debugPrint("Business list changed");
+      print("Business list changed");
       loadBusiness();
     });
 
@@ -334,7 +334,7 @@ class MerchantListingController extends GetxController {
   Future<void> loadBusiness() async {
     final businesses = businessController.myBusinessesPaginator.items;
 
-    debugPrint("loadBusiness called. Count=${businesses.length}");
+    print("loadBusiness called. Count=${businesses.length}");
 
     if (businesses.isEmpty) return;
 
@@ -367,7 +367,7 @@ class MerchantListingController extends GetxController {
 
     resetTemporarySelections();
 
-    debugPrint("Business refreshed: ${business.name}");
+    print("Business refreshed: ${business.name}");
   }
 
   void _loadOpeningHours(List<BusinessHourModel> hours) {

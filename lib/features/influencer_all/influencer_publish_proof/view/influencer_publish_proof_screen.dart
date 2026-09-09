@@ -161,12 +161,12 @@ class _PublishProofScreenState extends State<InfluencerPublishProofScreen> {
           AppRouter.route.goNamed(RoutePath.navigationPages);
 
           if (Get.isRegistered<NavigationControllerMain>()) {
-            debugPrint('going to tasks tab');
+            print('going to tasks tab');
 
             NavigationControllerMain.to.goToTabTasks();
 
             if (Get.isRegistered<InfluencerTaskController>()) {
-              debugPrint('going to tasks tab > published tab');
+              print('going to tasks tab > published tab');
 
               InfluencerTaskController.to.selectedTab.value =
                   InfluencerTaskTab.published;

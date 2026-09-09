@@ -60,7 +60,7 @@ class _InfluencerYourSubmissionScreenState
                     return const SizedBox();
                   }
 
-                  debugPrint('draftVideoUrl: ${task.draftVideoUrl}');
+                  print('draftVideoUrl: ${task.draftVideoUrl}');
 
                   return Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),

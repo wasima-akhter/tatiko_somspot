@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../../../../../share/export/repo_export.dart';
 import '../request/new_campaign_request.dart';
 
@@ -98,7 +96,7 @@ class MerchantCampaignRepository {
   Future<Response> getCampaignContentDetails({
     required String applicationId,
   }) async {
-    debugPrint('loadContentDetails--> repo request start: $applicationId');
+    print('loadContentDetails--> repo request start: $applicationId');
 
     final response = await _apiClient.get(
       showResponse: true,
@@ -107,9 +105,9 @@ class MerchantCampaignRepository {
       queryParams: {"applicationId": applicationId, "hasContent": true},
     );
 
-    debugPrint('loadContentDetails--> repo response: ${response.statusCode}');
+    print('loadContentDetails--> repo response: ${response.statusCode}');
 
-    debugPrint('loadContentDetails--> repo body: ${response.data}');
+    print('loadContentDetails--> repo body: ${response.data}');
 
     return response;
   }

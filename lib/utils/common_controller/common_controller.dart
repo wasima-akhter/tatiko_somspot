@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:som_spot/helper/snackbar/api_snackbar.dart';
 import 'package:som_spot/utils/app_strings/app_strings.dart';
@@ -65,7 +64,7 @@ extension UserRoleExtension on UserRole {
       case 'user':
         return UserRole.customer;
       default:
-        debugPrint("⚠️ [UserRole] Unrecognized role value: '$value'");
+        print("⚠️ [UserRole] Unrecognized role value: '$value'");
         return null;
     }
   }

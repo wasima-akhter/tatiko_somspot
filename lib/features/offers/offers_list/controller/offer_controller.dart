@@ -91,11 +91,11 @@ class OffersController extends GetxController {
   }
 
   Future<void> loadOffers() async {
-    debugPrint("Before: ${paginator.items.length}");
+    print("Before: ${paginator.items.length}");
 
     await paginator.loadInitial();
 
-    debugPrint("After: ${paginator.items.length}");
+    print("After: ${paginator.items.length}");
   }
 
   Future<void> loadMore() {

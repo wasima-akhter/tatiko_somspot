@@ -40,7 +40,7 @@ class MerchantReviewsTabState extends State<MerchantReviewsTab> {
             builder: (_) {
               final reviews = controller.reviews;
 
-              debugPrint('reviews length: ${reviews.length}');
+              print('reviews length: ${reviews.length}');
 
               return CustomRefreshIndicator(
                 onRefresh: controller.refreshBusinessReviews,

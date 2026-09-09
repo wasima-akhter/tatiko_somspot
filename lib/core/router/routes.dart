@@ -1151,13 +1151,13 @@ class _BindingWrapperState extends State<BindingWrapper> {
   void initState() {
     super.initState();
 
-    debugPrint("BindingWrapper init");
+    print("BindingWrapper init");
     widget.binding.dependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("BindingWrapper build");
+    print("BindingWrapper build");
     return widget.child;
   }
 }

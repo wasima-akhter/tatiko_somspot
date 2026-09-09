@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../../../core/service/datasource/remote/api_client.dart';
@@ -28,7 +27,7 @@ class CategoryRepository {
   }
 
   String _getCategoryType(CategoryUsage usage) {
-    debugPrint(
+    print(
       '📂 [CategoryRepository] Resolving category type | '
       'usage: $usage | '
       'isCustomer: ${CommonController.to.isCustomer} | '
@@ -37,38 +36,36 @@ class CategoryRepository {
     );
 
     if (CommonController.to.isCustomer) {
-      debugPrint('📂 [CategoryRepository] User is CUSTOMER → type: merchant');
+      print('📂 [CategoryRepository] User is CUSTOMER → type: merchant');
       return "merchant";
     }
 
     if (CommonController.to.isMerchandiser) {
       switch (usage) {
         case CategoryUsage.businessProfile:
-          debugPrint(
+          print(
             '📂 [CategoryRepository] Merchandiser + businessProfile → type: merchant',
           );
           return "merchant";
 
         case CategoryUsage.campaign:
-          debugPrint(
+          print(
             '📂 [CategoryRepository] Merchandiser + campaign → type: creator',
           );
           return "creator";
 
         case CategoryUsage.none:
-          debugPrint(
-            '📂 [CategoryRepository] Merchandiser + none → type: merchant',
-          );
+          print('📂 [CategoryRepository] Merchandiser + none → type: merchant');
           return "merchant";
       }
     }
 
     if (CommonController.to.isInfluencer) {
-      debugPrint('📂 [CategoryRepository] User is INFLUENCER → type: creator');
+      print('📂 [CategoryRepository] User is INFLUENCER → type: creator');
       return "creator";
     }
 
-    debugPrint(
+    print(
       '📂 [CategoryRepository] No matching role → type: creator (fallback)',
     );
 

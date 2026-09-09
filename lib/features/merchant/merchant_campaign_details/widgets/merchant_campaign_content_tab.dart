@@ -26,11 +26,11 @@ class MerchantCampaignContentTab
         noDataWidget: _noContentPlaceholder(context),
 
         builder: (_) {
-          debugPrint(
+          print(
             "CONTENT STATUS => ${controller.contentsPaginator.status.value}",
           );
 
-          debugPrint("CONTENT LENGTH => ${controller.contents.length}");
+          print("CONTENT LENGTH => ${controller.contents.length}");
 
           final contents = controller.contentTabList;
 

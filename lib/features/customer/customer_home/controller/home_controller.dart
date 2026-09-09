@@ -143,13 +143,13 @@ class HomeController extends GetxController {
   // ---------------------------------------------------------------------------
 
   Future<void> loadNearbyBusinesses() async {
-    debugPrint('Before: ${nearbyBusinessesPaginator.items.length}');
+    print('Before: ${nearbyBusinessesPaginator.items.length}');
     await nearbyBusinessesPaginator.loadInitial();
-    debugPrint('After: ${nearbyBusinessesPaginator.items.length}');
+    print('After: ${nearbyBusinessesPaginator.items.length}');
   }
 
   void _initNearbyBusinessesPaginator() {
-    debugPrint('nearbyLat : $nearbyLat');
+    print('nearbyLat : $nearbyLat');
 
     nearbyBusinessesPaginator = Paginator<BusinessModel>(
       fetchPage: (page, limit) async {

@@ -22,7 +22,7 @@ class MerchantCampaignInfluencerCard extends StatelessWidget {
       pitch: "",
     );
 
-    debugPrint('creator.profileImage: ${creator.profileImage}');
+    print('creator.profileImage: ${creator.profileImage}');
 
     return Container(
       padding: EdgeInsets.all(12.w),

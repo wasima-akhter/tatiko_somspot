@@ -46,11 +46,11 @@ class ChooseRoleController extends GetxController {
     final role = selectedRole.value;
 
     if (role == null) {
-      debugPrint("ROLE IS NULL");
+      print("ROLE IS NULL");
       return;
     }
 
-    debugPrint("Selected role: ${role.name}");
+    print("Selected role: ${role.name}");
 
     if (!CommonController.to.setRole(role)) {
       return;
