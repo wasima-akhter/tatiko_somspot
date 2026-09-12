@@ -43,6 +43,23 @@
   "confirm_password": "Confirm Password",
   "agree_to_somspot": "Agree to SomSpot's",
   "already_have_account": "Already have an account?",
+
+  "verification_code_resent": "Verification code resent",
+  "registration_completed_successfully": "Registration completed successfully",
+  "login_failed": "Login failed",
+  "invalid_name": "Invalid Name",
+  "phone_required": "Phone Required",
+  "invalid_phone": "Invalid Phone",
+  "invalid_email": "Invalid Email",
+  "invalid_password": "Invalid Password",
+  "password_mismatch": "Password Mismatch",
+  "terms_required": "Terms Required",
+
+  "enter_valid_name": "Please enter a valid name",
+  "enter_valid_phone": "Please enter a valid phone number",
+  "enter_valid_password": "Please enter a valid password",
+  "enter_valid_email": "Please enter a valid email address",
+
   "verify_your_phone": "Verify your phone",
   "verify_your_email": "Verify your email",
   "we_sent_code": "We sent a 6-digit code to",
@@ -56,6 +73,19 @@
   "create_new_password": "Create new password",
   "create_new_password_subtitle": "Enter your New Password to reset your password.",
   "save_password": "Save password",
+
+  "what_brings_you_to_som_spot": "What brings you to Som Spot?",
+  "choose_the_experience_that_is_right_for_you": "Choose the experience that’s right for you.",
+  "discover_connect_save": "Discover. Connect. Save.",
+
+  "connect_socials": "Connect Socials",
+  "link_accounts_to_verify_reach": "Link your accounts to verify your reach",
+  "upload_photo": "Upload Photo",
+
+  "enter_your_full_name": "Enter your full name",
+  "select_location": "Select Location",
+  "finish_and_setup": "Finish & Setup",
+
   "complete_your_profile": "Complete your profile",
   "complete_profile_subtitle": "Help us personalize your SomSpot experience",
   "add_profile_photo": "Add Profile Photo",
@@ -189,6 +219,15 @@
   "friday": "Friday",
   "saturday": "Saturday",
   "sunday": "Sunday",
+
+  "no_internet_connection": "No internet connection",
+  "location_unavailable": "Location unavailable",
+  "enable_location_nearby_message": "Enable your location to discover businesses and offers nearby.",
+
+  "use_current_location": "Use Current Location",
+  "getting_location": "Getting Location...",
+  "current_location_selected": "Current location selected",
+  "unable_to_get_current_location": "Unable to get your current location",
   "please_enter_address_to_search": "Please enter a street address or city to search.",
   "location_updated_on_map": "Location updated on map!",
   "no_location_matches_found": "No location matches found.",

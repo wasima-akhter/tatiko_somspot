@@ -62,7 +62,7 @@ class AuthController extends GetxController {
       if (!result.success || result.data == null) {
         errorMessage.value = result.message.isNotEmpty
             ? result.message
-            : "Login failed";
+            : AppStrings.loginFailed.tr;
 
         ApiSnackbar.show(errorMessage.value, type: SnackbarType.error);
 
@@ -98,7 +98,7 @@ class AuthController extends GetxController {
 
       AppRouter.route.pushNamed(RoutePath.activeOtpScreen, extra: email);
 
-      ApiSnackbar.show("Registration completed successfully");
+      ApiSnackbar.show(AppStrings.registrationCompletedSuccessfully.tr);
     } finally {
       isRegisterLoading.value = false;
     }
@@ -140,7 +140,9 @@ class AuthController extends GetxController {
 
     if (result.success) {
       ApiSnackbar.show(
-        result.message.isNotEmpty ? result.message : "Verification code resent",
+        result.message.isNotEmpty
+            ? result.message
+            : AppStrings.verificationCodeResent.tr,
         type: SnackbarType.success,
       );
     } else {
@@ -320,6 +322,12 @@ class AuthController extends GetxController {
           return;
 
         case "CREATOR":
+          if (user.sections.creator?.complete == false) {
+            AppRouter.route.goNamed(RoutePath.influencerInfoComplete);
+            // AppRouter.route.goNamed(RoutePath.navigationPages);
+            return;
+          }
+
           AppRouter.route.goNamed(RoutePath.completedProfileInfluencerScreen);
           return;
 
@@ -350,7 +358,7 @@ class AuthController extends GetxController {
     // }
 
     // Business profile incomplete
-    if (user.role == "MERCHANT" && !user.sections.business.complete) {
+    if (user.role == "MERCHANT" && user.sections.business?.complete == false) {
       AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
       return;
     }

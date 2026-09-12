@@ -6,6 +6,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../helper/toast/toast_helper.dart';
+import '../current_location/current_location_controller.dart';
 
 class BusinessLocationController extends GetxController {
   static BusinessLocationController get to => Get.find();
@@ -28,6 +29,8 @@ class BusinessLocationController extends GetxController {
 
   final isMapSearching = false.obs;
 
+  final isGettingCurrentLocation = false.obs;
+
   // =========================
   // Suggestions
   // =========================
@@ -40,6 +43,36 @@ class BusinessLocationController extends GetxController {
 
   bool _isSelectingSuggestion = false;
 
+  // =========================
+  // Use Current Location
+  // =========================
+
+  Future<void> useCurrentLocation() async {
+    isGettingCurrentLocation.value = true;
+    final position = await LocationController.to.getCurrentLocation();
+
+    if (position == null) {
+      return;
+    }
+
+    final latLng = LatLng(position.latitude, position.longitude);
+
+    //
+
+    updateMapPosition(latLng);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      try {
+        mapController.move(latLng, 16);
+      } catch (e) {
+        debugPrint('Could not move map: $e');
+      }
+    });
+
+    isGettingCurrentLocation.value = false;
+
+    AppToast.success(message: AppStrings.currentLocationSelected.tr);
+  }
   // =========================
   // MAP TAP
   // =========================

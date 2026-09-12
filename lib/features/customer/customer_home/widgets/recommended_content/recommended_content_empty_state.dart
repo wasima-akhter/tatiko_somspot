@@ -42,7 +42,7 @@ class RecommendedContentEmptyState extends StatelessWidget {
               children: [
                 Text(
                   AppStrings.noContentYet.tr,
-                  style: context.bodyMedium.copyWith(
+                  style: context.bodyLarge.copyWith(
                     color: AppColors.darkTextColor,
                     fontWeight: FontWeight.w600,
                   ),
@@ -54,9 +54,8 @@ class RecommendedContentEmptyState extends StatelessWidget {
                   AppStrings.newVideosWillAppearHere.tr,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: context.bodySmall.copyWith(
+                  style: context.bodyMedium.copyWith(
                     color: AppColors.subtitleTextColor,
-                    fontSize: 11.sp,
                   ),
                 ),
               ],
@@ -76,9 +75,9 @@ class RecommendedContentEmptyState extends StatelessWidget {
               ),
               child: Text(
                 AppStrings.retry.tr,
-                style: context.bodySmall.copyWith(
+                style: context.bodyMedium.copyWith(
                   color: Colors.white,
-                  fontSize: 12.sp,
+
                   fontWeight: FontWeight.w600,
                 ),
               ),

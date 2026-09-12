@@ -93,8 +93,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                               : CustomButton(
                                   text: AppStrings.sendVerificationCode.tr,
                                   onTap: () {
-                                    if (!_formKey.currentState!.validate())
+                                    if (!_formKey.currentState!.validate()) {
                                       return;
+                                    }
 
                                     AuthController.to.forgotPassword(
                                       email: _emailController.text.trim(),

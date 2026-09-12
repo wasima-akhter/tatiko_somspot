@@ -54,7 +54,8 @@ class RoleRouter {
 
       if (!user.isProfileComplete) {
         // Merchant still needs to complete business profile.
-        if (user.role == "MERCHANT" && !user.sections.business.complete) {
+        if (user.role == "MERCHANT" &&
+            user.sections.business?.complete == false) {
           AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
           return;
         }
@@ -84,7 +85,8 @@ class RoleRouter {
         }
       }
 
-      if (user.role == "MERCHANT" && !user.sections.business.complete) {
+      if (user.role == "MERCHANT" &&
+          user.sections.business?.complete == false) {
         AppRouter.route.goNamed(RoutePath.completeBusinessProfileScreen);
         return;
       }

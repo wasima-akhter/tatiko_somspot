@@ -5,154 +5,6 @@ import '../../../../../share/export/screen_export.dart';
 import '../../../../../share/widgets/custom_text/custom_text.dart';
 import '../controller/choose_role_controller.dart';
 
-/*
-class ChooseRoleScreen extends GetView<ChooseRoleController> {
-  const ChooseRoleScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColorNew,
-
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Gap(40),
-              Text(AppStrings.chooseYourRole.tr, style: context.headlineMedium),
-              const Gap(8),
-              Text(
-                AppStrings.roleSelectionSubtitle.tr,
-                style: context.bodyLarge,
-              ),
-              const Gap(32),
-
-              Expanded(
-                child: ListView.separated(
-                  itemCount: CommonController.to.roles.length,
-                  separatorBuilder: (_, _) => const Gap(12),
-                  itemBuilder: (context, index) {
-                    final role = CommonController.to.roles[index];
-
-                    return Obx(() {
-                      final isSelected = controller.selectedRole.value == role;
-
-                      return _RoleCard(
-                        title:
-                            controller.roleTitles[index].tr.capitalizeFirst ??
-                            '',
-                        isSelected: isSelected,
-                        onTap: () => controller.selectRole(role),
-                      );
-                    });
-                  },
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(bottom: 32, top: 16),
-                child: Obx(
-                  () => CustomButton(
-                    text: AppStrings.continueText.tr,
-                    isLoading: false,
-                    onTap: controller.canContinue
-                        ? controller.confirmAndContinue
-                        : null,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _RoleCard extends StatelessWidget {
-  final String title;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _RoleCard({
-    required this.title,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.primaryColor.withValues(alpha: 0.08)
-              : AppColors.white,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: isSelected
-                ? AppColors.primaryColor
-                : AppColors.linesDarkColor,
-            width: isSelected ? 1.5 : 1,
-          ),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                style: context.titleSmall.copyWith(
-                  color: isSelected
-                      ? AppColors.primaryColor
-                      : AppColors.darkTextColor,
-                ),
-              ),
-            ),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              child: isSelected
-                  ? Container(
-                      key: const ValueKey("selected"),
-                      width: 24,
-                      height: 24,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primaryColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.check,
-                        color: AppColors.white,
-                        size: 16,
-                      ),
-                    )
-                  : Container(
-                      key: const ValueKey("unselected"),
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: AppColors.linesDarkColor,
-                          width: 1.5,
-                        ),
-                      ),
-                    ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-*/
-
 class ChooseRoleScreen extends GetView<ChooseRoleController> {
   const ChooseRoleScreen({super.key});
 
@@ -179,7 +31,7 @@ class ChooseRoleScreen extends GetView<ChooseRoleController> {
                 child: Column(
                   children: [
                     CustomText(
-                      text: 'What brings you to Som Spot?',
+                      text: AppStrings.whatBringsYouToSomSpot.tr,
 
                       fontSize: 18,
                       color: AppColors.blackMainTextColor,
@@ -189,7 +41,7 @@ class ChooseRoleScreen extends GetView<ChooseRoleController> {
                     const Gap(8),
 
                     CustomText(
-                      text: 'Choose the experience that’s right for you.',
+                      text: AppStrings.chooseTheExperienceThatIsRightForYou.tr,
                       fontSize: 15,
                       color: AppColors.grayTextSecondaryColor,
                     ),

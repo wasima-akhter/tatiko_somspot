@@ -7,7 +7,6 @@ class InfluencerCompleteProfileRepository {
   final ApiClient _apiClient;
 
   InfluencerCompleteProfileRepository(this._apiClient);
-
   Future<Response> completeProfile(InfluencerCompleteProfileRequest request) {
     return _apiClient.uploadMultipart(
       url: ApiUrls.editProfile(),
@@ -16,6 +15,8 @@ class InfluencerCompleteProfileRepository {
         "name": request.name,
         "address": request.address,
         "phoneNumber": request.phoneNumber,
+        if (request.latitude != null) "lat": request.latitude.toString(),
+        if (request.longitude != null) "lng": request.longitude.toString(),
       },
       files: [
         MultipartBody(fieldKey: "profile_image", file: request.profileImage),

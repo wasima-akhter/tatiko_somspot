@@ -76,5 +76,11 @@
 
 <key>NSPhotoLibraryAddUsageDescription</key>
 <string>We need access to save your claim QR code to your photos.</string>
+
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Som Spot needs access to your photos and videos so you can upload content.</string>
+
+<key>NSCameraUsageDescription</key>
+<string>Som Spot uses your camera to capture photos and videos for your content.</string>
 </dict>
 </plist>

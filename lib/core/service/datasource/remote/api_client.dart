@@ -3,12 +3,14 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:mime/mime.dart';
 import 'package:som_spot/core/router/route_path.dart';
 import 'package:som_spot/core/router/routes.dart';
 import 'package:som_spot/core/service/datasource/local/app_storage.dart';
+import 'package:som_spot/utils/app_strings/app_strings.dart';
 
 import '../../../../utils/multipart/multipart_body.dart';
 import '../../network/network_checker.dart';
@@ -19,6 +21,7 @@ import 'api_logger.dart';
 class ApiClient {
   final Dio dio;
 
+  /*
   ApiClient({required this.dio}) {
     dio.interceptors.add(
       InterceptorsWrapper(
@@ -57,6 +60,99 @@ class ApiClient {
       ),
     );
   }
+*/
+
+  bool _isRedirectingToLogin = false;
+
+  ApiClient({required this.dio}) {
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final skipAuth = options.extra["skipAuth"] == true;
+
+          if (skipAuth) {
+            return handler.next(options);
+          }
+
+          if (TokenManager.isAccessTokenExpired) {
+            if (TokenManager.isRefreshTokenExpired) {
+              await _redirectToLogin();
+
+              return handler.reject(
+                DioException(
+                  requestOptions: options,
+                  error: "Session expired",
+                  type: DioExceptionType.cancel,
+                ),
+              );
+            }
+
+            final refreshToken = AppStorage.to.refreshToken;
+
+            // Keep your existing behavior here for now.
+            await AppStorage.to.setAccessToken(refreshToken);
+          }
+
+          final accessToken = AppStorage.to.accessToken;
+
+          if (accessToken.isNotEmpty) {
+            options.headers["Authorization"] = "Bearer $accessToken";
+          }
+
+          handler.next(options);
+        },
+
+        onError: (error, handler) async {
+          await _handleAuthError(error);
+
+          handler.next(error);
+        },
+      ),
+    );
+  }
+
+  Future<void> _handleAuthError(DioException error) async {
+    final statusCode = error.response?.statusCode;
+    final responseData = error.response?.data;
+
+    String? message;
+
+    if (responseData is Map) {
+      message = responseData["message"]?.toString();
+    }
+
+    final isUnauthorized = statusCode == 401;
+
+    final isForbidden = statusCode == 403;
+
+    // Your backend currently returns 500 for:
+    // "Access Forbidden: You do not have permission to perform this action"
+    final isBackendAccessForbidden =
+        statusCode == 500 &&
+        message != null &&
+        message.toLowerCase().contains("access forbidden");
+
+    if (isUnauthorized || isForbidden || isBackendAccessForbidden) {
+      await _redirectToLogin();
+    }
+  }
+
+  Future<void> _redirectToLogin() async {
+    if (_isRedirectingToLogin) {
+      return;
+    }
+
+    _isRedirectingToLogin = true;
+
+    try {
+      await AppStorage.to.logout();
+
+      AppRouter.route.goNamed(RoutePath.loginScreen);
+    } finally {
+      _isRedirectingToLogin = false;
+    }
+  }
+
   Future<Map<String, String>> headers({
     String? token,
     bool isJson = true,
@@ -83,7 +179,10 @@ class ApiClient {
     final connected = await NetworkChecker().hasConnection();
 
     if (!connected) {
-      throw ApiException(message: "No internet connection", statusCode: 0);
+      throw ApiException(
+        message: AppStrings.noInternetConnection.tr,
+        statusCode: 0,
+      );
     }
   }
 

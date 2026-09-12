@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:som_spot/features/auth/controller/auth_controller.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
 import 'package:som_spot/features/profile/main_profile/widgets/language_dialog_content.dart';
@@ -6,6 +7,7 @@ import 'package:som_spot/features/profile/main_profile/widgets/profile_menu_item
 import 'package:som_spot/features/profile/main_profile/widgets/profile_section_header.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
 import 'package:som_spot/share/widgets/dialog/custom_dialog.dart';
+import 'package:som_spot/share/widgets/video/video_overlay.dart';
 import 'package:som_spot/utils/common_controller/common_controller.dart';
 
 import '../../../../share/export/screen_export.dart';
@@ -20,6 +22,18 @@ class ProfileScreen extends GetView<ProfileScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: kDebugMode
+          ? FloatingActionButton(
+              child: Text("show"),
+              onPressed: () {
+                AppVideoOverlay.show(
+                  context,
+                  videoUrl: "https://lorem.video/720p",
+                  title: "show",
+                );
+              },
+            )
+          : null,
       backgroundColor: AppColors.backgroundColorNew,
       body: CustomRefreshIndicator(
         onRefresh: () async {
@@ -43,6 +57,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                     // Account section
                     ProfileSectionHeader(title: AppStrings.account.tr),
                     Gap(8.h),
+
                     ProfileMenuCard(
                       children: [
                         ProfileMenuItem(

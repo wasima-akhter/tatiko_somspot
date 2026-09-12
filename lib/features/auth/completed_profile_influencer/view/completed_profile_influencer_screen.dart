@@ -32,7 +32,7 @@ class CompletedProfileInfluencerScreen extends StatelessWidget {
                   Gap(24.h),
 
                   Text(
-                    "Connect Socials",
+                    AppStrings.connectSocials.tr,
                     style: context.headlineMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.darkTextColor,
@@ -42,7 +42,7 @@ class CompletedProfileInfluencerScreen extends StatelessWidget {
                   Gap(8.h),
 
                   Text(
-                    "Link your accounts to verify your reach",
+                    AppStrings.linkAccountsToVerifyReach.tr,
                     style: context.bodyLarge.copyWith(
                       color: AppColors.subtitleTextColor,
                     ),
@@ -107,7 +107,7 @@ class CompletedProfileInfluencerScreen extends StatelessWidget {
                                     Gap(8.h),
 
                                     Text(
-                                      "Upload Photo",
+                                      AppStrings.uploadPhoto.tr,
 
                                       style: context.bodySmall.copyWith(
                                         color: AppColors.primaryColor,
@@ -151,7 +151,7 @@ class CompletedProfileInfluencerScreen extends StatelessWidget {
 
                   Center(
                     child: Text(
-                      "Add Profile Photo",
+                      AppStrings.addProfilePhoto.tr,
 
                       style: context.headlineMedium.copyWith(
                         fontWeight: FontWeight.bold,
@@ -168,9 +168,9 @@ class CompletedProfileInfluencerScreen extends StatelessWidget {
                   CustomTextField(
                     controller: controller.nameController,
 
-                    title: "Full Name",
+                    title: AppStrings.fullName.tr,
 
-                    hintText: "Enter your full name",
+                    hintText: AppStrings.enterYourFullName.tr,
 
                     textInputAction: TextInputAction.next,
 
@@ -208,14 +208,49 @@ class CompletedProfileInfluencerScreen extends StatelessWidget {
                   // ----------------------------------------------------------------
                   // Location Title
                   // ----------------------------------------------------------------
-                  Text(
-                    "Select Location",
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppStrings.selectLocation.tr,
+                        style: context.bodyLarge.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.darkTextColor,
+                        ),
+                      ),
 
-                    style: context.bodyLarge.copyWith(
-                      fontWeight: FontWeight.w600,
-
-                      color: AppColors.darkTextColor,
-                    ),
+                      Obx(
+                        () => TextButton.icon(
+                          onPressed:
+                              locationController.isGettingCurrentLocation.value
+                              ? null
+                              : locationController.useCurrentLocation,
+                          icon:
+                              locationController.isGettingCurrentLocation.value
+                              ? SizedBox(
+                                  width: 16.w,
+                                  height: 16.w,
+                                  child: const CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : Icon(
+                                  Iconsax.gps,
+                                  size: 18.sp,
+                                  color: AppColors.primaryColor,
+                                ),
+                          label: Text(
+                            locationController.isGettingCurrentLocation.value
+                                ? AppStrings.gettingLocation.tr
+                                : AppStrings.useCurrentLocation.tr,
+                            style: context.bodyMedium.copyWith(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
 
                   Gap(10.h),
@@ -336,7 +371,7 @@ class CompletedProfileInfluencerScreen extends StatelessWidget {
                     () => SizedBox(
                       width: double.infinity,
                       child: CustomButton(
-                        text: "Finish & Setup",
+                        text: AppStrings.finishAndSetup.tr,
                         isLoading: controller.isLoading.value,
                         onTap: () {
                           if (!formKey.currentState!.validate()) {

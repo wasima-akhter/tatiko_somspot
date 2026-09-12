@@ -50,7 +50,7 @@ class CustomText extends StatelessWidget {
         maxLines: maxLines,
         overflow: overflow,
         style: TextStyle(
-          fontFamily: "Urbanist",
+          fontFamily: "Poppins",
           fontSize: fontSize.sp,
           fontWeight: fontWeight,
           color: color,

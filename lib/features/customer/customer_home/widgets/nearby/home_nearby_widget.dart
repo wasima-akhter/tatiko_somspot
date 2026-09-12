@@ -18,15 +18,6 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
   final controller = HomeController.to;
 
   @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.refreshNearbyBusinesses();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,13 +50,28 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
 
         Gap(16.h),
 
-        Obx(
-          () => ApiStatusBuilder(
+        Obx(() {
+          // ----------------------------------------------------------
+          // Location unavailable
+          // ----------------------------------------------------------
+          if (controller.nearbyLocationUnavailable.value) {
+            return NearbyEmptyState(
+              icon: Icons.location_off_outlined,
+              title: AppStrings.locationUnavailable.tr,
+              message: AppStrings.enableLocationNearbyMessage.tr,
+              onRetry: controller.retryNearbyLocation,
+            );
+          }
+
+          // ----------------------------------------------------------
+          // API state
+          // ----------------------------------------------------------
+          return ApiStatusBuilder(
             status: controller.nearbyBusinessesPaginator.status.value,
             errorMessage:
                 controller.nearbyBusinessesPaginator.errorMessage.value,
             noDataWidget: NearbyEmptyState(
-              icon: Icons.location_off_outlined,
+              icon: Icons.storefront_outlined,
               title: AppStrings.noNearbyPlacesYet.tr,
               message: AppStrings.noNearbyPlacesMessage.tr,
               onRetry: controller.loadNearbyBusinesses,
@@ -94,7 +100,8 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
                   child: Center(
                     child: Text(
                       AppStrings.noNearbyMerchantsFound.tr,
-                      style: context.bodyMedium.copyWith(
+                      textAlign: TextAlign.center,
+                      style: context.bodyLarge.copyWith(
                         color: AppColors.subtitleTextColor,
                       ),
                     ),
@@ -112,8 +119,8 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
                   ),
                   controller: controller.nearbyBusinessesScrollController,
                   itemCount: controller.nearbyBusinesses.length,
-                  separatorBuilder: (context, index) => Gap(16.h),
-                  itemBuilder: (context, index) {
+                  separatorBuilder: (_, index) => Gap(16.h),
+                  itemBuilder: (_, index) {
                     final item = controller.nearbyBusinesses[index];
 
                     return NearbyBusinessCard(item: item);
@@ -121,8 +128,8 @@ class _HomeNearbyWidgetState extends State<HomeNearbyWidget> {
                 ),
               );
             },
-          ),
-        ),
+          );
+        }),
       ],
     );
   }

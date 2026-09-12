@@ -1,7 +1,9 @@
 import 'package:som_spot/features/customer/customer_home/controller/home_controller.dart';
+import 'package:som_spot/helper/text_utils/string_extension.dart';
 import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../../share/widgets/ui_status_builder/api_status_builder.dart';
+import '../../../../share/widgets/ui_status_builder/error_card.dart';
 import '../../customer_business_details/widgets/tab_modulars/offer_tab_content/merchant_offer_card.dart';
 
 class HomeTopDealsWidget extends StatelessWidget {
@@ -55,10 +57,10 @@ class HomeTopDealsWidget extends StatelessWidget {
             status: paginator.status.value,
             errorMessage: paginator.errorMessage.value,
             onRetry: controller.loadTopDeals,
-            noDataWidget: _TopDealsEmpty(),
+            noDataWidget: _TopDealsEmpty(onRetry: controller.loadTopDeals),
             builder: (_) {
               if (paginator.items.isEmpty) {
-                return _TopDealsEmpty();
+                return _TopDealsEmpty(onRetry: controller.loadTopDeals);
               }
 
               // Only show first 2 on Home
@@ -85,16 +87,19 @@ class HomeTopDealsWidget extends StatelessWidget {
 }
 
 class _TopDealsEmpty extends StatelessWidget {
-  const _TopDealsEmpty();
+  final VoidCallback onRetry;
+
+  const _TopDealsEmpty({required this.onRetry});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(24.w),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: AppColors.backgroundsLinesColor),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
@@ -103,14 +108,43 @@ class _TopDealsEmpty extends StatelessWidget {
           ),
         ],
       ),
-      child: Center(
-        child: Text(
-          AppStrings.noTopDealsYet.tr,
-          textAlign: TextAlign.center,
-          style: context.bodyMedium.copyWith(
-            color: AppColors.subtitleTextColor,
+      child: Row(
+        children: [
+          Container(
+            width: 44.w,
+            height: 44.w,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor.withValues(alpha: 0.08),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.local_offer_outlined,
+              size: 22.sp,
+              color: AppColors.primaryColor,
+            ),
           ),
-        ),
+
+          Gap(12.h),
+
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text(
+                    AppStrings.noTopDealsYet.tr.capitalizeWords(),
+                    textAlign: TextAlign.left,
+                    style: context.bodyLarge.copyWith(height: 1.4),
+                  ),
+                ),
+
+                Gap(14.h),
+
+                RetryButton(onTap: onRetry),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

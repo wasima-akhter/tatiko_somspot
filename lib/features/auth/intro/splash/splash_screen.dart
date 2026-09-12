@@ -3,7 +3,7 @@ import 'package:som_spot/core/custom_assets/assets.gen.dart';
 import 'package:som_spot/core/service/datasource/local/app_storage.dart';
 import 'package:som_spot/share/export/screen_export.dart';
 
-import '../../../../core/router/role_router.dart';
+import '../../../../core/router/splash_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // Already logged in
     if (storage.isLoggedIn && storage.accessToken.isNotEmpty) {
-      RoleRouter.navigateByRole();
+      await SplashRouter.navigate();
       return;
     }
 
@@ -77,7 +77,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
             const Gap(20),
 
-            Text("Discover. Connect. Save.", style: context.headlineSmall),
+            Text(
+              AppStrings.discoverConnectSave.tr,
+              style: context.headlineSmall,
+            ),
           ],
         ),
       ),

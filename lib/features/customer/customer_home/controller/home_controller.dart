@@ -7,6 +7,7 @@ import '../../../../share/widgets/paginator/paginator.dart';
 import '../../../../utils/enum/app_enum.dart';
 import '../../../core/business/response/business-response.dart';
 import '../../../core/category/binding/category_binding_helper.dart';
+import '../../../core/location/current_location/current_location_controller.dart';
 import '../../../profile/main_profile/controller/profile_controller.dart';
 import '../../customer_business_list/controller/customer_business_list_controller.dart';
 import '../model/home_content_creator_model.dart';
@@ -23,8 +24,8 @@ class HomeController extends GetxController {
   ProfileScreenController get profileController => ProfileScreenController.to;
 
   //
-
   final selectedCategoryId = "".obs;
+
   // ---------------------------------------------------------------------------
   // Nearby Businesses
   // ---------------------------------------------------------------------------
@@ -37,15 +38,23 @@ class HomeController extends GetxController {
 
   String? nearbyBusinessesError;
 
-  // Current nearby-business search parameters
-  final nearbyLat = 23.8103.obs;
-  final nearbyLng = 90.4125.obs;
+  // ---------------------------------------------------------------------------
+  // Location
+  // ---------------------------------------------------------------------------
+
+  LocationController get locationController => LocationController.to;
+
+  final nearbyLat = RxnDouble();
+  final nearbyLng = RxnDouble();
+
+  final nearbyLocationUnavailable = false.obs;
+
   final double _nearbyRadiusKm = 10;
   String? _nearbyCategory;
 
-  // List<BusinessModel> get nearbyBusinesses => nearbyBusinessesPaginator.items;
   List<BusinessModel> get nearbyBusinesses {
     final items = nearbyBusinessesPaginator.items;
+
     return items.sublist(0, items.length < 3 ? items.length : 3);
   }
 
@@ -56,26 +65,20 @@ class HomeController extends GetxController {
     // Load profile once.
     profileController.getProfile();
 
-    // _nearbyLat = profileController.userLocationCords.value.coordinates.first;
-    // _nearbyLng = profileController.userLocationCords.value.coordinates.last;
-
-    //
+    // Nearby businesses
     _initNearbyBusinessesPaginator();
-
     nearbyBusinessesScrollController.addListener(_onNearbyBusinessesScroll);
+    _initializeLocationAndNearbyBusinesses();
 
+    // Top Deals
     _initTopDealsPaginator();
     topDealsScrollController.addListener(_onTopDealsScroll);
 
-    //
+    // Creator Content
     _initCreatorContentPaginator();
-
     creatorContentScrollController.addListener(_onCreatorContentScroll);
 
     loadCreatorContent();
-
-    //
-    // Load first page of top deals.
     loadTopDeals();
   }
 
@@ -141,31 +144,97 @@ class HomeController extends GetxController {
   // ---------------------------------------------------------------------------
   // Nearby Businesses
   // ---------------------------------------------------------------------------
-
-  Future<void> loadNearbyBusinesses() async {
-    print('Before: ${nearbyBusinessesPaginator.items.length}');
-    await nearbyBusinessesPaginator.loadInitial();
-    print('After: ${nearbyBusinessesPaginator.items.length}');
-  }
+  // ---------------------------------------------------------------------------
+  // Nearby Businesses
+  // ---------------------------------------------------------------------------
 
   void _initNearbyBusinessesPaginator() {
-    print('nearbyLat : $nearbyLat');
-
     nearbyBusinessesPaginator = Paginator<BusinessModel>(
       fetchPage: (page, limit) async {
+        final lat = nearbyLat.value;
+        final lng = nearbyLng.value;
+
+        // Location is required before making the API request.
+        if (lat == null || lng == null) {
+          throw Exception('Location is unavailable');
+        }
+
         final response = await _service.getNearbyBusinesses(
           page: page,
           limit: limit,
-          lat: nearbyLat.value,
-          lng: nearbyLng.value,
+          lat: lat,
+          lng: lng,
           radiusKm: _nearbyRadiusKm,
           category: _nearbyCategory,
           locationMode: BusinessLocationMode.nearby,
         );
 
-        return response.data!;
+        if (!response.success || response.data == null) {
+          nearbyBusinessesStatus.value = ApiStatus.error;
+          nearbyBusinessesError = response.message;
+
+          throw Exception(response.message);
+        }
+
+        final result = response.data!;
+
+        nearbyBusinessesStatus.value = result.data.isEmpty
+            ? ApiStatus.noDataFound
+            : ApiStatus.completed;
+
+        return result;
       },
     );
+  }
+
+  Future<void> _initializeLocationAndNearbyBusinesses() async {
+    nearbyLocationUnavailable.value = false;
+    nearbyBusinessesStatus.value = ApiStatus.loading;
+    nearbyBusinessesError = null;
+
+    final position = await locationController.getCurrentLocation();
+
+    if (position == null) {
+      nearbyLocationUnavailable.value = true;
+      nearbyBusinessesStatus.value = ApiStatus.noDataFound;
+
+      nearbyBusinessesError =
+          'Location is unavailable. Enable location to find businesses nearby.';
+
+      return;
+    }
+
+    nearbyLat.value = position.latitude;
+    nearbyLng.value = position.longitude;
+
+    debugPrint(
+      'Home location: '
+      '${nearbyLat.value}, ${nearbyLng.value}',
+    );
+
+    await loadNearbyBusinesses();
+  }
+
+  Future<void> loadNearbyBusinesses() async {
+    if (nearbyLat.value == null || nearbyLng.value == null) {
+      return;
+    }
+
+    debugPrint(
+      'Loading nearby businesses at: '
+      '${nearbyLat.value}, ${nearbyLng.value}',
+    );
+
+    await nearbyBusinessesPaginator.loadInitial();
+
+    debugPrint(
+      'Nearby businesses loaded: '
+      '${nearbyBusinessesPaginator.items.length}',
+    );
+  }
+
+  Future<void> retryNearbyLocation() async {
+    await _initializeLocationAndNearbyBusinesses();
   }
 
   void _onNearbyBusinessesScroll() {
@@ -178,14 +247,18 @@ class HomeController extends GetxController {
     }
   }
 
-  /// Load the next page.
   Future<void> loadMoreNearbyBusinesses() {
     return nearbyBusinessesPaginator.loadMore();
   }
 
-  /// Refresh using the current location/filter.
-  Future<void> refreshNearbyBusinesses() {
-    return nearbyBusinessesPaginator.refresh();
+  Future<void> refreshNearbyBusinesses() async {
+    // If we don't currently have a location, try to obtain it first.
+    if (nearbyLat.value == null || nearbyLng.value == null) {
+      await _initializeLocationAndNearbyBusinesses();
+      return;
+    }
+
+    await nearbyBusinessesPaginator.refresh();
   }
 
   @override
@@ -199,9 +272,13 @@ class HomeController extends GetxController {
     topDealsScrollController.dispose();
     topDealsPaginator.dispose();
 
+    creatorContentScrollController.removeListener(_onCreatorContentScroll);
+
+    creatorContentScrollController.dispose();
+    creatorContentPaginator.dispose();
+
     super.onClose();
   }
-
   // ---------------------------------------------------------------------------
   // Creator Content
   // ---------------------------------------------------------------------------

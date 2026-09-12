@@ -50,7 +50,7 @@ class NearbyEmptyState extends StatelessWidget {
                   title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: context.bodyMedium.copyWith(
+                  style: context.bodyLarge.copyWith(
                     color: AppColors.darkTextColor,
                     fontWeight: FontWeight.w700,
                   ),
@@ -60,7 +60,7 @@ class NearbyEmptyState extends StatelessWidget {
                   message,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: context.bodySmall.copyWith(
+                  style: context.bodyMedium.copyWith(
                     color: AppColors.subtitleTextColor,
                     height: 1.3,
                   ),

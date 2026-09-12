@@ -22,96 +22,81 @@ class LocationController extends GetxController {
   // =========================
 
   double? get lat => latitude.value;
+
   double? get lng => longitude.value;
 
   bool get hasValidLocation =>
       latitude.value != null && longitude.value != null;
 
   // =========================
-  // INIT
+  // GET CURRENT LOCATION
   // =========================
 
-  @override
-  void onInit() {
-    super.onInit();
-
-    // Try automatically when controller starts.
-    getCurrentLocation();
-  }
-
-  // =========================
-  // GET LOCATION
-  // =========================
-
-  Future<bool> getCurrentLocation({bool showSettingsOnFailure = true}) async {
-    if (isLoading.value) return hasValidLocation;
+  Future<Position?> getCurrentLocation({
+    bool showSettingsOnFailure = true,
+  }) async {
+    if (isLoading.value) {
+      return hasValidLocation ? _currentPosition : null;
+    }
 
     try {
       isLoading.value = true;
 
       // --------------------------------------------------
-      // 1. Check if location service/GPS is enabled
+      // 1. Check location service
       // --------------------------------------------------
 
       isLocationServiceEnabled.value =
           await Geolocator.isLocationServiceEnabled();
 
       if (!isLocationServiceEnabled.value) {
-        print('Location service is disabled.');
-
         if (showSettingsOnFailure) {
           await _showLocationServiceDialog();
         }
 
-        return false;
+        return null;
       }
 
       // --------------------------------------------------
-      // 2. Check current permission
+      // 2. Check permission
       // --------------------------------------------------
 
       permission.value = await Geolocator.checkPermission();
 
       // --------------------------------------------------
-      // 3. Already have permission → don't request again
+      // 3. Request permission if needed
       // --------------------------------------------------
 
-      if (permission.value == LocationPermission.always ||
-          permission.value == LocationPermission.whileInUse) {
-        print('Location permission already granted.');
-      }
-      // --------------------------------------------------
-      // 4. Permission not granted → request it
-      // --------------------------------------------------
-      else if (permission.value == LocationPermission.denied) {
-        print('Requesting location permission...');
-
+      if (permission.value == LocationPermission.denied) {
         permission.value = await Geolocator.requestPermission();
-
-        // User denied the request
-        if (permission.value == LocationPermission.denied) {
-          print('Location permission denied.');
-
-          await _showPermissionDeniedDialog();
-
-          return false;
-        }
       }
-      // --------------------------------------------------
-      // 5. Permission permanently denied
-      // --------------------------------------------------
-      else if (permission.value == LocationPermission.deniedForever) {
-        print('Location permission permanently denied.');
 
+      // --------------------------------------------------
+      // 4. User denied permission
+      // --------------------------------------------------
+
+      if (permission.value == LocationPermission.denied) {
         if (showSettingsOnFailure) {
           await _showPermissionDeniedDialog();
         }
 
-        return false;
+        return null;
       }
 
       // --------------------------------------------------
-      // 6. Get current location
+      // 5. Permanently denied
+      // --------------------------------------------------
+
+      if (permission.value == LocationPermission.deniedForever) {
+        if (showSettingsOnFailure) {
+          await _showPermissionDeniedForeverDialog();
+        }
+
+        return null;
+      }
+
+      // --------------------------------------------------
+      // 6. Get current position
       // --------------------------------------------------
 
       final position = await Geolocator.getCurrentPosition(
@@ -122,20 +107,19 @@ class LocationController extends GetxController {
 
       latitude.value = position.latitude;
       longitude.value = position.longitude;
-
       hasLocation.value = true;
 
-      print(
+      debugPrint(
         'User location: '
         '${position.latitude}, ${position.longitude}',
       );
 
-      return true;
+      return position;
     } catch (e, stackTrace) {
-      print('Get current location error: $e');
+      debugPrint('Get current location error: $e');
       debugPrintStack(stackTrace: stackTrace);
 
-      return false;
+      return null;
     } finally {
       isLoading.value = false;
     }
@@ -145,8 +129,29 @@ class LocationController extends GetxController {
   // RETRY
   // =========================
 
-  Future<bool> retryLocation() async {
+  Future<Position?> retryLocation() async {
     return getCurrentLocation(showSettingsOnFailure: true);
+  }
+
+  // =========================
+  // CURRENT POSITION
+  // =========================
+
+  Position? get _currentPosition {
+    if (!hasValidLocation) return null;
+
+    return Position(
+      longitude: longitude.value!,
+      latitude: latitude.value!,
+      timestamp: DateTime.now(),
+      accuracy: 0,
+      altitude: 0,
+      altitudeAccuracy: 0,
+      heading: 0,
+      headingAccuracy: 0,
+      speed: 0,
+      speedAccuracy: 0,
+    );
   }
 
   // =========================
@@ -162,7 +167,7 @@ class LocationController extends GetxController {
   }
 
   // =========================
-  // PERMISSION DIALOG
+  // PERMISSION DENIED
   // =========================
 
   Future<void> _showPermissionDeniedDialog() async {
@@ -171,17 +176,10 @@ class LocationController extends GetxController {
         title: Text(AppStrings.locationPermissionRequired.tr),
         content: Text(AppStrings.locationPermissionMessage.tr),
         actions: [
-          TextButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: Text(AppStrings.cancel.tr),
-          ),
+          TextButton(onPressed: Get.back, child: Text(AppStrings.cancel.tr)),
           TextButton(
             onPressed: () async {
               Get.back();
-
-              // Try permission again.
               await getCurrentLocation();
             },
             child: Text(AppStrings.tryAgain.tr),
@@ -193,7 +191,7 @@ class LocationController extends GetxController {
   }
 
   // =========================
-  // PERMANENTLY DENIED
+  // PERMISSION DENIED FOREVER
   // =========================
 
   Future<void> _showPermissionDeniedForeverDialog() async {
@@ -202,16 +200,10 @@ class LocationController extends GetxController {
         title: Text(AppStrings.enableLocationPermission.tr),
         content: Text(AppStrings.locationPermissionDisabledMessage.tr),
         actions: [
-          TextButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: Text(AppStrings.cancel.tr),
-          ),
+          TextButton(onPressed: Get.back, child: Text(AppStrings.cancel.tr)),
           TextButton(
             onPressed: () async {
               Get.back();
-
               await Geolocator.openAppSettings();
             },
             child: Text(AppStrings.openSettings.tr),
@@ -232,20 +224,13 @@ class LocationController extends GetxController {
         title: Text(AppStrings.locationIsDisabled.tr),
         content: Text(AppStrings.locationDisabledMessage.tr),
         actions: [
-          TextButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: const Text('Cancel'),
-          ),
+          TextButton(onPressed: Get.back, child: Text(AppStrings.cancel.tr)),
           TextButton(
             onPressed: () async {
               Get.back();
 
               await Geolocator.openLocationSettings();
 
-              // Give the settings screen a moment to close,
-              // then try again.
               await Future.delayed(const Duration(milliseconds: 500));
 
               await getCurrentLocation();

@@ -1,5 +1,6 @@
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+import 'package:som_spot/helper/text_utils/string_extension.dart';
 import 'package:som_spot/share/export/screen_export.dart';
 
 import '../../../utils/api_urls/api_urls.dart';
@@ -20,7 +21,7 @@ class AppVideoOverlay {
         return Center(
           child: AppVideoPlayer(
             url: getVideoUrl(
-              // "https://nc5cnwcx-8000.inc1.devtunnels.ms/uploads/draftVideo/1785900922470-534162-21.mp4" ??
+              //     "https://nc5cnwcx-8000.inc1.devtunnels.ms/uploads/draftVideo/1785900922470-534162-21.mp4" ??
               videoUrl,
               ApiUrls.base, // your actual base url
             ),
@@ -80,7 +81,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
     videoController = VideoController(
       player,
       configuration: const VideoControllerConfiguration(
-        enableHardwareAcceleration: true,
+        enableHardwareAcceleration: false,
       ),
     );
 
@@ -179,27 +180,35 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
+      borderRadius: BorderRadius.circular(20),
       child: Center(
         child: Container(
           width: MediaQuery.of(context).size.width * .92,
-          height: MediaQuery.of(context).size.height * .4,
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * .7,
+          ),
           decoration: BoxDecoration(
-            color: Colors.grey.shade200,
+            color: Colors.grey.shade300,
             borderRadius: BorderRadius.circular(20),
           ),
-          // clipBehavior: Clip.antiAlias,
+          clipBehavior: Clip.antiAlias,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               // Header
               Container(
                 height: 56,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                color: Colors.black87,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.black87,
+                ),
+
                 child: Row(
                   children: [
                     Expanded(
                       child: Text(
-                        widget.title ?? "",
+                        (widget.title ?? "").capitalizeWords(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(

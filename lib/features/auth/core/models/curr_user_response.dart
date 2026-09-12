@@ -35,14 +35,20 @@ class CurrentUserResponse {
 
 class UserSections {
   final ProfileSection personal;
-  final ProfileSection business;
+  final ProfileSection? business;
+  final ProfileSection? creator;
 
-  UserSections({required this.personal, required this.business});
+  UserSections({required this.personal, this.business, this.creator});
 
   factory UserSections.fromJson(Map<String, dynamic> json) {
     return UserSections(
       personal: ProfileSection.fromJson(json["personal"] ?? {}),
-      business: ProfileSection.fromJson(json["business"] ?? {}),
+      business: json["business"] != null
+          ? ProfileSection.fromJson(json["business"])
+          : null,
+      creator: json["creator"] != null
+          ? ProfileSection.fromJson(json["creator"])
+          : null,
     );
   }
 }

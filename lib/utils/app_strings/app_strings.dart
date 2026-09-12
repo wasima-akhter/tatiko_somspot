@@ -80,6 +80,48 @@ class AppStrings {
   static const String alreadyHaveAccount = "already_have_account";
 
   // Additional Auth Strings
+  // AppStrings
+
+  static const verificationCodeResent = 'verification_code_resent';
+
+  static const registrationCompletedSuccessfully =
+      'registration_completed_successfully';
+
+  static const loginFailed = 'login_failed';
+  //
+  static const enterValidName = 'enter_valid_name';
+
+  static const enterValidPhone = 'enter_valid_phone';
+
+  static const enterValidPassword = 'enter_valid_password';
+
+  static const enterValidEmail = 'enter_valid_email';
+  //
+  static const phoneRequired = 'phone_required';
+
+  static const nameRequired = 'name_required';
+
+  static const invalidName = 'invalid_name';
+
+  static const invalidPhone = 'invalid_phone';
+
+  static const invalidEmail = 'invalid_email';
+
+  static const invalidPassword = 'invalid_password';
+
+  static const passwordMismatch = 'password_mismatch';
+
+  static const termsRequired = 'terms_required';
+
+  static const connectSocials = 'connect_socials';
+  static const linkAccountsToVerifyReach = 'link_accounts_to_verify_reach';
+  static const uploadPhoto = 'upload_photo';
+  static const addProfilePhoto = 'add_profile_photo';
+  static const enterYourFullName = 'enter_your_full_name';
+  static const selectLocation = 'select_location';
+  static const finishAndSetup = 'finish_and_setup';
+
+  //
   static const String verifyYourPhone = "verify_your_phone";
   static const String verifyYourEmail = "verify_your_email";
   static const String weSentCode = "we_sent_code";
@@ -96,8 +138,15 @@ class AppStrings {
   static const String savePassword = "save_password";
   static const String completeYourProfile = "complete_your_profile";
   static const String completeProfileSubtitle = "complete_profile_subtitle";
-  static const String addProfilePhoto = "add_profile_photo";
+
   static const String finishAndExplore = "finish_and_explore";
+
+  static const whatBringsYouToSomSpot = 'what_brings_you_to_som_spot';
+
+  static const chooseTheExperienceThatIsRightForYou =
+      'choose_the_experience_that_is_right_for_you';
+
+  static const discoverConnectSave = 'discover_connect_save';
 
   // Home Screen
   static const String searchPlaceholder = "search_placeholder";
@@ -487,8 +536,6 @@ class AppStrings {
   static const String validWebsiteUrl = "valid_website_url";
 
   static const String urlProtocolRequired = "url_protocol_required";
-
-  static const String nameRequired = "name_required";
 
   static const String validName = "valid_name";
 
@@ -1029,7 +1076,7 @@ class AppStrings {
   static const String tapToRate = "tap_to_rate";
   static const String submitRating = "submit_rating";
 
-  //OTHER Stuff
+  // --other
 
   static const String seeLess = "see_less";
   static const String seeMore = "see_more";
@@ -1040,6 +1087,8 @@ class AppStrings {
   static const String unableToPlayVideo = "unable_to_play_video";
   static const String videoUnavailableOrConnectionFailed =
       "video_may_be_unavailable_or_connection_failed";
+
+  // --Location
 
   static const String locationPermissionRequired =
       "location_permission_required";
@@ -1059,6 +1108,11 @@ class AppStrings {
 
   static const String enableLocation = "enable_location";
 
+  static const useCurrentLocation = 'use_current_location';
+  static const gettingLocation = 'getting_location';
+  static const currentLocationSelected = 'current_location_selected';
+  static const unableToGetCurrentLocation = 'unable_to_get_current_location';
+
   // other
   static const String noTopDealsYet = "no_top_deals_yet";
   static const String noTopDealsMessage = "no_top_deals_message";
@@ -1074,4 +1128,10 @@ class AppStrings {
   static const String locationNotAvailable = "location_not_available";
   static const String toAddress = "to_address";
   static const String fromAddress = "from_address";
+  static const String noInternetConnection = 'no_internet_connection';
+
+  //
+  static const String locationUnavailable = 'location_unavailable';
+  static const String enableLocationNearbyMessage =
+      'enable_location_nearby_message';
 }

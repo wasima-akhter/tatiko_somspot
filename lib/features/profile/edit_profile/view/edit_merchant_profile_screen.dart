@@ -7,6 +7,10 @@ import 'package:som_spot/share/widgets/network_image/custom_network_image.dart';
 import 'package:som_spot/share/widgets/text_field/custom_text_field.dart';
 
 import '../../../../share/export/screen_export.dart';
+import '../../../../utils/common_controller/common_controller.dart';
+import '../../../core/location/controller/business_location_controller.dart';
+import '../../../core/location/widgets/app_location_picker.dart';
+import '../../../core/location/widgets/app_location_suggestions.dart';
 
 class EditMerchantProfileScreen extends StatefulWidget {
   const EditMerchantProfileScreen({super.key});
@@ -197,6 +201,13 @@ class _EditMerchantProfileScreenState extends State<EditMerchantProfileScreen> {
                       ),
                     ),
                   ),
+
+                  Gap(20.h),
+
+                  if (CommonController.to.isInfluencer) ...[
+                    _buildInfluencerLocation(context),
+                    Gap(24.h),
+                  ],
                   Gap(48.h),
 
                   // Save Changes button
@@ -226,6 +237,153 @@ class _EditMerchantProfileScreenState extends State<EditMerchantProfileScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildInfluencerLocation(BuildContext context) {
+    final locationController = BusinessLocationController.to;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              AppStrings.selectLocation.tr,
+              style: context.bodyLarge.copyWith(
+                fontWeight: FontWeight.w600,
+                color: AppColors.darkTextColor,
+              ),
+            ),
+
+            Obx(
+              () => TextButton.icon(
+                onPressed: locationController.isGettingCurrentLocation.value
+                    ? null
+                    : locationController.useCurrentLocation,
+                icon: locationController.isGettingCurrentLocation.value
+                    ? SizedBox(
+                        width: 16.w,
+                        height: 16.w,
+                        child: const CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : Icon(
+                        Iconsax.gps,
+                        size: 18.sp,
+                        color: AppColors.primaryColor,
+                      ),
+                label: Text(
+                  locationController.isGettingCurrentLocation.value
+                      ? AppStrings.gettingLocation.tr
+                      : AppStrings.useCurrentLocation.tr,
+                  style: context.bodyMedium.copyWith(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        Gap(10.h),
+
+        ClipRRect(
+          borderRadius: BorderRadius.circular(16.r),
+          child: Container(
+            height: 220.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.r),
+              border: Border.all(
+                color: AppColors.primaryColor.withValues(alpha: 0.2),
+                width: 1.5,
+              ),
+            ),
+            child: Obx(
+              () => Stack(
+                children: [
+                  AppLocationPicker(
+                    mapController: locationController.mapController,
+                    selectedLatLng: locationController.selectedLatLng.value,
+                    isSearching: locationController.isMapSearching.value,
+                    onMapTap: locationController.updateMapPosition,
+                  ),
+
+                  if (locationController.isMapSearching.value)
+                    AppLocationSuggestions(
+                      suggestions: locationController.suggestions,
+                      onTap: locationController.selectSuggestion,
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+
+        Gap(16.h),
+
+        CustomTextField(
+          controller: locationController.addressController,
+          title: AppStrings.streetAddress.tr,
+          hintText: AppStrings.enterStreetAddress.tr,
+          fillColor: AppColors.white,
+          onChanged: locationController.onAddressChanged,
+          onFieldSubmitted: (_) =>
+              locationController.searchLocationFromAddress(),
+          prefixIcon: Icon(
+            Iconsax.location,
+            size: 20.sp,
+            color: AppColors.hintTextColor,
+          ),
+          suffixIcon: Obx(() {
+            if (locationController.isSearchingSuggestions.value) {
+              return Padding(
+                padding: EdgeInsets.all(12.w),
+                child: SizedBox(
+                  width: 18.w,
+                  height: 18.w,
+                  child: const CircularProgressIndicator(strokeWidth: 2),
+                ),
+              );
+            }
+
+            return IconButton(
+              onPressed: locationController.searchLocationFromAddress,
+              icon: Icon(
+                Iconsax.search_normal,
+                color: AppColors.primaryColor,
+                size: 20.sp,
+              ),
+            );
+          }),
+        ),
+
+        Gap(16.h),
+
+        CustomTextField(
+          controller: locationController.cityController,
+          title: AppStrings.city.tr,
+          hintText: AppStrings.enterCity.tr,
+          textInputAction: TextInputAction.search,
+          prefixIcon: Icon(
+            Iconsax.building,
+            size: 20.sp,
+            color: AppColors.hintTextColor,
+          ),
+          suffixIcon: IconButton(
+            onPressed: locationController.searchLocationFromAddress,
+            icon: Icon(
+              Iconsax.search_normal,
+              size: 20.sp,
+              color: AppColors.primaryColor,
+            ),
+          ),
+          onFieldSubmitted: (_) =>
+              locationController.searchLocationFromAddress(),
+        ),
+      ],
     );
   }
 }

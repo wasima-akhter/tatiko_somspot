@@ -110,10 +110,6 @@ class CompletedProfileInfluencerController extends GetxController {
     super.onInit();
 
     location.reset(initialLatLng: const LatLng(23.8103, 90.4125));
-
-    if (categoryController.categories.isEmpty) {
-      categoryController.loadInitialCategories();
-    }
   }
 
   // ---------------------------------------------------------------------------
@@ -162,9 +158,11 @@ class CompletedProfileInfluencerController extends GetxController {
 
     return true;
   }
+
   // ---------------------------------------------------------------------------
   // API - Step 1 Basic Profile
   // ---------------------------------------------------------------------------
+  final locationController = BusinessLocationController.to;
 
   Future<void> completeBasicProfile() async {
     if (!validateBasicProfile()) return;
@@ -172,15 +170,18 @@ class CompletedProfileInfluencerController extends GetxController {
     try {
       isLoading.value = true;
 
+      final selectedLocation =
+          BusinessLocationController.to.selectedLatLng.value;
+
       final result = await _service.completeProfile(
         InfluencerCompleteProfileRequest(
           name: nameController.text.trim(),
-
-          address: location.addressController.text.trim(),
-
+          address: BusinessLocationController.to.addressController.text.trim(),
           phoneNumber: phoneController.text.trim(),
-
           profileImage: File(profileImagePath.value!),
+
+          latitude: selectedLocation.latitude,
+          longitude: selectedLocation.longitude,
         ),
       );
 
@@ -196,7 +197,6 @@ class CompletedProfileInfluencerController extends GetxController {
       isLoading.value = false;
     }
   }
-
   // ---------------------------------------------------------------------------
   // API - Step 2 Creator Profile
   // ---------------------------------------------------------------------------

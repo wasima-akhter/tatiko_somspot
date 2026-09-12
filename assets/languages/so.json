@@ -43,6 +43,23 @@
   "confirm_password": "Xaqiiji Furaha Sirta",
   "agree_to_somspot": "Ogoloow SomSpot's",
   "already_have_account": "Miyaad hore u leedahay koonto?",
+
+  "verification_code_resent": "Koodhka xaqiijinta ayaa dib loo diray",
+  "registration_completed_successfully": "Diiwaangelintu si guul leh ayay u dhammaatay",
+  "login_failed": "Gelitaanku wuu fashilmay",
+  "invalid_name": "Magac aan sax ahayn",
+  "phone_required": "Lambarka taleefanka ayaa loo baahan yahay",
+  "invalid_phone": "Lambar taleefan aan sax ahayn",
+
+  "enter_valid_name": "Fadlan geli magac sax ah",
+  "enter_valid_phone": "Fadlan geli lambar taleefan sax ah",
+  "enter_valid_password": "Fadlan geli furaha sirta ah ee saxda ah",
+  "enter_valid_email": "Fadlan geli iimayl sax ah",
+  "invalid_email": "Iimayl aan sax ahayn",
+  "invalid_password": "Furaha sirta ah ma saxna",
+  "password_mismatch": "Furayaasha sirta ah isma waafaqaan",
+  "terms_required": "Shuruudaha ayaa loo baahan yahay",
+
   "verify_your_phone": "Xaqiiji taleefankaaga",
   "verify_your_email": "Xaqiiji iimaylkaaga",
   "we_sent_code": "Waxaan u dirnay koodh 6-lambar ah",
@@ -56,6 +73,18 @@
   "create_new_password": "Abuur fure sir ah oo cusub",
   "create_new_password_subtitle": "Geli Furahaaga Sirta ee Cusub si aad dib ugu dejiso furahaaga sirta.",
   "save_password": "Keydi furaha sirta",
+
+  "what_brings_you_to_som_spot": "Maxaa kugu keenay Som Spot?",
+  "choose_the_experience_that_is_right_for_you": "Dooro khibradda kugu habboon.",
+  "discover_connect_save": "Soo ogow. Xiriir samee. Kaydso.",
+
+  "connect_socials": "Ku Xidh Baraha Bulshada",
+  "link_accounts_to_verify_reach": "Ku xidh akoonnadaada si loo xaqiijiyo gaadhistaada",
+  "upload_photo": "Soo Geli Sawir",
+  "enter_your_full_name": "Geli magacaaga oo buuxa",
+  "select_location": "Dooro Goobta",
+  "finish_and_setup": "Dhammaystir & Habee",
+
   "complete_your_profile": "Dhamaystir profile-kaaga",
   "complete_profile_subtitle": "Naga caawi inaan shakhsiyeeyo waayo-aragnimadaada SomSpot",
   "add_profile_photo": "Ku dar Sawirka Profile",
@@ -190,6 +219,15 @@
   "saturday": "Sabti",
   "sunday": "Axad",
   "please_enter_address_to_search": "Fadlan geli cinwaanka waddada ama magaalada si aad u raadiso.",
+  "no_internet_connection": "Ma jiro xiriir internet",
+
+  "location_unavailable": "Goobta lama heli karo",
+  "enable_location_nearby_message": "Daar goobtaada si aad u ogaato ganacsiyada iyo dalabyada kuu dhow.",
+
+  "use_current_location": "Isticmaal Goobta Hadda",
+  "getting_location": "Helitaanka Goobta...",
+  "current_location_selected": "Goobta hadda ayaa la doortay",
+  "unable_to_get_current_location": "Lama heli karo goobtaada hadda",
   "location_updated_on_map": "Goobta waxaa lagu cusbooneysiiyay khariidada!",
   "no_location_matches_found": "Wax goobo ah oo u dhigma lama helin.",
   "error_searching_location": "Cillad ayaa dhacday inta lagu guda jiray raadinta goobta. Fadlan isku day markale.",

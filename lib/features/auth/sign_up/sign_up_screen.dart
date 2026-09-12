@@ -335,8 +335,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (name.isEmpty) {
       UiSnackbar.show(
         context,
-        title: 'Name Required',
-        message: 'Please enter your full name',
+        title: AppStrings.nameRequired.tr,
+        message: AppStrings.fullName.tr,
         type: UiSnackbarType.warning,
       );
       return;
@@ -345,8 +345,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (name.length < 2) {
       UiSnackbar.show(
         context,
-        title: 'Invalid Name',
-        message: 'Please enter a valid full name',
+        title: AppStrings.invalidName.tr,
+        message: AppStrings.enterValidName.tr,
         type: UiSnackbarType.warning,
       );
       return;
@@ -358,8 +358,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (phone.isEmpty) {
       UiSnackbar.show(
         context,
-        title: 'Phone Required',
-        message: 'Please enter your phone number',
+        title: AppStrings.phoneRequired.tr,
+        message: AppStrings.phoneNumberRequired.tr,
         type: UiSnackbarType.warning,
       );
       return;
@@ -368,8 +368,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (!RegExp(r'^\+?[0-9]{7,15}$').hasMatch(phone)) {
       UiSnackbar.show(
         context,
-        title: 'Invalid Phone',
-        message: 'Please enter a valid phone number',
+        title: AppStrings.invalidPhone.tr,
+        message: AppStrings.enterValidPhone.tr,
         type: UiSnackbarType.warning,
       );
       return;
@@ -381,8 +381,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (email.isEmpty) {
       UiSnackbar.show(
         context,
-        title: 'Email Required',
-        message: 'Please enter your email address',
+        title: AppStrings.emailRequired.tr,
+        message: AppStrings.emailRequired.tr,
         type: UiSnackbarType.warning,
       );
       return;
@@ -391,8 +391,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (!RegExp(r'^[\w\-.]+@([\w\-]+\.)+[\w\-]{2,4}$').hasMatch(email)) {
       UiSnackbar.show(
         context,
-        title: 'Invalid Email',
-        message: 'Please enter a valid email address',
+        title: AppStrings.invalidEmail.tr,
+        message: AppStrings.enterValidEmail.tr,
         type: UiSnackbarType.warning,
       );
       return;
@@ -404,8 +404,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (password.isEmpty) {
       UiSnackbar.show(
         context,
-        title: 'Password Required',
-        message: 'Please enter a password',
+        title: AppStrings.passwordRequired.tr,
+        message: AppStrings.enterPasswordFirst.tr,
         type: UiSnackbarType.warning,
       );
       return;
@@ -414,8 +414,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (password.length < 6) {
       UiSnackbar.show(
         context,
-        title: 'Invalid Password',
-        message: 'Password must be at least 6 characters',
+        title: AppStrings.invalidPassword.tr,
+        message: AppStrings.passwordMin6.tr,
         type: UiSnackbarType.warning,
       );
       return;
@@ -427,8 +427,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (confirmPassword.isEmpty) {
       UiSnackbar.show(
         context,
-        title: 'Confirm Password',
-        message: 'Please confirm your password',
+        title: AppStrings.confirmPassword.tr,
+        message: AppStrings.confirmPasswordRequired.tr,
         type: UiSnackbarType.warning,
       );
       return;
@@ -437,8 +437,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (password != confirmPassword) {
       UiSnackbar.show(
         context,
-        title: 'Password Mismatch',
-        message: 'Passwords do not match',
+        title: AppStrings.password.tr,
+        message: AppStrings.passwordMismatch.tr,
         type: UiSnackbarType.warning,
       );
       return;
@@ -448,8 +448,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (!_agreedToTerms) {
       UiSnackbar.show(
         context,
-        title: 'Terms Required',
-        message: 'Please accept terms and privacy policy',
+        title: AppStrings.termsAndConditions.tr,
+        message: AppStrings.termsRequired.tr,
         type: UiSnackbarType.warning,
       );
       return;

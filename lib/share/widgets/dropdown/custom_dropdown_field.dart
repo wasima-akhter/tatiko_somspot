@@ -12,6 +12,10 @@ class CustomDropdownField<T> extends StatelessWidget {
   final Color? fillColor;
   final String? errorText;
   final bool enabled;
+  final Future<void> Function()? onLoadMore;
+  final bool hasMore;
+  final bool isLoadingMore;
+  final Widget? emptyPlaceholder;
 
   const CustomDropdownField({
     super.key,
@@ -25,6 +29,10 @@ class CustomDropdownField<T> extends StatelessWidget {
     this.fillColor,
     this.errorText,
     this.enabled = true,
+    this.onLoadMore,
+    this.hasMore = false,
+    this.isLoadingMore = false,
+    this.emptyPlaceholder,
   });
 
   @override
@@ -37,6 +45,59 @@ class CustomDropdownField<T> extends StatelessWidget {
     final validationFunction = validator ?? validation;
 
     final bool hasError = errorText != null && errorText!.isNotEmpty;
+
+    //
+    final dropdownItems = <DropdownMenuItem<T>>[
+      ...items.map((item) {
+        final isSelected = item == value;
+
+        return DropdownMenuItem<T>(
+          value: item,
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Text(
+              labelBuilder?.call(item) ?? item.toString(),
+              style: context.bodyMedium.copyWith(
+                fontSize: 15,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                color: isSelected
+                    ? AppColors.primaryColor
+                    : AppColors.darkTextColor,
+              ),
+            ),
+          ),
+        );
+      }),
+
+      if (onLoadMore != null && hasMore)
+        DropdownMenuItem<T>(
+          value: null,
+          enabled: !isLoadingMore,
+          child: Center(
+            child: isLoadingMore
+                ? SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : Text(
+                    "Load more",
+                    style: context.bodyMedium.copyWith(
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+          ),
+        ),
+    ];
+
+    if (items.isEmpty && emptyPlaceholder != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [emptyPlaceholder!, const SizedBox(height: 8)],
+      );
+    }
 
     return DropdownButtonFormField2<T>(
       isExpanded: true,
@@ -67,28 +128,17 @@ class CustomDropdownField<T> extends StatelessWidget {
           fontWeight: FontWeight.w400,
         ),
       ),
-      items: items.map((item) {
-        final isSelected = item == value;
+      items: dropdownItems,
+      onChanged: enabled
+          ? (value) async {
+              if (value == null && onLoadMore != null && hasMore) {
+                await onLoadMore!();
+                return;
+              }
 
-        return DropdownMenuItem<T>(
-          value: item,
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Text(
-              labelBuilder?.call(item) ?? item.toString(),
-              style: context.bodyMedium.copyWith(
-                fontSize: 15,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: isSelected
-                    ? AppColors.primaryColor
-                    : AppColors.darkTextColor,
-              ),
-            ),
-          ),
-        );
-      }).toList(),
-      onChanged: enabled ? onChanged : null,
+              onChanged?.call(value);
+            }
+          : null,
       validator: validationFunction,
       style: context.bodyMedium,
       buttonStyleData: const ButtonStyleData(

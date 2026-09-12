@@ -43,6 +43,24 @@
   "confirm_password": "تأكيد كلمة المرور",
   "agree_to_somspot": "أوافق على SomSpot",
   "already_have_account": "هل لديك حساب بالفعل؟",
+
+  "verification_code_resent": "تمت إعادة إرسال رمز التحقق",
+  "registration_completed_successfully": "تم التسجيل بنجاح",
+  "login_failed": "فشل تسجيل الدخول",
+  "invalid_name": "اسم غير صالح",
+  "phone_required": "رقم الهاتف مطلوب",
+  "invalid_phone": "رقم هاتف غير صالح",
+
+  "enter_valid_name": "يرجى إدخال اسم صالح",
+  "enter_valid_phone": "يرجى إدخال رقم هاتف صالح",
+  "enter_valid_password": "يرجى إدخال كلمة مرور صالحة",
+  "enter_valid_email": "يرجى إدخال بريد إلكتروني صالح",
+
+  "invalid_email": "بريد إلكتروني غير صالح",
+  "invalid_password": "كلمة مرور غير صالحة",
+  "password_mismatch": "كلمتا المرور غير متطابقتين",
+  "terms_required": "الموافقة على الشروط مطلوبة",
+
   "verify_your_phone": "تحقق من هاتفك",
   "verify_your_email": "تحقق من بريدك الإلكتروني",
   "we_sent_code": "أرسلنا رمزًا مكونًا من 6 أرقام إلى",
@@ -56,6 +74,18 @@
   "create_new_password": "إنشاء كلمة مرور جديدة",
   "create_new_password_subtitle": "أدخل كلمة المرور الجديدة لإعادة تعيين كلمة المرور الخاصة بك.",
   "save_password": "حفظ كلمة المرور",
+
+  "what_brings_you_to_som_spot": "ما الذي جاء بك إلى Som Spot؟",
+  "choose_the_experience_that_is_right_for_you": "اختر التجربة المناسبة لك.",
+  "discover_connect_save": "اكتشف. تواصل. وفّر.",
+
+  "connect_socials": "ربط حسابات التواصل الاجتماعي",
+  "link_accounts_to_verify_reach": "اربط حساباتك للتحقق من مدى وصولك",
+  "upload_photo": "رفع صورة",
+  "enter_your_full_name": "أدخل اسمك الكامل",
+  "select_location": "اختر الموقع",
+  "finish_and_setup": "إنهاء وإعداد",
+
   "complete_your_profile": "أكمل ملفك الشخصي",
   "complete_profile_subtitle": "ساعدنا في تخصيص تجربتك في SomSpot",
   "add_profile_photo": "إضافة صورة شخصية",
@@ -190,6 +220,15 @@
   "saturday": "السبت",
   "sunday": "الأحد",
   "please_enter_address_to_search": "يرجى إدخال عنوان الشارع أو المدينة للبحث.",
+  "no_internet_connection": "لا يوجد اتصال بالإنترنت",
+
+  "location_unavailable": "الموقع غير متاح",
+  "enable_location_nearby_message": "فعّل موقعك لاكتشاف الأنشطة التجارية والعروض القريبة منك.",
+
+  "use_current_location": "استخدام الموقع الحالي",
+  "getting_location": "جارٍ الحصول على الموقع...",
+  "current_location_selected": "تم تحديد الموقع الحالي",
+  "unable_to_get_current_location": "تعذر الحصول على موقعك الحالي",
   "location_updated_on_map": "تم تحديث الموقع على الخريطة!",
   "no_location_matches_found": "لم يتم العثور على نتائج متطابقة للموقع.",
   "error_searching_location": "خطأ أثناء البحث عن الموقع. يرجى المحاولة مرة أخرى.",

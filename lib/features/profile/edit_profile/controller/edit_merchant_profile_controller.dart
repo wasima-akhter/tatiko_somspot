@@ -3,10 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:som_spot/features/profile/main_profile/controller/profile_controller.dart';
 import 'package:som_spot/helper/toast/toast_helper.dart';
 
 import '../../../../core/router/routes.dart';
+import '../../../../utils/common_controller/common_controller.dart';
+import '../../../core/location/controller/business_location_controller.dart';
 import '../../request/edit_profile_request.dart';
 import '../../service/profile_service.dart';
 
@@ -28,6 +31,12 @@ class EditMerchantProfileController extends GetxController {
 
   final ImagePicker _picker = ImagePicker();
 
+  // ---------------------------------------------------------------------------
+  // Location
+  // ---------------------------------------------------------------------------
+
+  BusinessLocationController? get locationController =>
+      CommonController.to.isInfluencer ? BusinessLocationController.to : null;
   Future<void> pickImage() async {
     final image = await _picker.pickImage(
       source: ImageSource.gallery,
@@ -46,6 +55,11 @@ class EditMerchantProfileController extends GetxController {
     try {
       isUpdateLoading.value = true;
 
+      final location = locationController;
+
+      final selectedLocation = location?.selectedLatLng.value;
+
+      //
       final result = await _service.editProfile(
         EditProfileRequest(
           name: name,
@@ -53,6 +67,19 @@ class EditMerchantProfileController extends GetxController {
           profileImage: selectedImage.value == null
               ? null
               : File(selectedImage.value!),
+
+          // Only creator/influencer sends location
+          address: CommonController.to.isInfluencer
+              ? location?.addressController.text.trim()
+              : null,
+
+          lat: CommonController.to.isInfluencer
+              ? selectedLocation?.latitude
+              : null,
+
+          lng: CommonController.to.isInfluencer
+              ? selectedLocation?.longitude
+              : null,
         ),
       );
 
@@ -109,6 +136,21 @@ class EditMerchantProfileController extends GetxController {
 
       if (profile.profileImage != null) {
         profileController.userAvatar.value = profile.profileImage!;
+      } // Populate influencer location
+      if (CommonController.to.isInfluencer) {
+        final location = locationController;
+
+        if (location != null) {
+          location.addressController.text = profile.address ?? "";
+
+          // If your profile model exposes coordinates,
+          // populate selectedLatLng here.
+          //
+          // location.selectedLatLng.value = LatLng(
+          //   profile.latitude!,
+          //   profile.longitude!,
+          // );
+        }
       }
     } finally {
       isProfileLoading.value = false;
@@ -118,6 +160,13 @@ class EditMerchantProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    if (CommonController.to.isInfluencer) {
+      BusinessLocationController.to.reset(
+        initialLatLng: const LatLng(23.8103, 90.4125),
+      );
+    }
+
     getProfile();
   }
 

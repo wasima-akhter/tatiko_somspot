@@ -6,6 +6,7 @@ import '../../../../../share/widgets/network_image/custom_network_image.dart';
 import '../../../../../share/widgets/ui_status_builder/api_status_builder.dart';
 import '../../../../../utils/enum/app_enum.dart';
 import '../../../../core/category/controller/category_controller.dart';
+import '../../../../customer/customer_home/widgets/category/home_categories_widget.dart';
 
 class BusinessCategory {
   final String labelKey;
@@ -81,7 +82,10 @@ class BusinessInfoStep extends StatelessWidget {
                 final categories = categoryController.categories;
 
                 if (categories.isEmpty) {
-                  return _noCategoriesPlaceholder(context);
+                  return noCategoriesPlaceholder(
+                    context,
+                    onTapRetry: () => categoryController.refreshCategories(),
+                  );
                 }
 
                 return Column(
@@ -207,51 +211,6 @@ class BusinessInfoStep extends StatelessWidget {
           Gap(32.h),
         ],
       ),
-    );
-  }
-
-  Widget _noCategoriesPlaceholder(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          AppStrings.category.tr,
-          style: context.bodyLarge.copyWith(
-            fontWeight: FontWeight.w600,
-            color: AppColors.darkTextColor,
-          ),
-        ),
-        Gap(12.h),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12.r),
-            border: Border.all(color: Colors.grey.shade200),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                Icons.info_outline_rounded,
-                size: 20.sp,
-                color: AppColors.subtitleTextColor,
-              ),
-              SizedBox(width: 10.w),
-              Expanded(
-                child: Text(
-                  "aidg8uyas gdgasduy gasuidg aus diasdgh iuasd",
-                  style: context.bodyMedium.copyWith(
-                    color: AppColors.subtitleTextColor,
-                    height: 1.45,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
