@@ -39,11 +39,8 @@ class _EditMerchantProfileScreenState extends State<EditMerchantProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        title: Text(AppStrings.editProfile.tr),
-        centerTitle: true,
-      ),
+      title: AppStrings.editProfile.tr,
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

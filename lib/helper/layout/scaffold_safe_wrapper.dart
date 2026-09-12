@@ -48,7 +48,7 @@ class ScaffoldWrapper extends StatelessWidget {
             ),
             title: Text(
               title ?? '',
-              style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
+              style: context.titleLarge.copyWith(fontWeight: FontWeight.w600),
             ),
             centerTitle: false,
             titleSpacing: 0,
